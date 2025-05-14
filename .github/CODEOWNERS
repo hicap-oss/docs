@@ -1,0 +1,17 @@
+# CODEOWNERS
+# This file sets default reviewers / approvers for paths across all org repositories.
+
+# Everything requires review from the core maintainers team
+*                @hi-cap/maintainers
+
+# Documentation
+docs/**          @hi-cap/docs-team
+*.md             @hi-cap/docs-team
+*.mdx             @hi-cap/docs-team
+
+
+# GitHub meta (issue templates, workflows)
+.github/**       @hi-cap/devops
+
+# Terraform or IaC directories
+terraform/**         @hi-cap/devops
