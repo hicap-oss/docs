@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "theme": "almond",
+  "name": "Hicap",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#280e87",
+    "light": "#60e8ce",
+    "dark": "#60e8ce"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -14,17 +14,24 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Overview",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "getting-started"
+            ]
+          },
+          {
+            "group": "Providers",
+            "pages": [
+              "models/openai",
+              "models/anthropic",
+              "models/gemini",
+              "models/opensource",
+              "modlels/openrouter"
             ]
           },
           {
             "group": "Essentials",
             "pages": [
-              "essentials/markdown",
               "essentials/code",
               "essentials/images",
               "essentials/settings",
@@ -57,46 +64,31 @@
     ],
     "global": {
       "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
       ]
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/lightFull.svg",
+    "dark": "/logo/darkFull.svg"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:support@hicap.ai"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "https://dashboard.hicap.ai"
     }
   },
   "footer": {
     "socials": {
       "x": "https://x.com/mintlify",
       "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "linkedin": "https://linkedin.com/company/hicapai"
     }
   }
 }
