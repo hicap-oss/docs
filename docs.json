@@ -14,9 +14,11 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Overview",
+            "group": "Get Started",
             "pages": [
-              "getting-started"
+              "overview",
+              "quickstart",
+              "faq"
             ]
           },
           {
