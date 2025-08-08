@@ -53,6 +53,24 @@
             ]
           },
           {
+            "group": "OpenAI APIs",
+            "pages": [
+              "api-reference/endpoint/openAI/retrieve_a_message",
+              "api-reference/endpoint/openAI/retrieve_a_message_file",
+              "api-reference/endpoint/openAI/retrieve_a_run_step",
+              "api-reference/endpoint/openAI/retrieve_a_run",
+              "api-reference/endpoint/openAI/retrieve_a_thread",
+              "api-reference/endpoint/openAI/retrieve_an_assistant",
+              "api-reference/endpoint/openAI/retrieve_an_assistant_file",
+              "api-reference/endpoint/openAI/return_a_list_assistant_files",
+              "api-reference/endpoint/openAI/return_a_list_assistants",
+              "api-reference/endpoint/openAI/return_a_list_message_files",
+              "api-reference/endpoint/openAI/return_a_list_message_for_thread",
+              "api-reference/endpoint/openAI/return_a_list_run_steps_belonging_run",
+              "api-reference/endpoint/openAI/return_a_list_run_steps_belonging_thread"
+            ]
+          },
+          {
             "group": "Endpoint Examples",
             "pages": [
               "api-reference/endpoint/get",
