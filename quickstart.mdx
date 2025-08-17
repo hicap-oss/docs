@@ -10,11 +10,7 @@ Follow this interactive guide to set up your account and start using the Hicap A
 
 ## 1. Sign in to the Hicap portal
 
-Navigate to:
-
-```bash
-https://portal.hicap.ai/signin
-```
+* Navigate to [https://portal.hicap.ai/signin](https://portal.hicap.ai/signin)
 
 ## 2. Authenticate with Azure AD B2C
 
@@ -47,40 +43,41 @@ If you're not registered, click **Sign up** now and complete the account creatio
 
 ## 5. Retrieve your Hicap API key
 
-1. After subscribing, your new subscription will appear in the list.
+1. After subscribing, your new subscription will appear in your profile.
 2. Click on it to reveal your **API key**.
+
+![](./images/quickstart/profile-show-keys.png)
+
 3. Copy this value and store it securely.
 
 ---
 
 ## 6. Configure your OpenAI SDK
 
-1. Go to the **APIs** tab and select `v1` to access the Hicap v1 API reference.
-2. Take note of the **Base URL** and the `api-key` header.
+1. Choose a model
 
+| Provider  | Model ID                    |
+| :--------- | :------------------------- |
+| **OpenAI** | `gpt-4o`                   |
+| **OpenAI** | `gpt-4o-mini`              |
+| **OpenAI** | `gpt-4.1`                  |
+| **OpenAI** | `gpt-4.1-mini`             |
+| **OpenAI** | `gpt-4.1-nano`             |
+| **Anthropic** | `Claude 3.5 Sonnet`     |
+| **Anthropic** | `Claude 3.7 Sonnet`     |
 
-![](./images/quickstart/sdk-config.png)
+2. Now try to chat with your model following the next examples.
 
-3. Choose a model
+Using this .env example:
 
----
+```bash
+BASE_URL = "https://api.hicap.ai/v1/openai/"
+API_KEY  = "your-hicap-api-key"
+# found in table above
+MODEL = "gpt-4o"
+API_VERSION = "2025-01-01-preview"
+```
 
-## Available Model/Version
-
-| Provider  | Model ID                                              | API Version           |
-| ---------- | ----------------------------------------------------- | --------------------- |
-| **OpenAI** | `model-router`                                        | `2025-01-01-preview`  |
-| **OpenAI** | `gpt-4o`                                              | `2025-01-01-preview`  |
-| **OpenAI** | `gpt-4o-mini`                                         | `2025-01-01-preview`  |
-| **OpenAI** | `gpt-4.1`                                             | `2025-01-01-preview`  |
-| **OpenAI** | `gpt-4.1-mini`                                        | `2025-01-01-preview`  |
-| **OpenAI** | `gpt-4.1-nano`                                        | `2025-01-01-preview`  |
-| **Anthropic** | `us.anthropic.claude-3-5-sonnet-20241022-v2:0`      | Not Applicable        |
-| **Anthropic** | `us.anthropic.claude-3-7-sonnet-20250219-v1:0`      | Not Applicable        |
-
----
-
-## Sample codes
 
 <CodeGroup>
 
