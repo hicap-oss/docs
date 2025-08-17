@@ -1,0 +1,29 @@
+{
+  "name": "tripel",
+  "version": "1.0.0",
+  "description": "hicap documentation",
+  "keywords": [
+    "docs",
+    "documentation",
+    "mintlify"
+  ],
+  "homepage": "https://github.com/hi-cap/tripel#readme",
+  "bugs": {
+    "url": "https://github.com/hi-cap/tripel/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hi-cap/tripel.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "mintlify dev"
+  },
+  "devDependencies": {
+    "mintlify": "^4.0.560"
+  }
+}

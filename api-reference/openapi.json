@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "https://api.hicap.ai/v1/"
     }
   ],
   "security": [
@@ -19,6 +19,842 @@
     }
   ],
   "paths": {
+    "/threads/{thread_id}/messages/{message_id}?api-version={api-version}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{thread_id}/messages/{message_id}/files/{file_id}?api-version={api-version}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{thread_id}/runs/{run_id}/steps/{step_id}?api-version={api-version}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{thread_id}/runs/{run_id}?api-version={api-version}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{thread_id}?api-version={api-version}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assistants/{assistant_id}?api-version={api-version}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assistants/{assistant_id}/files/{file_id}?api-version={api-version}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assistants/{assistant_id}/files?api-version={api-version}&limit={limit}&order={order}&after={after}&before={before}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assistants?api-version={api-version}&limit={limit}&order={order}&after={after}&before={before}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{thread_id}/messages/{message_id}/files?api-version={api-version}&limit={limit}&order={order}&after={after}&before={before}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{thread_id}/messages?api-version={api-version}&limit={limit}&order={order}&after={after}&before={before}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{thread_id}/runs/{run_id}/steps?api-version={api-version}&limit={limit}&order={order}&after={after}&before={before}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{thread_id}/runs?api-version={api-version}&limit={limit}&order={order}&after={after}&before={before}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/plants": {
       "get": {
         "description": "Returns all plants from the system that the user has access to",
@@ -154,6 +990,63 @@
   },
   "components": {
     "schemas": {
+      "messageObject": {
+        "required": [
+          "id",
+          "object",
+          "created_at",
+          "thread_id",
+          "role",
+          "content[]",
+          "assistant_id",
+          "run_id",
+          "file_ids",
+          "metadata"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "TThe identifier, which can be referenced in API endpoints.",
+            "type": "string"
+          },
+          "object": {
+            "description": "The object type, which is always thread.message.",
+            "type": "string"
+          },
+          "created_at": {
+            "description": "The Unix timestamp (in seconds) for when the message was created.",
+            "type": "integer"
+          },
+          "thread_id": {
+            "description": "The thread ID that this message belongs to.",
+            "type": "string"
+          },
+          "role": {
+            "description": "The entity that produced the message. One of user or assistant.",
+            "type": "string"
+          },
+          "content[]": {
+            "description": "The entity that produced the message. One of user or assistant.",
+            "type": "One of:"
+          },
+          "assistant_id": {
+            "description": "If applicable, the ID of the assistant that authored this message.",
+            "type": "string"
+          },
+          "run_id": {
+            "description": "If applicable, the ID of the run associated with the authoring of this message.",
+            "type": "string"
+          },
+          "file_ids": {
+            "description": "A list of file IDs that the assistant should use. Useful for tools like retrieval and code_interpret…",
+            "type": "string[]"
+          },
+          "metadata": {
+            "description": "Set of 16 key-value pairs that can be attached to an object. This can be useful for storing addition…",
+            "type": "object"
+          }
+        }
+      },
       "Plant": {
         "required": [
           "name"
