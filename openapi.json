@@ -1,0 +1,2706 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OpenAPI Plant Store",
+    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.hicap.ai/openai/v1"
+    },
+    {
+      "url": "https://api.hicap.ai/azopenai/v1"
+    },
+    {
+      "url": "https://api.hicap.ai/vertex/v1"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/threads/{threadId}/messages/{messageId}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "threadId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{threadId}/messages/{messageId}/files/{fileId}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "threadId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageFileObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{threadId}/runs/{runId}/steps/{stepId}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "threadId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "runId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "stepId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/runStepObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{threadId}/runs/{runId}": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "threadId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "runId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/runObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{threadId}": {
+      "get": {
+        "description": "Retrieves a thread.",
+        "parameters": [
+          {
+            "name": "threadId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/threadObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assistants/{assistantId}": {
+      "get": {
+        "description": "Retrieves an assistant.",
+        "parameters": [
+          {
+            "name": "assistantId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/assistantObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assistants/{assistantId}/files/{fileId}": {
+      "get": {
+        "description": "Retrieves an AssistantFile.",
+        "parameters": [
+          {
+            "name": "assistantId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/assistantFileObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assistants/{assistantId}/files": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "assistantId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["asc", "desc"]
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "default": ["desc"]
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listAssistantFilesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assistants": {
+      "get": {
+        "description": "Returns a list of assistants.",
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["asc", "desc"]
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "default": ["desc"]
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "required": [
+                  "object",
+                  "data",
+                  "first_id",
+                  "last_id",
+                  "has_more"
+                ],
+                "type": "object",
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "example": "list"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/assistantObject"
+                    }
+                  },
+                  "first_id": {
+                    "type": "string"
+                  },
+                  "last_id": {
+                    "type": "string"
+                  },
+                  "has_more": {
+                    "type": "boolean",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{thread_id}/messages/{message_id}/files": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{thread_id}/messages": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{thread_id}/runs/{run_id}/steps": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{thread_id}/runs": {
+      "get": {
+        "description": "Retrieve a message.",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messageObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deployments/{deploymentId}/chat/completions": {
+      "post": {
+        "parameters": [
+          {
+            "name": "deploymentId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/chatCompletionsRequestCommon"
+                  },
+                  {
+                    "required": ["messages"],
+                    "properties": {
+                      "messages": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/chatCompletionRequestMessage"
+                        },
+                        "description": "A list of messages comprising the conversation so far. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_format_inputs_to_ChatGPT_models.ipynb)."
+                      },
+                      "data_sources": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/azureChatExtensionConfiguration"
+                        },
+                        "description": "  The configuration entries for Azure OpenAI chat extensions that use them.\n  This additional specification is only compatible with Azure OpenAI."
+                      },
+                      "enhancements": {
+                        "type": "object",
+                        "properties": {
+                          "grounding": {
+                            "type": "object",
+                            "properties": {
+                              "enabled": {
+                                "type": "boolean",
+                                "default": false
+                              }
+                            },
+                            "description": "Request object to specify if grounding enhancement is needed."
+                          },
+                          "ocr": {
+                            "type": "object",
+                            "properties": {
+                              "enabled": {
+                                "type": "boolean",
+                                "default": false
+                              }
+                            },
+                            "description": "Request object to specify if ocr enhancement is needed."
+                          }
+                        },
+                        "description": "The type of enhancements needed."
+                      },
+                      "n": {
+                        "maximum": 128,
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "How many chat completion choices to generate for each input message.",
+                        "default": 1,
+                        "nullable": true,
+                        "example": 1
+                      },
+                      "seed": {
+                        "maximum": 9223372036854776000,
+                        "minimum": -9223372036854776000,
+                        "type": "integer",
+                        "description": "If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.Determinism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.",
+                        "default": 0,
+                        "nullable": true,
+                        "example": 1
+                      },
+                      "logprobs": {
+                        "type": "boolean",
+                        "description": "Whether to return log probabilities of the output tokens or not. If true, returns the log probabilities of each output token returned in the `content` of `message`. This option is currently not available on the `gpt-4-vision-preview` model.",
+                        "default": false,
+                        "nullable": true
+                      },
+                      "top_logprobs": {
+                        "maximum": 5,
+                        "minimum": 0,
+                        "type": "integer",
+                        "description": "An integer between 0 and 5 specifying the number of most likely tokens to return at each token position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used.",
+                        "nullable": true
+                      },
+                      "response_format": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "$ref": "#/components/schemas/chatCompletionResponseFormat"
+                          }
+                        },
+                        "description": "An object specifying the format that the model must output. Used to enable JSON mode."
+                      },
+                      "tools": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/chatCompletionTool"
+                        },
+                        "description": "A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for."
+                      },
+                      "tool_choice": {
+                        "$ref": "#/components/schemas/chatCompletionToolChoiceOption"
+                      },
+                      "functions": {
+                        "maxItems": 128,
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/chatCompletionFunction"
+                        },
+                        "description": "Deprecated in favor of `tools`. A list of functions the model may generate JSON inputs for."
+                      },
+                      "function_call": {
+                        "oneOf": [
+                          {
+                            "enum": ["none", "auto"],
+                            "type": "string",
+                            "description": "`none` means the model will not call a function and instead generates a message. `auto` means the model can pick between generating a message or calling a function."
+                          },
+                          {
+                            "required": ["name"],
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "The name of the function to call."
+                              }
+                            },
+                            "description": "Specifying a particular function via `{\"name\": \"my_function\"}` forces the model to call that function."
+                          }
+                        ],
+                        "description": "Deprecated in favor of `tool_choice`. Controls how the model responds to function calls. \"none\" means the model does not call a function, and responds to the end-user. \"auto\" means the model can pick between an end-user or calling a function.  Specifying a particular function via `{\"name\":\\ \"my_function\"}` forces the model to call that function. \"none\" is the default when no functions are present. \"auto\" is the default if functions are present."
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "apim-request-id": {
+                "description": "Request ID for troubleshooting purposes",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/chatCompletionsResponseCommon"
+                    },
+                    {
+                      "required": ["choices"],
+                      "properties": {
+                        "prompt_filter_results": {
+                          "$ref": "#/components/schemas/promptFilterResults"
+                        },
+                        "choices": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/chatCompletionChoiceCommon"
+                              },
+                              {
+                                "properties": {
+                                  "message": {
+                                    "$ref": "#/components/schemas/chatCompletionResponseMessage"
+                                  },
+                                  "content_filter_results": {
+                                    "$ref": "#/components/schemas/contentFilterChoiceResults"
+                                  },
+                                  "logprobs": {
+                                    "$ref": "#/components/schemas/chatCompletionChoiceLogProbs"
+                                  },
+                                  "enhancements": {
+                                    "$ref": "#/components/schemas/enhancement"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Service unavailable",
+            "headers": {
+              "apim-request-id": {
+                "description": "Request ID for troubleshooting purposes",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/error"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Service unavailable",
+            "headers": {
+              "apim-request-id": {
+                "description": "Request ID for troubleshooting purposes",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "chatCompletionsRequestCommon": {
+        "type": "object",
+        "properties": {
+          "temperature": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number",
+            "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.\nWe generally recommend altering this or `top_p` but not both.",
+            "default": 1,
+            "nullable": true,
+            "example": 1
+          },
+          "top_p": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.\nWe generally recommend altering this or `temperature` but not both.",
+            "default": 1,
+            "nullable": true,
+            "example": 1
+          },
+          "stream": {
+            "type": "boolean",
+            "description": "If set, partial message deltas will be sent, like in ChatGPT. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a `data: [DONE]` message.",
+            "default": false,
+            "nullable": true
+          },
+          "stop": {
+            "oneOf": [
+              {
+                "type": "string",
+                "nullable": true
+              },
+              {
+                "maxItems": 4,
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array minimum size of 1 and maximum of 4"
+              }
+            ],
+            "description": "Up to 4 sequences where the API will stop generating further tokens.",
+            "default": null
+          },
+          "max_tokens": {
+            "type": "integer",
+            "description": "The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (4096 - prompt tokens).",
+            "default": 4096
+          },
+          "presence_penalty": {
+            "maximum": 2,
+            "minimum": -2,
+            "type": "number",
+            "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.",
+            "default": 0
+          },
+          "frequency_penalty": {
+            "maximum": 2,
+            "minimum": -2,
+            "type": "number",
+            "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.",
+            "default": 0
+          },
+          "logit_bias": {
+            "type": "object",
+            "description": "Modify the likelihood of specified tokens appearing in the completion. Accepts a json object that maps tokens (specified by their token ID in the tokenizer) to an associated bias value from -100 to 100. Mathematically, the bias is added to the logits generated by the model prior to sampling. The exact effect will vary per model, but values between -1 and 1 should decrease or increase likelihood of selection; values like -100 or 100 should result in a ban or exclusive selection of the relevant token.",
+            "nullable": true
+          },
+          "user": {
+            "type": "string",
+            "description": "A unique identifier representing your end-user, which can help Azure OpenAI to monitor and detect abuse.",
+            "example": "user-1234"
+          }
+        }
+      },
+      "chatCompletionRequestMessage": {
+        "required": ["role"],
+        "type": "object",
+        "properties": {
+          "role": {
+            "$ref": "#/components/schemas/chatCompletionRequestMessageRole"
+          }
+        },
+        "discriminator": {
+          "propertyName": "role",
+          "mapping": {
+            "system": "#/components/schemas/chatCompletionRequestMessageSystem",
+            "user": "#/components/schemas/chatCompletionRequestMessageUser",
+            "assistant": "#/components/schemas/chatCompletionRequestMessageAssistant",
+            "tool": "#/components/schemas/chatCompletionRequestMessageTool",
+            "function": "#/components/schemas/chatCompletionRequestMessageFunction"
+          }
+        }
+      },
+      "chatCompletionRequestMessageRole": {
+        "enum": ["system", "user", "assistant", "tool", "function"],
+        "type": "string",
+        "description": "The role of the messages author.",
+        "x-ms-enum": {
+          "name": "ChatCompletionRequestMessageRole",
+          "modelAsString": true,
+          "values": [
+            {
+              "value": "system",
+              "description": "The message author role is system."
+            },
+            {
+              "value": "user",
+              "description": "The message author role is user."
+            },
+            {
+              "value": "assistant",
+              "description": "The message author role is assistant."
+            },
+            {
+              "value": "tool",
+              "description": "The message author role is tool."
+            },
+            {
+              "value": "function",
+              "description": "Deprecated. The message author role is function."
+            }
+          ]
+        }
+      },
+      "azureChatExtensionConfiguration": {
+        "required": ["type"],
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/azureChatExtensionType"
+          }
+        },
+        "description": "  A representation of configuration data for a single Azure OpenAI chat extension. This will be used by a chat\n  completions request that should use Azure OpenAI chat extensions to augment the response behavior.\n  The use of this configuration is compatible only with Azure OpenAI.",
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "azure_search": "#/components/schemas/azureSearchChatExtensionConfiguration",
+            "azure_ml_index": "#/components/schemas/azureMachineLearningIndexChatExtensionConfiguration",
+            "azure_cosmos_db": "#/components/schemas/azureCosmosDBChatExtensionConfiguration",
+            "elasticsearch": "#/components/schemas/elasticsearchChatExtensionConfiguration",
+            "pinecone": "#/components/schemas/pineconeChatExtensionConfiguration"
+          }
+        }
+      },
+      "azureChatExtensionType": {
+        "enum": [
+          "azure_search",
+          "azure_ml_index",
+          "azure_cosmos_db",
+          "elasticsearch",
+          "pinecone"
+        ],
+        "type": "string",
+        "description": "  A representation of configuration data for a single Azure OpenAI chat extension. This will be used by a chat\n  completions request that should use Azure OpenAI chat extensions to augment the response behavior.\n  The use of this configuration is compatible only with Azure OpenAI.",
+        "x-ms-enum": {
+          "name": "AzureChatExtensionType",
+          "modelAsString": true,
+          "values": [
+            {
+              "name": "azureSearch",
+              "value": "azure_search",
+              "description": "Represents the use of Azure Search as an Azure OpenAI chat extension."
+            },
+            {
+              "name": "azureMachineLearningIndex",
+              "value": "azure_ml_index",
+              "description": "Represents the use of Azure Machine Learning index as an Azure OpenAI chat extension."
+            },
+            {
+              "name": "azureCosmosDB",
+              "value": "azure_cosmos_db",
+              "description": "Represents the use of Azure Cosmos DB as an Azure OpenAI chat extension."
+            },
+            {
+              "name": "elasticsearch",
+              "value": "elasticsearch",
+              "description": "Represents the use of Elasticsearch® index as an Azure OpenAI chat extension."
+            },
+            {
+              "name": "pinecone",
+              "value": "pinecone",
+              "description": "Represents the use of Pinecone index as an Azure OpenAI chat extension."
+            }
+          ]
+        }
+      },
+      "chatCompletionResponseFormat": {
+        "enum": ["text", "json_object"],
+        "type": "string",
+        "description": "Setting to `json_object` enables JSON mode. This guarantees that the message the model generates is valid JSON.",
+        "default": "text",
+        "nullable": true,
+        "example": "json_object",
+        "x-ms-enum": {
+          "name": "ChatCompletionResponseFormat",
+          "modelAsString": true,
+          "values": [
+            {
+              "value": "text",
+              "description": "Response format is a plain text string."
+            },
+            {
+              "value": "json_object",
+              "description": "Response format is a JSON object."
+            }
+          ]
+        }
+      },
+      "chatCompletionTool": {
+        "required": ["type", "function"],
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/chatCompletionToolType"
+          },
+          "function": {
+            "required": ["name", "parameters"],
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string",
+                "description": "A description of what the function does, used by the model to choose when and how to call the function."
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64."
+              },
+              "parameters": {
+                "$ref": "#/components/schemas/chatCompletionFunctionParameters"
+              }
+            }
+          }
+        }
+      },
+      "chatCompletionToolType": {
+        "enum": ["function"],
+        "type": "string",
+        "description": "The type of the tool. Currently, only `function` is supported.",
+        "x-ms-enum": {
+          "name": "ChatCompletionToolType",
+          "modelAsString": true,
+          "values": [
+            {
+              "value": "function",
+              "description": "The tool type is function."
+            }
+          ]
+        }
+      },
+      "chatCompletionToolChoiceOption": {
+        "oneOf": [
+          {
+            "enum": ["none", "auto"],
+            "type": "string",
+            "description": "`none` means the model will not call a function and instead generates a message. `auto` means the model can pick between generating a message or calling a function."
+          },
+          {
+            "$ref": "#/components/schemas/chatCompletionNamedToolChoice"
+          }
+        ],
+        "description": "Controls which (if any) function is called by the model. `none` means the model will not call a function and instead generates a message. `auto` means the model can pick between generating a message or calling a function. Specifying a particular function via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that function."
+      },
+      "chatCompletionNamedToolChoice": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["function"],
+            "type": "string",
+            "description": "The type of the tool. Currently, only `function` is supported."
+          },
+          "function": {
+            "required": ["name"],
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the function to call."
+              }
+            }
+          }
+        },
+        "description": "Specifies a tool the model should use. Use to force the model to call a specific function."
+      },
+      "chatCompletionFunction": {
+        "required": ["name"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64."
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of what the function does."
+          },
+          "parameters": {
+            "$ref": "#/components/schemas/chatCompletionFunctionParameters"
+          }
+        }
+      },
+      "chatCompletionFunctionParameters": {
+        "type": "object",
+        "description": "The parameters the functions accepts, described as a JSON Schema object. See the [guide](/docs/guides/gpt/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format."
+      },
+      "chatCompletionsResponseCommon": {
+        "required": ["id", "object", "created", "model"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "A unique identifier for the chat completion."
+          },
+          "object": {
+            "$ref": "#/components/schemas/chatCompletionResponseObject",
+            "type": "object"
+          },
+          "created": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) of when the chat completion was created.",
+            "format": "unixtime"
+          },
+          "model": {
+            "type": "string",
+            "description": "The model used for the chat completion."
+          },
+          "usage": {
+            "$ref": "#/components/schemas/completionUsage",
+            "type": "object"
+          },
+          "system_fingerprint": {
+            "type": "string",
+            "description": "Can be used in conjunction with the `seed` request parameter to understand when backend changes have been made that might impact determinism."
+          }
+        }
+      },
+      "completionUsage": {
+        "required": ["prompt_tokens", "completion_tokens", "total_tokens"],
+        "type": "object",
+        "properties": {
+          "prompt_tokens": {
+            "type": "integer",
+            "description": "Number of tokens in the prompt."
+          },
+          "completion_tokens": {
+            "type": "integer",
+            "description": "Number of tokens in the generated completion."
+          },
+          "total_tokens": {
+            "type": "integer",
+            "description": "Total number of tokens used in the request (prompt + completion)."
+          }
+        },
+        "description": "Usage statistics for the completion request."
+      },
+      "chatCompletionResponseObject": {
+        "enum": ["chat.completion"],
+        "type": "string",
+        "description": "The object type.",
+        "x-ms-enum": {
+          "name": "ChatCompletionResponseObject",
+          "modelAsString": true,
+          "values": [
+            {
+              "value": "chat.completion",
+              "description": "The object type is chat completion."
+            }
+          ]
+        }
+      },
+      "messageObject": {
+        "title": "The message object",
+        "required": [
+          "id",
+          "object",
+          "created_at",
+          "thread_id",
+          "role",
+          "content",
+          "assistant_id",
+          "run_id",
+          "file_ids",
+          "metadata"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The identifier, which can be referenced in API endpoints."
+          },
+          "object": {
+            "enum": ["thread.message"],
+            "type": "string",
+            "description": "The object type, which is always `thread.message`.",
+            "x-ms-enum": {
+              "name": "MessageObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "thread.message",
+                  "description": "The message object type which is `thread.message`"
+                }
+              ]
+            }
+          },
+          "created_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the message was created."
+          },
+          "thread_id": {
+            "type": "string",
+            "description": "The [thread](/docs/api-reference/threads) ID that this message belongs to."
+          },
+          "role": {
+            "enum": ["user", "assistant"],
+            "type": "string",
+            "description": "The entity that produced the message. One of `user` or `assistant`.",
+            "x-ms-enum": {
+              "name": "MessageObjectRole",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "user",
+                  "description": "Message object role as `user`"
+                },
+                {
+                  "value": "assistant",
+                  "description": "Message object role as `assistant`"
+                }
+              ]
+            }
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/messageContentImageFileObject"
+                },
+                {
+                  "$ref": "#/components/schemas/messageContentTextObject"
+                }
+              ]
+            },
+            "description": "The content of the message in array of text and/or images."
+          },
+          "assistant_id": {
+            "type": "string",
+            "description": "If applicable, the ID of the [assistant](/docs/api-reference/assistants) that authored this message.",
+            "nullable": true
+          },
+          "run_id": {
+            "type": "string",
+            "description": "If applicable, the ID of the [run](/docs/api-reference/runs) associated with the authoring of this message.",
+            "nullable": true
+          },
+          "file_ids": {
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "A list of [file](/docs/api-reference/files) IDs that the assistant should use. Useful for tools like retrieval and code_interpreter that can access files. A maximum of 10 files can be attached to a message."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format. Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.\n",
+            "nullable": true
+          }
+        },
+        "description": "Represents a message within a [thread](/docs/api-reference/threads)."
+      },
+      "messageFileObject": {
+        "title": "Message files",
+        "required": ["id", "object", "created_at", "message_id"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The identifier, which can be referenced in API endpoints."
+          },
+          "object": {
+            "enum": ["thread.message.file"],
+            "type": "string",
+            "description": "The object type, which is always `thread.message.file`.",
+            "x-ms-enum": {
+              "name": "MessageFileObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "thread.message.file"
+                }
+              ]
+            }
+          },
+          "created_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the message file was created."
+          },
+          "message_id": {
+            "type": "string",
+            "description": "The ID of the [message](/docs/api-reference/messages) that the [File](/docs/api-reference/files) is attached to."
+          }
+        },
+        "description": "A list of files attached to a `message`."
+      },
+      "messageContentImageFileObject": {
+        "title": "Image file",
+        "required": ["type", "image_file"],
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["image_file"],
+            "type": "string",
+            "description": "Always `image_file`.",
+            "x-ms-enum": {
+              "name": "MessageContentImageFileObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "image_file",
+                  "description": "The message content image file type"
+                }
+              ]
+            }
+          },
+          "image_file": {
+            "required": ["file_id"],
+            "type": "object",
+            "properties": {
+              "file_id": {
+                "type": "string",
+                "description": "The [File](/docs/api-reference/files) ID of the image in the message content."
+              }
+            }
+          }
+        },
+        "description": "References an image [File](/docs/api-reference/files) in the content of a message."
+      },
+      "messageContentTextObject": {
+        "title": "Text",
+        "required": ["type", "text"],
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["text"],
+            "type": "string",
+            "description": "Always `text`.",
+            "x-ms-enum": {
+              "name": "messageContentTextObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "text",
+                  "description": "The message content text Object type"
+                }
+              ]
+            }
+          },
+          "text": {
+            "required": ["value", "annotations"],
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "description": "The data that makes up the text."
+              },
+              "annotations": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/messageContentTextAnnotationsFileCitationObject"
+                    },
+                    {
+                      "$ref": "#/components/schemas/messageContentTextAnnotationsFilePathObject"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": "The text content that is part of a message."
+      },
+      "runStepObject": {
+        "title": "Run steps",
+        "required": [
+          "id",
+          "object",
+          "created_at",
+          "assistant_id",
+          "thread_id",
+          "run_id",
+          "type",
+          "status",
+          "step_details",
+          "last_error",
+          "expired_at",
+          "cancelled_at",
+          "failed_at",
+          "completed_at",
+          "metadata"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The identifier of the run step, which can be referenced in API endpoints."
+          },
+          "object": {
+            "enum": ["assistant.run.step"],
+            "type": "string",
+            "description": "The object type, which is always `assistant.run.step``.",
+            "x-ms-enum": {
+              "name": "RunStepObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "assistant.run.step",
+                  "description": "The object type, which is always `assistant.run.step`"
+                }
+              ]
+            }
+          },
+          "created_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the run step was created."
+          },
+          "assistant_id": {
+            "type": "string",
+            "description": "The ID of the [assistant](/docs/api-reference/assistants) associated with the run step."
+          },
+          "thread_id": {
+            "type": "string",
+            "description": "The ID of the [thread](/docs/api-reference/threads) that was run."
+          },
+          "run_id": {
+            "type": "string",
+            "description": "The ID of the [run](/docs/api-reference/runs) that this run step is a part of."
+          },
+          "type": {
+            "enum": ["message_creation", "tool_calls"],
+            "type": "string",
+            "description": "The type of run step, which can be either `message_creation` or `tool_calls`.",
+            "x-ms-enum": {
+              "name": "RunStepObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "message_creation",
+                  "description": "The message_creation run step"
+                },
+                {
+                  "value": "tool_calls",
+                  "description": "The tool_calls run step"
+                }
+              ]
+            }
+          },
+          "status": {
+            "enum": [
+              "in_progress",
+              "cancelled",
+              "failed",
+              "completed",
+              "expired"
+            ],
+            "type": "string",
+            "description": "The status of the run, which can be either `in_progress`, `cancelled`, `failed`, `completed`, or `expired`.",
+            "x-ms-enum": {
+              "name": "RunStepObjectStatus",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "in_progress",
+                  "description": "The in_progress run status"
+                },
+                {
+                  "value": "cancelled",
+                  "description": "The cancelled run status"
+                },
+                {
+                  "value": "failed",
+                  "description": "The cancelled run status"
+                },
+                {
+                  "value": "completed",
+                  "description": "The cancelled run status"
+                },
+                {
+                  "value": "expired",
+                  "description": "The cancelled run status"
+                }
+              ]
+            }
+          },
+          "step_details": {
+            "type": "object",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/runStepDetailsMessageCreationObject"
+              },
+              {
+                "$ref": "#/components/schemas/runStepDetailsToolCallsObject"
+              }
+            ],
+            "description": "The details of the run step."
+          },
+          "last_error": {
+            "required": ["code", "message"],
+            "type": "object",
+            "properties": {
+              "code": {
+                "enum": ["server_error", "rate_limit_exceeded"],
+                "type": "string",
+                "description": "One of `server_error` or `rate_limit_exceeded`.",
+                "x-ms-enum": {
+                  "name": "LastErrorCode",
+                  "modelAsString": true,
+                  "values": [
+                    {
+                      "value": "server_error",
+                      "description": "The server_error"
+                    },
+                    {
+                      "value": "rate_limit_exceeded",
+                      "description": "The rate_limit_exceeded status"
+                    }
+                  ]
+                }
+              },
+              "message": {
+                "type": "string",
+                "description": "A human-readable description of the error."
+              }
+            },
+            "description": "The last error associated with this run step. Will be `null` if there are no errors.",
+            "nullable": true
+          },
+          "expired_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the run step expired. A step is considered expired if the parent run is expired.",
+            "nullable": true
+          },
+          "cancelled_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the run step was cancelled.",
+            "nullable": true
+          },
+          "failed_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the run step failed.",
+            "nullable": true
+          },
+          "completed_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the run step completed.",
+            "nullable": true
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format. Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.\n",
+            "nullable": true
+          }
+        },
+        "description": "Represents a step in execution of a run.\n"
+      },
+      "runStepDetailsMessageCreationObject": {
+        "title": "Message creation",
+        "required": ["type", "message_creation"],
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["message_creation"],
+            "type": "string",
+            "description": "Always `message_creation``.",
+            "x-ms-enum": {
+              "name": "RunStepDetailsMessageCreationObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "message_creation"
+                }
+              ]
+            }
+          },
+          "message_creation": {
+            "required": ["message_id"],
+            "type": "object",
+            "properties": {
+              "message_id": {
+                "type": "string",
+                "description": "The ID of the message that was created by this run step."
+              }
+            }
+          }
+        },
+        "description": "Details of the message creation by the run step."
+      },
+      "runStepDetailsToolCallsObject": {
+        "title": "Tool calls",
+        "required": ["type", "tool_calls"],
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["tool_calls"],
+            "type": "string",
+            "description": "Always `tool_calls`.",
+            "x-ms-enum": {
+              "name": "RunStepDetailsToolCallsObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "tool_calls"
+                }
+              ]
+            }
+          },
+          "tool_calls": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/runStepDetailsToolCallsCodeObject"
+                },
+                {
+                  "$ref": "#/components/schemas/runStepDetailsToolCallsRetrievalObject"
+                },
+                {
+                  "$ref": "#/components/schemas/runStepDetailsToolCallsFunctionObject"
+                }
+              ]
+            },
+            "description": "An array of tool calls the run step was involved in. These can be associated with one of three types of tools: `code_interpreter`, `retrieval`, or `function`.\n"
+          }
+        },
+        "description": "Details of the tool call."
+      },
+      "runObject": {
+        "title": "A run on a thread",
+        "required": [
+          "id",
+          "object",
+          "created_at",
+          "thread_id",
+          "assistant_id",
+          "status",
+          "required_action",
+          "last_error",
+          "expires_at",
+          "started_at",
+          "cancelled_at",
+          "failed_at",
+          "completed_at",
+          "model",
+          "instructions",
+          "tools",
+          "file_ids",
+          "metadata"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The identifier, which can be referenced in API endpoints."
+          },
+          "object": {
+            "enum": ["thread.run"],
+            "type": "string",
+            "description": "The object type, which is always `thread.run`.",
+            "x-ms-enum": {
+              "name": "runObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "thread.run",
+                  "description": "The run object type which is always thread.run"
+                }
+              ]
+            }
+          },
+          "created_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the run was created."
+          },
+          "thread_id": {
+            "type": "string",
+            "description": "The ID of the [thread](/docs/api-reference/threads) that was executed on as a part of this run."
+          },
+          "assistant_id": {
+            "type": "string",
+            "description": "The ID of the [assistant](/docs/api-reference/assistants) used for execution of this run."
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "in_progress",
+              "requires_action",
+              "cancelling",
+              "cancelled",
+              "failed",
+              "completed",
+              "expired"
+            ],
+            "type": "string",
+            "description": "The status of the run, which can be either `queued`, `in_progress`, `requires_action`, `cancelling`, `cancelled`, `failed`, `completed`, or `expired`.",
+            "x-ms-enum": {
+              "name": "RunObjectStatus",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "queued",
+                  "description": "The queued state"
+                },
+                {
+                  "value": "in_progress",
+                  "description": "The in_progress state"
+                },
+                {
+                  "value": "requires_action",
+                  "description": "The required_action state"
+                },
+                {
+                  "value": "cancelling",
+                  "description": "The cancelling state"
+                },
+                {
+                  "value": "cancelled",
+                  "description": "The cancelled state"
+                },
+                {
+                  "value": "failed",
+                  "description": "The failed state"
+                },
+                {
+                  "value": "completed",
+                  "description": "The completed state"
+                },
+                {
+                  "value": "expired",
+                  "description": "The expired state"
+                }
+              ]
+            }
+          },
+          "required_action": {
+            "required": ["type", "submit_tool_outputs"],
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": ["submit_tool_outputs"],
+                "type": "string",
+                "description": "For now, this is always `submit_tool_outputs`."
+              },
+              "submit_tool_outputs": {
+                "required": ["tool_calls"],
+                "type": "object",
+                "properties": {
+                  "tool_calls": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/runToolCallObject"
+                    },
+                    "description": "A list of the relevant tool calls."
+                  }
+                },
+                "description": "Details on the tool outputs needed for this run to continue."
+              }
+            },
+            "description": "Details on the action required to continue the run. Will be `null` if no action is required.",
+            "nullable": true
+          },
+          "last_error": {
+            "required": ["code", "message"],
+            "type": "object",
+            "properties": {
+              "code": {
+                "enum": ["server_error", "rate_limit_exceeded"],
+                "type": "string",
+                "description": "One of `server_error` or `rate_limit_exceeded`.",
+                "x-ms-enum": {
+                  "name": "LastErrorCode",
+                  "modelAsString": true,
+                  "values": [
+                    {
+                      "value": "server_error",
+                      "description": "The server failed to respond to request due to server error"
+                    },
+                    {
+                      "value": "rate_limit_exceeded",
+                      "description": "The server failed to respond to request due to rate limit exceeded"
+                    }
+                  ]
+                }
+              },
+              "message": {
+                "type": "string",
+                "description": "A human-readable description of the error."
+              }
+            },
+            "description": "The last error associated with this run. Will be `null` if there are no errors.",
+            "nullable": true
+          },
+          "expires_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the run will expire."
+          },
+          "started_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the run was started.",
+            "nullable": true
+          },
+          "cancelled_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the run was cancelled.",
+            "nullable": true
+          },
+          "failed_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the run failed.",
+            "nullable": true
+          },
+          "completed_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the run was completed.",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "The model that the [assistant](/docs/api-reference/assistants) used for this run."
+          },
+          "instructions": {
+            "type": "string",
+            "description": "The instructions that the [assistant](/docs/api-reference/assistants) used for this run."
+          },
+          "tools": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/assistantToolsCode"
+                },
+                {
+                  "$ref": "#/components/schemas/assistantToolsRetrieval"
+                },
+                {
+                  "$ref": "#/components/schemas/assistantToolsFunction"
+                }
+              ]
+            },
+            "description": "The list of tools that the [assistant](/docs/api-reference/assistants) used for this run."
+          },
+          "file_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The list of [File](/docs/api-reference/files) IDs the [assistant](/docs/api-reference/assistants) used for this run."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format. Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.\n",
+            "nullable": true
+          }
+        },
+        "description": "Represents an execution run on a [thread](/docs/api-reference/threads)."
+      },
+      "runToolCallObject": {
+        "required": ["id", "type", "function"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the tool call. This ID must be referenced when you submit the tool outputs in using the [Submit tool outputs to run](/docs/api-reference/runs/submitToolOutputs) endpoint."
+          },
+          "type": {
+            "enum": ["function"],
+            "type": "string",
+            "description": "The type of tool call the output is required for. For now, this is always `function`.",
+            "x-ms-enum": {
+              "name": "RunToolCallObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "function",
+                  "description": "The type of tool call the output is required for which is always `function` for now"
+                },
+                {
+                  "value": "rate_limit_exceeded",
+                  "description": "The server failed to respond to request due to rate limit exceeded"
+                }
+              ]
+            }
+          },
+          "function": {
+            "required": ["name", "arguments"],
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the function."
+              },
+              "arguments": {
+                "type": "string",
+                "description": "The arguments that the model expects you to pass to the function."
+              }
+            },
+            "description": "The function definition."
+          }
+        },
+        "description": "Tool call objects"
+      },
+      "threadObject": {
+        "title": "Thread",
+        "required": ["id", "object", "created_at", "metadata"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The identifier, which can be referenced in API endpoints."
+          },
+          "object": {
+            "enum": ["thread"],
+            "type": "string",
+            "description": "The object type, which is always `thread`.",
+            "x-ms-enum": {
+              "name": "ThreadObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "thread",
+                  "description": "The type of thread object which is always `thread`"
+                }
+              ]
+            }
+          },
+          "created_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the thread was created."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format. Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.\n",
+            "nullable": true
+          }
+        },
+        "description": "Represents a thread that contains [messages](/docs/api-reference/messages)."
+      },
+      "assistantObject": {
+        "title": "Assistant",
+        "required": [
+          "id",
+          "object",
+          "created_at",
+          "name",
+          "description",
+          "model",
+          "instructions",
+          "tools",
+          "file_ids",
+          "metadata"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The identifier, which can be referenced in API endpoints."
+          },
+          "object": {
+            "enum": ["assistant"],
+            "type": "string",
+            "description": "The object type, which is always `assistant`.",
+            "x-ms-enum": {
+              "name": "AssistantObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "assistant",
+                  "description": "The object type, which is always assistant"
+                }
+              ]
+            }
+          },
+          "created_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the assistant was created."
+          },
+          "name": {
+            "maxLength": 256,
+            "type": "string",
+            "description": "The name of the assistant. The maximum length is 256 characters.\n",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 512,
+            "type": "string",
+            "description": "The description of the assistant. The maximum length is 512 characters.\n",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "ID of the model to use. You can use the [List models](/docs/api-reference/models/list) API to see all of your available models, or see our [Model overview](/docs/models/overview) for descriptions of them.\n"
+          },
+          "instructions": {
+            "maxLength": 32768,
+            "type": "string",
+            "description": "The system instructions that the assistant uses. The maximum length is 32768 characters.\n",
+            "nullable": true
+          },
+          "tools": {
+            "maxItems": 128,
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/assistantToolsCode"
+                },
+                {
+                  "$ref": "#/components/schemas/assistantToolsRetrieval"
+                },
+                {
+                  "$ref": "#/components/schemas/assistantToolsFunction"
+                }
+              ]
+            },
+            "description": "A list of tool enabled on the assistant. There can be a maximum of 128 tools per assistant. Tools can be of types `code_interpreter`, `retrieval`, or `function`.\n"
+          },
+          "file_ids": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "A list of [file](/docs/api-reference/files) IDs attached to this assistant. There can be a maximum of 20 files attached to the assistant. Files are ordered by their creation date in ascending order.\n"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format. Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.\n",
+            "nullable": true
+          }
+        },
+        "description": "Represents an `assistant` that can call the model and use tools."
+      },
+      "assistantToolsCode": {
+        "title": "Code interpreter tool",
+        "required": ["type"],
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["code_interpreter"],
+            "type": "string",
+            "description": "The type of tool being defined: `code_interpreter`",
+            "x-ms-enum": {
+              "name": "assistantToolsCodeType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "code_interpreter",
+                  "description": "code_interpreter as type of tool being defined"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "assistantToolsRetrieval": {
+        "title": "Retrieval tool",
+        "required": ["type"],
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["retrieval"],
+            "type": "string",
+            "description": "The type of tool being defined: `retrieval`",
+            "x-ms-enum": {
+              "name": "assistantToolsRetrievalType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "retrieval",
+                  "description": "retrieval as type of tool being defined"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "assistantToolsFunction": {
+        "title": "Function tool",
+        "required": ["type", "function"],
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["function"],
+            "type": "string",
+            "description": "The type of tool being defined: `function`",
+            "x-ms-enum": {
+              "name": "assistantToolsFunction",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "retrieval",
+                  "description": "retrieval as type of tool being defined"
+                }
+              ]
+            }
+          },
+          "function": {
+            "required": ["name", "parameters", "description"],
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string",
+                "description": "A description of what the function does, used by the model to choose when and how to call the function."
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64."
+              },
+              "parameters": {
+                "$ref": "#/components/schemas/chatCompletionFunctionParameters",
+                "type": "object"
+              }
+            },
+            "description": "The function definition."
+          }
+        }
+      },
+      "assistantFileObject": {
+        "title": "Assistant files",
+        "required": ["id", "object", "created_at", "assistant_id"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The identifier, which can be referenced in API endpoints."
+          },
+          "object": {
+            "enum": ["assistant.file"],
+            "type": "string",
+            "description": "The object type, which is always `assistant.file`.",
+            "x-ms-enum": {
+              "name": "AssistantFileObjectType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "assistant.file"
+                }
+              ]
+            }
+          },
+          "created_at": {
+            "type": "integer",
+            "description": "The Unix timestamp (in seconds) for when the assistant file was created."
+          },
+          "assistant_id": {
+            "type": "string",
+            "description": "The assistant ID that the file is attached to."
+          }
+        },
+        "description": "A list of [Files](/docs/api-reference/files) attached to an `assistant`."
+      },
+      "listAssistantFilesResponse": {
+        "required": [
+          "object",
+          "data",
+          "items",
+          "first_id",
+          "last_id",
+          "has_more"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "example": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/assistantFileObject"
+            }
+          },
+          "first_id": {
+            "type": "string"
+          },
+          "last_id": {
+            "type": "string"
+          },
+          "has_more": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "error": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/errorBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "param": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "inner_error": {
+                "$ref": "#/components/schemas/innerError"
+              }
+            }
+          }
+        ]
+      },
+      "errorBase": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "innerError": {
+        "description": "Inner error with additional details.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/innerErrorCode"
+          },
+          "content_filter_results": {
+            "$ref": "#/components/schemas/contentFilterPromptResults"
+          }
+        }
+      },
+      "innerErrorCode": {
+        "enum": ["ResponsibleAIPolicyViolation"],
+        "type": "string",
+        "description": "Error codes for the inner error object.",
+        "x-ms-enum": {
+          "name": "InnerErrorCode",
+          "modelAsString": true,
+          "values": [
+            {
+              "value": "ResponsibleAIPolicyViolation",
+              "description": "The prompt violated one of more content filter rules."
+            }
+          ]
+        }
+      },
+      "contentFilterPromptResults": {
+        "description": "Information about the content filtering category (hate, sexual, violence, self_harm), if it has been detected, as well as the severity level (very_low, low, medium, high-scale that determines the intensity and risk level of harmful content) and if it has been filtered or not. Information about jailbreak content and profanity, if it has been detected, and if it has been filtered or not. And information about customer block list, if it has been filtered and its id.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/contentFilterResultsBase"
+          },
+          {
+            "properties": {
+              "jailbreak": {
+                "$ref": "#/components/schemas/contentFilterDetectedResult"
+              }
+            }
+          }
+        ]
+      },
+      "contentFilterResultsBase": {
+        "type": "object",
+        "properties": {
+          "sexual": {
+            "$ref": "#/components/schemas/contentFilterSeverityResult"
+          },
+          "violence": {
+            "$ref": "#/components/schemas/contentFilterSeverityResult"
+          },
+          "hate": {
+            "$ref": "#/components/schemas/contentFilterSeverityResult"
+          },
+          "self_harm": {
+            "$ref": "#/components/schemas/contentFilterSeverityResult"
+          },
+          "profanity": {
+            "$ref": "#/components/schemas/contentFilterDetectedResult"
+          },
+          "custom_blocklists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/contentFilterIdResult"
+            }
+          },
+          "error": {
+            "$ref": "#/components/schemas/errorBase"
+          }
+        },
+        "description": "Information about the content filtering results."
+      },
+      "contentFilterSeverityResult": {
+        "required": ["severity", "filtered"],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/contentFilterResultBase"
+          },
+          {
+            "properties": {
+              "severity": {
+                "enum": ["safe", "low", "medium", "high"],
+                "type": "string",
+                "x-ms-enum": {
+                  "name": "ContentFilterSeverity",
+                  "modelAsString": true,
+                  "values": [
+                    {
+                      "value": "safe",
+                      "description": "General content or related content in generic or non-harmful contexts."
+                    },
+                    {
+                      "value": "low",
+                      "description": "Harmful content at a low intensity and risk level."
+                    },
+                    {
+                      "value": "medium",
+                      "description": "Harmful content at a medium intensity and risk level."
+                    },
+                    {
+                      "value": "high",
+                      "description": "Harmful content at a high intensity and risk level."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "contentFilterDetectedResult": {
+        "required": ["detected", "filtered"],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/contentFilterResultBase"
+          },
+          {
+            "properties": {
+              "detected": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      },
+      "contentFilterIdResult": {
+        "required": ["id", "filtered"],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/contentFilterResultBase"
+          },
+          {
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "contentFilterResultBase": {
+        "required": ["filtered"],
+        "type": "object",
+        "properties": {
+          "filtered": {
+            "type": "boolean"
+          }
+        }
+      },
+      "promptFilterResult": {
+        "type": "object",
+        "properties": {
+          "prompt_index": {
+            "type": "integer"
+          },
+          "content_filter_results": {
+            "$ref": "#/components/schemas/contentFilterPromptResults"
+          }
+        },
+        "description": "Content filtering results for a single prompt in the request."
+      },
+      "promptFilterResults": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/promptFilterResult"
+        },
+        "description": "Content filtering results for zero or more prompts in the request. In a streaming request, results for different prompts may arrive at different times or in different orders."
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "api-key"
+      }
+    }
+  }
+}

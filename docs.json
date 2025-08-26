@@ -15,25 +15,69 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": [
-              "index",
-              "quickstart",
-              "faq"
-            ]
+            "pages": ["index", "quickstart", "faq"]
           },
           {
             "group": "Providers",
+            "pages": ["providers/openai", "providers/anthropic"]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": ["api-reference/introduction"]
+          },
+          {
+            "group": "Endpoints",
+            "icon": "square-terminal",
             "pages": [
-              "providers/openai",
-              "providers/anthropic"
+              {
+                "group": "TODO",
+                "pages": [
+                  
+                  
+                  
+                  "api-reference/endpoint/openAI/return_a_list_message_files",
+                  "api-reference/endpoint/openAI/return_a_list_message_for_thread",
+                  "api-reference/endpoint/openAI/return_a_list_run_steps_belonging_run",
+                  "api-reference/endpoint/openAI/return_a_list_run_steps_belonging_thread"
+                ]
+              },
+              {
+                "group": "Threads",
+                "pages": [
+                  "api-reference/endpoint/openAI/threads/retrieve_a_message",
+                  "api-reference/endpoint/openAI/threads/retrieve_a_message_file",
+                  "api-reference/endpoint/openAI/threads/retrieve_a_run_step",
+                  "api-reference/endpoint/openAI/threads/retrieve_a_run",
+                  "api-reference/endpoint/openAI/threads/retrieve_a_thread"
+                ]
+              },
+              {
+                "group": "Assistant",
+                "pages": [
+                  "api-reference/endpoint/openAI/assistants/retrieve_an_assistant",
+                  "api-reference/endpoint/openAI/assistants/retrieve_an_assistant_file",
+                  "api-reference/endpoint/openAI/assistants/return_a_list_assistant_files",
+                  "api-reference/endpoint/openAI/assistants/return_a_list_assistants"
+                ]
+              },
+              {
+                "group": "Deployments",
+                "pages": [
+                  "api-reference/endpoint/openAI/deployments/creates_a_completion_for_the_chat_message"
+                ]
+              }
             ]
           }
         ]
       }
     ],
     "global": {
-      "anchors": [
-      ]
+      "anchors": []
     }
   },
   "logo": {
