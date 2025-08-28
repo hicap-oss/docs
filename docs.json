@@ -27,48 +27,69 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "API Documentation",
-            "pages": ["api-reference/introduction"]
-          },
-          {
             "group": "Endpoints",
             "icon": "square-terminal",
             "pages": [
               {
-                "group": "TODO",
+                "group": "API Reference",
                 "pages": [
-                  
-                  
-                  
-                  "api-reference/endpoint/openAI/return_a_list_message_files",
-                  "api-reference/endpoint/openAI/return_a_list_message_for_thread",
-                  "api-reference/endpoint/openAI/return_a_list_run_steps_belonging_run",
-                  "api-reference/endpoint/openAI/return_a_list_run_steps_belonging_thread"
+                  "api-reference/endpoints/openAI/creates-a-completion-for-the-provided-prompt-parameters-and-chosen-model",
+                  "api-reference/endpoints/openAI/get-a-vector-representation-of-a-given-input-that-can-be-easily-consumed-by-machine-learning-models-and-algorithms",
+                  "api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message",
+                  "api-reference/endpoints/openAI/transcribes-audio-into-the-input-language",
+                  "api-reference/endpoints/openAI/transcribes-and-translates-input-audio-into-english-text",
+                  "api-reference/endpoints/openAI/generates-audio-from-the-input-text",
+                  "api-reference/endpoints/openAI/generates-a-batch-of-images-from-a-text-caption-on-a-given-dalle-model-deployment"
                 ]
               },
               {
-                "group": "Threads",
+                "group": "Assistants",
                 "pages": [
-                  "api-reference/endpoint/openAI/threads/retrieve_a_message",
-                  "api-reference/endpoint/openAI/threads/retrieve_a_message_file",
-                  "api-reference/endpoint/openAI/threads/retrieve_a_run_step",
-                  "api-reference/endpoint/openAI/threads/retrieve_a_run",
-                  "api-reference/endpoint/openAI/threads/retrieve_a_thread"
+                  "api-reference/endpoints/openAI/assistants/returns-a-list-of-assistants",
+                  "api-reference/endpoints/openAI/assistants/create-an-assistant-with-a-model-and-instructions",
+                  "api-reference/endpoints/openAI/assistants/retrieves-an-assistant",
+                  "api-reference/endpoints/openAI/assistants/delete-an-assistant",
+                  "api-reference/endpoints/openAI/assistants/create-a-thread",
+                  "api-reference/endpoints/openAI/assistants/retrieves-a-thread",
+                  "api-reference/endpoints/openAI/assistants/modifies-a-thread",
+                  "api-reference/endpoints/openAI/assistants/delete-a-thread",
+                  "api-reference/endpoints/openAI/assistants/returns-a-list-of-messages-for-a-given-thread",
+                  "api-reference/endpoints/openAI/assistants/create-a-message",
+                  "api-reference/endpoints/openAI/assistants/retrieve-a-message",
+                  "api-reference/endpoints/openAI/assistants/modifies-a-message",
+                  "api-reference/endpoints/openAI/assistants/create-a-thread-and-run-it-in-one-request",
+                  "api-reference/endpoints/openAI/assistants/returns-a-list-of-runs-belonging-to-a-thread",
+                  "api-reference/endpoints/openAI/assistants/create-a-run",
+                  "api-reference/endpoints/openAI/assistants/retrieves-a-run",
+                  "api-reference/endpoints/openAI/assistants/modifies-a-run",
+                  "api-reference/endpoints/openAI/assistants/when-a-run-has-the-`status:-\"requires_action\"`-and-`required_actiontype`-is-`submit_tool_outputs`-this-endpoint-can-be-used-to-submit-the-outputs-from-the-tool-calls-once-theyre-all-completed-all-outputs-must-be-submitted-in-a-single-request",
+                  "api-reference/endpoints/openAI/assistants/cancels-a-run-that-is-`in_progress`",
+                  "api-reference/endpoints/openAI/assistants/returns-a-list-of-run-steps-belonging-to-a-run",
+                  "api-reference/endpoints/openAI/assistants/retrieves-a-run-step"
                 ]
               },
               {
                 "group": "Assistant",
                 "pages": [
-                  "api-reference/endpoint/openAI/assistants/retrieve_an_assistant",
-                  "api-reference/endpoint/openAI/assistants/retrieve_an_assistant_file",
-                  "api-reference/endpoint/openAI/assistants/return_a_list_assistant_files",
-                  "api-reference/endpoint/openAI/assistants/return_a_list_assistants"
+                  "api-reference/endpoints/openAI/assistant/modifies-an-assistant"
                 ]
               },
               {
-                "group": "Deployments",
+                "group": "Vector Stores",
                 "pages": [
-                  "api-reference/endpoint/openAI/deployments/creates_a_completion_for_the_chat_message"
+                  "api-reference/endpoints/openAI/vector-stores/returns-a-list-of-vector-stores",
+                  "api-reference/endpoints/openAI/vector-stores/create-a-vector-store",
+                  "api-reference/endpoints/openAI/vector-stores/retrieves-a-vector-store",
+                  "api-reference/endpoints/openAI/vector-stores/modifies-a-vector-store",
+                  "api-reference/endpoints/openAI/vector-stores/delete-a-vector-store",
+                  "api-reference/endpoints/openAI/vector-stores/returns-a-list-of-vector-store-files",
+                  "api-reference/endpoints/openAI/vector-stores/create-a-vector-store-file-by-attaching-a-[file]docsapi-referencefiles-to-a-[vector-store]docsapi-referencevector-storesobject",
+                  "api-reference/endpoints/openAI/vector-stores/retrieves-a-vector-store-file",
+                  "api-reference/endpoints/openAI/vector-stores/delete-a-vector-store-file-this-will-remove-the-file-from-the-vector-store-but-the-file-itself-will-not-be-deleted-to-delete-the-file-use-the-[delete-file]docsapi-referencefilesdelete-endpoint",
+                  "api-reference/endpoints/openAI/vector-stores/create-a-vector-store-file-batch",
+                  "api-reference/endpoints/openAI/vector-stores/retrieves-a-vector-store-file-batch",
+                  "api-reference/endpoints/openAI/vector-stores/cancel-a-vector-store-file-batch-this-attempts-to-cancel-the-processing-of-files-in-this-batch-as-soon-as-possible",
+                  "api-reference/endpoints/openAI/vector-stores/returns-a-list-of-vector-store-files-in-a-batch"
                 ]
               }
             ]
