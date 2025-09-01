@@ -11,12 +11,6 @@
   "servers": [
     {
       "url": "https://api.hicap.ai/openai/v1"
-    },
-    {
-      "url": "https://api.hicap.ai/azopenai/v1"
-    },
-    {
-      "url": "https://api.hicap.ai/vertex/v1"
     }
   ],
   "security": [
