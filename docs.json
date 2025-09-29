@@ -19,7 +19,7 @@
           },
           {
             "group": "Providers",
-            "pages": ["providers/openai", "providers/anthropic"]
+            "pages": ["providers/table-comparison", "providers/openai", "providers/anthropic", "providers/google"]
           }
         ]
       },

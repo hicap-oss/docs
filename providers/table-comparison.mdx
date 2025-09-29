@@ -1,0 +1,390 @@
+---
+title: 'Model/Provider Comparison'
+description: 'Available Models by Google (Gemini)'
+mode: 'wide'
+---
+
+<div className="w-full">
+  <table className="w-full text-sm">
+    <thead className="bg-zinc-900/60 text-zinc-300">
+      <tr>
+        <th className="px-2 py-1 font-semibold text-left">Model</th>
+        <th className="px-2 py-1 font-semibold text-left">Best For</th>
+        <th className="px-2 py-1 font-semibold text-left">Input</th>
+        <th className="px-2 py-1 font-semibold text-left">Output</th>
+        <th className="px-2 py-1 font-semibold text-left">Context Window</th>
+        <th className="px-2 py-1 font-semibold text-left">Max output tokens</th>
+        <th className="px-2 py-1 font-semibold text-left">Knowledge cutoff</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-zinc-800">
+      <tr className="hover:bg-zinc-900/40">
+        <td className="px-2 py-1">
+          <span
+            className={
+              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
+            }
+            style={{ backgroundColor: '#00695533', color: '#4FC6AF' }}
+          >
+            gpt-5
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>
+            Enterprise-grade copilots, advanced software development, strategic
+            research, product/financial/legal analysis, high-quality multimodal
+            content generation. Best when you need maximum depth and
+            reliability.
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text, Image</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text / JSON (API)</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>400,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>128,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>September 30, 2024</span>
+        </td>
+      </tr>
+
+    <tr className="hover:bg-zinc-900/40">
+        <td className="px-2 py-1">
+          <span
+            className={
+              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
+            }
+            style={{ backgroundColor: '#00695533', color: '#4FC6AF' }}
+          >
+            gpt-5-mini
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>
+            A lighter and faster variant of GPT-5. Preserves strong reasoning and coding ability, but optimized for lower latency and cost. Good balance between performance and efficiency.
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text, Image</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text / JSON (API)</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>400,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>128,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>May 30, 2024</span>
+        </td>
+    </tr>
+
+    <tr className="hover:bg-zinc-900/40">
+        <td className="px-2 py-1">
+          <span
+            className={
+              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
+            }
+            style={{ backgroundColor: '#00695533', color: '#4FC6AF' }}
+          >
+            gpt-5-nano
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>
+            Real-time assistants, mobile/edge use cases, autocomplete, customer service chat, high-volume RAG queries. Best when cost + speed > deep reasoning.
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text, Image</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text / JSON (API)</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>400,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>128,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>May 30, 2024</span>
+        </td>
+    </tr>
+
+    <tr className="hover:bg-zinc-900/40">
+        <td className="px-2 py-1">
+          <span
+            className={
+              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
+            }
+            style={{ backgroundColor: '#7F431B33', color: '#DD9464' }}
+          >
+            claude-sonnet-4V 200K-
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>
+            Product/design reviews with screenshots, Figma/UI audits, general enterprise copilots, data analysis, and multimodal reasoning (documents + images). Good fit when prompts are large but manageable `(<200k)`.
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text, Image</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>200,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>64,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>March 01, 2025</span>
+        </td>
+    </tr>
+
+    <tr className="hover:bg-zinc-900/40">
+        <td className="px-2 py-1">
+          <span
+            className={
+              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
+            }
+            style={{ backgroundColor: '#7F431B33', color: '#DD9464' }}
+          >
+            claude-sonnet-4V 200K+
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>
+            Deep document analysis (legal, technical, research) with embedded visuals, large-scale design system validation, long historical chat/session review, and knowledge-base copilots that need persistent memory across massive inputs.
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text, Image</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text</span>
+        </td>
+        <td className="px-2 py-1">
+          <span></span>
+        </td>
+        <td className="px-2 py-1">
+          <span></span>
+        </td>
+        <td className="px-2 py-1">
+          <span></span>
+        </td>
+    </tr>
+
+    <tr className="hover:bg-zinc-900/40">
+        <td className="px-2 py-1">
+          <span
+            className={
+              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
+            }
+            style={{ backgroundColor: '#7F431B33', color: '#DD9464' }}
+          >
+            claude-opus-4
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>
+            Strategic decision-making, in-depth research, advanced coding and debugging, legal/financial/technical analysis, high-stakes content generation (contracts, reports, product strategy docs). Best when quality > cost/latency.
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text, Image</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>200,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>32,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>March 01, 2025</span>
+        </td>
+    </tr>
+
+    <tr className="hover:bg-zinc-900/40">
+        <td className="px-2 py-1">
+          <span
+            className={
+              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
+            }
+            style={{ backgroundColor: '#7F431B33', color: '#DD9464' }}
+          >
+            claude-3.7-sonnet
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>
+            Agents with tools and deep reasoning with “extended thinking” and efficient tool use in tokens.
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text, Image</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>200,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>64,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>October 01, 2024</span>
+        </td>
+    </tr>
+
+    <tr className="hover:bg-zinc-900/40">
+        <td className="px-2 py-1">
+          <span
+            className={
+              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
+            }
+            style={{ backgroundColor: '#6C30C740', color: '#979BF5' }}
+          >
+            gemini-2.5-pro (≤200k prompt)
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>
+            General enterprise and product use cases: data analysis, software development, QA agents, Figma/GitHub/Jira copilots, complex writing. Suitable for most workflows requiring long prompts but not ultra-large contexts.
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text, Image, Audio, Video, Code</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>1,000,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>65,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>January 01, 2025</span>
+        </td>
+    </tr>
+
+    <tr className="hover:bg-zinc-900/40">
+        <td className="px-2 py-1">
+          <span
+            className={
+              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
+            }
+            style={{ backgroundColor: '#6C30C740', color: '#979BF5' }}
+          >
+            gemini-2.5-pro (>200k prompt)
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>
+            Long-context processing: legal contracts spanning thousands of pages, large codebases, academic research, reviewing historical chat/log data. Ideal for copilots that need to “remember” or reason over very large corpora.
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text, Image, Audio, Video, Code</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text</span>
+        </td>
+        <td className="px-2 py-1">
+          <span></span>
+        </td>
+        <td className="px-2 py-1">
+          <span></span>
+        </td>
+        <td className="px-2 py-1">
+          <span></span>
+        </td>
+    </tr>
+
+    <tr className="hover:bg-zinc-900/40">
+        <td className="px-2 py-1">
+          <span
+            className={
+              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
+            }
+            style={{ backgroundColor: '#6C30C740', color: '#979BF5' }}
+          >
+            gemini-2.5-flash
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>
+            Low latency/high throughput for chat, summarization, and multimodal extraction at a lower cost.
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text, Image, Audio, Video, Code</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>1,048,576 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>65,536 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>January 01, 2025</span>
+        </td>
+    </tr>
+
+    <tr className="hover:bg-zinc-900/40">
+        <td className="px-2 py-1">
+          <span
+            className={
+              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
+            }
+            style={{ backgroundColor: '#6C30C740', color: '#979BF5' }}
+          >
+            gemini-2.5-flash-lite
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>
+            High-throughput, latency-sensitive tasks: chatbots with large user volumes, quick autocomplete, real-time customer support, fast retrieval-augmented generation (RAG), and mobile/embedded use cases where cost and speed matter more than depth.
+          </span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text, Image, Audio, Video, Code</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>Text</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>1,000,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>64,000 tokens</span>
+        </td>
+        <td className="px-2 py-1">
+          <span>January 01, 2025</span>
+        </td>
+    </tr>
+
+    </tbody>
+
+  </table>
+</div>
