@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://api.hicap.ai/openai/v1"
+      "url": "https://api.hicap.ai/v2/openai/"
     }
   ],
   "security": [
