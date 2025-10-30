@@ -203,7 +203,7 @@ Provide your company name, main contact details, and basic address information. 
     import os
     from openai import OpenAI
 
-    client = AzureOpenAI(
+    client = OpenAI(
       api_version="2024-12-01-preview",
       endpoint="https://cog-cline-westus3-managed-001.openai.azure.com/",
       credential=AzureKeyCredential("<API_KEY>")
@@ -218,7 +218,7 @@ Provide your company name, main contact details, and basic address information. 
 
     ```python python
     import os
-    from openai import AzureOpenAI
+    from openai import OpenAI
 
     endpoint = "https://cog-cline-westus3-managed-001.openai.azure.com/"
     model_name = "gpt-4"
@@ -227,7 +227,7 @@ Provide your company name, main contact details, and basic address information. 
     subscription_key = "<your-api-key>"
     api_version = "2024-12-01-preview"
 
-    client = AzureOpenAI(
+    client = OpenAI(
       api_version=api_version,
       azure_endpoint=endpoint,
       api_key=subscription_key,
@@ -256,12 +256,6 @@ Provide your company name, main contact details, and basic address information. 
   </Tab>
   {/* <Tab title="Video Tutorials">
     Now lets conect your product with Hicap's API
-
-    #### Primary key looks like:
-
-    ```mdx
-    https:hicap.ai/sing-up
-    ```
 
     <iframe
       className="w-full aspect-video rounded-xl"
