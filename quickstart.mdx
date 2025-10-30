@@ -61,7 +61,7 @@ Provide your company name, main contact details, and basic address information. 
 <Tabs>
   <Tab title="Step-by-step">
   
-  #### ¿What is a connection?
+  #### What is a connection?
 
   A connection in Hicap is the link between your system and our platform. When you create a connection, you give it a name and we generate your API keys. These keys allow your system to communicate securely with Hicap.
   
@@ -102,7 +102,7 @@ Provide your company name, main contact details, and basic address information. 
   <Note>
     #### Unlock the production environments
 
-    To unlock production environments such as Pay as you go, Managed-Premium, or Standard, you will need to add funds to your account. [Learn how to do it here](#)
+    To unlock production environments such as Pay as you go, Managed-Premium, or Standard, you will need to add funds to your account.{/*  [Learn how to do it here](#) */}
   </Note>
 
   #### Confirm your setup
@@ -204,9 +204,8 @@ Provide your company name, main contact details, and basic address information. 
     from openai import OpenAI
 
     client = OpenAI(
-      api_version="2024-12-01-preview",
-      endpoint="https://cog-cline-westus3-managed-001.openai.azure.com/",
-      credential=AzureKeyCredential("<API_KEY>")
+      endpoint="https://api.hicap.ai/v2/openai",
+      credential="<API_KEY>"
     )
     ```
   </CodeGroup>
@@ -220,17 +219,14 @@ Provide your company name, main contact details, and basic address information. 
     import os
     from openai import OpenAI
 
-    endpoint = "https://cog-cline-westus3-managed-001.openai.azure.com/"
-    model_name = "gpt-4"
-    deployment = "gpt-4-turbo"
+    endpoint = "https://api.hicap.ai/v2/openai"
+    deployment = "gpt-4"
 
     subscription_key = "<your-api-key>"
-    api_version = "2024-12-01-preview"
 
     client = OpenAI(
-      api_version=api_version,
-      azure_endpoint=endpoint,
-      api_key=subscription_key,
+      endpoint=endpoint,
+      credential=subscription_key,
     )
 
     response = client.chat.completions.create(
