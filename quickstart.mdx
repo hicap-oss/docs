@@ -204,8 +204,8 @@ Provide your company name, main contact details, and basic address information. 
     from openai import OpenAI
 
     client = OpenAI(
-      endpoint="https://api.hicap.ai/v2/openai",
-      credential="<API_KEY>"
+      base_url="https://api.hicap.ai/v2/openai",
+      api_key="<API_KEY>"
     )
     ```
   </CodeGroup>
@@ -225,8 +225,8 @@ Provide your company name, main contact details, and basic address information. 
     subscription_key = "<your-api-key>"
 
     client = OpenAI(
-      endpoint=endpoint,
-      credential=subscription_key,
+      base_url=endpoint,
+      api_key=subscription_key,
     )
 
     response = client.chat.completions.create(
