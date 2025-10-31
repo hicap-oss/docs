@@ -4,45 +4,194 @@ description: ''
 icon: 'compass'
 ---
 
+import React from 'react'
+
+export const rows = [
+  { provider: 'OpenAI', model: 'gpt-5', href: '/providers/openai#gpt-5' },
+  { provider: 'OpenAI', model: 'gpt-5-mini', href: '/providers/openai#gpt-5-mini' },
+  { provider: 'OpenAI', model: 'gpt-5-nano', href: '/providers/openai#gpt-5-nano' },
+  { provider: 'Anthropic', model: 'claude-sonnet-4V 200K-', href: '/providers/anthropic#claude-sonnet-4v-less-200k' },
+  { provider: 'Anthropic', model: 'claude-sonnet-4V 200K+', href: '/providers/anthropic#claude-sonnet-4v-more-200k' },
+  { provider: 'Anthropic', model: 'claude-opus-4', href: '/providers/anthropic#claude-opus-4' },
+  { provider: 'Anthropic', model: 'claude-3.7-sonnet', href: '/providers/anthropic#claude-3-7-sonnet' },
+  { provider: 'Google Gemini', model: 'gemini-2.5-pro (≤200k prompt)', href: '/providers/google#gemini-2-5-pro-less-200k-prompt' },
+  { provider: 'Google Gemini', model: 'gemini-2.5-pro (>200k prompt)', href: '/providers/google#gemini-2-5-pro-more-200k-prompt' },
+  { provider: 'Google Gemini', model: 'gemini-2.5-flash', href: '/providers/google#gemini-2-5-flash' },
+  { provider: 'Google Gemini', model: 'gemini-2.5-flash-lite', href: '/providers/google#gemini-2-5-flash-lite' },
+]
+
+export const badgeStyles = {
+  OpenAI: { backgroundColor: '#00695533', color: '#4FC6AF' },
+  Anthropic: { backgroundColor: '#7F431B33', color: '#DD9464' },
+  'Google Gemini': { backgroundColor: '#6C30C740', color: '#979BF5' },
+}
+
+export function ProviderBadge(props) {
+  var provider = props.provider
+  var cls = badgeStyles[provider]
+  return (
+    <span
+      className={
+        'inline-flex items-center gap-2 px-3 py-1 rounded-md text-sm font-medium '
+      }
+      style={{ ...cls }}
+    >
+      {provider}
+    </span>
+  )
+}
+
+export function ModelPill(props) {
+  return (
+    <span
+      className="inline-flex items-center gap-3 px-3 py-1 rounded-md font-mono"
+      style={{ backgroundColor: '#0D0D0D', color: '#BF9D97' }}
+    >
+      {props.model}
+      <svg
+        viewBox="0 0 24 24"
+        className="size-4 opacity-60 group-hover:opacity-100 transition"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
+  )
+}
+
+<Columns cols={3}>
+  <div style={{ border: "1px solid rgba(56, 178, 168, 0.1)", borderRadius: "1rem", position: "relative", height: "230px"}}>
+    <img
+      src="/images/overview/openAI-logo-background.png"
+      alt="Main dashboard interface"
+      height="200"
+      width="200"
+      style={{ borderRadius: "1rem" }}
+    />
+    <div className='absolute top-0 w-full'>
+      <div className='flex justify-center mt-10'>
+        <img
+          src="/images/overview/openAI-logo.png"
+          alt="Main dashboard interface"
+          height="100"
+          width="100"
+          className="rounded-lg"
+        />
+      </div>
+      <p className="ml-6 mt-9">OpenAI</p>
+    </div>
+  </div>
+
+  <div style={{ border: "1px solid rgba(204, 155, 122, 0.1)", borderRadius: "1rem", position: "relative" }}>
+    <img
+      src="/images/overview/anthropic-logo-background.png"
+      alt="Main dashboard interface"
+      height="200"
+      width="200"
+      style={{ borderRadius: "1rem" }}
+    />
+    <div className='absolute top-0 w-full'>
+      <div className='flex justify-center mt-10'>
+        <img
+          src="/images/overview/anthropic-logo.png"
+          alt="Main dashboard interface"
+          height="100"
+          width="100"
+          className="rounded-lg"
+        />
+      </div>
+      <p className="ml-6 mt-9">Anthropic</p>
+    </div>
+  </div>
+
+  <div style={{ border: "1px solid rgba(177, 94, 255, 0.1)", borderRadius: "1rem", position: "relative" }}>
+    <img
+      src="/images/overview/gemini-logo-background.png"
+      alt="Main dashboard interface"
+      height="200"
+      width="200"
+      style={{ borderRadius: "1rem" }}
+    />
+    <div className='absolute top-0 w-full'>
+      <div className='flex justify-center mt-10'>
+        <img
+          src="/images/overview/gemini-logo.png"
+          alt="Main dashboard interface"
+          height="100"
+          width="100"
+          className="rounded-lg"
+        />
+      </div>
+      <p className="ml-6 mt-9">Google Gemini</p>
+    </div>
+  </div>
+</Columns>
+
 ## Why Hicap?
 
 Hicap gives you secure, enterprise-ready access to top models from OpenAI, Gemini & Anthropic with up to 25% lower inference costs.
 
+<div className='w-full'>
+  <table className="w-full text-sm">
+    <thead className="bg-zinc-900/60 text-zinc-300">
+      <tr>
+        <th className="px-4 py-3 font-semibold text-left">Provider</th>
+        <th className="px-4 py-3 font-semibold text-left">Model ID</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-zinc-800">
+      {rows.map(function (r, i) {
+        return (
+          <tr
+            key={r.provider + '-' + r.model + '-' + i}
+            className="hover:bg-zinc-900/40"
+          >
+            <td className="px-4 py-3">
+              <ProviderBadge provider={r.provider} />
+            </td>
+            <td className="px-4 py-3">
+              <a href={r.href}>
+                <ModelPill model={r.model} />
+              </a>
+            </td>
+          </tr>
+        )
+      })}
+    </tbody>
+  </table>
+</div>
+
 ## How Hicap Works ⚡
 
-Hicap makes access to high-performance inference as seamless and scalable as flipping a switch.
+Hicap gives you secure, enterprise-ready access to top models from OpenAI, Gemini & Anthropic with up to 25% lower inference costs.
 
 <Steps>
-  <Step title="Step 1">
-    ## Choose your model
-
+  <Step title="Choose your model">
     Run foundation models—fully supported and instantly available.
-    <img 
-        src="/images/overview/step-1.png" 
+    <img
+        src="/images/overview/step-1.png"
         alt="Main dashboard interface"
         height="100"
         width="300"
         className="rounded-lg"
     />
   </Step>
-  <Step title="Step 2">
-    ## Select your capacity
-
+  <Step title="Select your capacity">
     Lock in the compute you need, when you need it
-    <img 
-        src="/images/overview/step-2.png" 
+    <img
+        src="/images/overview/step-2.png"
         alt="Main dashboard interface"
         height="100"
         width="300"
         className="rounded-lg"
     />
   </Step>
-  <Step title="Step 3">
-    ## Connect via API
-
+  <Step title="Connect via API">
     Integration takes under 5 minutes with your existing stack:
-    <img 
-        src="/images/overview/step-3.png" 
+    <img
+        src="/images/overview/step-3.png"
         alt="Main dashboard interface"
         height="100"
         width="300"
@@ -50,15 +199,3 @@ Hicap makes access to high-performance inference as seamless and scalable as fli
     />
   </Step>
 </Steps>
-
-## [Available Model/Version](/providers/openai)
-
-| Provider  | Model ID                    |
-| :--------- | :------------------------- |
-| **OpenAI** | `gpt-4o`                   |
-| **OpenAI** | `gpt-4o-mini`              |
-| **OpenAI** | `gpt-4.1`                  |
-| **OpenAI** | `gpt-4.1-mini`             |
-| **OpenAI** | `gpt-4.1-nano`             |
-| **Anthropic** | `Claude 3.5 Sonnet`     |
-| **Anthropic** | `Claude 3.7 Sonnet`     |

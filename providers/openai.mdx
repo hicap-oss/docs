@@ -3,84 +3,133 @@ title: 'OpenAI'
 description: 'Available Models by OpenAI'
 ---
 
-<Note>The prices below are rates per 1M tokens.</Note>
+## gpt-5
 
-## gpt-4o
+Full-scale flagship OpenAI model. Delivers state-of-the-art reasoning, creativity, coding, and multimodal support. Handles long contexts (hundreds of thousands of tokens) and complex workflows.
 
-GPT-4o (“o” for “omni”) is versatile, high-intelligence flagship model. It accepts both text and image inputs, and produces text outputs (including Structured Outputs). It is the best model for most tasks, and is our most capable model outside of our o-series models.
+<div className='text-white font-bold'>Best for:</div>
 
-| Intelligence |  Speed   | Price (input - output) | Input | Output |
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>Enterprise-grade copilots, advanced software development, strategic research, product/financial/legal analysis, high-quality multimodal content generation. Best when you need maximum depth and reliability.</span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, image` | | `Text / JSON (API)` |
+
+{/* | Intelligence |  Speed   | Price (input - output) | Input | Output |
 | ------------ | -------- | :---------------------: | ----- | ------ |
-|   `High`   | `Medium` |       `$2.5 - $10`     | `Text, image` | `Text`  |
+|   `High`   | `Medium` |       `$2.5 - $10`     | `Text, image` | `Text`  | */}
 
-This model offers
+<Columns cols={2}>
+    <div>
+        ### This model offers
 
-> * 128,000 context window
-> * 16,384 max output tokens
-> * Sep 30, 2023 knowledge cutoff
+        <ul className='mb-6'>
+            <li>* 400,000 context window</li>
+            <li>* 128,000 max output tokens</li>
+            <li>* September 30, 2024 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
 
-Information provided from [openAI website.](https://platform.openai.com/docs/models/gpt-4o)
+    {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
+        ### Check our model pricing
 
-## gpt-4o-mini
+        <div className='mt-2 mb-5'>See detailed usage costs and choose the plan that best fits your workload.</div>
 
-GPT-4o mini (“o” for “omni”) is a fast, affordable small model for focused tasks. It accepts both text and image inputs, and produces text outputs (including Structured Outputs). It is ideal for fine-tuning, and model outputs from a larger model like GPT-4o can be distilled to GPT-4o-mini to produce similar results at lower cost and latency.
+        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
+            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Go to pricing</div>
+        </a>
+    </div> */}
+</Columns>
 
-| Intelligence |  Speed   | Price (input - output) | Input | Output |
-| ------------ | -------- | :---------------------: | ----- | ------ |
-|   `Average`   | `Fast` |       `$0.15 - $0.6`     | `Text, image` | `Text`  |
+{/* <Panel>
+    <div className='p-4' style={{ border: '1px solid transparent', borderRadius: '0.5rem', backgroundColor: 'rgba(13, 167, 255, 0.20)' }}>
+        <span className='text-white font-bold'>Wanna know how much your consumption would be?</span>
 
-This model offers
+        <div className='mt-2 mb-5'>Talk with our team and we'll walk you through how much you can save with Hicap ⚡</div>
 
-> * 128,000 context window
-> * 16,384 max output tokens
-> * Sep 30, 2023 knowledge cutoff
+        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
+            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Talk with us</div>
+        </a>
+    </div>
+</Panel> */}
 
-Information provided from [openAI website.](https://platform.openai.com/docs/models/gpt-4o-mini)
 
-## gpt-4.1
+## gpt-5-mini
 
-GPT-4.1 is flagship model for complex tasks. It is well suited for problem solving across domains.
+A lighter and faster variant of GPT-5. Preserves strong reasoning and coding ability, but optimized for lower latency and cost. Good balance between performance and efficiency.
 
-| Intelligence |  Speed   | Price (input - output) | Input | Output |
-| ------------ | -------- | :---------------------: | ----- | ------ |
-|   `Higher`   | `Medium` |       `$2 - $8`     | `Text, image` | `Text`  |
+<div className='text-white font-bold'>Best for:</div>
 
-This model offers
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>A lighter and faster variant of GPT-5. Preserves strong reasoning and coding ability, but optimized for lower latency and cost. Good balance between performance and efficiency.</span>
+</div>
 
-> * 1,047,576 context window
-> * 32,768 max output tokens
-> * May 31, 2024 knowledge cutoff
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, image` | | `Text / JSON (API)` |
 
-Information provided from [openAI website.](https://platform.openai.com/docs/models/gpt-4.1)
+<Columns cols={2}>
+    <div>
+        ### This model offers
 
-## gpt-4.1-mini
+        <ul className='mb-6'>
+            <li>* 400,000 context window</li>
+            <li>* 128,000 max output tokens</li>
+            <li>* May 30, 2024 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
 
-GPT-4.1 mini provides a balance between intelligence, speed, and cost that makes it an attractive model for many use cases.
+    {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
+        ### Check our model pricing
 
-| Intelligence |  Speed   | Price (input - output) | Input | Output |
-| ------------ | -------- | :---------------------: | ----- | ------ |
-|   `High`   | `Fast` |       `$0.4 - $1.6`     | `Text, image` | `Text`  |
+        <div className='mt-2 mb-5'>See detailed usage costs and choose the plan that best fits your workload.</div>
 
-This model offers
+        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
+            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Go to pricing</div>
+        </a>
+    </div> */}
+</Columns>
 
-> * 1,047,576 context window
-> * 32,768 max output tokens
-> * May 31, 2024 knowledge cutoff
+## gpt-5-nano
 
-Information provided from [openAI website.](https://platform.openai.com/docs/models/gpt-4.1-mini)
+Ultra-light, low-latency model. Prioritizes speed and efficiency over advanced reasoning. Best for lightweight tasks where response time and throughput matter more than nuance.
 
-## gpt-4.1-nano
+<div className='text-white font-bold'>Best for:</div>
 
-GPT-4.1 nano is the fastest, most cost-effective GPT-4.1 model.
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>Real-time assistants, mobile/edge use cases, autocomplete, customer service chat, high-volume RAG queries. Best when cost + speed > deep reasoning.</span>
+</div>
 
-| Intelligence |  Speed   | Price (input - output) | Input | Output |
-| ------------ | -------- | :---------------------: | ----- | ------ |
-|   `Average`   | `Very fast` |       `$0.1 - $0.4`     | `Text, image` | `Text`  |
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, image` | | `Text / JSON (API)`  |
 
-This model offers
+<Columns cols={2}>
+    <div>
+        ### This model offers
 
-> * 1,047,576 context window
-> * 32,768 max output tokens
-> * May 31, 2024 knowledge cutoff
+        <ul className='mb-6'>
+            <li>* 400,000 context window</li>
+            <li>* 128,000 max output tokens</li>
+            <li>* May 30, 2024 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [Open AI website.](https://platform.openai.com/docs/pricing)
+    </div>
 
-Information provided from [openAI website.](https://platform.openai.com/docs/models/gpt-4.1-nano)
+    {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
+        ### Check our model pricing
+
+        <div className='mt-2 mb-5'>See detailed usage costs and choose the plan that best fits your workload.</div>
+
+        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
+            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Go to pricing</div>
+        </a>
+    </div> */}
+</Columns>

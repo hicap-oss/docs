@@ -15,25 +15,38 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": [
-              "index",
-              "quickstart",
-              "faq"
-            ]
+            "pages": ["index", "quickstart", "faq"]
           },
           {
             "group": "Providers",
+            "pages": ["providers/table-comparison", "providers/openai", "providers/anthropic", "providers/google"]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Endpoints",
             "pages": [
-              "providers/openai",
-              "providers/anthropic"
+              {
+                "group": "OpenAI",
+                "pages": [
+                  {
+                    "group": "Chat Completions",
+                    "pages": [
+                      "api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message"
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ]
       }
     ],
     "global": {
-      "anchors": [
-      ]
+      "anchors": []
     }
   },
   "logo": {

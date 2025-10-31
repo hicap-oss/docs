@@ -1,21 +1,21 @@
 ---
-title: 'Anthropic'
-description: 'Available Models by Anthropic'
+title: 'Google'
+description: 'Available Models by Google (Gemini)'
 ---
 
-## claude-sonnet-4V Less 200K
+## gemini-2.5-pro (Less 200k prompt)
 
-Mid-tier Claude model with vision capabilities (the “V” stands for multimodal with images). Supports up to 200k tokens of context. Balances speed, cost, and reasoning power.
+Standard version of Gemini 2.5 Pro with a large context window (up to 200k tokens). Provides advanced reasoning, high-quality text generation, and multimodal support.
 
 <div className='text-white font-bold'>Best for:</div>
 
 <div className='bg-black px-3 py-1 mt-2'>
-    <span>Product/design reviews with screenshots, Figma/UI audits, general enterprise copilots, data analysis, and multimodal reasoning (documents + images). Good fit when prompts are large but manageable (`<200k`).</span>
+    <span>General enterprise and product use cases: data analysis, software development, QA agents, Figma/GitHub/Jira copilots, complex writing. Suitable for most workflows requiring long prompts but not ultra-large contexts.</span>
 </div>
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, image` | | `Text` |
+| `Text, Image, Audio, Video, Code` | | `Text` |
 
 
 <Columns cols={2}>
@@ -23,12 +23,12 @@ Mid-tier Claude model with vision capabilities (the “V” stands for multimoda
         ### This model offers
 
         <ul className='mb-6'>
-            <li>* 200,000 context window</li>
-            <li>* 64,000 max output tokens</li>
-            <li>* March 01, 2025 knowledge cutoff</li>
+            <li>* 1,000,000 context window</li>
+            <li>* 65,000 max output tokens</li>
+            <li>* January 01, 2025 knowledge cutoff</li>
         </ul>
        
-        Information provided from [Claude website.](https://docs.claude.com/en/docs/about-claude/pricing)
+        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
 
     {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
@@ -55,62 +55,23 @@ Mid-tier Claude model with vision capabilities (the “V” stands for multimoda
 </Panel> */}
 
 
-## claude-sonnet-4V More 200K
+## gemini-2.5-pro (More 200k prompt)
 
-Extended version of Claude Sonnet 4V with ultra-long context support (beyond 200k tokens, up to ~1M depending on configuration). Maintains multimodal (text + images) while handling very large corpora.
-
-<div className='text-white font-bold'>Best for:</div>
-
-<div className='bg-black px-3 py-1 mt-2'>
-    <span>Deep document analysis (legal, technical, research) with embedded visuals, large-scale design system validation, long historical chat/session review, and knowledge-base copilots that need persistent memory across massive inputs.</span>
-</div>
-
-|  Input | | Output |
-| ----- | - | ------ |
-| `Text, image` | | `Text` |
-
-
-{/* <Columns cols={2}>
-    <div>
-    </div>
-
-    <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
-        ### Check our model pricing
-
-        <div className='mt-2 mb-5'>See detailed usage costs and choose the plan that best fits your workload.</div>
-
-        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
-            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Go to pricing</div>
-        </a>
-    </div>
-</Columns> */}
-
-
-## claude-opus-4
-
-Claude Opus 4.1 is a drop-in replacement for Opus 4 that delivers superior performance and precision for real-world coding and agentic tasks. It handles complex, multi-step problems with more rigor and attention to detail.
+Extended version of Gemini 2.5 Pro with ultra-long context support (beyond 200k tokens, reaching into the millions depending on setup). Designed to handle large documents, full repositories, or extensive datasets in a single session.
 
 <div className='text-white font-bold'>Best for:</div>
 
 <div className='bg-black px-3 py-1 mt-2'>
-    <span>Strategic decision-making, in-depth research, advanced coding and debugging, legal/financial/technical analysis, high-stakes content generation (contracts, reports, product strategy docs). Best when quality > cost/latency.</span>
+    <span>Long-context processing: legal contracts spanning thousands of pages, large codebases, academic research, reviewing historical chat/log data. Ideal for copilots that need to “remember” or reason over very large corpora.</span>
 </div>
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, image` | | `Text` |
+| `Text, Image, Audio, Video, Code` | | `Text` |
+
 
 <Columns cols={2}>
     <div>
-        ### This model offers
-
-        <ul className='mb-6'>
-            <li>* 200,000 context window</li>
-            <li>* 32,000 max output tokens</li>
-            <li>* March 01, 2025 knowledge cutoff</li>
-        </ul>
-       
-        Information provided from [Claude website.](https://docs.claude.com/en/docs/about-claude/pricing)
     </div>
 
     {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
@@ -125,19 +86,58 @@ Claude Opus 4.1 is a drop-in replacement for Opus 4 that delivers superior perfo
 </Columns>
 
 
-## claude-3.7-sonnet
+## gemini-2.5-flash
 
-Claude 3.7 Sonnet shows particularly strong improvements in coding and front-end web development. Along with the model, we’re also introducing a command line tool for agentic coding, Claude Code. Claude Code is available as a limited research preview, and enables developers to delegate substantial engineering tasks to Claude directly from their terminal.
+Gemini 2.5 Flash is a fast and cost-effective model that balances performance with a wide range of capabilities. It is the first Flash model to feature thinking capabilities, which lets you see the model's thinking process as it generates a response.
 
 <div className='text-white font-bold'>Best for:</div>
 
 <div className='bg-black px-3 py-1 mt-2'>
-    <span>Agents with tools and deep reasoning with “extended thinking” and efficient tool use in tokens.</span>
+    <span>Low latency/high throughput for chat, summarization, and multimodal extraction at a lower cost.</span>
 </div>
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, image` | | `Text` |
+| `Text, Image, Audio, Video, Code` | | `Text` |
+
+<Columns cols={2}>
+    <div>
+        ### This model offers
+
+        <ul className='mb-6'>
+            <li>* 1,048,576 context window</li>
+            <li>* 65,536 max output tokens</li>
+            <li>* January 01, 2025 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
+    </div>
+
+    {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
+        ### Check our model pricing
+
+        <div className='mt-2 mb-5'>See detailed usage costs and choose the plan that best fits your workload.</div>
+
+        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
+            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Go to pricing</div>
+        </a>
+    </div> */}
+</Columns>
+
+
+## gemini-2.5-flash-lite
+
+Lightweight, optimized version of Gemini Flash, designed for speed and low cost. Trades off some reasoning depth and output quality for efficiency. Maintains multimodal capabilities (text + image input) but focuses on ultra-fast responses.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>High-throughput, latency-sensitive tasks: chatbots with large user volumes, quick autocomplete, real-time customer support, fast retrieval-augmented generation (RAG), and mobile/embedded use cases where cost and speed matter more than depth.</span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Audio, Video, Code` | | `Text` |
 
 
 <Columns cols={2}>
@@ -145,12 +145,12 @@ Claude 3.7 Sonnet shows particularly strong improvements in coding and front-end
         ### This model offers
 
         <ul className='mb-6'>
-            <li>* 200,000 context window</li>
+            <li>* 1,000,000 context window</li>
             <li>* 64,000 max output tokens</li>
-            <li>* October 01, 2024 knowledge cutoff</li>
+            <li>* January 01, 2025 knowledge cutoff</li>
         </ul>
        
-        Information provided from [Claude website.](https://docs.claude.com/en/docs/about-claude/pricing)
+        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
 
     {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
