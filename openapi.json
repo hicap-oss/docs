@@ -3948,6 +3948,14 @@
       "chatCompletionRequestUserMessage": {
         "type": "object",
         "title": "User message",
+        "allOf": [
+          {
+            "not": {
+              "required": ["name"],
+              "properties": { "name": { "const": "developer" } }
+            }
+          }
+        ],
         "properties": {
           "content": {
             "description": "The contents of the user message.\n",
@@ -3969,14 +3977,6 @@
             ],
             "x-oaiExpandable": true
           },
-          "allOf": [
-            {
-              "not": {
-                "required": ["name"],
-                "properties": { "name": { "const": "developer" } }
-              }
-            }
-          ],
           "role": {
             "type": "string",
             "enum": [
