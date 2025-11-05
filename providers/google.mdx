@@ -3,66 +3,16 @@ title: 'Google'
 description: 'Available Models by Google (Gemini)'
 ---
 
-## gemini-2.5-pro (Less 200k prompt)
-
-Standard version of Gemini 2.5 Pro with a large context window (up to 200k tokens). Provides advanced reasoning, high-quality text generation, and multimodal support.
-
-<div className='text-white font-bold'>Best for:</div>
-
-<div className='bg-black px-3 py-1 mt-2'>
-    <span>General enterprise and product use cases: data analysis, software development, QA agents, Figma/GitHub/Jira copilots, complex writing. Suitable for most workflows requiring long prompts but not ultra-large contexts.</span>
-</div>
-
-|  Input | | Output |
-| ----- | - | ------ |
-| `Text, Image, Audio, Video, Code` | | `Text` |
-
-
-<Columns cols={2}>
-    <div>
-        ### This model offers
-
-        <ul className='mb-6'>
-            <li>* 1,000,000 context window</li>
-            <li>* 65,000 max output tokens</li>
-            <li>* January 01, 2025 knowledge cutoff</li>
-        </ul>
-       
-        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
-    </div>
-
-    {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
-        ### Check our model pricing
-
-        <div className='mt-2 mb-5'>See detailed usage costs and choose the plan that best fits your workload.</div>
-
-        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
-            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Go to pricing</div>
-        </a>
-    </div> */}
-</Columns>
-
-{/* <Panel>
-    <div className='p-4' style={{ border: '1px solid transparent', borderRadius: '0.5rem', backgroundColor: 'rgba(13, 167, 255, 0.20)' }}>
-        <span className='text-white font-bold'>Wanna know how much your consumption would be?</span>
-
-        <div className='mt-2 mb-5'>Talk with our team and we'll walk you through how much you can save with Hicap ⚡</div>
-
-        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
-            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Talk with us</div>
-        </a>
-    </div>
-</Panel> */}
-
-
-## gemini-2.5-pro (More 200k prompt)
+## gemini-2.5-pro
 
 Extended version of Gemini 2.5 Pro with ultra-long context support (beyond 200k tokens, reaching into the millions depending on setup). Designed to handle large documents, full repositories, or extensive datasets in a single session.
 
 <div className='text-white font-bold'>Best for:</div>
 
 <div className='bg-black px-3 py-1 mt-2'>
-    <span>Long-context processing: legal contracts spanning thousands of pages, large codebases, academic research, reviewing historical chat/log data. Ideal for copilots that need to “remember” or reason over very large corpora.</span>
+    <span>
+    Long-context processing: legal contracts spanning thousands of pages, large codebases, academic research, reviewing historical chat/log data. Ideal for copilots that need to “remember” or reason over very large corpora.
+    </span>
 </div>
 
 |  Input | | Output |
@@ -70,21 +20,11 @@ Extended version of Gemini 2.5 Pro with ultra-long context support (beyond 200k 
 | `Text, Image, Audio, Video, Code` | | `Text` |
 
 
-<Columns cols={2}>
+<Columns cols={1}>
     <div>
+        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
-
-    {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
-        ### Check our model pricing
-
-        <div className='mt-2 mb-5'>See detailed usage costs and choose the plan that best fits your workload.</div>
-
-        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
-            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Go to pricing</div>
-        </a>
-    </div> */}
 </Columns>
-
 
 ## gemini-2.5-flash
 
@@ -93,37 +33,52 @@ Gemini 2.5 Flash is a fast and cost-effective model that balances performance wi
 <div className='text-white font-bold'>Best for:</div>
 
 <div className='bg-black px-3 py-1 mt-2'>
-    <span>Low latency/high throughput for chat, summarization, and multimodal extraction at a lower cost.</span>
+    <span>
+    Low latency/high throughput for chat, summarization, and multimodal extraction at a lower cost.
+    </span>
 </div>
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, Image, Audio, Video, Code` | | `Text` |
+| `Text, Image, Audio, Video, Code` | | `Text, Image, Audio, Video, Code` |
 
-<Columns cols={2}>
+
+<Columns cols={1}>
     <div>
-        ### This model offers
+        <div className='text-white font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,048,576 context window</li>
             <li>* 65,536 max output tokens</li>
-            <li>* January 01, 2025 knowledge cutoff</li>
+            <li>* January 1, 2025 knowledge cutoff</li>
         </ul>
        
         Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
-
-    {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
-        ### Check our model pricing
-
-        <div className='mt-2 mb-5'>See detailed usage costs and choose the plan that best fits your workload.</div>
-
-        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
-            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Go to pricing</div>
-        </a>
-    </div> */}
 </Columns>
 
+## gemini-2.5-flash-image
+
+Gemini 2.5 Flash Image (Also known as “Nano Banana”) is an efficient multimodal model optimized for high-quality image generation and editing. Built on the Gemini 2.5 Flash architecture, it enables seamless creation, enhancement, and fusion of visual content directly from text or mixed inputs. The model preserves visual coherence across edits and includes built-in SynthID watermarking for responsible image generation.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>
+    Fast and cost-effective text-to-image generation, iterative image editing, and visual asset creation for marketing, design, and creative workflows.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Audio, Video, Code` | | `Text, Image, Audio, Video, Code` |
+
+
+<Columns cols={1}>
+    <div>
+        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
+    </div>
+</Columns>
 
 ## gemini-2.5-flash-lite
 
@@ -132,34 +87,88 @@ Lightweight, optimized version of Gemini Flash, designed for speed and low cost.
 <div className='text-white font-bold'>Best for:</div>
 
 <div className='bg-black px-3 py-1 mt-2'>
-    <span>High-throughput, latency-sensitive tasks: chatbots with large user volumes, quick autocomplete, real-time customer support, fast retrieval-augmented generation (RAG), and mobile/embedded use cases where cost and speed matter more than depth.</span>
+    <span>
+    High-throughput, latency-sensitive tasks: chatbots with large user volumes, quick autocomplete, real-time customer support, fast retrieval-augmented generation (RAG), and mobile/embedded use cases where cost and speed matter more than depth.
+    </span>
 </div>
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, Image, Audio, Video, Code` | | `Text` |
+| `Text, Image, Audio` | | `Text, Audio` |
 
 
-<Columns cols={2}>
+<Columns cols={1}>
     <div>
-        ### This model offers
+        <div className='text-white font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,000,000 context window</li>
             <li>* 64,000 max output tokens</li>
-            <li>* January 01, 2025 knowledge cutoff</li>
+            <li>* January 1, 2025 knowledge cutoff</li>
         </ul>
        
         Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
+</Columns>
 
-    {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
-        ### Check our model pricing
+## gemini-2.0-flash
 
-        <div className='mt-2 mb-5'>See detailed usage costs and choose the plan that best fits your workload.</div>
+A Google model that performs like a Pro model with the speed of a Flash model. Multi-modal inputs and outputs, native tool use, great for agentic workflows.
 
-        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
-            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Go to pricing</div>
-        </a>
-    </div> */}
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>
+    High-volume workflows: customer interaction, summarization, data extraction, and fast-response agents. Good when you need speed with decent reasoning.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Audio, Video, Code` | | `Text, Image, Audio` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 1,000,000 context window</li>
+            <li>* 8,000 max output tokens</li>
+            <li>* August 1, 2024 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
+    </div>
+</Columns>
+
+## gemini-2.0-flash-lite
+
+Ultra-light, lowest-latency Gemini variant. Optimized for efficiency rather than depth, while maintaining multimodal support.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>
+    Mobile or embedded copilots, lightweight RAG, chatbots, autocomplete, and fast contextual lookups where cost and response time are more critical than complex reasoning.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Audio` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 1,000,000 context window</li>
+            <li>* 8,000 max output tokens</li>
+            <li>* February 5, 2025 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
+    </div>
 </Columns>

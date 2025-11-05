@@ -14,14 +14,7 @@
     }
   ],
   "security": [
-    {
-      "bearer": [
-        "api.read"
-      ]
-    },
-    {
-      "ApiKeyAuth": []
-    }
+    { "apiKeyAuth": [] }
   ],
   "paths": {
     "/deployments/{deploymentId}/completions": {
@@ -276,27 +269,6 @@
       "post": {
         "summary": "Creates a completion for the chat message",
         "operationId": "ChatCompletions_Create",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "deploymentId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "description": "Deployment id of the model which was deployed."
-            }
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "2025-01-01-preview",
-              "description": "api version"
-            }
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -3195,15 +3167,16 @@
       "chatCompletionsRequestCommon": {
         "type": "object",
         "properties": {
-          "model_name": {
+          "model": {
             "description": "Model name to use",
+            "default": "gpt-5",
+            "example": "gpt-5",
             "oneOf": [
               {
                 "type": "string",
                 "nullable": true
               }
-            ],
-            "default": "gpt-5"
+            ]
           },
           "temperature": {
             "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.\nWe generally recommend altering this or `top_p` but not both.",
@@ -3248,11 +3221,6 @@
               }
             ],
             "default": null
-          },
-          "max_tokens": {
-            "description": "The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (4096 - prompt tokens). This is not compatible with o1 series models.",
-            "type": "integer",
-            "default": 4096
           },
           "max_completion_tokens": {
             "description": "An upper bound for the number of tokens that can be generated for a completion, including visible output tokens and reasoning tokens. This is only supported in o1 series models. Will expand the support to other models in future API release.",
@@ -3628,11 +3596,6 @@
                 "maximum": 20,
                 "nullable": true
               },
-              "max_tokens": {
-                "description": "The maximum number of [tokens](/tokenizer) that can be generated in the chat completion.\n\nThe total length of input tokens and generated tokens is limited by the model's context length. [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken) for counting tokens.\n",
-                "type": "integer",
-                "nullable": true
-              },
               "n": {
                 "type": "integer",
                 "minimum": 1,
@@ -3696,10 +3659,6 @@
                 "maximum": 2,
                 "nullable": true,
                 "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.\n"
-              },
-              "parallel_tool_calls": {
-                "$ref": "#/components/schemas/ParallelToolCalls",
-                "nullable": true
               },
               "response_format": {
                 "description": "An object specifying the format that the model must output. Compatible with [GPT-4o](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-4-and-gpt-4-turbo-models), [GPT-4o mini](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-4-and-gpt-4-turbo-models), [GPT-4 Turbo](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-4-and-gpt-4-turbo-models) and all [GPT-3.5](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-35) Turbo models newer than `gpt-3.5-turbo-1106`.\n\nSetting to `{ \"type\": \"json_schema\", \"json_schema\": {...} }` enables Structured Outputs which guarantees the model will match your supplied JSON schema.\n\nSetting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is valid JSON.\n\n**Important:** when using JSON mode, you **must** also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly \"stuck\" request. Also note that the message content may be partially cut off if `finish_reason=\"length\"`, which indicates the generation exceeded `max_tokens` or the conversation exceeded the max context length.\n",
@@ -3908,8 +3867,8 @@
       },
       "ChatCompletionRequestDeveloperMessage": {
         "type": "object",
-        "title": "Developer message",
-        "description": "Developer-provided instructions that the model should follow, regardless of messages sent by the user.\nWith o1 models and newer, `developer` messages replace the previous `system` messages.",
+        "title": "Instruction message (developer semantics)",
+        "description": "Instructional message that encodes developer semantics in this API. Use role=`user` and set name=`developer` to distinguish from ordinary user messages.",
         "properties": {
           "content": {
             "description": "The contents of the developer message.",
@@ -3932,19 +3891,19 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "developer"
-            ],
-            "description": "The role of the messages author, in this case `developer`."
+            "enum": ["user"],
+            "description": "The role of the message author. In this API, developer semantics use role `user`."
           },
           "name": {
             "type": "string",
-            "description": "An optional name for the participant. Provides the model information to differentiate between participants of the same role."
+            "enum": ["developer"],
+            "description": "Constant marker used to disambiguate instruction/developer messages from ordinary user messages."
           }
         },
         "required": [
           "content",
-          "role"
+          "role",
+          "name"
         ]
       },
       "chatCompletionRequestSystemMessage": {
@@ -3990,6 +3949,14 @@
       "chatCompletionRequestUserMessage": {
         "type": "object",
         "title": "User message",
+        "allOf": [
+          {
+            "not": {
+              "required": ["name"],
+              "properties": { "name": { "const": "developer" } }
+            }
+          }
+        ],
         "properties": {
           "content": {
             "description": "The contents of the user message.\n",
@@ -8280,10 +8247,6 @@
             "$ref": "#/components/schemas/assistantsApiToolChoiceOption",
             "nullable": true
           },
-          "parallel_tool_calls": {
-            "$ref": "#/components/schemas/ParallelToolCalls",
-            "nullable": true
-          },
           "response_format": {
             "$ref": "#/components/schemas/assistantsApiResponseFormatOption",
             "nullable": true
@@ -8413,9 +8376,6 @@
           "tool_choice": {
             "$ref": "#/components/schemas/assistantsApiToolChoiceOption",
             "nullable": true
-          },
-          "parallel_tool_calls": {
-            "$ref": "#/components/schemas/ParallelToolCalls"
           },
           "response_format": {
             "$ref": "#/components/schemas/assistantsApiResponseFormatOption",
@@ -8676,9 +8636,6 @@
           "tool_choice": {
             "$ref": "#/components/schemas/assistantsApiToolChoiceOption",
             "nullable": true
-          },
-          "parallel_tool_calls": {
-            "$ref": "#/components/schemas/ParallelToolCalls"
           },
           "response_format": {
             "$ref": "#/components/schemas/assistantsApiResponseFormatOption",
@@ -12268,21 +12225,11 @@
       }
     },
     "securitySchemes": {
-      "bearer": {
-        "type": "oauth2",
-        "flows": {
-          "implicit": {
-            "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
-            "scopes": {}
-          }
-        },
-        "x-tokenInfoFunc": "api.middleware.auth.bearer_auth",
-        "x-scopeValidateFunc": "api.middleware.auth.validate_scopes"
-      },
-      "apiKey": {
+      "apiKeyAuth": {
         "type": "apiKey",
+        "in": "header",
         "name": "api-key",
-        "in": "header"
+        "description": "Your Hicap API key."
       }
     }
   }

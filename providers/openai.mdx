@@ -10,20 +10,19 @@ Full-scale flagship OpenAI model. Delivers state-of-the-art reasoning, creativit
 <div className='text-white font-bold'>Best for:</div>
 
 <div className='bg-black px-3 py-1 mt-2'>
-    <span>Enterprise-grade copilots, advanced software development, strategic research, product/financial/legal analysis, high-quality multimodal content generation. Best when you need maximum depth and reliability.</span>
+    <span>
+    Enterprise-grade copilots, advanced software development, strategic research, product/financial/legal analysis, high-quality multimodal content generation. Best when you need maximum depth and reliability.
+    </span>
 </div>
 
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, image` | | `Text / JSON (API)` |
 
-{/* | Intelligence |  Speed   | Price (input - output) | Input | Output |
-| ------------ | -------- | :---------------------: | ----- | ------ |
-|   `High`   | `Medium` |       `$2.5 - $10`     | `Text, image` | `Text`  | */}
 
-<Columns cols={2}>
+<Columns cols={1}>
     <div>
-        ### This model offers
+        <div className='text-white font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 400,000 context window</li>
@@ -33,30 +32,69 @@ Full-scale flagship OpenAI model. Delivers state-of-the-art reasoning, creativit
        
         Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
-
-    {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
-        ### Check our model pricing
-
-        <div className='mt-2 mb-5'>See detailed usage costs and choose the plan that best fits your workload.</div>
-
-        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
-            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Go to pricing</div>
-        </a>
-    </div> */}
 </Columns>
 
-{/* <Panel>
-    <div className='p-4' style={{ border: '1px solid transparent', borderRadius: '0.5rem', backgroundColor: 'rgba(13, 167, 255, 0.20)' }}>
-        <span className='text-white font-bold'>Wanna know how much your consumption would be?</span>
+## gpt-5-chat
 
-        <div className='mt-2 mb-5'>Talk with our team and we'll walk you through how much you can save with Hicap ⚡</div>
+This use case employs OpenAI's foundational GPT-5 model (which is the default model in the ChatGPT interface). It is a general-purpose multimodal reasoning engine designed to understand, generate, and synthesize complex information in a coherent and contextually relevant manner, simulating a fluid human conversation without requiring a specific “chat” model.
 
-        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
-            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Talk with us</div>
-        </a>
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>
+    General conversational interaction and multimodal reasoning. Ideal for answering questions, generating creative and explanatory content, summarizing documents, translating languages, analyzing images, and serving as a versatile virtual assistant across a wide range of non-specialized tasks.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, image` | | `Text, Image, Code` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 400,000 context window</li>
+            <li>* 128,000 max output tokens</li>
+            <li>* September 30, 2024 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
-</Panel> */}
+</Columns>
 
+## gpt-5-codex
+
+A specialized version of OpenAI's GPT-5 model, optimized for automated and agent-assisted software engineering tasks. It uses dynamic reasoning to be fast at small tasks and deep at complex projects that can take hours.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>
+    Comprehensive software development, including: complete project generation, new feature development, debugging, large-scale refactoring, code review, test generation, and autonomous coding agent tasks (in CLI, IDE, or Cloud environments).
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Code` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 400,000 context window</li>
+            <li>* 128,000 max output tokens</li>
+            <li>* September 30, 2024 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
+</Columns>
 
 ## gpt-5-mini
 
@@ -65,16 +103,19 @@ A lighter and faster variant of GPT-5. Preserves strong reasoning and coding abi
 <div className='text-white font-bold'>Best for:</div>
 
 <div className='bg-black px-3 py-1 mt-2'>
-    <span>A lighter and faster variant of GPT-5. Preserves strong reasoning and coding ability, but optimized for lower latency and cost. Good balance between performance and efficiency.</span>
+    <span>
+    A lighter and faster variant of GPT-5. Preserves strong reasoning and coding ability, but optimized for lower latency and cost. Good balance between performance and efficiency.
+    </span>
 </div>
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, image` | | `Text / JSON (API)` |
+| `Text, Image` | | `Text / JSON (API)` |
 
-<Columns cols={2}>
+
+<Columns cols={1}>
     <div>
-        ### This model offers
+        <div className='text-white font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 400,000 context window</li>
@@ -84,16 +125,6 @@ A lighter and faster variant of GPT-5. Preserves strong reasoning and coding abi
        
         Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
-
-    {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
-        ### Check our model pricing
-
-        <div className='mt-2 mb-5'>See detailed usage costs and choose the plan that best fits your workload.</div>
-
-        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
-            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Go to pricing</div>
-        </a>
-    </div> */}
 </Columns>
 
 ## gpt-5-nano
@@ -103,16 +134,19 @@ Ultra-light, low-latency model. Prioritizes speed and efficiency over advanced r
 <div className='text-white font-bold'>Best for:</div>
 
 <div className='bg-black px-3 py-1 mt-2'>
-    <span>Real-time assistants, mobile/edge use cases, autocomplete, customer service chat, high-volume RAG queries. Best when cost + speed > deep reasoning.</span>
+    <span>
+    Real-time assistants, mobile/edge use cases, autocomplete, customer service chat, high-volume RAG queries. Best when cost + speed > deep reasoning.
+    </span>
 </div>
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, image` | | `Text / JSON (API)`  |
+| `Text, Image` | | `Text / JSON (API)` |
 
-<Columns cols={2}>
+
+<Columns cols={1}>
     <div>
-        ### This model offers
+        <div className='text-white font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 400,000 context window</li>
@@ -120,16 +154,184 @@ Ultra-light, low-latency model. Prioritizes speed and efficiency over advanced r
             <li>* May 30, 2024 knowledge cutoff</li>
         </ul>
        
-        Information provided from [Open AI website.](https://platform.openai.com/docs/pricing)
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
+</Columns>
 
-    {/* <div className='px-5 pb-5' style={{ border: '1px solid transparent', borderRadius: '0.5rem' }}>
-        ### Check our model pricing
+## gpt-4o
 
-        <div className='mt-2 mb-5'>See detailed usage costs and choose the plan that best fits your workload.</div>
+OpenAI's high-intelligence flagship model for complex, multi-step tasks. GPT-4o is cheaper and faster than GPT-4 Turbo
 
-        <a href='https://form.typeform.com/to/TzuEi1zf?typeform-source=hicap.ai' target='_blank'>
-            <div className='bg-[#60E8CE] text-[#171717] text-center py-2 font-bold' style={{ borderRadius: '0.25rem' }}>Go to pricing</div>
-        </a>
-    </div> */}
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>
+    Multimodal copilots (voice, image, video), real-time assistants, design/code reviews, customer-facing apps, and enterprise agents that require both contextual reasoning + speed.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Audio, Video, Code` | | `Text, Audio, Image (limited)` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 128,000 context window</li>
+            <li>* 16,384 max output tokens</li>
+            <li>* October 1, 2023 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
+</Columns>
+
+## gpt-4o-mini
+
+OpenAI's affordable and intelligent small model for fast, lightweight tasks. GPT-4o mini is cheaper and more capable than GPT-3.5 Turbo
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>
+    Scalable chatbots, QA systems, RAG pipelines, lightweight coding assistants, and UX/product copilots where cost efficiency + responsiveness matter.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Code` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 128,000 context window</li>
+            <li>* 16,384 max output tokens</li>
+            <li>* October 1, 2023 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
+</Columns>
+
+## gpt-4.1
+
+GPT-4.1 is the flagship model of the new 4.1 family, excelling in coding, following complex instructions, and managing long contexts (up to 1 million tokens), making it the powerful go-to choice for demanding applications.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>
+    Advanced data analysis, high-fidelity content creation, software architecture design, and analytical copilots requiring maximum reliability and depth.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Code` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 1,000,000 context window</li>
+            <li>* 32,000 max output tokens</li>
+            <li>* June 1, 2024 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
+</Columns>
+
+## gpt-4.1-mini
+
+GPT-4.1 mini is optimized for speed and efficiency, being 40% faster then GPT-4o. GPT-4.1 mini offers a balanced approach with robust performance for simpler or time-sensitive tasks, providing faster response times compared to its more feature-rich counterpart.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>
+    Mid-complexity workflows: documentation QA, data summarization, low-latency coding copilots, or iterative product feedback systems.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Code` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 1,000,000 context window</li>
+            <li>* 32,000 max output tokens</li>
+            <li>* June 1, 2024 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
+</Columns>
+
+## gpt-4.1-nano
+
+GPT-4.1 nano is the smallest, fastest, and most cost-effective option of the GPT-4.1 family. GPT-4.1 nano is ideal for high-volume applications such as autocomplete, classification, and extracting details from lengthy documents while maintaining a strong performance profile.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>
+    Autocomplete, message classification, semantic search ranking, basic natural-language logic tasks, and embedded AI tools. Ideal for speed-critical micro-agents.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 1,000,000 context window</li>
+            <li>* 32,000 max output tokens</li>
+            <li>* June 1, 2024 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
+</Columns>
+
+## gpt-image-1
+
+OpenAI's most advanced image generation model. It is natively multimodal, allowing it to generate and edit high-quality images with superior contextual understanding, following complex instructions and reasoning about visual and text inputs.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-black px-3 py-1 mt-2'>
+    <span>
+    Generation and editing of photorealistic and stylized images for commercial use, web design, social media, and creative applications. It excels at following detailed instructions, rendering precise text within images, and agent tasks involving the comprehension of visual designs.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image` | | `Image` |
+
+
+<Columns cols={1}>
+    <div>
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
 </Columns>
