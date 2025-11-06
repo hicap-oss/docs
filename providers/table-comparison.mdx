@@ -3,9 +3,245 @@ title: 'Model/Provider Comparison'
 mode: 'wide'
 ---
 
+import React from 'react'
+
+export const openAIModels = [
+  {
+    model: 'gpt-5',
+    best: 'Enterprise-grade copilots, advanced software development, strategic research, product/financial/legal analysis, high-quality multimodal content generation. Best when you need maximum depth and reliability.',
+    input: 'Text, image',
+    output: 'Text / JSON (API)',
+    contextWindow: '400,000',
+    maxOutputTokens: '128,000',
+    knowledgeCutoff: 'September 30, 2024',
+  },
+  {
+    model: 'gpt-5-chat',
+    best: 'General conversational interaction and multimodal reasoning. Ideal for answering questions, generating creative and explanatory content, summarizing documents, translating languages, analyzing images, and serving as a versatile virtual assistant across a wide range of non-specialized tasks.',
+    input: 'Text, image',
+    output: 'Text, Image, Code',
+    contextWindow: '400,000',
+    maxOutputTokens: '128,000',
+    knowledgeCutoff: 'September 30, 2024',
+  },
+  {
+    model: 'gpt-5-codex',
+    best: 'Comprehensive software development, including: complete project generation, new feature development, debugging, large-scale refactoring, code review, test generation, and autonomous coding agent tasks (in CLI, IDE, or Cloud environments).',
+    input: 'Text, Image, Code',
+    output: 'Text',
+    contextWindow: '400,000',
+    maxOutputTokens: '128,000',
+    knowledgeCutoff: 'September 30, 2024',
+  },
+  {
+    model: 'gpt-5-mini',
+    best: 'A lighter and faster variant of GPT-5. Preserves strong reasoning and coding ability, but optimized for lower latency and cost. Good balance between performance and efficiency.',
+    input: 'Text, Image',
+    output: 'Text / JSON (API)',
+    contextWindow: '400,000',
+    maxOutputTokens: '128,000',
+    knowledgeCutoff: 'May 30, 2024',
+  },
+  {
+    model: 'gpt-5-nano',
+    best: 'Real-time assistants, mobile/edge use cases, autocomplete, customer service chat, high-volume RAG queries. Best when cost + speed > deep reasoning.',
+    input: 'Text, Image',
+    output: 'Text / JSON (API)',
+    contextWindow: '400,000',
+    maxOutputTokens: '128,000',
+    knowledgeCutoff: 'May 30, 2024',
+  },
+  {
+    model: 'gpt-4o',
+    best: 'Multimodal copilots (voice, image, video), real-time assistants, design/code reviews, customer-facing apps, and enterprise agents that require both contextual reasoning + speed.',
+    input: 'Text, Image, Audio, Video, Code',
+    output: 'Text, Audio, Image (limited)',
+    contextWindow: '128,000',
+    maxOutputTokens: '16,384',
+    knowledgeCutoff: 'October 1, 2023',
+  },
+  {
+    model: 'gpt-4o-mini',
+    best: 'Scalable chatbots, QA systems, RAG pipelines, lightweight coding assistants, and UX/product copilots where cost efficiency + responsiveness matter.',
+    input: 'Text, Image, Code',
+    output: 'Text',
+    contextWindow: '128,000',
+    maxOutputTokens: '16,384',
+    knowledgeCutoff: 'October 1, 2023',
+  },
+  {
+    model: 'gpt-4.1',
+    best: 'Advanced data analysis, high-fidelity content creation, software architecture design, and analytical copilots requiring maximum reliability and depth.',
+    input: 'Text, Code',
+    output: 'Text',
+    contextWindow: '1,000,000',
+    maxOutputTokens: '32,000',
+    knowledgeCutoff: 'June 1, 2024',
+  },
+  {
+    model: 'gpt-4.1-mini',
+    best: 'Mid-complexity workflows: documentation QA, data summarization, low-latency coding copilots, or iterative product feedback systems.',
+    input: 'Text, Code',
+    output: 'Text',
+    contextWindow: '1,000,000',
+    maxOutputTokens: '32,000',
+    knowledgeCutoff: 'June 1, 2024',
+  },
+  {
+    model: 'gpt-4.1-nano',
+    best: 'Autocomplete, message classification, semantic search ranking, basic natural-language logic tasks, and embedded AI tools. Ideal for speed-critical micro-agents.',
+    input: 'Text',
+    output: 'Text',
+    contextWindow: '1,000,000',
+    maxOutputTokens: '32,000',
+    knowledgeCutoff: 'June 1, 2024',
+  },
+  {
+    model: 'gpt-image-1',
+    best: 'Generation and editing of photorealistic and stylized images for commercial use, web design, social media, and creative applications. It excels at following detailed instructions, rendering precise text within images, and agent tasks involving the comprehension of visual designs.',
+    input: 'Text, Image',
+    output: 'Image',
+    contextWindow: '',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+]
+
+export const anthropicModels = [
+  {
+    model: 'claude-sonnet-4.5',
+    best: 'Enterprise copilots, advanced coding and debugging, legal/financial document analysis, product and design QA, structured reasoning tasks. Ideal when you want high intelligence at practical scale.',
+    input: 'Text, Image, Code',
+    output: 'Text / JSON (API)',
+    contextWindow: '200,000',
+    maxOutputTokens: '64,000',
+    knowledgeCutoff: 'January 1, 2025',
+  },
+  {
+    model: 'claude-haiku-4.5',
+    best: 'High-throughput chatbots, customer support automation, RAG summarizers, quick document Q&A, or embedded assistants where speed and affordability matter most.',
+    input: 'Text, image',
+    output: 'Text / JSON (API)',
+    contextWindow: '200,000',
+    maxOutputTokens: '64,000',
+    knowledgeCutoff: 'February 1, 2025',
+  },
+  {
+    model: 'claude-sonnet-4',
+    best: 'Deep document analysis (legal, technical, research) with embedded visuals, large-scale design system validation, long historical chat/session review, and knowledge-base copilots that need persistent memory across massive inputs.',
+    input: 'Text, Image, Code',
+    output: 'Text',
+    contextWindow: '',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+  {
+    model: 'claude-opus-4.1',
+    best: 'Strategic decision-making, in-depth research, advanced coding and debugging, legal/financial/technical analysis, high-stakes content generation (contracts, reports, product strategy docs). Best when quality > cost/latency.',
+    input: 'Text, Image, Code',
+    output: 'Text',
+    contextWindow: '200,000',
+    maxOutputTokens: '32,000',
+    knowledgeCutoff: 'March 1, 2025',
+  },
+  {
+    model: 'claude-opus-4',
+    best: 'Strategic and analytical tasks where precision, reasoning depth, and interpretability matter most — e.g., legal or financial analysis, multi-step research, technical documentation, and advanced coding/debugging workflows.',
+    input: 'Text, Image, Code',
+    output: 'Text',
+    contextWindow: '200,000',
+    maxOutputTokens: '32,000',
+    knowledgeCutoff: 'March 1, 2025',
+  },
+  {
+    model: 'claude-3.7-sonnet',
+    best: 'Agents with tools and deep reasoning with “extended thinking” and efficient tool use in tokens.',
+    input: 'Text, Image, Code',
+    output: 'Text',
+    contextWindow: '200,000',
+    maxOutputTokens: '64,000',
+    knowledgeCutoff: 'October 1, 2024',
+  },
+  {
+    model: 'claude-3.5-sonnet',
+    best: 'General enterprise copilots, technical writing, product documentation, Figma/UI reviews, code explanation and debugging. Ideal when you need smart but affordable reasoning.',
+    input: 'Text, Image, Code',
+    output: 'Text',
+    contextWindow: '200,000',
+    maxOutputTokens: '8,192',
+    knowledgeCutoff: 'April 1, 2024',
+  },
+  {
+    model: 'claude-3.5-haiku',
+    best: 'Real-time assistants, chatbots, RAG queries, customer support, lightweight summarization, or any latency-sensitive app.',
+    input: 'Text, Image',
+    output: 'Text',
+    contextWindow: '200,000',
+    maxOutputTokens: '8,192',
+    knowledgeCutoff: 'July 1, 2024',
+  }
+]
+
+export const googleModels = [
+  {
+    model: 'gemini-2.5-pro',
+    best: 'Long-context processing: legal contracts spanning thousands of pages, large codebases, academic research, reviewing historical chat/log data. Ideal for copilots that need to “remember” or reason over very large corpora.',
+    input: 'Text, Image, Audio, Video, Code',
+    output: 'Text',
+    contextWindow: '',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+  {
+    model: 'gemini-2.5-flash',
+    best: 'Low latency/high throughput for chat, summarization, and multimodal extraction at a lower cost.',
+    input: 'Text, Image, Audio, Video, Code',
+    output: 'Text, Image, Audio, Video, Code',
+    contextWindow: '1,048,576',
+    maxOutputTokens: '65,536',
+    knowledgeCutoff: 'January 1, 2025',
+  },
+  {
+    model: 'gemini-2.5-flash-image',
+    best: 'Fast and cost-effective text-to-image generation, iterative image editing, and visual asset creation for marketing, design, and creative workflows.',
+    input: 'Text, Image',
+    output: 'Image',
+    contextWindow: '',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+  {
+    model: 'gemini-2.5-flash-lite',
+    best: 'High-throughput, latency-sensitive tasks: chatbots with large user volumes, quick autocomplete, real-time customer support, fast retrieval-augmented generation (RAG), and mobile/embedded use cases where cost and speed matter more than depth.',
+    input: 'Text, Image, Audio',
+    output: 'Text, Audio',
+    contextWindow: '1,000,000',
+    maxOutputTokens: '64,000',
+    knowledgeCutoff: 'January 1, 2025',
+  },
+  {
+    model: 'gemini-2.0-flash',
+    best: 'High-volume workflows: customer interaction, summarization, data extraction, and fast-response agents. Good when you need speed with decent reasoning.',
+    input: 'Text, Image, Audio, Video, Code',
+    output: 'Text, Image, Audio',
+    contextWindow: '1,000,000',
+    maxOutputTokens: '8,000',
+    knowledgeCutoff: 'August 1, 2024',
+  },
+  {
+    model: 'gemini-2.0-flash-lite',
+    best: 'Mobile or embedded copilots, lightweight RAG, chatbots, autocomplete, and fast contextual lookups where cost and response time are more critical than complex reasoning.',
+    input: 'Text, Image, Audio',
+    output: 'Text',
+    contextWindow: '1,000,000',
+    maxOutputTokens: '8,000',
+    knowledgeCutoff: 'February 5, 2025',
+  },
+]
+
 <div className="w-full">
   <table className="w-full text-sm">
-    <thead className="bg-zinc-900/60 text-zinc-300">
+    <thead className="dark:bg-zinc-900/60 text-zinc-300">
       <tr>
         <th className="px-2 py-1 font-semibold text-left">Model</th>
         <th className="px-2 py-1 font-semibold text-left">Best For</th>
@@ -17,373 +253,116 @@ mode: 'wide'
       </tr>
     </thead>
     <tbody className="divide-y divide-zinc-800">
-      <tr className="hover:bg-zinc-900/40">
-        <td className="px-2 py-1">
-          <span
-            className={
-              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
-            }
-            style={{ backgroundColor: '#00695533', color: '#4FC6AF' }}
-          >
-            gpt-5
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>
-            Enterprise-grade copilots, advanced software development, strategic
-            research, product/financial/legal analysis, high-quality multimodal
-            content generation. Best when you need maximum depth and
-            reliability.
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text, Image</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text / JSON (API)</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>400,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>128,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>September 30, 2024</span>
-        </td>
-      </tr>
+      {openAIModels.map(model => {
+        return (
+          <tr className="hover:bg-zinc-900/40">
+            <td className="px-2 py-1">
+              <span
+                className={
+                  'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium'
+                }
+                style={{ backgroundColor: '#00695533', color: '#4FC6AF' }}
+              >
+                {model.model}
+              </span>
+            </td>
+            <td className="px-2 py-1">
+              <span>
+                {model.best}
+              </span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.input}</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.output}</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.contextWindow} tokens</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.maxOutputTokens} tokens</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.knowledgeCutoff}</span>
+            </td>
+          </tr>
+        )
+      })}
 
-    <tr className="hover:bg-zinc-900/40">
-        <td className="px-2 py-1">
-          <span
-            className={
-              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
-            }
-            style={{ backgroundColor: '#00695533', color: '#4FC6AF' }}
-          >
-            gpt-5-mini
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>
-            A lighter and faster variant of GPT-5. Preserves strong reasoning and coding ability, but optimized for lower latency and cost. Good balance between performance and efficiency.
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text, Image</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text / JSON (API)</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>400,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>128,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>May 30, 2024</span>
-        </td>
-    </tr>
+      {anthropicModels.map(model => {
+        return (
+          <tr className="hover:bg-zinc-900/40">
+            <td className="px-2 py-1">
+              <span
+                className={
+                  'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium'
+                }
+                style={{ backgroundColor: '#7F431B33', color: '#DD9464' }}
+              >
+                {model.model}
+              </span>
+            </td>
+            <td className="px-2 py-1">
+              <span>
+                {model.best}
+              </span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.input}</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.output}</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.contextWindow} tokens</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.maxOutputTokens} tokens</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.knowledgeCutoff}</span>
+            </td>
+          </tr>
+        )
+      })}
 
-    <tr className="hover:bg-zinc-900/40">
-        <td className="px-2 py-1">
-          <span
-            className={
-              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
-            }
-            style={{ backgroundColor: '#00695533', color: '#4FC6AF' }}
-          >
-            gpt-5-nano
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>
-            Real-time assistants, mobile/edge use cases, autocomplete, customer service chat, high-volume RAG queries. Best when cost + speed > deep reasoning.
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text, Image</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text / JSON (API)</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>400,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>128,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>May 30, 2024</span>
-        </td>
-    </tr>
-
-    <tr className="hover:bg-zinc-900/40">
-        <td className="px-2 py-1">
-          <span
-            className={
-              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
-            }
-            style={{ backgroundColor: '#7F431B33', color: '#DD9464' }}
-          >
-            claude-sonnet-4V 200K-
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>
-            Product/design reviews with screenshots, Figma/UI audits, general enterprise copilots, data analysis, and multimodal reasoning (documents + images). Good fit when prompts are large but manageable `(<200k)`.
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text, Image</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>200,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>64,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>March 01, 2025</span>
-        </td>
-    </tr>
-
-    <tr className="hover:bg-zinc-900/40">
-        <td className="px-2 py-1">
-          <span
-            className={
-              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
-            }
-            style={{ backgroundColor: '#7F431B33', color: '#DD9464' }}
-          >
-            claude-sonnet-4V 200K+
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>
-            Deep document analysis (legal, technical, research) with embedded visuals, large-scale design system validation, long historical chat/session review, and knowledge-base copilots that need persistent memory across massive inputs.
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text, Image</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text</span>
-        </td>
-        <td className="px-2 py-1">
-          <span></span>
-        </td>
-        <td className="px-2 py-1">
-          <span></span>
-        </td>
-        <td className="px-2 py-1">
-          <span></span>
-        </td>
-    </tr>
-
-    <tr className="hover:bg-zinc-900/40">
-        <td className="px-2 py-1">
-          <span
-            className={
-              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
-            }
-            style={{ backgroundColor: '#7F431B33', color: '#DD9464' }}
-          >
-            claude-opus-4
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>
-            Strategic decision-making, in-depth research, advanced coding and debugging, legal/financial/technical analysis, high-stakes content generation (contracts, reports, product strategy docs). Best when quality > cost/latency.
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text, Image</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>200,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>32,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>March 01, 2025</span>
-        </td>
-    </tr>
-
-    <tr className="hover:bg-zinc-900/40">
-        <td className="px-2 py-1">
-          <span
-            className={
-              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
-            }
-            style={{ backgroundColor: '#7F431B33', color: '#DD9464' }}
-          >
-            claude-3.7-sonnet
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>
-            Agents with tools and deep reasoning with “extended thinking” and efficient tool use in tokens.
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text, Image</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>200,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>64,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>October 01, 2024</span>
-        </td>
-    </tr>
-
-    <tr className="hover:bg-zinc-900/40">
-        <td className="px-2 py-1">
-          <span
-            className={
-              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
-            }
-            style={{ backgroundColor: '#6C30C740', color: '#979BF5' }}
-          >
-            gemini-2.5-pro (≤200k prompt)
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>
-            General enterprise and product use cases: data analysis, software development, QA agents, Figma/GitHub/Jira copilots, complex writing. Suitable for most workflows requiring long prompts but not ultra-large contexts.
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text, Image, Audio, Video, Code</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>1,000,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>65,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>January 01, 2025</span>
-        </td>
-    </tr>
-
-    <tr className="hover:bg-zinc-900/40">
-        <td className="px-2 py-1">
-          <span
-            className={
-              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
-            }
-            style={{ backgroundColor: '#6C30C740', color: '#979BF5' }}
-          >
-            gemini-2.5-pro (>200k prompt)
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>
-            Long-context processing: legal contracts spanning thousands of pages, large codebases, academic research, reviewing historical chat/log data. Ideal for copilots that need to “remember” or reason over very large corpora.
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text, Image, Audio, Video, Code</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text</span>
-        </td>
-        <td className="px-2 py-1">
-          <span></span>
-        </td>
-        <td className="px-2 py-1">
-          <span></span>
-        </td>
-        <td className="px-2 py-1">
-          <span></span>
-        </td>
-    </tr>
-
-    <tr className="hover:bg-zinc-900/40">
-        <td className="px-2 py-1">
-          <span
-            className={
-              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
-            }
-            style={{ backgroundColor: '#6C30C740', color: '#979BF5' }}
-          >
-            gemini-2.5-flash
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>
-            Low latency/high throughput for chat, summarization, and multimodal extraction at a lower cost.
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text, Image, Audio, Video, Code</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>1,048,576 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>65,536 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>January 01, 2025</span>
-        </td>
-    </tr>
-
-    <tr className="hover:bg-zinc-900/40">
-        <td className="px-2 py-1">
-          <span
-            className={
-              'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium '
-            }
-            style={{ backgroundColor: '#6C30C740', color: '#979BF5' }}
-          >
-            gemini-2.5-flash-lite
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>
-            High-throughput, latency-sensitive tasks: chatbots with large user volumes, quick autocomplete, real-time customer support, fast retrieval-augmented generation (RAG), and mobile/embedded use cases where cost and speed matter more than depth.
-          </span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text, Image, Audio, Video, Code</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>Text</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>1,000,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>64,000 tokens</span>
-        </td>
-        <td className="px-2 py-1">
-          <span>January 01, 2025</span>
-        </td>
-    </tr>
-
+      {googleModels.map(model => {
+        return (
+          <tr className="hover:bg-zinc-900/40">
+            <td className="px-2 py-1">
+              <span
+                className={
+                  'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium'
+                }
+                style={{  backgroundColor: '#6C30C740', color: '#979BF5' }}
+              >
+                {model.model}
+              </span>
+            </td>
+            <td className="px-2 py-1">
+              <span>
+                {model.best}
+              </span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.input}</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.output}</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.contextWindow} tokens</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.maxOutputTokens} tokens</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.knowledgeCutoff}</span>
+            </td>
+          </tr>
+        )
+      })}
     </tbody>
-
   </table>
 </div>
