@@ -6,417 +6,96 @@ icon: 'rocket'
 
 Welcome to Hicap. Our guided onboarding will walk you through everything you need to start leveraging your network and making the most of your resources.
 
-{/* <span>Already have an account?</span>
-<br />
-<span>jump ahead to the <a href="#" style={{ color: '#19F7D3' }}>developer quickstart</a></span> */}
-
-## 1. Create an account
-
-Visit [hicap.ai/signin](https://dashboard.hicap.dev/) and choose the login method that works best for you. Follow the prompts to set up your account and get started.
-
-<span className="text-white font-bold">Go to this link</span>
-
-```mdx
-https://dashboard.hicap.dev/
-```
-
-<div
-  className="flex justify-center"
-  style={{ width: '100%', height: '100%', backgroundColor: '#F8F8F8' }}
->
-  <img
-    src="/images/quickstart/step-1.png"
-    alt="Create an account"
-    height="400"
-    width="400"
-    className="rounded-lg"
-  />
-</div>
-
-<Note>
-  #### <span className='text-white'>Wanna join your team?</span>
-
-  If someone on your team invited you, check your email and follow the invitation link to join your workspace
-</Note>
-
-<br/>
-
-<span className="text-white font-bold">Enter Your Company Information</span>
-
-Provide your company name, main contact details, and basic address information. This helps set up your workspace and ensures everything is ready for your team to start using Hicap.
-
-
-<img
-  src="/images/quickstart/step-1.1.png"
-  alt="Welcome to Hicap"
-  height="700"
-  width="700"
-  className="rounded-lg"
-/>
-
----
-
-## 2. Create Your First Connection
+## Install the OpenAI SDK and Run an API Call
 
 <Tabs>
-  <Tab title="Step-by-step">
-  
-  #### What is a connection?
+  <Tab title="Javascript">
+    To use the Hicap API in server-side JavaScript environments like Node.js, Deno, or Bun, you can use the official [OpenAI SDK for TypeScript and JavaScript](https://github.com/openai/openai-node). Get started by installing the SDK using [npm](https://www.npmjs.com/) or your preferred package manager:
 
-  A connection in Hicap is the link between your system and our platform. When you create a connection, you give it a name and we generate your API keys. These keys allow your system to communicate securely with Hicap.
-  
-  By creating a connection, you get a <strong>secure and unique way to send and receive data with Hicap</strong>. This is the foundation for testing, integrating, and eventually letting your users access the features you provide through our platform.
+    ```bash Install the OpenAI SDK with npm
+    npm install openai
+    ```
 
-  #### Create Connection
+    With the OpenAI SDK installed, create a file called `example.mjs` and copy the example code into it:
 
-  Set up your first connection by entering basic information such as a name and description.
+    ```javascript example.mjs
+    import OpenAI from "openai";
 
-  <div
-    className="flex justify-center"
-    style={{ width: '100%', height: '100%', backgroundColor: '#F8F8F8' }}
-  >
-    <img
-      src="/images/quickstart/step-2.1.png"
-      alt="Welcome to Hicap"
-      height="400"
-      width="400"
-      className="rounded-lg"
-    />
-  </div>
+    const apiKey = "YOUR-API-KEY";
 
-  Then, create your first Key. With this step, you can immediately start using the Starter plan in <strong>test mode</strong>. This allows you to test if your connection works, but it will not enable your users to consume tokens yet.
-  
-  <div
-    className="flex justify-center"
-    style={{ width: '100%', height: '100%', backgroundColor: '#F8F8F8' }}
-  >
-    <img
-      src="/images/quickstart/step-2.2.png"
-      alt="Welcome to Hicap"
-      height="500"
-      width="500"
-      className="rounded-lg"
-    />
-  </div>
+    const client = new OpenAI({
+      baseURL: "https://api.hicap.ai/v2/openai",
+      apiKey: apiKey,
+      defaultHeaders: { "api-key": apiKey },
+    });
 
-  {/* <Note>
-    #### Unlock the production environments
+    const response = await client.chat.completions.create({
+      model: "gpt-5",
+      messages: [{
+        role: "user",
+        content: "Hello World",
+        name: "developer"
+      }],
+    });
 
-    To unlock production environments such as Pay as you go, Managed-Premium, or Standard, you will need to add funds to your account. [Learn how to do it here](#)
-  </Note> */}
+    console.log(response.choices[0].message.content);
+    ```
 
-  #### Confirm your setup
-
-  Once you have created your connection and Key, you will see a summary of your operation, including your Primary Key and Secondary Key. These keys are essential for integrating Hicap with your system.
-
-  <strong>Use the Primary Key</strong> to establish the main connection, and keep <strong>the Secondary Key as a backup for security</strong> or recovery purposes. Enter these keys into your system according to your integration setup to start testing and using your connection with Hicap.
-
-  Tip: Keep your keys secure and do not share them publicly.
-
-  <div
-    className="flex justify-center"
-    style={{ width: '100%', height: '100%', backgroundColor: '#F8F8F8' }}
-  >
-    <img
-      src="/images/quickstart/step-2.3.png"
-      alt="Welcome to Hicap"
-      height="500"
-      width="500"
-      className="rounded-lg"
-    />
-  </div>
+    Execute the code with `node example.mjs` (or the equivalent command for Deno or Bun). In a few moments, you should see the output of your API request.
   </Tab>
-  {/* <Tab title="Video Tutorials">
-    #### ¿What is a connection?
+  <Tab title="Python">
+    To use the Hicap API in Python, you can use the official [OpenAI SDK for Python](https://github.com/openai/openai-python). Get started by installing the SDK using [pip](https://pypi.org/project/pip/):
 
-    A connection in Hicap is the link between your system and our platform. When you create a connection, you give it a name and we generate your API keys. These keys allow your system to communicate securely with Hicap.
-  
-    By creating a connection, you get a <strong>secure and unique way to send and receive data with Hicap</strong>. This is the foundation for testing, integrating, and eventually letting your users access the features you provide through our platform.
-
-    <iframe
-      className="w-full aspect-video rounded-xl"
-      src="https://www.youtube.com/embed/XQu8TTBmGhA"
-      title="Create your first connection"
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    />
-
-    <Note>
-      #### Unlock the production environments
-
-      To unlock production environments such as Pay as you go, Managed-Premium, or Standard, you will need to add funds to your account. [Learn how to do it here](#)
-    </Note>
-
-    #### Confirm your setup
-
-    Once you have created your connection and Key, you will see a summary of your operation, including your Primary Key and Secondary Key. These keys are essential for integrating Hicap with your system.
-
-    <strong>Use the Primary Key</strong> to establish the main connection, and keep <strong>the Secondary Key as a backup for security</strong> or recovery purposes. Enter these keys into your system according to your integration setup to start testing and using your connection with Hicap.
-
-    Tip: Keep your keys secure and do not share them publicly.
-
-    <iframe
-      className="w-full aspect-video rounded-xl"
-      src="https://www.youtube.com/embed/XQu8TTBmGhA"
-      title="Create your first connection"
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    />
-  </Tab> */}
-</Tabs>
-
----
-
-## 3. Dev Quickstart / VSC Implementation
-
-<Tabs>
-  <Tab title="Step-by-step">
-  Now let's connect your product with Hicap's API
-
-  #### Connect with your API keys
-
-  <img
-      src="/images/quickstart/step-3.png"
-      alt="Welcome to Hicap"
-      height="800"
-      width="800"
-      className="rounded-lg"
-  />
-
-  ### Install Dependencies
-  Install the OpenAI SDK using pip (Requires: Python >=3.8):
-
-  <CodeGroup>
-    ```python python
+    ```bash Install the OpenAI SDK with pip
     pip install openai
     ```
-  </CodeGroup>
 
-  ### Authenticating using Hicap Endpoint and API KEY
-  To create a client with the OpenAI SDK using an API key, initialize the client by passing your API key to the SDK's configuration. This allows you to authenticate and interact with OpenAI's services seamlessly
+    With the OpenAI SDK installed, create a file called `example.py` and copy the example code into it:
 
-  <CodeGroup>
-
-    ```python python
-    import os
+    ```python example.py
     from openai import OpenAI
+
+    api_key = "YOUR-API-KEY"
 
     client = OpenAI(
       base_url="https://api.hicap.ai/v2/openai",
-      api_key="<API_KEY>"
-    )
-    ```
-  </CodeGroup>
-
-  ### Code Sample
-  This sample demonstrates a basic call to the chat completion API. The call is synchronous.
-
-  <CodeGroup>
-
-    ```python python
-    import os
-    from openai import OpenAI
-
-    endpoint = "https://api.hicap.ai/v2/openai"
-    deployment = "gpt-4"
-
-    subscription_key = "<your-api-key>"
-
-    client = OpenAI(
-      base_url=endpoint,
-      api_key=subscription_key,
+      api_key=api_key,
+      default_headers={ "api-key": api_key },
     )
 
     response = client.chat.completions.create(
-      messages=[
-        {
-          "role": "system",
-          "content": "You are a helpful assistant.",
-        },
-        {
-          "role": "user",
-          "content": "I am going to Paris, what should I see?",
-        }
-      ],
-      max_tokens=4096,
-      temperature=1.0,
-      top_p=1.0,
-      model=deployment
+      model="gpt-5",
+      messages=[{
+        "role": "user",
+        "content": "Hello World",
+        "name": "developer"
+      }],
     )
 
     print(response.choices[0].message.content)
     ```
-  </CodeGroup>
+
+    Execute the code with `python example.py`. In a few moments, you should see the output of your API request.
   </Tab>
-  {/* <Tab title="Video Tutorials">
-    Now lets conect your product with Hicap's API
+  <Tab title="Curl">
+    To use the Hicap API using curl just use the follow code in your terminal.
 
-    <iframe
-      className="w-full aspect-video rounded-xl"
-      src="https://www.youtube.com/embed/XQu8TTBmGhA"
-      title="Create your first connection"
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    />
-  </Tab> */}
-</Tabs>
-
----
-
-## 4. Test Mode vs Production mode
-
-<Tabs>
-  <Tab title="Step-by-step">
-    <div
-      className="flex justify-center"
-      style={{ width: '100%', height: '100%', backgroundColor: '#F8F8F8' }}
-    >
-      <img
-        src="/images/quickstart/step-4.png"
-        alt="Welcome to Hicap"
-        height="550"
-        width="550"
-        className="rounded-lg"
-      />
-    </div>
-
-    #### What is Test Mode?
-
-    In Test Mode (available with the Starter plan), you can create connections, generate API keys, and run test requests to verify that your integration works as expected. Test Mode is perfect for development and debugging because no real tokens are consumed by your end users.
-  
-    #### What is Production Mode?
-
-    In Production Mode, your connections are live. End users can start consuming tokens through your integration, and usage will be billed according to your selected plan. To unlock Production Mode, you need to add credits or funds to your Hicap account.
-  
-    {/* <Note>
-      #### Fund your account to unlock Production Mode
-
-      [Learn how to add credits to your account](#) or [See our pricing plans](#)
-    </Note> */}
+    ```bash example
+    curl --request POST \
+    --url https://api.hicap.ai/v2/openai/chat/completions \
+    --header 'Content-Type: application/json' \
+    --header 'api-key: YOUR-API-KEY' \
+    --data '{
+      "model": "gpt-5",
+      "messages": [
+        {
+          "content": "Hello World",
+          "role": "user",
+          "name": "developer"
+        }
+      ]
+    }'
+    ```
+    Press enter in your terminal. In a few moments, you should see the output of your API request.
   </Tab>
-  {/* <Tab title="Video Tutorials">
-    #### What is Test Mode?
-
-    In Test Mode (available with the Starter plan), you can create connections, generate API keys, and run test requests to verify that your integration works as expected. Test Mode is perfect for development and debugging because no real tokens are consumed by your end users.
-  
-    #### What is Production Mode?
-
-    In Production Mode, your connections are live. End users can start consuming tokens through your integration, and usage will be billed according to your selected plan. To unlock Production Mode, you need to add credits or funds to your Hicap account.
-  
-    <iframe
-      className="w-full aspect-video rounded-xl"
-      src="https://www.youtube.com/embed/XQu8TTBmGhA"
-      title="Create your first connection"
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    />
-
-    <Note>
-      #### Fund your account to unlock Production Mode
-
-      [Learn how to add credits to your account](#) or [See our pricing plans](#)
-    </Note>
-  </Tab> */}
 </Tabs>
-
----
-
-## 5. How to Add Funds to Your Account
-
-<Tabs>
-  <Tab title="Step-by-step">
-    1. Click on the available credits indicator or on Upgrade now to start adding funds to your account.
-
-    <div
-      className="flex justify-center"
-      style={{ width: '100%', height: '100%', backgroundColor: '#F8F8F8' }}
-    >
-      <img
-        src="/images/quickstart/step-5.1.png"
-        alt="Welcome to Hicap"
-        height="500"
-        width="500"
-        className="rounded-lg"
-      />
-    </div>
-
-    <br/>
-    2. Select the amount of credits you want to add. If you wish, you can enable auto-recharge so that your balance is automatically topped up when it falls below a set threshold.
-
-    <div
-      className="flex justify-center"
-      style={{ width: '100%', height: '100%', backgroundColor: '#F8F8F8' }}
-    >
-      <img
-        src="/images/quickstart/step-5.2.png"
-        alt="Welcome to Hicap"
-        height="500"
-        width="500"
-        className="rounded-lg"
-      />
-    </div>
-
-    <br/>
-    3. Once you've chosen the amount, select your preferred payment method. We accept credit cards and bank transfers via Plaid.
-
-    <div
-      className="flex justify-center"
-      style={{ width: '100%', height: '100%', backgroundColor: '#F8F8F8' }}
-    >
-      <img
-        src="/images/quickstart/step-5.3.png"
-        alt="Welcome to Hicap"
-        height="500"
-        width="500"
-        className="rounded-lg"
-      />
-    </div>
-
-    <br/>
-    4. After the payment is confirmed, you'll receive a notification letting you know that your connection is now ready to run in Production Mode.
-
-    
-    <img
-      src="/images/quickstart/step-5.4.png"
-      alt="Welcome to Hicap"
-      height="700"
-      width="700"
-      className="rounded-lg"
-    />
-
-    <br/>
-    5. You can adjust your connection settings anytime from the Connections section.
-
-    
-    <img
-      src="/images/quickstart/step-5.5.png"
-      alt="Welcome to Hicap"
-      height="700"
-      width="700"
-      className="rounded-lg"
-    />
-  </Tab>
-  {/* <Tab title="Video Tutorials">
-    Adding funds to your Hicap account unlocks Production Mode, giving your users real access to tokens and features. With flexible payment options and auto-reload, you’ll never have to worry about interruptions.
-  
-    <iframe
-      className="w-full aspect-video rounded-xl"
-      src="https://www.youtube.com/embed/XQu8TTBmGhA"
-      title="Create your first connection"
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    />
-
-    <Note>
-      #### Fund your account to unlock Production Mode
-
-      [Learn how to add credits to your account](#) or [See our pricing plans](#)
-    </Note>
-  </Tab> */}
-</Tabs>
----
