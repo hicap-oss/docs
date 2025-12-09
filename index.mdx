@@ -7,6 +7,9 @@ icon: 'compass'
 import React from 'react'
 
 export const rows = [
+  { provider: 'OpenAI', model: 'gpt-5.1', href: '/providers/openai#gpt-5.1' },
+  { provider: 'OpenAI', model: 'gpt-5.1-codex', href: '/providers/openai#gpt-5.1-codex' },
+  { provider: 'OpenAI', model: 'gpt-5.1-chat', href: '/providers/openai#gpt-5.1-chat-latest' },
   { provider: 'OpenAI', model: 'gpt-5', href: '/providers/openai#gpt-5' },
   { provider: 'OpenAI', model: 'gpt-5-chat', href: '/providers/openai#gpt-5-chat' },
   { provider: 'OpenAI', model: 'gpt-5-codex', href: '/providers/openai#gpt-5-codex' },
@@ -21,13 +24,15 @@ export const rows = [
 
   { provider: 'Anthropic', model: 'claude-sonnet-4.5', href: '/providers/anthropic#claude-sonnet-4-5' },
   { provider: 'Anthropic', model: 'claude-haiku-4.5', href: '/providers/anthropic#claude-haiku-4-5' },
-  { provider: 'Anthropic', model: 'claude-sonnet-4', href: '/providers/anthropic#claude-sonnet-4' },
+  { provider: 'Anthropic', model: 'claude-opus-4.5', href: '/providers/anthropic#claude-opus-4-5' },
   { provider: 'Anthropic', model: 'claude-opus-4.1', href: '/providers/anthropic#claude-opus-4-1' },
+  { provider: 'Anthropic', model: 'claude-sonnet-4', href: '/providers/anthropic#claude-sonnet-4' },
   { provider: 'Anthropic', model: 'claude-opus-4', href: '/providers/anthropic#claude-opus-4' },
   { provider: 'Anthropic', model: 'claude-3.7-sonnet', href: '/providers/anthropic#claude-3-7-sonnet' },
   { provider: 'Anthropic', model: 'claude-3.5-sonnet', href: '/providers/anthropic#claude-3-5-sonnet' },
   { provider: 'Anthropic', model: 'claude-3.5-haiku', href: '/providers/anthropic#claude-3-5-haiku' },
 
+  { provider: 'Google Gemini', model: 'gemini-3-pro-preview', href: '/providers/google#gemini-3-pro-preview' },
   { provider: 'Google Gemini', model: 'gemini-2.5-pro', href: '/providers/google#gemini-2-5-pro' },
   { provider: 'Google Gemini', model: 'gemini-2.5-flash', href: '/providers/google#gemini-2-5-flash' },
   { provider: 'Google Gemini', model: 'gemini-2.5-flash-image', href: '/providers/google#gemini-2-5-flash-image' },
