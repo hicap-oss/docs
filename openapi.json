@@ -267,7 +267,7 @@
     },
     "/chat/completions": {
       "post": {
-        "summary": "Creates a completion for the chat message",
+        "summary": "Creates a model response for the given chat conversation",
         "operationId": "ChatCompletions_Create",
         "requestBody": {
           "required": true,
@@ -3260,9 +3260,20 @@
             }
           },
           "user": {
-            "description": "A unique identifier representing your end-user, which can help Azure OpenAI to monitor and detect abuse.",
+            "description": "A unique identifier representing your end-user, which can help Azure OpenAI to monitor and detect abuse. This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations. A stable identifier for your end-users. Used to boost cache hit rates by better bucketing similar requests and to help OpenAI detect and prevent abuse.",
             "type": "string",
             "example": "user-1234",
+            "nullable": false,
+            "deprecated": true
+          },
+          "safety_identifier": {
+            "description": "A stable identifier used to help detect users of your application that may be violating OpenAI's usage policies. The IDs should be a string that uniquely identifies each user. We recommend hashing their username or email address, in order to avoid sending us any identifying information.",
+            "type": "string",
+            "nullable": false
+          },
+          "prompt_cache_key": {
+            "description": "Used by OpenAI to cache responses for similar requests to optimize your cache hit rates. Replaces the `user` field.",
+            "type": "string",
             "nullable": false
           }
         }
@@ -3542,7 +3553,7 @@
           {
             "properties": {
               "messages": {
-                "description": "A list of messages comprising the conversation so far. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_format_inputs_to_ChatGPT_models.ipynb).",
+                "description": "A list of messages comprising the conversation so far. Depending on the model you use, different message types (modalities) are supported, like text, images, and audio.",
                 "type": "array",
                 "minItems": 1,
                 "items": {
@@ -3661,7 +3672,7 @@
                 "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.\n"
               },
               "response_format": {
-                "description": "An object specifying the format that the model must output. Compatible with [GPT-4o](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-4-and-gpt-4-turbo-models), [GPT-4o mini](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-4-and-gpt-4-turbo-models), [GPT-4 Turbo](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-4-and-gpt-4-turbo-models) and all [GPT-3.5](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-35) Turbo models newer than `gpt-3.5-turbo-1106`.\n\nSetting to `{ \"type\": \"json_schema\", \"json_schema\": {...} }` enables Structured Outputs which guarantees the model will match your supplied JSON schema.\n\nSetting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is valid JSON.\n\n**Important:** when using JSON mode, you **must** also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly \"stuck\" request. Also note that the message content may be partially cut off if `finish_reason=\"length\"`, which indicates the generation exceeded `max_tokens` or the conversation exceeded the max context length.\n",
+                "description": "An object specifying the format that the model must output.\n\nSetting to `{ \"type\": \"json_schema\", \"json_schema\": {...} }` enables Structured Outputs which guarantees the model will match your supplied JSON schema.\n\nSetting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is valid JSON.\n\n**Important:** when using JSON mode, you **must** also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly \"stuck\" request. Also note that the message content may be partially cut off if `finish_reason=\"length\"`, which indicates the generation exceeded `max_tokens` or the conversation exceeded the max context length.\n",
                 "oneOf": [
                   {
                     "$ref": "#/components/schemas/ResponseFormatText"
@@ -3680,6 +3691,7 @@
                 "minimum": -9223372036854775808,
                 "maximum": 9223372036854775807,
                 "nullable": true,
+                "deprecated": true,
                 "description": "This feature is in Beta.\nIf specified, our system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.\nDeterminism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.\n"
               },
               "stop": {
@@ -3867,8 +3879,8 @@
       },
       "ChatCompletionRequestDeveloperMessage": {
         "type": "object",
-        "title": "Instruction message (developer semantics)",
-        "description": "Instructional message that encodes developer semantics in this API. Use role=`user` and set name=`developer` to distinguish from ordinary user messages.",
+        "title": "Developer message",
+        "description": "Developer-provided instructions that the model should follow, regardless of messages sent by the user.",
         "properties": {
           "content": {
             "description": "The contents of the developer message.",
@@ -3891,24 +3903,23 @@
           },
           "role": {
             "type": "string",
-            "enum": ["user"],
-            "description": "The role of the message author. In this API, developer semantics use role `user`."
+            "enum": ["developer"],
+            "description": "The role of the messages author, in this case `developer`."
           },
           "name": {
             "type": "string",
-            "enum": ["developer"],
-            "description": "Constant marker used to disambiguate instruction/developer messages from ordinary user messages."
+            "description": "An optional name for the participant. Provides the model information to differentiate between participants of the same role."
           }
         },
         "required": [
           "content",
-          "role",
-          "name"
+          "role"
         ]
       },
       "chatCompletionRequestSystemMessage": {
         "type": "object",
         "title": "System message",
+        "description": "Developer-provided instructions that the model should follow, regardless of messages sent by the user.",
         "properties": {
           "content": {
             "description": "The contents of the system message.",
@@ -3949,6 +3960,7 @@
       "chatCompletionRequestUserMessage": {
         "type": "object",
         "title": "User message",
+        "description": "Messages sent by an end user, containing prompts or additional context information.",
         "allOf": [
           {
             "not": {
@@ -3968,7 +3980,7 @@
               },
               {
                 "type": "array",
-                "description": "An array of content parts with a defined type, each can be of type `text` or `image_url` when passing in images. You can pass multiple images by adding multiple `image_url` content parts. Image input is only supported when using the `gpt-4o` model.",
+                "description": "An array of content parts with a defined type. Supported options differ based on the model being used to generate the response. Can contain text, image, or audio inputs.",
                 "title": "Array of content parts",
                 "items": {
                   "$ref": "#/components/schemas/chatCompletionRequestUserMessageContentPart"
@@ -3998,6 +4010,7 @@
       "chatCompletionRequestAssistantMessage": {
         "type": "object",
         "title": "Assistant message",
+        "description": "Messages sent by the model in response to user messages.",
         "properties": {
           "content": {
             "nullable": true,
