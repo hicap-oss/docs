@@ -3618,7 +3618,7 @@
               },
               "reasoning_effort": {
                 "type": "string",
-                "description": "**o1 models only** \n\n Constrains effort on reasoning for \n[reasoning models](https://platform.openai.com/docs/guides/reasoning).\n\nCurrently supported values are `none`, `minimal`, `low`, `medium`, `high` and `xhigh`. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.",
+                "description": "**Reasoning-capable models only** \n\n Constrains effort on reasoning for \n[reasoning models](https://platform.openai.com/docs/guides/reasoning).\n\nCurrently supported values are `none`, `minimal`, `low`, `medium`, `high` and `xhigh`. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.",
                 "enum": [
                   "none",
                   "minimal",
