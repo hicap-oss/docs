@@ -3169,36 +3169,8 @@
         "properties": {
           "model": {
             "type": "string",
-            "description": "Model ID used to generate the response",
-            "default": "gpt-5",
-            "example": "gpt-5",
-            "enum": [
-              "gpt-5",
-              "gpt-5-chat",
-              "gpt-5-codex",
-              "gpt-5-mini",
-              "gpt-5-nano",
-              "gpt-4o",
-              "gpt-4o-mini",
-              "gpt-4.1",
-              "gpt-4.1-mini",
-              "gpt-4.1-nano",
-              "gpt-image-1",
-              "claude-sonnet-4.5",
-              "claude-haiku-4.5",
-              "claude-sonnet-4",
-              "claude-opus-4.1",
-              "claude-opus-4",
-              "claude-3.7-sonnet",
-              "claude-3.5-sonnet",
-              "claude-3.5-haiku",
-              "gemini-2.5-pro",
-              "gemini-2.5-flash",
-              "gemini-2.5-flash-image",
-              "gemini-2.5-flash-lite",
-              "gemini-2.0-flash",
-              "gemini-2.0-flash-lite"
-            ]
+            "description": "Model ID used to generate the response. See the list of [available options](/providers/table-comparison)",
+            "default": "gpt-5"
           },
           "temperature": {
             "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.\nWe generally recommend altering this or `top_p` but not both.",
@@ -3595,11 +3567,12 @@
                 "x-oaiExpandable": true,
                 "properties": {
                   "voice": {
-                    "description": "The voice the model uses to respond. Supported built-in voices are alloy, `ash`, `ballad`, `coral`, `echo`, `fable`, `nova`, `onyx`, `sage`, `shimmer`, `marin`, and `cedar`. You may also provide a custom voice object with an `id`, for example `{ 'id': 'voice_1234' }`.\n",
+                    "description": "The voice the model uses to respond. Supported built-in voices are `alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `nova`, `onyx`, `sage`, `shimmer`, `marin`, and `cedar`. You may also provide a custom voice object with an `id`, for example `{ 'id': 'voice_1234' }`.\n",
                     "oneOf": [
                       {
                         "type": "string",
                         "enum": [
+                          "alloy",
                           "ash",
                           "ballad",
                           "coral",
@@ -3659,9 +3632,7 @@
                 "default": null,
                 "nullable": true,
                 "additionalProperties": {
-                  "type": "integer",
-                  "minLength": -100,
-                  "maxLength": 100
+                  "type": "integer"
                 }
               },
               "logprobs": {
@@ -5814,7 +5785,7 @@
         "required": [
           "id",
           "type",
-          "function"
+          "custom"
         ]
       },
       "toolCallType": {
