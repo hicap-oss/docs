@@ -6716,6 +6716,7 @@
                 "description": "The type of the custom tool. Always `custom`."
               },
               "custom": {
+                "type": "object",
                 "description": "Properties of the custom tool.",
                 "properties": {
                   "name": {
