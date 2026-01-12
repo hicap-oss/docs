@@ -3517,7 +3517,8 @@
           },
           "system_fingerprint": {
             "type": "string",
-            "description": "This fingerprint represents the backend configuration that the model runs with.\n\nCan be used in conjunction with the `seed` request parameter to understand when backend changes have been made that might impact determinism.\n"
+            "description": "This fingerprint represents the backend configuration that the model runs with.\n\nCan be used in conjunction with the `seed` request parameter to understand when backend changes have been made that might impact determinism.\n",
+            "deprecated": true
           },
           "object": {
             "type": "string",
@@ -6058,7 +6059,8 @@
           },
           "system_fingerprint": {
             "type": "string",
-            "description": "This fingerprint represents the backend configuration that the model runs with.\nCan be used in conjunction with the `seed` request parameter to understand when backend changes have been made that might impact determinism.\n"
+            "description": "This fingerprint represents the backend configuration that the model runs with.\nCan be used in conjunction with the `seed` request parameter to understand when backend changes have been made that might impact determinism.\n",
+            "deprecated": true
           },
           "object": {
             "type": "string",
@@ -6329,7 +6331,10 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "description": "The type of the URL citation. Always `url_citation`."
+                  "description": "The type of the URL citation. Always `url_citation`.",
+                  "enum": [
+                    "url_citation"
+                  ]
                 },
                 "url_citation": {
                   "type": "object",
@@ -6351,7 +6356,12 @@
                       "type": "string",
                       "description": "The URL of the web resource."
                     }
-                  }
+                  },
+                  "required": [
+                    "end_index",
+                    "start_index",
+                    "url"
+                  ]
                 }
               }
             }
