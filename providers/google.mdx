@@ -3,6 +3,59 @@ title: 'Google'
 description: 'Available Models by Google (Gemini)'
 ---
 
+## gemini-3-pro-preview
+
+Gemini 3 Pro Preview is a next-generation, high-capability model focused on advanced reasoning, deep multimodal understanding, and long-context performance. As a preview release, it showcases cutting-edge improvements in analytical depth, instruction comprehension, and complex problem solving across text and multimodal inputs.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Advanced reasoning, complex multimodal workflows, research-oriented tasks, and early adoption scenarios where maximum capability and depth are prioritized over cost or latency.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Audio, Video, PDF` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 1,000,000 context window</li>
+            <li>* 64,000 max output tokens</li>
+        </ul>
+
+        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
+    </div>
+</Columns>
+
+## gemini-3-flash-preview
+
+Gemini 3 Flash is a fast and cost-efficient multimodal model designed for responsive interactions and scalable workloads. It balances solid reasoning and multimodal understanding with low latency, making it well suited for high-throughput applications.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Low-latency, high-throughput chat, summarization, and multimodal extraction in production environments where speed and cost efficiency are critical.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
+    </div>
+</Columns>
+
 ## gemini-2.5-pro
 
 Extended version of Gemini 2.5 Pro with ultra-long context support (beyond 200k tokens, reaching into the millions depending on setup). Designed to handle large documents, full repositories, or extensive datasets in a single session.
@@ -53,29 +106,6 @@ Gemini 2.5 Flash is a fast and cost-effective model that balances performance wi
             <li>* January 1, 2025 knowledge cutoff</li>
         </ul>
        
-        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
-    </div>
-</Columns>
-
-## gemini-2.5-flash-image
-
-Gemini 2.5 Flash Image (Also known as “Nano Banana”) is an efficient multimodal model optimized for high-quality image generation and editing. Built on the Gemini 2.5 Flash architecture, it enables seamless creation, enhancement, and fusion of visual content directly from text or mixed inputs. The model preserves visual coherence across edits and includes built-in SynthID watermarking for responsible image generation.
-
-<div className='text-white font-bold'>Best for:</div>
-
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
-    <span>
-    Fast and cost-effective text-to-image generation, iterative image editing, and visual asset creation for marketing, design, and creative workflows.
-    </span>
-</div>
-
-|  Input | | Output |
-| ----- | - | ------ |
-| `Text, Image` | | `Image` |
-
-
-<Columns cols={1}>
-    <div>
         Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
 </Columns>
