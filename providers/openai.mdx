@@ -3,6 +3,130 @@ title: 'OpenAI'
 description: 'Available Models by OpenAI'
 ---
 
+## gpt-5.2
+
+GPT-5.2 is a highly capable general-purpose language model designed for advanced reasoning, long-context understanding, and instruction fidelity. It delivers stable, coherent outputs across complex tasks and extended conversations, while supporting multimodal inputs for richer and more contextual responses.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Complex reasoning, long-form generation, decision support, and multimodal chat experiences where accuracy, consistency, and instruction adherence are critical.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, image` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 400,000 context window</li>
+            <li>* 128,000 max output tokens</li>
+            <li>* August 31, 2025 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
+</Columns>
+
+## gpt-5.2-chat-latest
+
+GPT-5.2 Chat is a conversationally optimized variant of GPT-5.2, designed to deliver natural, responsive, and context-aware dialogue. It emphasizes turn-by-turn coherence, low-latency interactions, and strong instruction following in chat-based environments, while retaining advanced reasoning and multimodal understanding.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Interactive chat applications, assistants, customer support, and real-time conversational experiences where responsiveness, conversational flow, and contextual continuity are essential.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, image` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 128,000 context window</li>
+            <li>* 16,384 max output tokens</li>
+            <li>* August 31, 2025 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
+</Columns>
+
+## gpt-5.1
+
+GPT-5.1 is a reliable and efficient language model that offers strong general-purpose capabilities with balanced reasoning, instruction following, and text generation. It provides consistent performance across common NLP tasks while prioritizing stability and cost efficiency.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    General-purpose text generation, summarization, content drafting, and standard chat or assistant workloads where reliability and efficiency are more important than maximum reasoning depth.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, image` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 400,000 context window</li>
+            <li>* 128,000 max output tokens</li>
+            <li>* September 30, 2024 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
+</Columns>
+
+## gpt-5.1-chat-latest
+
+GPT-5.1 Chat is a conversationally tuned language model optimized for responsive, natural dialogue and consistent instruction following. It builds on GPT-5.1’s stable core capabilities while prioritizing low-latency interactions and smooth conversational flow in chat-based applications.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Everyday chat assistants, customer support, guided interactions, and conversational interfaces where speed, clarity, and reliability are the primary requirements.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, image` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 128,000 context window</li>
+            <li>* 16,384 max output tokens</li>
+            <li>* September 30, 2024 knowledge cutoff</li>
+        </ul>
+       
+        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
+    </div>
+</Columns>
+
 ## gpt-5
 
 Full-scale flagship OpenAI model. Delivers state-of-the-art reasoning, creativity, coding, and multimodal support. Handles long contexts (hundreds of thousands of tokens) and complex workflows.
@@ -17,7 +141,7 @@ Full-scale flagship OpenAI model. Delivers state-of-the-art reasoning, creativit
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, image` | | `Text / JSON (API)` |
+| `Text, image` | | `Text` |
 
 
 <Columns cols={1}>
@@ -65,37 +189,6 @@ This use case employs OpenAI's foundational GPT-5 model (which is the default mo
     </div>
 </Columns>
 
-## gpt-5-codex
-
-A specialized version of OpenAI's GPT-5 model, optimized for automated and agent-assisted software engineering tasks. It uses dynamic reasoning to be fast at small tasks and deep at complex projects that can take hours.
-
-<div className='text-white font-bold'>Best for:</div>
-
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
-    <span>
-    Comprehensive software development, including: complete project generation, new feature development, debugging, large-scale refactoring, code review, test generation, and autonomous coding agent tasks (in CLI, IDE, or Cloud environments).
-    </span>
-</div>
-
-|  Input | | Output |
-| ----- | - | ------ |
-| `Text, Image, Code` | | `Text` |
-
-
-<Columns cols={1}>
-    <div>
-        <div className='text-white font-bold'>This model offers</div>
-
-        <ul className='mb-6'>
-            <li>* 400,000 context window</li>
-            <li>* 128,000 max output tokens</li>
-            <li>* September 30, 2024 knowledge cutoff</li>
-        </ul>
-       
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
-    </div>
-</Columns>
-
 ## gpt-5-mini
 
 A lighter and faster variant of GPT-5. Preserves strong reasoning and coding ability, but optimized for lower latency and cost. Good balance between performance and efficiency.
@@ -110,7 +203,7 @@ A lighter and faster variant of GPT-5. Preserves strong reasoning and coding abi
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, Image` | | `Text / JSON (API)` |
+| `Text, Image` | | `Text` |
 
 
 <Columns cols={1}>
@@ -141,7 +234,7 @@ Ultra-light, low-latency model. Prioritizes speed and efficiency over advanced r
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, Image` | | `Text / JSON (API)` |
+| `Text, Image` | | `Text` |
 
 
 <Columns cols={1}>
@@ -309,29 +402,6 @@ GPT-4.1 nano is the smallest, fastest, and most cost-effective option of the GPT
             <li>* June 1, 2024 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
-    </div>
-</Columns>
-
-## gpt-image-1
-
-OpenAI's most advanced image generation model. It is natively multimodal, allowing it to generate and edit high-quality images with superior contextual understanding, following complex instructions and reasoning about visual and text inputs.
-
-<div className='text-white font-bold'>Best for:</div>
-
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
-    <span>
-    Generation and editing of photorealistic and stylized images for commercial use, web design, social media, and creative applications. It excels at following detailed instructions, rendering precise text within images, and agent tasks involving the comprehension of visual designs.
-    </span>
-</div>
-
-|  Input | | Output |
-| ----- | - | ------ |
-| `Text, Image` | | `Image` |
-
-
-<Columns cols={1}>
-    <div>
         Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>

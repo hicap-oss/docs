@@ -17,7 +17,7 @@ Latest mid-to-high tier Claude model (successor to 3.5-Sonnet) that delivers nea
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, Image, Code` | | `Text / JSON (API)` |
+| `Text, Image, Code` | | `Text` |
 
 
 <Columns cols={1}>
@@ -48,7 +48,7 @@ Lightweight, fastest Claude 4.5 variant, designed for real-time inference and ve
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, Image` | | `Text / JSON (API)` |
+| `Text, Image` | | `Text` |
 
 
 <Columns cols={1}>
@@ -84,6 +84,37 @@ Extended version of Claude Sonnet 4V with ultra-long context support (beyond 200
 
 <Columns cols={1}>
     <div>
+        Information provided from [Claude website.](https://docs.claude.com/en/docs/about-claude/pricing)
+    </div>
+</Columns>
+
+## claude-opus-4.5
+
+Claude Opus 4.5 is a high-end reasoning and language model designed for deep analysis, nuanced understanding, and carefully structured responses. It excels at handling complex instructions, long-form content, and sensitive or high-context tasks with a strong emphasis on clarity, safety, and interpretability.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Deep reasoning, complex analysis, long-form writing, policy-heavy workflows, and high-stakes tasks where precision, context awareness, and thoughtful responses are essential.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 200,000 context window</li>
+            <li>* 64,000 max output tokens</li>
+            <li>* May 2025 knowledge cutoff</li>
+        </ul>
+
         Information provided from [Claude website.](https://docs.claude.com/en/docs/about-claude/pricing)
     </div>
 </Columns>
