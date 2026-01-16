@@ -41,9 +41,9 @@ export const rows = [
 ]
 
 export const badgeStyles = {
-  OpenAI: { backgroundColor: '#00695533', color: '#4FC6AF' },
-  Anthropic: { backgroundColor: '#7F431B33', color: '#DD9464' },
-  'Google Gemini': { backgroundColor: '#6C30C740', color: '#979BF5' },
+  OpenAI: { backgroundColor: 'light-dark(#E7FAF3, #00695533)', color: 'light-dark(#009C7A, #4FC6AF)' },
+  Anthropic: { backgroundColor: 'light-dark(#F8EFE6, #7F431B33)', color: 'light-dark(#A0623A, #DD9464)' },
+  'Google Gemini': { backgroundColor: 'light-dark(#E9E6FB, #6C30C740)', color: 'light-dark(#5E45D8, #979BF5)' },
 }
 
 export function ProviderBadge(props) {
@@ -65,7 +65,7 @@ export function ModelPill(props) {
   return (
     <span
       className="inline-flex items-center gap-3 px-3 py-1 rounded-md font-mono"
-      style={{ backgroundColor: '#0D0D0D', color: '#BF9D97' }}
+      style={{ backgroundColor: 'light-dark(#FFFFFF, #0D0D0D)', color: 'light-dark(#C27F58, #BF9D97)' }}
     >
       {props.model}
       <svg
@@ -190,32 +190,11 @@ Hicap gives you secure, enterprise-ready access to top models from OpenAI, Gemin
 <Steps>
   <Step title="Choose your model">
     Run foundation models—fully supported and instantly available.
-    <img
-        src="/images/overview/step-1.png"
-        alt="Main dashboard interface"
-        height="100"
-        width="300"
-        className="rounded-lg"
-    />
   </Step>
   <Step title="Select your capacity">
-    Lock in the compute you need, when you need it
-    <img
-        src="/images/overview/step-2.png"
-        alt="Main dashboard interface"
-        height="100"
-        width="300"
-        className="rounded-lg"
-    />
+    Lock in the compute you need, when you need it.
   </Step>
   <Step title="Connect via API">
-    Integration takes under 5 minutes with your existing stack:
-    <img
-        src="/images/overview/step-3.png"
-        alt="Main dashboard interface"
-        height="100"
-        width="300"
-        className="rounded-lg"
-    />
+    Integration takes under 5 minutes with your existing stack.
   </Step>
 </Steps>
