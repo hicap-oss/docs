@@ -24,7 +24,7 @@ Welcome to Hicap. Our guided onboarding will walk you through everything you nee
     const apiKey = "YOUR-API-KEY";
 
     const client = new OpenAI({
-      baseURL: "https://api.hicap.ai/v2/openai",
+      baseURL: "https://api.hicap.ai/v1",
       apiKey: apiKey,
       defaultHeaders: { "api-key": apiKey },
     });
@@ -58,7 +58,7 @@ Welcome to Hicap. Our guided onboarding will walk you through everything you nee
     api_key = "YOUR-API-KEY"
 
     client = OpenAI(
-      base_url="https://api.hicap.ai/v2/openai",
+      base_url="https://api.hicap.ai/v1",
       api_key=api_key,
       default_headers={ "api-key": api_key },
     )
@@ -82,7 +82,7 @@ Welcome to Hicap. Our guided onboarding will walk you through everything you nee
 
     ```bash example
     curl --request POST \
-    --url https://api.hicap.ai/v2/openai/chat/completions \
+    --url https://api.hicap.ai/v1/chat/completions \
     --header 'Content-Type: application/json' \
     --header 'api-key: YOUR-API-KEY' \
     --data '{
