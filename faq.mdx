@@ -75,11 +75,8 @@ How Hicap fits into your stack
     Hicap sits between your application and the upstream model providers. Here's the typical flow:
 
     ```
-    ┌──────────────┐     ┌─────────────┐     ┌───────────────────┐
-    │ Your App     │────▶│ Hicap API   │────▶│ Model Provider    │
-    │ (OpenAI SDK) │◀────│ api.hicap.ai│◀────│ (OpenAI/Anthropic/│
-    └──────────────┘     └─────────────┘     │  Google/etc.)     │
-                                              └───────────────────┘
+    Your App ──▶ Hicap API ──▶ Model Provider
+    (OpenAI SDK)  api.hicap.ai  (OpenAI / Anthropic / Google / etc.)
     ```
 
     1. **Your application** calls `api.hicap.ai/v1` using any standard OpenAI SDK
