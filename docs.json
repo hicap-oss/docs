@@ -96,6 +96,12 @@
       "href": "https://platform.hicap.ai/"
     }
   },
+  "redirects": [
+    {
+      "source": "/providers/table-comparison",
+      "destination": "https://hicap.ai/models"
+    }
+  ],
   "footer": {
     "socials": {
       "linkedin": "https://www.linkedin.com/company/hicapai/",
