@@ -1,125 +1,193 @@
 ---
-title: 'Hicap API Quickstart'
-description: 'Get started with the Hicap API in under 5 minutes'
+title: 'Developer Quickstart'
+description: 'Make your first Hicap API request in minutes'
 icon: 'rocket'
 ---
 
-Welcome to Hicap. The **Hicap API** is fully compatible with the OpenAI API specification — use any standard OpenAI SDK and simply point it at `https://api.hicap.ai/v1`. No proprietary client needed.
+The Hicap API gives you access to 42 foundation models from OpenAI, Anthropic, Google Gemini, and more — through a single OpenAI-compatible endpoint. Use any standard OpenAI SDK and start building in under 5 minutes.
 
-<Info>
-  **OpenAI-compatible** — The Hicap API uses the [OpenAI API spec](https://platform.openai.com/docs/api-reference). Endpoints like `/v1/chat/completions`, `/v1/embeddings`, `/v1/images/generations`, and `/v1/audio` all work as documented in the OpenAI reference. Pass any [supported model ID](https://hicap.ai/models.json) in the `model` field.
-</Info>
+[Get your API Key](https://platform.hicap.ai/)
 
-## Install the OpenAI SDK and Run Your First Hicap API Call
+## 1. Set up your API key
+
+Create an API key in the [Hicap dashboard](https://platform.hicap.ai/), then export it as an environment variable:
+
+```bash
+export HICAP_API_KEY="your_api_key_here"
+```
+
+## 2. Install an SDK and make your first request
 
 <Tabs>
-  <Tab title="Javascript">
-    To call the Hicap API from Node.js, Deno, or Bun, install the official [OpenAI SDK for TypeScript and JavaScript](https://github.com/openai/openai-node):
-
-    ```bash Install the OpenAI SDK with npm
+  <Tab title="JavaScript">
+    ```bash
     npm install openai
     ```
-
-    Create a file called `example.mjs` and copy the example code into it:
 
     ```javascript example.mjs
     import OpenAI from "openai";
 
-    const apiKey = "YOUR-HICAP-API-KEY";
-
     const client = new OpenAI({
-      baseURL: "https://api.hicap.ai/v1",  // Hicap API endpoint
-      apiKey: apiKey,
-      defaultHeaders: { "api-key": apiKey },
+      baseURL: "https://api.hicap.ai/v1",
+      apiKey: process.env.HICAP_API_KEY,
+      defaultHeaders: { "api-key": process.env.HICAP_API_KEY },
     });
 
     const response = await client.chat.completions.create({
-      model: "gpt-5",  // Any model from hicap.ai/models.json
-      messages: [{
-        role: "user",
-        content: "Hello World",
-        name: "developer"
-      }],
+      model: "gpt-5",
+      messages: [{ role: "user", content: "Write a one-sentence bedtime story about a unicorn." }],
     });
 
     console.log(response.choices[0].message.content);
     ```
 
-    Execute the code with `node example.mjs` (or the equivalent command for Deno or Bun). In a few moments, you should see the output of your Hicap API request.
+    Run with `node example.mjs`.
   </Tab>
   <Tab title="Python">
-    To call the Hicap API from Python, install the official [OpenAI SDK for Python](https://github.com/openai/openai-python):
-
-    ```bash Install the OpenAI SDK with pip
+    ```bash
     pip install openai
     ```
 
-    Create a file called `example.py` and copy the example code into it:
-
     ```python example.py
+    import os
     from openai import OpenAI
 
-    api_key = "YOUR-HICAP-API-KEY"
-
     client = OpenAI(
-      base_url="https://api.hicap.ai/v1",  # Hicap API endpoint
-      api_key=api_key,
-      default_headers={ "api-key": api_key },
+        base_url="https://api.hicap.ai/v1",
+        api_key=os.environ["HICAP_API_KEY"],
+        default_headers={"api-key": os.environ["HICAP_API_KEY"]},
     )
 
     response = client.chat.completions.create(
-      model="gpt-5",  # Any model from hicap.ai/models.json
-      messages=[{
-        "role": "user",
-        "content": "Hello World",
-        "name": "developer"
-      }],
+        model="gpt-5",
+        messages=[{"role": "user", "content": "Write a one-sentence bedtime story about a unicorn."}],
     )
 
     print(response.choices[0].message.content)
     ```
 
-    Execute the code with `python example.py`. In a few moments, you should see the output of your Hicap API request.
+    Run with `python example.py`.
   </Tab>
-  <Tab title="Curl">
-    Call the Hicap API directly with curl:
-
-    ```bash example
-    curl --request POST \
-    --url https://api.hicap.ai/v1/chat/completions \
-    --header 'Content-Type: application/json' \
-    --header 'api-key: YOUR-HICAP-API-KEY' \
-    --data '{
-      "model": "gpt-5",
-      "messages": [
-        {
-          "content": "Hello World",
-          "role": "user",
-          "name": "developer"
-        }
-      ]
-    }'
+  <Tab title="curl">
+    ```bash
+    curl -s https://api.hicap.ai/v1/chat/completions \
+      -H "Content-Type: application/json" \
+      -H "api-key: $HICAP_API_KEY" \
+      -d '{
+        "model": "gpt-5",
+        "messages": [{"role": "user", "content": "Write a one-sentence bedtime story about a unicorn."}]
+      }'
     ```
-    Press enter in your terminal. In a few moments, you should see the output of your Hicap API request.
   </Tab>
 </Tabs>
 
-## Using Other Models
+That's it. You just called the Hicap API. The same code works with any of the [42 supported models](/providers/table-comparison) — just change the `model` parameter.
 
-The Hicap API supports **42 models** across 6 providers. Simply change the `model` parameter to any supported model ID:
+---
+
+## Switch between models and providers
+
+One API, any model. Use OpenAI, Anthropic, or Gemini models through the same endpoint and SDK — no separate integrations needed.
 
 ```python
-# Use Anthropic Claude via the Hicap API
-response = client.chat.completions.create(
-    model="claude-sonnet-4.5",
-    messages=[{"role": "user", "content": "Hello from Claude via Hicap!"}],
-)
+# OpenAI
+client.chat.completions.create(model="gpt-5", messages=[...])
 
-# Use Google Gemini via the Hicap API
-response = client.chat.completions.create(
-    model="gemini-2.5-pro",
-    messages=[{"role": "user", "content": "Hello from Gemini via Hicap!"}],
-)
+# Anthropic Claude
+client.chat.completions.create(model="claude-sonnet-4.5", messages=[...])
+
+# Google Gemini
+client.chat.completions.create(model="gemini-2.5-pro", messages=[...])
+
+# Moonshot Kimi
+client.chat.completions.create(model="kimi-k2.5", messages=[...])
 ```
 
-Browse all available models and pricing at [hicap.ai/models.json](https://hicap.ai/models.json) or on the [Model Comparison](/providers/table-comparison) page.
+See all available models, context windows, and pricing → [Model Comparison](/providers/table-comparison) or [models.json](https://hicap.ai/models.json)
+
+---
+
+## Analyze images
+
+Send image URLs directly to vision-capable models:
+
+```javascript
+const response = await client.chat.completions.create({
+  model: "gpt-5",
+  messages: [{
+    role: "user",
+    content: [
+      { type: "text", text: "What is in this image?" },
+      { type: "image_url", image_url: { url: "https://example.com/photo.jpg" } },
+    ],
+  }],
+});
+
+console.log(response.choices[0].message.content);
+```
+
+---
+
+## Stream responses
+
+Use server-sent events to show results as they're generated:
+
+```javascript
+const stream = await client.chat.completions.create({
+  model: "gpt-5",
+  messages: [{ role: "user", content: "Explain quantum computing in simple terms." }],
+  stream: true,
+});
+
+for await (const chunk of stream) {
+  process.stdout.write(chunk.choices[0]?.delta?.content || "");
+}
+```
+
+---
+
+## Models
+
+Start with `gpt-5` for strong general-purpose performance, or pick a model optimized for your use case.
+
+<CardGroup cols={3}>
+  <Card title="GPT-5.4" icon="bolt" href="/providers/openai#gpt-5-4">
+    OpenAI's most capable model. 1M+ context window, top-tier reasoning.
+  </Card>
+  <Card title="Claude Opus 4.6" icon="brain" href="/providers/anthropic#claude-opus-4-6">
+    Anthropic's flagship. Deep reasoning, coding, and analysis.
+  </Card>
+  <Card title="Gemini 3.1 Pro" icon="sparkles" href="/providers/google#gemini-3-1-pro">
+    Google's latest. 1M context, strong multimodal and reasoning.
+  </Card>
+  <Card title="GPT-5-mini" icon="gauge-high" href="/providers/openai#gpt-5-mini">
+    Fast and affordable. Great balance of performance and cost.
+  </Card>
+  <Card title="Claude Haiku 4.5" icon="feather" href="/providers/anthropic#claude-haiku-4-5">
+    Ultra-fast. Ideal for high-volume, latency-sensitive workloads.
+  </Card>
+  <Card title="Gemini 2.5 Flash" icon="bolt" href="/providers/google#gemini-2-5-flash">
+    Cost-efficient with thinking capabilities. Great for real-time apps.
+  </Card>
+</CardGroup>
+
+[View all 42 models →](/providers/table-comparison)
+
+---
+
+## Why Hicap?
+
+<CardGroup cols={2}>
+  <Card title="Up to 25% lower cost" icon="piggy-bank">
+    We bulk-reserve compute from leading cloud providers and pass the savings to you.
+  </Card>
+  <Card title="One API, all providers" icon="plug">
+    OpenAI, Anthropic, Gemini, Moonshot, Zhipu, MiniMax — all through one OpenAI-compatible endpoint.
+  </Card>
+  <Card title="5-minute integration" icon="clock">
+    Use the standard OpenAI SDK. Change the base URL. You're done.
+  </Card>
+  <Card title="No lock-in" icon="lock-open">
+    Start monthly, scale anytime. Switch models with a single parameter change.
+  </Card>
+</CardGroup>

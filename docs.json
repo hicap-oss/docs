@@ -15,10 +15,10 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["index", "quickstart", "faq"]
+            "pages": ["quickstart", "faq"]
           },
           {
-            "group": "Providers",
+            "group": "Models",
             "pages": [
               "providers/table-comparison",
               "providers/openai",
