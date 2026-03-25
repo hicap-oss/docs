@@ -3,7 +3,7 @@ title: 'API Overview'
 description: 'OpenAI-compatible REST API for accessing foundation models through Hicap'
 ---
 
-The Hicap API is a RESTful API compatible with the [OpenAI API specification](https://platform.openai.com/docs/api-reference). Use it from any environment that supports HTTP requests, or through OpenAI's official SDKs for [Python](https://github.com/openai/openai-python), [JavaScript/TypeScript](https://github.com/openai/openai-node), [Go](https://github.com/openai/openai-go), and more.
+The Hicap API is a RESTful API compatible with the [OpenAI API specification](https://github.com/openai/openai-openapi). Use it from any environment that supports HTTP requests, or through OpenAI's official SDKs for [Python](https://github.com/openai/openai-python), [JavaScript/TypeScript](https://github.com/openai/openai-node), [Go](https://github.com/openai/openai-go), and more.
 
 <Info>
   **Base URL:** `https://api.hicap.ai/v1`
@@ -45,13 +45,24 @@ curl https://api.hicap.ai/v1/chat/completions \
 
 ## Endpoints
 
-All endpoints follow the OpenAI API spec. Click through for full request/response schemas.
+All endpoints follow the [OpenAI OpenAPI specification](https://github.com/openai/openai-openapi). The tables below list every supported endpoint category.
 
-### Text & Chat
+### Chat Completions
 
 | Endpoint | Method | Description |
 | --- | --- | --- |
 | [`/v1/chat/completions`](/api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message) | `POST` | Generate text, analyze images, call tools, stream responses |
+| `/v1/chat/completions/{completion_id}` | `GET` | Retrieve a stored chat completion by ID |
+| `/v1/chat/completions/{completion_id}/messages` | `GET` | List messages from a stored chat completion |
+
+### Responses
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/responses` | `POST` | Create a model response (new Responses API) |
+| `/v1/responses/{response_id}` | `GET` `DELETE` | Retrieve or delete a response |
+| `/v1/responses/{response_id}/cancel` | `POST` | Cancel an in-progress response |
+| `/v1/responses/{response_id}/input_items` | `GET` | List input items for a response |
 
 ### Embeddings
 
@@ -63,25 +74,116 @@ All endpoints follow the OpenAI API spec. Click through for full request/respons
 
 | Endpoint | Method | Description |
 | --- | --- | --- |
-| `/v1/images/generations` | `POST` | Generate images with DALL·E |
+| `/v1/images/generations` | `POST` | Generate images from text prompts |
+| `/v1/images/edits` | `POST` | Edit or extend existing images |
+| `/v1/images/variations` | `POST` | Generate variations of an image |
 
 ### Audio
 
 | Endpoint | Method | Description |
 | --- | --- | --- |
+| `/v1/audio/speech` | `POST` | Generate speech from text (TTS) |
 | `/v1/audio/transcriptions` | `POST` | Transcribe audio to text (Whisper) |
 | `/v1/audio/translations` | `POST` | Translate audio to English text |
-| `/v1/audio/speech` | `POST` | Generate speech from text (TTS) |
+| `/v1/audio/voices` | `GET` | List available TTS voices |
+
+### Moderations
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/moderations` | `POST` | Classify text for policy compliance |
+
+### Files
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/files` | `GET` `POST` | List or upload files |
+| `/v1/files/{file_id}` | `GET` `DELETE` | Retrieve metadata or delete a file |
+| `/v1/files/{file_id}/content` | `GET` | Download file content |
+
+### Uploads
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/uploads` | `POST` | Create a multipart upload |
+| `/v1/uploads/{upload_id}/parts` | `POST` | Upload a part |
+| `/v1/uploads/{upload_id}/complete` | `POST` | Complete the upload |
+| `/v1/uploads/{upload_id}/cancel` | `POST` | Cancel the upload |
+
+### Models
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/models` | `GET` | List available models |
+| `/v1/models/{model}` | `GET` `DELETE` | Retrieve or delete a model |
+
+### Batches
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/batches` | `GET` `POST` | List or create batch jobs |
+| `/v1/batches/{batch_id}` | `GET` | Retrieve batch status |
+| `/v1/batches/{batch_id}/cancel` | `POST` | Cancel a batch |
+
+### Evals
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/evals` | `GET` `POST` | List or create evaluations |
+| `/v1/evals/{eval_id}` | `GET` `DELETE` | Retrieve or delete an eval |
+| `/v1/evals/{eval_id}/runs` | `GET` `POST` | List or create eval runs |
+| `/v1/evals/{eval_id}/runs/{run_id}` | `GET` `DELETE` | Retrieve or cancel an eval run |
+| `/v1/evals/{eval_id}/runs/{run_id}/output_items` | `GET` | List eval run output items |
 
 ### Assistants
 
 | Endpoint | Method | Description |
 | --- | --- | --- |
-| `/v1/assistants` | `POST` `GET` | Create and list assistants |
-| `/v1/threads` | `POST` | Create conversation threads |
-| `/v1/threads/{id}/messages` | `POST` `GET` | Add and list messages in a thread |
-| `/v1/threads/{id}/runs` | `POST` `GET` | Execute and monitor assistant runs |
-| `/v1/vector_stores` | `POST` `GET` | Manage knowledge base vector stores |
+| `/v1/assistants` | `GET` `POST` | List or create assistants |
+| `/v1/assistants/{assistant_id}` | `GET` `POST` `DELETE` | Retrieve, modify, or delete an assistant |
+
+### Threads
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/threads` | `POST` | Create a thread |
+| `/v1/threads/{thread_id}` | `GET` `POST` `DELETE` | Retrieve, modify, or delete a thread |
+| `/v1/threads/{thread_id}/messages` | `GET` `POST` | List or add messages |
+| `/v1/threads/{thread_id}/messages/{message_id}` | `GET` `POST` `DELETE` | Retrieve, modify, or delete a message |
+
+### Runs
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/threads/{thread_id}/runs` | `GET` `POST` | List or create runs |
+| `/v1/threads/{thread_id}/runs/{run_id}` | `GET` `POST` | Retrieve or modify a run |
+| `/v1/threads/{thread_id}/runs/{run_id}/cancel` | `POST` | Cancel a run |
+| `/v1/threads/{thread_id}/runs/{run_id}/submit_tool_outputs` | `POST` | Submit tool call outputs |
+| `/v1/threads/{thread_id}/runs/{run_id}/steps` | `GET` | List run steps |
+| `/v1/threads/{thread_id}/runs/{run_id}/steps/{step_id}` | `GET` | Retrieve a run step |
+| `/v1/threads/runs` | `POST` | Create thread and run in one call |
+
+### Vector Stores
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/vector_stores` | `GET` `POST` | List or create vector stores |
+| `/v1/vector_stores/{vector_store_id}` | `GET` `POST` `DELETE` | Retrieve, modify, or delete a store |
+| `/v1/vector_stores/{vector_store_id}/files` | `GET` `POST` | List or add files |
+| `/v1/vector_stores/{vector_store_id}/files/{file_id}` | `GET` `DELETE` | Retrieve or remove a file |
+| `/v1/vector_stores/{vector_store_id}/files/{file_id}/content` | `GET` | Download file content |
+| `/v1/vector_stores/{vector_store_id}/search` | `POST` | Search a vector store |
+| `/v1/vector_stores/{vector_store_id}/file_batches` | `POST` | Create a file batch |
+| `/v1/vector_stores/{vector_store_id}/file_batches/{batch_id}` | `GET` | Retrieve file batch status |
+| `/v1/vector_stores/{vector_store_id}/file_batches/{batch_id}/cancel` | `POST` | Cancel a file batch |
+| `/v1/vector_stores/{vector_store_id}/file_batches/{batch_id}/files` | `GET` | List files in a batch |
+
+### Realtime
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/realtime/sessions` | `POST` | Create a realtime session |
+| `/v1/realtime/transcription_sessions` | `POST` | Create a transcription session |
 
 ---
 
