@@ -43,9 +43,15 @@
             "group": "Endpoints",
             "pages": [
               {
-                "group": "Chat",
+                "group": "Chat Completions",
                 "pages": [
                   "api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message"
+                ]
+              },
+              {
+                "group": "Images",
+                "pages": [
+                  "api-reference/endpoints/openAI/generates-a-batch-of-images-from-a-text-caption-on-a-given-dalle-model-deployment"
                 ]
               }
             ]
