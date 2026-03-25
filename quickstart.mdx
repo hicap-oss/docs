@@ -6,11 +6,13 @@ icon: 'rocket'
 
 The Hicap API gives you access to foundation models from OpenAI, Anthropic, Google Gemini, and more — through a single OpenAI-compatible endpoint. Use any standard OpenAI SDK and start building in under 5 minutes.
 
-[Get your API Key](https://platform.hicap.ai/)
+## 1. Get your API key
 
-## 1. Set up your API key
+<Note>
+  **Opens the Hicap Platform** — You'll create an account and generate an API key in the [Hicap Platform dashboard ↗](https://platform.hicap.ai/). Then come back here to use it.
+</Note>
 
-Create an API key in the [Hicap dashboard](https://platform.hicap.ai/), then export it as an environment variable:
+Export it as an environment variable:
 
 ```bash
 export HICAP_API_KEY="your_api_key_here"
@@ -81,7 +83,7 @@ export HICAP_API_KEY="your_api_key_here"
   </Tab>
 </Tabs>
 
-That's it. You just called the Hicap API. The same code works with any [supported model](/providers/table-comparison) — just change the `model` parameter.
+That's it — you just called the Hicap API. The same code works with any [supported model](/providers/table-comparison); just change the `model` parameter.
 
 ---
 
@@ -146,6 +148,22 @@ for await (const chunk of stream) {
 
 ---
 
+## Popular endpoints
+
+These are the most commonly used Hicap API endpoints. All follow the [OpenAI API spec](/api-reference/introduction) — if you've used the OpenAI API before, you already know how to use these.
+
+| Endpoint | Description | Docs |
+| --- | --- | --- |
+| `POST /v1/chat/completions` | Generate text, analyze images, use tools | [Reference →](/api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message) |
+| `POST /v1/embeddings` | Create text embeddings for search and RAG | [Reference →](/api-reference/introduction#supported-endpoints) |
+| `POST /v1/images/generations` | Generate images with DALL·E | [Reference →](/api-reference/introduction#supported-endpoints) |
+| `POST /v1/audio/transcriptions` | Transcribe audio with Whisper | [Reference →](/api-reference/introduction#supported-endpoints) |
+| `POST /v1/audio/speech` | Generate speech from text | [Reference →](/api-reference/introduction#supported-endpoints) |
+
+[Full API Reference →](/api-reference/introduction)
+
+---
+
 ## Models
 
 Start with `gpt-5` for strong general-purpose performance, or pick a model optimized for your use case.
@@ -189,5 +207,21 @@ Start with `gpt-5` for strong general-purpose performance, or pick a model optim
   </Card>
   <Card title="No lock-in" icon="lock-open">
     Start monthly, scale anytime. Switch models with a single parameter change.
+  </Card>
+</CardGroup>
+
+---
+
+## Next steps
+
+<CardGroup cols={3}>
+  <Card title="API Reference" icon="code" href="/api-reference/introduction">
+    Full endpoint docs, authentication, and request/response schemas.
+  </Card>
+  <Card title="Model Comparison" icon="table" href="/providers/table-comparison">
+    Compare all models by provider, tier, context window, and pricing.
+  </Card>
+  <Card title="FAQ" icon="question" href="/faq">
+    Common questions about pricing, security, architecture, and data handling.
   </Card>
 </CardGroup>

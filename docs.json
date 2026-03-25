@@ -35,7 +35,7 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "Hicap API",
+            "group": "Overview",
             "pages": [
               "api-reference/introduction"
             ]
@@ -44,14 +44,9 @@
             "group": "Endpoints",
             "pages": [
               {
-                "group": "OpenAI-Compatible",
+                "group": "Chat",
                 "pages": [
-                  {
-                    "group": "Chat Completions",
-                    "pages": [
-                      "api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message"
-                    ]
-                  }
+                  "api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message"
                 ]
               }
             ]
@@ -60,7 +55,23 @@
       }
     ],
     "global": {
-      "anchors": []
+      "anchors": [
+        {
+          "anchor": "API Reference",
+          "href": "/api-reference/introduction",
+          "icon": "code"
+        },
+        {
+          "anchor": "Models",
+          "href": "/providers/table-comparison",
+          "icon": "microchip"
+        },
+        {
+          "anchor": "Hicap Platform",
+          "href": "https://platform.hicap.ai/",
+          "icon": "arrow-up-right-from-square"
+        }
+      ]
     }
   },
   "logo": {

@@ -1,50 +1,96 @@
 ---
-title: 'Hicap API Reference'
+title: 'API Reference'
 description: 'OpenAI-compatible API for accessing foundation models through Hicap'
 ---
 
 ## Overview
 
-The **Hicap API** is fully compatible with the [OpenAI API specification](https://platform.openai.com/docs/api-reference). All endpoints follow the same request/response format as the OpenAI API — you can use any standard OpenAI SDK by simply changing the base URL to `https://api.hicap.ai/v1`.
+The **Hicap API** is fully compatible with the [OpenAI API specification](https://platform.openai.com/docs/api-reference). If you've used the OpenAI API before, you already know how to use Hicap — just change the base URL.
 
 <Info>
   **Base URL:** `https://api.hicap.ai/v1`
 
-  All endpoints documented in the [OpenAI API reference](https://platform.openai.com/docs/api-reference) are supported, including Chat Completions, Embeddings, Images, Audio, and Assistants.
+  Use any standard OpenAI SDK (Python, JavaScript, Go, etc.) by pointing it at this URL.
 </Info>
 
 ## Authentication
 
-All Hicap API endpoints are authenticated using your Hicap API key. Include it in either the `Authorization` header or the `api-key` header:
+Include your Hicap API key in either the `Authorization` header or the `api-key` header:
 
 ```bash
-# Using Authorization header
+# Option 1: Authorization header (OpenAI SDK default)
 curl https://api.hicap.ai/v1/chat/completions \
   -H "Authorization: Bearer YOUR-HICAP-API-KEY" \
   -H "Content-Type: application/json" \
   -d '{"model": "gpt-5", "messages": [{"role": "user", "content": "Hello"}]}'
 
-# Using api-key header
+# Option 2: api-key header (Azure-style)
 curl https://api.hicap.ai/v1/chat/completions \
   -H "api-key: YOUR-HICAP-API-KEY" \
   -H "Content-Type: application/json" \
   -d '{"model": "gpt-5", "messages": [{"role": "user", "content": "Hello"}]}'
 ```
 
-## Supported Endpoints
+<Note>
+  **Get your API key** from the [Hicap Platform ↗](https://platform.hicap.ai/). This opens the Hicap Platform dashboard — a separate app where you manage your account, API keys, and usage.
+</Note>
 
-| Endpoint | Description |
-| --- | --- |
-| `POST /v1/chat/completions` | Chat completions (streaming supported) |
-| `POST /v1/embeddings` | Text embeddings |
-| `POST /v1/images/generations` | Image generation (DALL·E) |
-| `POST /v1/audio/transcriptions` | Audio transcription (Whisper) |
-| `POST /v1/audio/translations` | Audio translation |
-| `POST /v1/audio/speech` | Text-to-speech |
-| Assistants API | Full Assistants, Threads, Messages, Runs, and Vector Stores |
+## Endpoints
+
+All endpoints below follow the OpenAI API spec. Click through for request/response details.
+
+### Text & Chat
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| [`/v1/chat/completions`](/api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message) | `POST` | Generate text, analyze images, call tools, stream responses |
+
+### Embeddings
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/embeddings` | `POST` | Create vector embeddings for search, RAG, and similarity |
+
+### Images
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/images/generations` | `POST` | Generate images with DALL·E |
+
+### Audio
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/audio/transcriptions` | `POST` | Transcribe audio to text (Whisper) |
+| `/v1/audio/translations` | `POST` | Translate audio to English text |
+| `/v1/audio/speech` | `POST` | Generate speech from text (TTS) |
+
+### Assistants
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/assistants` | `POST` `GET` | Create and list assistants |
+| `/v1/threads` | `POST` | Create conversation threads |
+| `/v1/threads/{id}/messages` | `POST` `GET` | Add and list messages in a thread |
+| `/v1/threads/{id}/runs` | `POST` `GET` | Execute and monitor assistant runs |
+| `/v1/vector_stores` | `POST` `GET` | Manage knowledge base vector stores |
 
 ## Models
 
-Pass any [supported model ID](https://hicap.ai/models.json) in the `model` field. The Hicap API supports models across OpenAI, Anthropic, Google Gemini, Moonshot, Zhipu, and MiniMax — all accessible through the same OpenAI-compatible interface.
+Pass any [supported model ID](https://hicap.ai/models.json) in the `model` field. The Hicap API supports models across OpenAI, Anthropic, Google Gemini, Moonshot, Zhipu, and MiniMax — all through the same OpenAI-compatible interface.
 
-See the [Model Comparison](/providers/table-comparison) for a full list of available models, capabilities, and context windows.
+[View all models →](/providers/table-comparison)
+
+## Rate Limits & Errors
+
+The Hicap API uses standard HTTP status codes:
+
+| Status | Meaning |
+| --- | --- |
+| `200` | Success |
+| `400` | Bad request — check your request body |
+| `401` | Unauthorized — check your API key |
+| `429` | Rate limited — back off and retry |
+| `500` | Server error — retry with exponential backoff |
+
+Rate limits vary by plan. If you receive `429` responses, wait and retry. For higher limits, contact us at [support@hicap.ai](mailto:support@hicap.ai) or upgrade your plan in the [Hicap Platform ↗](https://platform.hicap.ai/).
