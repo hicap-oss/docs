@@ -24,7 +24,7 @@
     "dev": "mintlify dev"
   },
   "devDependencies": {
-    "mintlify": "^4.2.453"
+    "mintlify": "^4.2.454"
   },
   "pnpm": {
     "overrides": {
