@@ -1,11 +1,41 @@
 ---
 title: 'Model/Provider Comparison'
+description: 'All models available through the Hicap API'
 mode: 'wide'
 ---
 
 import React from 'react'
 
+All models below are accessible through the **Hicap API** using the standard [OpenAI API spec](https://platform.openai.com/docs/api-reference). The full machine-readable catalog with up-to-date pricing is at [hicap.ai/models.json](https://hicap.ai/models.json).
+
 export const openAIModels = [
+  {
+    model: 'gpt-5.4',
+    best: 'Ultra-long-context analysis, full-codebase reasoning, massive document processing, and demanding enterprise workflows that require the highest intelligence with extended context.',
+    input: 'Text, image',
+    output: 'Text',
+    contextWindow: '1,050,000',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+  {
+    model: 'gpt-5.3-chat-latest',
+    best: 'Interactive chat applications, conversational assistants, customer support, and real-time dialogue where responsiveness and instruction following are critical.',
+    input: 'Text, image',
+    output: 'Text',
+    contextWindow: '200,000',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+  {
+    model: 'gpt-5.3-codex',
+    best: 'Agentic coding, code generation, debugging, refactoring, automated development workflows, and IDE integrations that require deep code understanding.',
+    input: 'Text, Code',
+    output: 'Text, Code',
+    contextWindow: '200,000',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
   {
     model: 'gpt-5.2',
     best: 'Complex reasoning, long-form generation, decision support, and multimodal chat experiences where accuracy, consistency, and instruction adherence are critical.',
@@ -127,6 +157,24 @@ export const openAIModels = [
 
 export const anthropicModels = [
   {
+    model: 'claude-opus-4.6',
+    best: 'Maximum-capability tasks: advanced agentic coding, deep research synthesis, complex multi-step reasoning, strategic analysis, and high-stakes content generation.',
+    input: 'Text, Image, Code',
+    output: 'Text',
+    contextWindow: '200,000',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+  {
+    model: 'claude-sonnet-4.6',
+    best: 'Enterprise copilots, production coding assistants, document analysis, structured reasoning, and general-purpose AI applications.',
+    input: 'Text, Image, Code',
+    output: 'Text',
+    contextWindow: '200,000',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+  {
     model: 'claude-sonnet-4.5',
     best: 'Enterprise copilots, advanced coding and debugging, legal/financial document analysis, product and design QA, structured reasoning tasks. Ideal when you want high intelligence at practical scale.',
     input: 'Text, Image, Code',
@@ -134,6 +182,15 @@ export const anthropicModels = [
     contextWindow: '200,000',
     maxOutputTokens: '64,000',
     knowledgeCutoff: 'January 1, 2025',
+  },
+  {
+    model: 'claude-opus-4.5',
+    best: 'Deep reasoning, complex analysis, long-form writing, policy-heavy workflows, and high-stakes tasks where precision, context awareness, and thoughtful responses are essential.',
+    input: 'Text, Image',
+    output: 'Text',
+    contextWindow: '200,000',
+    maxOutputTokens: '64,000',
+    knowledgeCutoff: 'May 2025',
   },
   {
     model: 'claude-haiku-4.5',
@@ -152,15 +209,6 @@ export const anthropicModels = [
     contextWindow: '',
     maxOutputTokens: '',
     knowledgeCutoff: '',
-  },
-  {
-    model: 'claude-opus-4.5',
-    best: 'Deep reasoning, complex analysis, long-form writing, policy-heavy workflows, and high-stakes tasks where precision, context awareness, and thoughtful responses are essential.',
-    input: 'Text, Image',
-    output: 'Text',
-    contextWindow: '200,000',
-    maxOutputTokens: '64,000',
-    knowledgeCutoff: 'May 2025',
   },
   {
     model: 'claude-opus-4.1',
@@ -182,7 +230,7 @@ export const anthropicModels = [
   },
   {
     model: 'claude-3.7-sonnet',
-    best: 'Agents with tools and deep reasoning with “extended thinking” and efficient tool use in tokens.',
+    best: 'Agents with tools and deep reasoning with "extended thinking" and efficient tool use in tokens.',
     input: 'Text, Image, Code',
     output: 'Text',
     contextWindow: '200,000',
@@ -211,12 +259,48 @@ export const anthropicModels = [
 
 export const googleModels = [
   {
+    model: 'gemini-3.1-pro',
+    best: 'Advanced reasoning, complex multi-step analysis, large-scale document processing, codebase understanding, and enterprise workflows requiring the highest Google Gemini capability.',
+    input: 'Text, Image, Audio, Video, PDF',
+    output: 'Text',
+    contextWindow: '1,000,000',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+  {
+    model: 'gemini-3.1-pro-preview',
+    best: 'Same as gemini-3.1-pro — advanced reasoning and enterprise workflows. Preview channel for early access.',
+    input: 'Text, Image, Audio, Video, PDF',
+    output: 'Text',
+    contextWindow: '1,000,000',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+  {
+    model: 'gemini-3.1-flash-image-preview',
+    best: 'Fast text-to-image generation, iterative image editing, visual asset creation, and design prototyping.',
+    input: 'Text, Image',
+    output: 'Image',
+    contextWindow: '',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+  {
     model: 'gemini-3-pro-preview',
     best: 'Advanced reasoning, complex multimodal workflows, research-oriented tasks, and early adoption scenarios where maximum capability and depth are prioritized over cost or latency.',
     input: 'Text, Image, Audio, Video, PDF',
     output: 'Text',
     contextWindow: '1,000,000',
     maxOutputTokens: '64,000',
+    knowledgeCutoff: '',
+  },
+  {
+    model: 'gemini-3-pro-image-preview',
+    best: 'High-quality image generation, creative visual content, marketing asset creation, and premium visual workflows.',
+    input: 'Text, Image',
+    output: 'Image',
+    contextWindow: '1,000,000',
+    maxOutputTokens: '',
     knowledgeCutoff: '',
   },
   {
@@ -230,7 +314,7 @@ export const googleModels = [
   },
   {
     model: 'gemini-2.5-pro',
-    best: 'Long-context processing: legal contracts spanning thousands of pages, large codebases, academic research, reviewing historical chat/log data. Ideal for copilots that need to “remember” or reason over very large corpora.',
+    best: 'Long-context processing: legal contracts spanning thousands of pages, large codebases, academic research, reviewing historical chat/log data. Ideal for copilots that need to "remember" or reason over very large corpora.',
     input: 'Text, Image, Audio, Video, Code',
     output: 'Text',
     contextWindow: '',
@@ -245,6 +329,15 @@ export const googleModels = [
     contextWindow: '1,048,576',
     maxOutputTokens: '65,536',
     knowledgeCutoff: 'January 1, 2025',
+  },
+  {
+    model: 'gemini-2.5-flash-preview',
+    best: 'Same as gemini-2.5-flash — fast multimodal chat and summarization. Preview channel for early access.',
+    input: 'Text, Image, Audio, Video, Code',
+    output: 'Text, Image, Audio, Video, Code',
+    contextWindow: '1,048,576',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
   },
   {
     model: 'gemini-2.5-flash-image',
@@ -284,6 +377,61 @@ export const googleModels = [
   },
 ]
 
+export const otherModels = [
+  {
+    provider: 'Moonshot',
+    model: 'kimi-k2.5',
+    best: 'Multilingual chat, coding assistance, reasoning tasks, and general-purpose AI workloads where cost-effective performance is important.',
+    input: 'Text, Image',
+    output: 'Text',
+    contextWindow: '128,000',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+  {
+    provider: 'Zhipu',
+    model: 'glm-5',
+    best: 'Chinese–English bilingual applications, reasoning tasks, content generation, and enterprise workflows in Chinese-language markets.',
+    input: 'Text, Image',
+    output: 'Text',
+    contextWindow: '128,000',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+  {
+    provider: 'MiniMax',
+    model: 'minimax-m2.5',
+    best: 'Creative content generation, multilingual chat, customer-facing AI applications, and general-purpose workloads where cost-effective performance is needed.',
+    input: 'Text, Image',
+    output: 'Text',
+    contextWindow: '200,000',
+    maxOutputTokens: '',
+    knowledgeCutoff: '',
+  },
+]
+
+export const badgeStyles = {
+  OpenAI: { backgroundColor: 'light-dark(#E7FAF3, #00695533)', color: 'light-dark(#009C7A, #4FC6AF)' },
+  Anthropic: { backgroundColor: 'light-dark(#F8EFE6, #7F431B33)', color: 'light-dark(#A0623A, #DD9464)' },
+  'Google Gemini': { backgroundColor: 'light-dark(#E9E6FB, #6C30C740)', color: 'light-dark(#5E45D8, #979BF5)' },
+  Moonshot: { backgroundColor: 'light-dark(#E6F0F8, #1B5F7F33)', color: 'light-dark(#3A7EA0, #64B4DD)' },
+  Zhipu: { backgroundColor: 'light-dark(#E6F8EE, #1B7F3333)', color: 'light-dark(#3AA062, #64DD94)' },
+  MiniMax: { backgroundColor: 'light-dark(#F8E6F0, #7F1B5F33)', color: 'light-dark(#A03A7E, #DD64B4)' },
+}
+
+export function ProviderBadge(props) {
+  var provider = props.provider;
+  var cls = badgeStyles[provider];
+  return (
+    <span
+      className={'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium'}
+      style={{ ...cls }}
+    >
+      {provider}
+    </span>
+  );
+}
+
 <div className="w-full">
   <table className="w-full text-sm">
     <thead className="dark:bg-zinc-900/60 text-zinc-300">
@@ -302,19 +450,11 @@ export const googleModels = [
         return (
           <tr className="hover:bg-zinc-900/40">
             <td className="px-2 py-1">
-              <span
-                className={
-                  'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium'
-                }
-                style={{ backgroundColor: 'light-dark(#E7FAF3, #00695533)', color: 'light-dark(#009C7A, #4FC6AF)' }}
-              >
-                {model.model}
-              </span>
+              <ProviderBadge provider="OpenAI" />
+              <span className="ml-2 font-mono text-sm">{model.model}</span>
             </td>
             <td className="px-2 py-1">
-              <span>
-                {model.best}
-              </span>
+              <span>{model.best}</span>
             </td>
             <td className="px-2 py-1">
               <span>{model.input}</span>
@@ -323,13 +463,13 @@ export const googleModels = [
               <span>{model.output}</span>
             </td>
             <td className="px-2 py-1">
-              <span>{model.contextWindow} tokens</span>
+              <span>{model.contextWindow ? model.contextWindow + ' tokens' : '—'}</span>
             </td>
             <td className="px-2 py-1">
-              <span>{model.maxOutputTokens} tokens</span>
+              <span>{model.maxOutputTokens ? model.maxOutputTokens + ' tokens' : '—'}</span>
             </td>
             <td className="px-2 py-1">
-              <span>{model.knowledgeCutoff}</span>
+              <span>{model.knowledgeCutoff || '—'}</span>
             </td>
           </tr>
         )
@@ -339,19 +479,11 @@ export const googleModels = [
         return (
           <tr className="hover:bg-zinc-900/40">
             <td className="px-2 py-1">
-              <span
-                className={
-                  'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium'
-                }
-                style={{ backgroundColor: 'light-dark(#F8EFE6, #7F431B33)', color: 'light-dark(#A0623A, #DD9464)' }}
-              >
-                {model.model}
-              </span>
+              <ProviderBadge provider="Anthropic" />
+              <span className="ml-2 font-mono text-sm">{model.model}</span>
             </td>
             <td className="px-2 py-1">
-              <span>
-                {model.best}
-              </span>
+              <span>{model.best}</span>
             </td>
             <td className="px-2 py-1">
               <span>{model.input}</span>
@@ -360,13 +492,13 @@ export const googleModels = [
               <span>{model.output}</span>
             </td>
             <td className="px-2 py-1">
-              <span>{model.contextWindow} tokens</span>
+              <span>{model.contextWindow ? model.contextWindow + ' tokens' : '—'}</span>
             </td>
             <td className="px-2 py-1">
-              <span>{model.maxOutputTokens} tokens</span>
+              <span>{model.maxOutputTokens ? model.maxOutputTokens + ' tokens' : '—'}</span>
             </td>
             <td className="px-2 py-1">
-              <span>{model.knowledgeCutoff}</span>
+              <span>{model.knowledgeCutoff || '—'}</span>
             </td>
           </tr>
         )
@@ -376,19 +508,11 @@ export const googleModels = [
         return (
           <tr className="hover:bg-zinc-900/40">
             <td className="px-2 py-1">
-              <span
-                className={
-                  'inline-flex items-center px-3 py-1 rounded-md text-sm font-medium'
-                }
-                style={{ backgroundColor: 'light-dark(#E9E6FB, #6C30C740)', color: 'light-dark(#5E45D8, #979BF5)' }}
-              >
-                {model.model}
-              </span>
+              <ProviderBadge provider="Google Gemini" />
+              <span className="ml-2 font-mono text-sm">{model.model}</span>
             </td>
             <td className="px-2 py-1">
-              <span>
-                {model.best}
-              </span>
+              <span>{model.best}</span>
             </td>
             <td className="px-2 py-1">
               <span>{model.input}</span>
@@ -397,13 +521,42 @@ export const googleModels = [
               <span>{model.output}</span>
             </td>
             <td className="px-2 py-1">
-              <span>{model.contextWindow} tokens</span>
+              <span>{model.contextWindow ? model.contextWindow + ' tokens' : '—'}</span>
             </td>
             <td className="px-2 py-1">
-              <span>{model.maxOutputTokens} tokens</span>
+              <span>{model.maxOutputTokens ? model.maxOutputTokens + ' tokens' : '—'}</span>
             </td>
             <td className="px-2 py-1">
-              <span>{model.knowledgeCutoff}</span>
+              <span>{model.knowledgeCutoff || '—'}</span>
+            </td>
+          </tr>
+        )
+      })}
+
+      {otherModels.map(model => {
+        return (
+          <tr className="hover:bg-zinc-900/40">
+            <td className="px-2 py-1">
+              <ProviderBadge provider={model.provider} />
+              <span className="ml-2 font-mono text-sm">{model.model}</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.best}</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.input}</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.output}</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.contextWindow ? model.contextWindow + ' tokens' : '—'}</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.maxOutputTokens ? model.maxOutputTokens + ' tokens' : '—'}</span>
+            </td>
+            <td className="px-2 py-1">
+              <span>{model.knowledgeCutoff || '—'}</span>
             </td>
           </tr>
         )

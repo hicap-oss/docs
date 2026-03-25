@@ -1,36 +1,40 @@
 ---
-title: 'HICAP Quickstart'
-description: ''
+title: 'Hicap API Quickstart'
+description: 'Get started with the Hicap API in under 5 minutes'
 icon: 'rocket'
 ---
 
-Welcome to Hicap. Our guided onboarding will walk you through everything you need to start leveraging your network and making the most of your resources.
+Welcome to Hicap. The **Hicap API** is fully compatible with the OpenAI API specification — use any standard OpenAI SDK and simply point it at `https://api.hicap.ai/v1`. No proprietary client needed.
 
-## Install the OpenAI SDK and Run an API Call
+<Info>
+  **OpenAI-compatible** — The Hicap API uses the [OpenAI API spec](https://platform.openai.com/docs/api-reference). Endpoints like `/v1/chat/completions`, `/v1/embeddings`, `/v1/images/generations`, and `/v1/audio` all work as documented in the OpenAI reference. Pass any [supported model ID](https://hicap.ai/models.json) in the `model` field.
+</Info>
+
+## Install the OpenAI SDK and Run Your First Hicap API Call
 
 <Tabs>
   <Tab title="Javascript">
-    To use the Hicap API in server-side JavaScript environments like Node.js, Deno, or Bun, you can use the official [OpenAI SDK for TypeScript and JavaScript](https://github.com/openai/openai-node). Get started by installing the SDK using [npm](https://www.npmjs.com/) or your preferred package manager:
+    To call the Hicap API from Node.js, Deno, or Bun, install the official [OpenAI SDK for TypeScript and JavaScript](https://github.com/openai/openai-node):
 
     ```bash Install the OpenAI SDK with npm
     npm install openai
     ```
 
-    With the OpenAI SDK installed, create a file called `example.mjs` and copy the example code into it:
+    Create a file called `example.mjs` and copy the example code into it:
 
     ```javascript example.mjs
     import OpenAI from "openai";
 
-    const apiKey = "YOUR-API-KEY";
+    const apiKey = "YOUR-HICAP-API-KEY";
 
     const client = new OpenAI({
-      baseURL: "https://api.hicap.ai/v1",
+      baseURL: "https://api.hicap.ai/v1",  // Hicap API endpoint
       apiKey: apiKey,
       defaultHeaders: { "api-key": apiKey },
     });
 
     const response = await client.chat.completions.create({
-      model: "gpt-5",
+      model: "gpt-5",  // Any model from hicap.ai/models.json
       messages: [{
         role: "user",
         content: "Hello World",
@@ -41,30 +45,30 @@ Welcome to Hicap. Our guided onboarding will walk you through everything you nee
     console.log(response.choices[0].message.content);
     ```
 
-    Execute the code with `node example.mjs` (or the equivalent command for Deno or Bun). In a few moments, you should see the output of your API request.
+    Execute the code with `node example.mjs` (or the equivalent command for Deno or Bun). In a few moments, you should see the output of your Hicap API request.
   </Tab>
   <Tab title="Python">
-    To use the Hicap API in Python, you can use the official [OpenAI SDK for Python](https://github.com/openai/openai-python). Get started by installing the SDK using [pip](https://pypi.org/project/pip/):
+    To call the Hicap API from Python, install the official [OpenAI SDK for Python](https://github.com/openai/openai-python):
 
     ```bash Install the OpenAI SDK with pip
     pip install openai
     ```
 
-    With the OpenAI SDK installed, create a file called `example.py` and copy the example code into it:
+    Create a file called `example.py` and copy the example code into it:
 
     ```python example.py
     from openai import OpenAI
 
-    api_key = "YOUR-API-KEY"
+    api_key = "YOUR-HICAP-API-KEY"
 
     client = OpenAI(
-      base_url="https://api.hicap.ai/v1",
+      base_url="https://api.hicap.ai/v1",  # Hicap API endpoint
       api_key=api_key,
       default_headers={ "api-key": api_key },
     )
 
     response = client.chat.completions.create(
-      model="gpt-5",
+      model="gpt-5",  # Any model from hicap.ai/models.json
       messages=[{
         "role": "user",
         "content": "Hello World",
@@ -75,16 +79,16 @@ Welcome to Hicap. Our guided onboarding will walk you through everything you nee
     print(response.choices[0].message.content)
     ```
 
-    Execute the code with `python example.py`. In a few moments, you should see the output of your API request.
+    Execute the code with `python example.py`. In a few moments, you should see the output of your Hicap API request.
   </Tab>
   <Tab title="Curl">
-    To use the Hicap API using curl just use the follow code in your terminal.
+    Call the Hicap API directly with curl:
 
     ```bash example
     curl --request POST \
     --url https://api.hicap.ai/v1/chat/completions \
     --header 'Content-Type: application/json' \
-    --header 'api-key: YOUR-API-KEY' \
+    --header 'api-key: YOUR-HICAP-API-KEY' \
     --data '{
       "model": "gpt-5",
       "messages": [
@@ -96,6 +100,26 @@ Welcome to Hicap. Our guided onboarding will walk you through everything you nee
       ]
     }'
     ```
-    Press enter in your terminal. In a few moments, you should see the output of your API request.
+    Press enter in your terminal. In a few moments, you should see the output of your Hicap API request.
   </Tab>
 </Tabs>
+
+## Using Other Models
+
+The Hicap API supports **42 models** across 6 providers. Simply change the `model` parameter to any supported model ID:
+
+```python
+# Use Anthropic Claude via the Hicap API
+response = client.chat.completions.create(
+    model="claude-sonnet-4.5",
+    messages=[{"role": "user", "content": "Hello from Claude via Hicap!"}],
+)
+
+# Use Google Gemini via the Hicap API
+response = client.chat.completions.create(
+    model="gemini-2.5-pro",
+    messages=[{"role": "user", "content": "Hello from Gemini via Hicap!"}],
+)
+```
+
+Browse all available models and pricing at [hicap.ai/models.json](https://hicap.ai/models.json) or on the [Model Comparison](/providers/table-comparison) page.

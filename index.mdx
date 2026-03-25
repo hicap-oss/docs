@@ -1,12 +1,15 @@
 ---
 title: 'Overview'
-description: ''
+description: 'Hicap API — OpenAI-compatible access to top foundation models'
 icon: 'compass'
 ---
 
 import React from 'react'
 
 export const rows = [
+  { provider: 'OpenAI', model: 'gpt-5.4', href: '/providers/openai#gpt-5-4' },
+  { provider: 'OpenAI', model: 'gpt-5.3-chat-latest', href: '/providers/openai#gpt-5-3-chat-latest' },
+  { provider: 'OpenAI', model: 'gpt-5.3-codex', href: '/providers/openai#gpt-5-3-codex' },
   { provider: 'OpenAI', model: 'gpt-5.2', href: '/providers/openai#gpt-5-2' },
   { provider: 'OpenAI', model: 'gpt-5.2-chat-latest', href: '/providers/openai#gpt-5-2-chat-latest' },
   { provider: 'OpenAI', model: 'gpt-5.1', href: '/providers/openai#gpt-5-1' },
@@ -21,29 +24,43 @@ export const rows = [
   { provider: 'OpenAI', model: 'gpt-4.1-mini', href: '/providers/openai#gpt-4-1-mini' },
   { provider: 'OpenAI', model: 'gpt-4.1-nano', href: '/providers/openai#gpt-4-1-nano' },
 
+  { provider: 'Anthropic', model: 'claude-opus-4.6', href: '/providers/anthropic#claude-opus-4-6' },
+  { provider: 'Anthropic', model: 'claude-sonnet-4.6', href: '/providers/anthropic#claude-sonnet-4-6' },
   { provider: 'Anthropic', model: 'claude-sonnet-4.5', href: '/providers/anthropic#claude-sonnet-4-5' },
+  { provider: 'Anthropic', model: 'claude-opus-4.5', href: '/providers/anthropic#claude-opus-4-5' },
   { provider: 'Anthropic', model: 'claude-haiku-4.5', href: '/providers/anthropic#claude-haiku-4-5' },
   { provider: 'Anthropic', model: 'claude-sonnet-4', href: '/providers/anthropic#claude-sonnet-4' },
-  { provider: 'Anthropic', model: 'claude-opus-4.5', href: '/providers/anthropic#claude-opus-4-5' },
   { provider: 'Anthropic', model: 'claude-opus-4.1', href: '/providers/anthropic#claude-opus-4-1' },
   { provider: 'Anthropic', model: 'claude-opus-4', href: '/providers/anthropic#claude-opus-4' },
   { provider: 'Anthropic', model: 'claude-3.7-sonnet', href: '/providers/anthropic#claude-3-7-sonnet' },
   { provider: 'Anthropic', model: 'claude-3.5-sonnet', href: '/providers/anthropic#claude-3-5-sonnet' },
   { provider: 'Anthropic', model: 'claude-3.5-haiku', href: '/providers/anthropic#claude-3-5-haiku' },
 
+  { provider: 'Google Gemini', model: 'gemini-3.1-pro', href: '/providers/google#gemini-3-1-pro' },
+  { provider: 'Google Gemini', model: 'gemini-3.1-pro-preview', href: '/providers/google#gemini-3-1-pro-preview' },
+  { provider: 'Google Gemini', model: 'gemini-3.1-flash-image-preview', href: '/providers/google#gemini-3-1-flash-image-preview' },
   { provider: 'Google Gemini', model: 'gemini-3-pro-preview', href: '/providers/google#gemini-3-pro-preview' },
+  { provider: 'Google Gemini', model: 'gemini-3-pro-image-preview', href: '/providers/google#gemini-3-pro-image-preview' },
   { provider: 'Google Gemini', model: 'gemini-3-flash-preview', href: '/providers/google#gemini-3-flash-preview' },
   { provider: 'Google Gemini', model: 'gemini-2.5-pro', href: '/providers/google#gemini-2-5-pro' },
   { provider: 'Google Gemini', model: 'gemini-2.5-flash', href: '/providers/google#gemini-2-5-flash' },
+  { provider: 'Google Gemini', model: 'gemini-2.5-flash-preview', href: '/providers/google#gemini-2-5-flash-preview' },
   { provider: 'Google Gemini', model: 'gemini-2.5-flash-lite', href: '/providers/google#gemini-2-5-flash-lite' },
   { provider: 'Google Gemini', model: 'gemini-2.0-flash', href: '/providers/google#gemini-2-0-flash' },
   { provider: 'Google Gemini', model: 'gemini-2.0-flash-lite', href: '/providers/google#gemini-2-0-flash-lite' },
+
+  { provider: 'Moonshot', model: 'kimi-k2.5', href: '/providers/moonshot#kimi-k2-5' },
+  { provider: 'Zhipu', model: 'glm-5', href: '/providers/zhipu#glm-5' },
+  { provider: 'MiniMax', model: 'minimax-m2.5', href: '/providers/minimax#minimax-m2-5' },
 ]
 
 export const badgeStyles = {
   OpenAI: { backgroundColor: 'light-dark(#E7FAF3, #00695533)', color: 'light-dark(#009C7A, #4FC6AF)' },
   Anthropic: { backgroundColor: 'light-dark(#F8EFE6, #7F431B33)', color: 'light-dark(#A0623A, #DD9464)' },
   'Google Gemini': { backgroundColor: 'light-dark(#E9E6FB, #6C30C740)', color: 'light-dark(#5E45D8, #979BF5)' },
+  Moonshot: { backgroundColor: 'light-dark(#E6F0F8, #1B5F7F33)', color: 'light-dark(#3A7EA0, #64B4DD)' },
+  Zhipu: { backgroundColor: 'light-dark(#E6F8EE, #1B7F3333)', color: 'light-dark(#3AA062, #64DD94)' },
+  MiniMax: { backgroundColor: 'light-dark(#F8E6F0, #7F1B5F33)', color: 'light-dark(#A03A7E, #DD64B4)' },
 }
 
 export function ProviderBadge(props) {
@@ -151,7 +168,17 @@ export function ModelPill(props) {
 
 ## Why Hicap?
 
-Hicap gives you secure, enterprise-ready access to top models from OpenAI, Gemini & Anthropic with up to 25% lower inference costs.
+Hicap gives you secure, enterprise-ready access to top models from OpenAI, Anthropic, Google Gemini, Moonshot, Zhipu, and MiniMax — with up to 25% lower inference costs.
+
+The **Hicap API** is fully compatible with the [OpenAI API specification](https://platform.openai.com/docs/api-reference). Point any OpenAI SDK at `https://api.hicap.ai/v1` and use any supported model — no code changes required beyond the base URL and API key.
+
+<Info>
+  **OpenAI-compatible API** — The Hicap frontend API follows the OpenAI API spec. Use the standard OpenAI SDKs (Python, Node.js, etc.) with `base_url` set to `https://api.hicap.ai/v1`. All chat completions, embeddings, images, audio, and assistants endpoints work the same way. See the [Quickstart](/quickstart) for examples.
+</Info>
+
+<Note>
+  **Live model catalog** — The full list of available models, pricing, and context windows is published at [hicap.ai/models.json](https://hicap.ai/models.json) and kept up to date as new models are added. The table below reflects the current catalog.
+</Note>
 
 <div className='w-full'>
   <table className="w-full text-sm">
@@ -189,12 +216,12 @@ Hicap gives you secure, enterprise-ready access to top models from OpenAI, Gemin
 
 <Steps>
   <Step title="Choose your model">
-    Run foundation models—fully supported and instantly available.
+    Browse the [model catalog](https://hicap.ai/models.json) — 42 foundation models across 6 providers, all available instantly.
   </Step>
   <Step title="Select your capacity">
     Lock in the compute you need, when you need it.
   </Step>
   <Step title="Connect via API">
-    Integration takes under 5 minutes with your existing stack.
+    Integration takes under 5 minutes. Point your existing OpenAI SDK at `https://api.hicap.ai/v1` — see the [Quickstart](/quickstart).
   </Step>
 </Steps>

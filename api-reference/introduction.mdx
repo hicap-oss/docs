@@ -1,33 +1,50 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'Hicap API Reference'
+description: 'OpenAI-compatible API for accessing foundation models through Hicap'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Overview
 
-## Welcome
+The **Hicap API** is fully compatible with the [OpenAI API specification](https://platform.openai.com/docs/api-reference). All endpoints follow the same request/response format as the OpenAI API — you can use any standard OpenAI SDK by simply changing the base URL to `https://api.hicap.ai/v1`.
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+<Info>
+  **Base URL:** `https://api.hicap.ai/v1`
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+  All endpoints documented in the [OpenAI API reference](https://platform.openai.com/docs/api-reference) are supported, including Chat Completions, Embeddings, Images, Audio, and Assistants.
+</Info>
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All Hicap API endpoints are authenticated using your Hicap API key. Include it in either the `Authorization` header or the `api-key` header:
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+```bash
+# Using Authorization header
+curl https://api.hicap.ai/v1/chat/completions \
+  -H "Authorization: Bearer YOUR-HICAP-API-KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "gpt-5", "messages": [{"role": "user", "content": "Hello"}]}'
+
+# Using api-key header
+curl https://api.hicap.ai/v1/chat/completions \
+  -H "api-key: YOUR-HICAP-API-KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "gpt-5", "messages": [{"role": "user", "content": "Hello"}]}'
 ```
+
+## Supported Endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| `POST /v1/chat/completions` | Chat completions (streaming supported) |
+| `POST /v1/embeddings` | Text embeddings |
+| `POST /v1/images/generations` | Image generation (DALL·E) |
+| `POST /v1/audio/transcriptions` | Audio transcription (Whisper) |
+| `POST /v1/audio/translations` | Audio translation |
+| `POST /v1/audio/speech` | Text-to-speech |
+| Assistants API | Full Assistants, Threads, Messages, Runs, and Vector Stores |
+
+## Models
+
+Pass any [supported model ID](https://hicap.ai/models.json) in the `model` field. The Hicap API supports 42 models across OpenAI, Anthropic, Google Gemini, Moonshot, Zhipu, and MiniMax — all accessible through the same OpenAI-compatible interface.
+
+See the [Model Comparison](/providers/table-comparison) for a full list of available models, capabilities, and context windows.

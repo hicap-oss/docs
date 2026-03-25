@@ -19,7 +19,15 @@
           },
           {
             "group": "Providers",
-            "pages": ["providers/table-comparison", "providers/openai", "providers/anthropic", "providers/google"]
+            "pages": [
+              "providers/table-comparison",
+              "providers/openai",
+              "providers/anthropic",
+              "providers/google",
+              "providers/moonshot",
+              "providers/zhipu",
+              "providers/minimax"
+            ]
           }
         ]
       },
@@ -27,10 +35,16 @@
         "tab": "API Reference",
         "groups": [
           {
+            "group": "Hicap API",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          },
+          {
             "group": "Endpoints",
             "pages": [
               {
-                "group": "OpenAI",
+                "group": "OpenAI-Compatible",
                 "pages": [
                   {
                     "group": "Chat Completions",

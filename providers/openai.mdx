@@ -1,7 +1,103 @@
 ---
 title: 'OpenAI'
-description: 'Available Models by OpenAI'
+description: 'OpenAI models available through the Hicap API'
 ---
+
+All OpenAI models below are accessible through the **Hicap API** using the standard [OpenAI API spec](https://platform.openai.com/docs/api-reference). Point your OpenAI SDK at `https://api.hicap.ai/v1` and use any model ID listed here. Pricing is sourced from [hicap.ai/models.json](https://hicap.ai/models.json).
+
+## gpt-5.4
+
+GPT-5.4 is OpenAI's most advanced model, offering a massive 1.05M token context window with state-of-the-art reasoning, coding, and multimodal capabilities. It features long-context pricing tiers above 272K tokens for cost-efficient processing of very large inputs.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Ultra-long-context analysis, full-codebase reasoning, massive document processing, and demanding enterprise workflows that require the highest intelligence with extended context.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, image` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 1,050,000 context window</li>
+            <li>* Long-context pricing above 272,000 tokens</li>
+        </ul>
+
+        Pricing: $2.50 / $15.00 / $0.25 (input / output / cache) per 1M tokens. Long-context: $5.00 / $22.50 input / output per 1M tokens.
+
+        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
+    </div>
+</Columns>
+
+## gpt-5.3-chat-latest
+
+GPT-5.3 Chat Latest is a conversationally optimized model from the GPT-5.3 family, designed for responsive dialogue and instruction fidelity. It supports a 200K token context window and delivers strong performance across chat-based applications.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Interactive chat applications, conversational assistants, customer support, and real-time dialogue where responsiveness and instruction following are critical.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, image` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 200,000 context window</li>
+        </ul>
+
+        Pricing: $1.75 / $14.00 / $0.175 (input / output / cache) per 1M tokens.
+
+        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
+    </div>
+</Columns>
+
+## gpt-5.3-codex
+
+GPT-5.3 Codex is a code-optimized variant from the GPT-5.3 family, purpose-built for software development workflows. It excels at code generation, editing, debugging, and agentic coding tasks with a 200K token context window.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Agentic coding, code generation, debugging, refactoring, automated development workflows, and IDE integrations that require deep code understanding.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Code` | | `Text, Code` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 200,000 context window</li>
+        </ul>
+
+        Pricing: $1.75 / $14.00 / $0.175 (input / output / cache) per 1M tokens.
+
+        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
+    </div>
+</Columns>
 
 ## gpt-5.2
 
