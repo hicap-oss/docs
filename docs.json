@@ -56,14 +56,14 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Models",
-          "href": "https://hicap.ai/models",
-          "icon": "microchip"
-        },
-        {
           "anchor": "API Reference",
           "href": "/api-reference/introduction",
           "icon": "code"
+        },
+        {
+          "anchor": "Models",
+          "href": "https://hicap.ai/models",
+          "icon": "microchip"
         },
         {
           "anchor": "Hicap Platform",
