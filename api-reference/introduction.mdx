@@ -1,43 +1,51 @@
 ---
-title: 'API Reference'
-description: 'OpenAI-compatible API for accessing foundation models through Hicap'
+title: 'API Overview'
+description: 'OpenAI-compatible REST API for accessing foundation models through Hicap'
 ---
 
-## Overview
-
-The **Hicap API** is fully compatible with the [OpenAI API specification](https://platform.openai.com/docs/api-reference). If you've used the OpenAI API before, you already know how to use Hicap — just change the base URL.
+The Hicap API is a RESTful API compatible with the [OpenAI API specification](https://platform.openai.com/docs/api-reference). Use it from any environment that supports HTTP requests, or through OpenAI's official SDKs for [Python](https://github.com/openai/openai-python), [JavaScript/TypeScript](https://github.com/openai/openai-node), [Go](https://github.com/openai/openai-go), and more.
 
 <Info>
   **Base URL:** `https://api.hicap.ai/v1`
-
-  Use any standard OpenAI SDK (Python, JavaScript, Go, etc.) by pointing it at this URL.
 </Info>
+
+---
 
 ## Authentication
 
-Include your Hicap API key in either the `Authorization` header or the `api-key` header:
+The Hicap API uses API keys for authentication. Create and manage your API keys in the [Hicap Platform ↗](https://platform.hicap.ai/).
+
+<Warning>
+  Your API key is a secret. Do not share it or expose it in client-side code (browsers, mobile apps). Load API keys from environment variables or a secrets manager on the server side.
+</Warning>
+
+Provide your key via one of these headers:
 
 ```bash
-# Option 1: Authorization header (OpenAI SDK default)
-curl https://api.hicap.ai/v1/chat/completions \
-  -H "Authorization: Bearer YOUR-HICAP-API-KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"model": "gpt-5", "messages": [{"role": "user", "content": "Hello"}]}'
+# Bearer authentication (OpenAI SDK default)
+Authorization: Bearer YOUR-HICAP-API-KEY
 
-# Option 2: api-key header (Azure-style)
-curl https://api.hicap.ai/v1/chat/completions \
-  -H "api-key: YOUR-HICAP-API-KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"model": "gpt-5", "messages": [{"role": "user", "content": "Hello"}]}'
+# api-key header (Azure-style, also supported)
+api-key: YOUR-HICAP-API-KEY
 ```
 
-<Note>
-  **Get your API key** from the [Hicap Platform ↗](https://platform.hicap.ai/). This opens the Hicap Platform dashboard — a separate app where you manage your account, API keys, and usage.
-</Note>
+### Example request
+
+```bash
+curl https://api.hicap.ai/v1/chat/completions \
+  -H "Authorization: Bearer $HICAP_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-5",
+    "messages": [{"role": "user", "content": "Hello, world"}]
+  }'
+```
+
+---
 
 ## Endpoints
 
-All endpoints below follow the OpenAI API spec. Click through for request/response details.
+All endpoints follow the OpenAI API spec. Click through for full request/response schemas.
 
 ### Text & Chat
 
@@ -75,22 +83,88 @@ All endpoints below follow the OpenAI API spec. Click through for request/respon
 | `/v1/threads/{id}/runs` | `POST` `GET` | Execute and monitor assistant runs |
 | `/v1/vector_stores` | `POST` `GET` | Manage knowledge base vector stores |
 
+---
+
 ## Models
 
 Pass any [supported model ID](https://hicap.ai/models) in the `model` field. The Hicap API supports models across OpenAI, Anthropic, Google Gemini, Moonshot, Zhipu, and MiniMax — all through the same OpenAI-compatible interface.
 
 [View all models →](https://hicap.ai/models)
 
-## Rate Limits & Errors
+---
 
-The Hicap API uses standard HTTP status codes:
+## Streaming
 
-| Status | Meaning |
+Most text generation endpoints support server-sent events (SSE) for streaming responses. Set `"stream": true` in your request body to receive chunks as they are generated.
+
+```bash
+curl https://api.hicap.ai/v1/chat/completions \
+  -H "Authorization: Bearer $HICAP_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-5",
+    "messages": [{"role": "user", "content": "Write a haiku"}],
+    "stream": true
+  }'
+```
+
+Each SSE event contains a JSON chunk with incremental content. The stream ends with a `[DONE]` sentinel.
+
+---
+
+## Rate limits
+
+Rate limits vary by plan and are applied per API key. When you exceed your limit, the API returns a `429` status code. Use exponential backoff to retry.
+
+The following rate limit headers are included in API responses:
+
+| Header | Description |
 | --- | --- |
-| `200` | Success |
-| `400` | Bad request — check your request body |
-| `401` | Unauthorized — check your API key |
-| `429` | Rate limited — back off and retry |
-| `500` | Server error — retry with exponential backoff |
+| `x-ratelimit-limit-requests` | Max requests allowed in the current window |
+| `x-ratelimit-limit-tokens` | Max tokens allowed in the current window |
+| `x-ratelimit-remaining-requests` | Requests remaining in the current window |
+| `x-ratelimit-remaining-tokens` | Tokens remaining in the current window |
+| `x-ratelimit-reset-requests` | Time until the request limit resets |
+| `x-ratelimit-reset-tokens` | Time until the token limit resets |
 
-Rate limits vary by plan. If you receive `429` responses, wait and retry. For higher limits, contact us at [support@hicap.ai](mailto:support@hicap.ai) or upgrade your plan in the [Hicap Platform ↗](https://platform.hicap.ai/).
+For higher limits, contact [support@hicap.ai](mailto:support@hicap.ai) or upgrade your plan in the [Hicap Platform ↗](https://platform.hicap.ai/).
+
+---
+
+## Errors
+
+The Hicap API uses standard HTTP status codes and returns JSON error bodies.
+
+| Status | Type | Description |
+| --- | --- | --- |
+| `400` | `invalid_request_error` | Malformed request body or missing required fields |
+| `401` | `authentication_error` | Invalid or missing API key |
+| `403` | `permission_error` | API key lacks required permissions |
+| `404` | `not_found_error` | Requested resource does not exist |
+| `429` | `rate_limit_error` | Rate limit exceeded — back off and retry |
+| `500` | `api_error` | Internal server error — retry with exponential backoff |
+| `503` | `overloaded_error` | Server temporarily overloaded — retry after a short delay |
+
+Error responses include a JSON body:
+
+```json
+{
+  "error": {
+    "message": "Invalid API key provided",
+    "type": "authentication_error",
+    "code": "invalid_api_key"
+  }
+}
+```
+
+---
+
+## Request IDs
+
+Every API response includes an `x-request-id` header with a unique identifier for that request. Log this value in production — it allows the Hicap support team to quickly locate and diagnose issues if you need help.
+
+---
+
+## Versioning
+
+The Hicap API follows the OpenAI v1 API specification. We are committed to maintaining backward compatibility within the v1 API and will avoid breaking changes whenever possible.
