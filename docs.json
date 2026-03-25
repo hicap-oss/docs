@@ -18,7 +18,7 @@
             "pages": ["quickstart", "faq"]
           },
           {
-            "group": "Models",
+            "group": "Providers",
             "pages": [
               "providers/table-comparison",
               "providers/openai",
@@ -60,11 +60,6 @@
           "anchor": "API Reference",
           "href": "/api-reference/introduction",
           "icon": "code"
-        },
-        {
-          "anchor": "Models",
-          "href": "/providers/table-comparison",
-          "icon": "microchip"
         },
         {
           "anchor": "Hicap Platform",
