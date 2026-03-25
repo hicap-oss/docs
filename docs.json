@@ -20,7 +20,6 @@
           {
             "group": "Providers",
             "pages": [
-              "providers/table-comparison",
               "providers/openai",
               "providers/anthropic",
               "providers/google",
@@ -56,6 +55,11 @@
     ],
     "global": {
       "anchors": [
+        {
+          "anchor": "Models",
+          "href": "https://hicap.ai/models",
+          "icon": "microchip"
+        },
         {
           "anchor": "API Reference",
           "href": "/api-reference/introduction",
