@@ -1,7 +1,71 @@
 ---
 title: 'Anthropic'
-description: 'Available Models by Anthropic'
+description: 'Anthropic Claude models available through the Hicap API'
 ---
+
+All Anthropic models below are accessible through the **Hicap API** using the standard [OpenAI API spec](https://platform.openai.com/docs/api-reference). Point your OpenAI SDK at `https://api.hicap.ai/v1` and use any model ID listed here. Pricing is sourced from [hicap.ai/models.json](https://hicap.ai/models.json).
+
+## claude-opus-4.6
+
+Claude Opus 4.6 is the latest and most capable Claude model, delivering state-of-the-art reasoning, coding, analysis, and creative output. It offers a 200K context window with efficient prompt caching for cost-effective processing of long inputs.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Maximum-capability tasks: advanced agentic coding, deep research synthesis, complex multi-step reasoning, strategic analysis, and high-stakes content generation where quality and depth are paramount.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Code` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 200,000 context window</li>
+        </ul>
+
+        Pricing: $5.00 / $25.00 / $0.50 / $6.25 (input / output / cache / cache write) per 1M tokens.
+
+        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
+    </div>
+</Columns>
+
+## claude-sonnet-4.6
+
+Claude Sonnet 4.6 is the latest mid-tier Claude model, offering strong reasoning, coding, and instruction following at an excellent cost-to-performance ratio. It balances intelligence and speed with a 200K context window.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Enterprise copilots, production coding assistants, document analysis, structured reasoning, and general-purpose AI applications where strong performance at moderate cost is ideal.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Code` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 200,000 context window</li>
+        </ul>
+
+        Pricing: $3.00 / $15.00 / $0.30 / $3.75 (input / output / cache / cache write) per 1M tokens.
+
+        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
+    </div>
+</Columns>
 
 ## claude-sonnet-4.5
 

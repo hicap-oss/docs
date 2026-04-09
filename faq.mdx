@@ -1,34 +1,37 @@
 ---
 title: 'FAQ'
-description: 'Frequently questions about Hicap'
+description: 'Frequently asked questions about Hicap'
 icon: 'question'
 ---
 
 ### General
 
-Everything you need to know about using HiCap on a day-to-day basis
+Everything you need to know about using Hicap on a day-to-day basis
 
 <AccordionGroup>
-  <Accordion title="What exactly does HiCAP do in plain terms?">
-    HiCAP gives you fast, secure access to top closed AI models—like GPT-4.1 and Sonnet 4 —at a fraction of the usual cost. We bulk-reserve compute from leading cloud providers and pass the savings to you, all through a simple API.
+  <Accordion title="What exactly does Hicap do in plain terms?">
+    Hicap gives you fast, secure access to top closed AI models — like GPT-5 and Claude Sonnet 4.5 — at a fraction of the usual cost. We bulk-reserve compute from leading cloud providers and pass the savings to you, all through a simple API.
   </Accordion>
-  <Accordion title="How is “reserved throughput” different from pay-as-you-go tokens?">
-    Reserved throughput locks in your compute and pricing—no rate limits, no surprise overages.
+  <Accordion title="How is 'reserved throughput' different from pay-as-you-go tokens?">
+    Reserved throughput locks in your compute and pricing — no rate limits, no surprise overages. Think of it like storing water when it's cheap instead of paying full price from the tap during a drought. You commit to a volume up front and get a guaranteed rate, while pay-as-you-go charges you the spot price for every token. If your usage is predictable, reserved throughput saves you money and removes uncertainty.
+  </Accordion>
+  <Accordion title="Do you offer pay-as-you-go pricing?">
+    Yes. If you're not ready to commit to reserved capacity, you can use Hicap on a pay-per-use basis. You get the same API, the same models, and the same reliability — you just pay per token at standard rates. It's a great way to get started or handle unpredictable workloads before locking in a reservation.
   </Accordion>
   <Accordion title="How much can customers typically save, and what drives those savings?">
-    Typical savings are up to 25%. Your savings depend on your model usage blend, commitment, and capacity needs.
+    Typical savings are up to 25%. Your savings depend on your model usage blend, commitment length, and capacity needs.
   </Accordion>
   <Accordion title="Which models and clouds do you cover today?">
-    We support all major models across OpenAI, Anthropic, Gemini and all top open source models. All across AWS, Azure, and Google Cloud and top Neo Clouds. More models and clouds are coming soon, let us know what you need!
+    We support the latest models across OpenAI, Anthropic, Google Gemini, and more. Available in AWS, Azure, Google Cloud, and top Neo Clouds like Alibaba — we try to be as flexible as our customers are. More models and clouds are coming soon; let us know what you need!
   </Accordion>
   <Accordion title="Is there a minimum commitment or lock-in period?">
-    No long-term lock-in. Start monthly, scale up or down anytime. Want a discount? We offer extra savings for longer commitments.
+    Start monthly! Scale up or down with your needs with no long-term lock-in. Want to pay even less? Sign up for a longer commitment for extra savings.
   </Accordion>
   <Accordion title="What happens if we burst above our reserved capacity?">
-    No stress. You can burst above your reservation as needed—just contact us, and we'll help you scale up instantly. Your service stays smooth, even during traffic surges.
+    No stress. You can burst above your reservation as needed — just contact us, and we'll help you scale up instantly. Your service stays smooth, even during traffic surges.
   </Accordion>
-  <Accordion title="Can we mix HiCAP reservations with our existing provider credits?">
-    Yes! You can use HiCAP for part of your workload and keep using existing provider credits elsewhere. Many teams blend both for maximum flexibility and savings.
+  <Accordion title="Can we use Hicap alongside our existing provider accounts?">
+    Yes. Hicap works great as one provider in a multi-provider setup. If you use an AI gateway (like LiteLLM, Portkey, or a custom router), you can configure Hicap as the preferred provider for specific models while keeping your existing provider accounts for others. Note that Hicap itself is an inference API — it doesn't provide gateway or routing services. Your gateway handles the routing logic; Hicap handles the inference.
   </Accordion>
 </AccordionGroup>
 
@@ -37,28 +40,52 @@ Everything you need to know about using HiCap on a day-to-day basis
 Your trust and data security are our top priority
 
 <AccordionGroup>
-  <Accordion title="Is my data safe with HiCap?">
-    Yes. We use bank-grade encryption (AES-256) and secure communication protocols (TLS 1.3) to protect all user data.
+  <Accordion title="Is my data safe with Hicap?">
+    Yes. We use bank-grade encryption (AES-256) and secure communication protocols (TLS 1.3) to protect all data in transit and at rest. Importantly, **Hicap does not store any customer messages or prompts sent to the LLM** — your requests are forwarded to the model provider and responses are returned to you without being logged or retained on our side.
   </Accordion>
-  <Accordion title="Does HiCap share my personal information with third parties?">
+  <Accordion title="Does Hicap share my personal information with third parties?">
     No. We never sell or share your data with third parties without your explicit consent. Your information is only used to provide our services.
   </Accordion>
   <Accordion title="What happens if there's a security breach?">
-    HiCap follows strict incident-response protocols. If a breach were ever to occur, users would be notified immediately and supported with protective measures.
+    Hicap follows strict incident-response protocols. If a breach were ever to occur, users would be notified immediately per our notification timeline, and we would work with affected customers on remediation steps. For full details on our obligations and response procedures, see our [Terms of Service](https://hicap.ai/terms).
   </Accordion>
-  <Accordion title="Can I delete my data from HiCap?">
-    Absolutely. You can request data deletion at any time, and we will securely remove your information from our systems in compliance with privacy regulations.
+  <Accordion title="Can I delete my data from Hicap?">
+    Absolutely. You can request data deletion at any time, and we will securely remove your information from our systems in compliance with GDPR and other applicable privacy regulations.
   </Accordion>
-  <Accordion title="Is HiCap compliant with industry security standards?">
-    Yes. HiCap follows best practices such as encryption, role-based access control, and can be configured to meet compliance requirements like SOC 2 or GDPR.
+  <Accordion title="Is Hicap compliant with industry security standards?">
+    Yes. Hicap follows best practices such as encryption, role-based access control, and can be configured to meet compliance requirements like SOC 2 or GDPR.
   </Accordion>
-  <Accordion title="What if I need to connect HiCap to external APIs?">
-    You decide. HiCap gives you full control over which applications go out, while keeping internal data and processing private.
+  <Accordion title="What if I need to connect Hicap to external APIs?">
+    You decide. Hicap gives you full control over which applications you integrate, while keeping internal data and processing private.
   </Accordion>
-  <Accordion title="How does HiCap protect sensitive information?">
-    By keeping requests inside your infrastructure, HiCap eliminates exposure to public endpoints. Combined with encryption in transit and at rest, your data stays safe end-to-end.
+  <Accordion title="How does Hicap protect sensitive information?">
+    All traffic between your application and Hicap is encrypted with TLS 1.3. Hicap does not store your prompts or completions — requests are forwarded to the upstream model provider and responses are returned directly to you. Combined with encryption at rest for account and billing data, your sensitive information stays protected end-to-end.
   </Accordion>
-  <Accordion title="Can HiCap be deployed inside my AWS account?">
-    Yes. HiCap can be installed within your AWS environment, ensuring that all processing and data requests remain private and isolated.
+  <Accordion title="Can Hicap be deployed inside my AWS account?">
+    Yes. Hicap can be installed within your AWS environment, ensuring that all processing and data requests remain private and isolated.
+  </Accordion>
+</AccordionGroup>
+
+### Architecture
+
+How Hicap fits into your stack
+
+<AccordionGroup>
+  <Accordion title="How does the integration architecture work?">
+    Hicap sits between your application and the upstream model providers. Here's the typical flow:
+
+    ```
+    Your App ──▶ Hicap API ──▶ Model Provider
+    (OpenAI SDK)  api.hicap.ai  (OpenAI / Anthropic / Google / etc.)
+    ```
+
+    1. **Your application** calls `api.hicap.ai/v1` using any standard OpenAI SDK
+    2. **Hicap** authenticates the request, routes it to the optimal provider endpoint using your reserved capacity (or pay-as-you-go), and returns the response
+    3. **No prompts or completions are stored** by Hicap — only usage metadata for billing
+
+    If you use an AI gateway, Hicap is configured as a provider upstream — the gateway routes to Hicap, and Hicap routes to the model provider.
+  </Accordion>
+  <Accordion title="What do I need to change in my existing code?">
+    Two things: the base URL and the API key. If you're already using the OpenAI SDK, just set `base_url` to `https://api.hicap.ai/v1` and use your Hicap API key. No other code changes are needed — the API is fully OpenAI-compatible.
   </Accordion>
 </AccordionGroup>

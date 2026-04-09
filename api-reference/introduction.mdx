@@ -1,33 +1,178 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'API Overview'
+description: 'OpenAI-compatible REST API for accessing foundation models through Hicap'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+The Hicap API is a RESTful API compatible with the [OpenAI API specification](https://github.com/openai/openai-openapi). Use it from any environment that supports HTTP requests, or through OpenAI's official SDKs for [Python](https://github.com/openai/openai-python), [JavaScript/TypeScript](https://github.com/openai/openai-node), [Go](https://github.com/openai/openai-go), and more.
 
-## Welcome
+<Info>
+  **Base URL:** `https://api.hicap.ai/v1`
+</Info>
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+---
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+The Hicap API uses API keys for authentication. Create and manage your API keys in the [Hicap Platform ↗](https://platform.hicap.ai/).
+
+<Warning>
+  Your API key is a secret. Do not share it or expose it in client-side code (browsers, mobile apps). Load API keys from environment variables or a secrets manager on the server side.
+</Warning>
+
+Provide your key via one of these headers:
+
+```bash
+# Bearer authentication (OpenAI SDK default)
+Authorization: Bearer YOUR-HICAP-API-KEY
+
+# api-key header (Azure-style, also supported)
+api-key: YOUR-HICAP-API-KEY
+```
+
+### Example request
+
+```bash
+curl https://api.hicap.ai/v1/chat/completions \
+  -H "Authorization: Bearer $HICAP_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-5",
+    "messages": [{"role": "user", "content": "Hello, world"}]
+  }'
+```
+
+---
+
+## Endpoints
+
+All endpoints follow the [OpenAI OpenAPI specification](https://github.com/openai/openai-openapi).
+
+### Production
+
+These endpoints are available on the production Hicap API (`api.hicap.ai`).
+
+#### Chat Completions
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| [`/v1/chat/completions`](/api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message) | `POST` | Generate text, analyze images, call tools, stream responses |
+| `/v1/chat/completions/{completion_id}` | `GET` | Retrieve a stored chat completion by ID |
+| `/v1/chat/completions/{completion_id}/messages` | `GET` | List messages from a stored chat completion |
+
+#### Images
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| [`/v1/images/generations`](/api-reference/endpoints/openAI/generates-a-batch-of-images-from-a-text-caption-on-a-given-dalle-model-deployment) | `POST` | Generate images from text prompts |
+| `/v1/images/edits` | `POST` | Edit or extend existing images |
+| `/v1/images/variations` | `POST` | Generate variations of an image |
+
+### Developer Preview
+
+These endpoints are available on the Hicap developer API and are not yet in production.
+
+<Note>
+  Developer preview endpoints may change before general availability. Contact [support@hicap.ai](mailto:support@hicap.ai) for access.
+</Note>
+
+#### Responses
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/responses` | `POST` | Create a model response (Responses API) |
+| `/v1/responses/{response_id}` | `GET` `DELETE` | Retrieve or delete a response |
+| `/v1/responses/{response_id}/cancel` | `POST` | Cancel an in-progress response |
+| `/v1/responses/{response_id}/input_items` | `GET` | List input items for a response |
+
+#### Realtime
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/v1/realtime/sessions` | `POST` | Create a realtime session |
+| `/v1/realtime/transcription_sessions` | `POST` | Create a transcription session |
+
+---
+
+## Models
+
+Pass any [supported model ID](https://hicap.ai/models) in the `model` field. The Hicap API supports models across OpenAI, Anthropic, Google Gemini, Moonshot, Zhipu, and MiniMax — all through the same OpenAI-compatible interface.
+
+[View all models →](https://hicap.ai/models)
+
+---
+
+## Streaming
+
+Most text generation endpoints support server-sent events (SSE) for streaming responses. Set `"stream": true` in your request body to receive chunks as they are generated.
+
+```bash
+curl https://api.hicap.ai/v1/chat/completions \
+  -H "Authorization: Bearer $HICAP_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-5",
+    "messages": [{"role": "user", "content": "Write a haiku"}],
+    "stream": true
+  }'
+```
+
+Each SSE event contains a JSON chunk with incremental content. The stream ends with a `[DONE]` sentinel.
+
+---
+
+## Rate limits
+
+Rate limits vary by plan and are applied per API key. When you exceed your limit, the API returns a `429` status code. Use exponential backoff to retry.
+
+The following rate limit headers are included in API responses:
+
+| Header | Description |
+| --- | --- |
+| `x-ratelimit-limit-requests` | Max requests allowed in the current window |
+| `x-ratelimit-limit-tokens` | Max tokens allowed in the current window |
+| `x-ratelimit-remaining-requests` | Requests remaining in the current window |
+| `x-ratelimit-remaining-tokens` | Tokens remaining in the current window |
+| `x-ratelimit-reset-requests` | Time until the request limit resets |
+| `x-ratelimit-reset-tokens` | Time until the token limit resets |
+
+For higher limits, contact [support@hicap.ai](mailto:support@hicap.ai) or upgrade your plan in the [Hicap Platform ↗](https://platform.hicap.ai/).
+
+---
+
+## Errors
+
+The Hicap API uses standard HTTP status codes and returns JSON error bodies.
+
+| Status | Type | Description |
+| --- | --- | --- |
+| `400` | `invalid_request_error` | Malformed request body or missing required fields |
+| `401` | `authentication_error` | Invalid or missing API key |
+| `403` | `permission_error` | API key lacks required permissions |
+| `404` | `not_found_error` | Requested resource does not exist |
+| `429` | `rate_limit_error` | Rate limit exceeded — back off and retry |
+| `500` | `api_error` | Internal server error — retry with exponential backoff |
+| `503` | `overloaded_error` | Server temporarily overloaded — retry after a short delay |
+
+Error responses include a JSON body:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
+{
+  "error": {
+    "message": "Invalid API key provided",
+    "type": "authentication_error",
+    "code": "invalid_api_key"
   }
-]
+}
 ```
+
+---
+
+## Request IDs
+
+Every API response includes an `x-request-id` header with a unique identifier for that request. Log this value in production — it allows the Hicap support team to quickly locate and diagnose issues if you need help.
+
+---
+
+## Versioning
+
+The Hicap API follows the OpenAI v1 API specification. We are committed to maintaining backward compatibility within the v1 API and will avoid breaking changes whenever possible.

@@ -1,7 +1,129 @@
 ---
 title: 'Google'
-description: 'Available Models by Google (Gemini)'
+description: 'Google Gemini models available through the Hicap API'
 ---
+
+All Google Gemini models below are accessible through the **Hicap API** using the standard [OpenAI API spec](https://platform.openai.com/docs/api-reference). Point your OpenAI SDK at `https://api.hicap.ai/v1` and use any model ID listed here. Pricing is sourced from [hicap.ai/models.json](https://hicap.ai/models.json).
+
+## gemini-3.1-pro
+
+Gemini 3.1 Pro is Google's latest flagship reasoning model with a 1M token context window, advanced analytical capabilities, and support for long-context pricing tiers. It excels at complex multi-step reasoning and large-scale document analysis.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Advanced reasoning, complex multi-step analysis, large-scale document processing, codebase understanding, and enterprise workflows requiring the highest Google Gemini capability.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Audio, Video, PDF` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 1,000,000 context window</li>
+            <li>* Long-context pricing above 200,000 tokens</li>
+        </ul>
+
+        Pricing: $2.00 / $12.00 / $0.20 (input / output / cache) per 1M tokens. Long-context: $4.00 / $18.00 / $0.40 per 1M tokens.
+
+        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
+    </div>
+</Columns>
+
+## gemini-3.1-pro-preview
+
+Gemini 3.1 Pro Preview is the preview channel of Gemini 3.1 Pro with identical capabilities, providing early access to the latest improvements.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Same use cases as gemini-3.1-pro — advanced reasoning, document analysis, and enterprise workflows. Use the preview for early access to latest refinements.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Audio, Video, PDF` | | `Text` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 1,000,000 context window</li>
+            <li>* Long-context pricing above 200,000 tokens</li>
+        </ul>
+
+        Pricing: $2.00 / $12.00 / $0.20 (input / output / cache) per 1M tokens. Long-context: $4.00 / $18.00 / $0.40 per 1M tokens.
+
+        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
+    </div>
+</Columns>
+
+## gemini-3.1-flash-image-preview
+
+Gemini 3.1 Flash Image Preview is a fast, cost-efficient model specialized for text-to-image generation and visual content creation. Built on the Flash architecture for low-latency responses.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Fast text-to-image generation, iterative image editing, visual asset creation, and design prototyping where speed and cost efficiency are priorities.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image` | | `Image` |
+
+
+<Columns cols={1}>
+    <div>
+        Pricing: $0.50 / $3.00 (input / output) per 1M tokens.
+
+        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
+    </div>
+</Columns>
+
+## gemini-3-pro-image-preview
+
+Gemini 3 Pro Image Preview is a high-capability model for image generation and multimodal visual workflows. It delivers higher quality image outputs compared to Flash variants.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    High-quality image generation, creative visual content, marketing asset creation, and premium visual workflows where output quality matters more than speed.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image` | | `Image` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 1,000,000 context window</li>
+        </ul>
+
+        Pricing: $2.00 / $12.00 (input / output) per 1M tokens.
+
+        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
+    </div>
+</Columns>
 
 ## gemini-3-pro-preview
 
@@ -107,6 +229,37 @@ Gemini 2.5 Flash is a fast and cost-effective model that balances performance wi
         </ul>
        
         Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
+    </div>
+</Columns>
+
+## gemini-2.5-flash-preview
+
+Gemini 2.5 Flash Preview provides early access to the latest Gemini 2.5 Flash improvements. Same fast, cost-effective architecture with thinking capabilities and multimodal support.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Same use cases as gemini-2.5-flash — low latency chat, summarization, and multimodal extraction. Use the preview for early access to the latest refinements.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, Image, Audio, Video, Code` | | `Text, Image, Audio, Video, Code` |
+
+
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 1,048,576 context window</li>
+        </ul>
+
+        Pricing: $0.15 / $0.60 / $0.0375 (input / output / cache) per 1M tokens.
+
+        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
     </div>
 </Columns>
 

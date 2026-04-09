@@ -3169,7 +3169,7 @@
         "properties": {
           "model": {
             "type": "string",
-            "description": "Model ID used to generate the response. See the list of [available options](/providers/table-comparison)",
+            "description": "Model ID used to generate the response. See the list of [available options](https://hicap.ai/models)",
             "default": "gpt-5.2"
           },
           "temperature": {

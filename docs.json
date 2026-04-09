@@ -15,11 +15,18 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["index", "quickstart", "faq"]
+            "pages": ["quickstart", "faq"]
           },
           {
             "group": "Providers",
-            "pages": ["providers/table-comparison", "providers/openai", "providers/anthropic", "providers/google"]
+            "pages": [
+              "providers/openai",
+              "providers/anthropic",
+              "providers/google",
+              "providers/moonshot",
+              "providers/zhipu",
+              "providers/minimax"
+            ]
           }
         ]
       },
@@ -27,17 +34,24 @@
         "tab": "API Reference",
         "groups": [
           {
+            "group": "Overview",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          },
+          {
             "group": "Endpoints",
             "pages": [
               {
-                "group": "OpenAI",
+                "group": "Chat Completions",
                 "pages": [
-                  {
-                    "group": "Chat Completions",
-                    "pages": [
-                      "api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message"
-                    ]
-                  }
+                  "api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message"
+                ]
+              },
+              {
+                "group": "Images",
+                "pages": [
+                  "api-reference/endpoints/openAI/generates-a-batch-of-images-from-a-text-caption-on-a-given-dalle-model-deployment"
                 ]
               }
             ]
@@ -46,7 +60,23 @@
       }
     ],
     "global": {
-      "anchors": []
+      "anchors": [
+        {
+          "anchor": "API Reference",
+          "href": "/api-reference/introduction",
+          "icon": "code"
+        },
+        {
+          "anchor": "Models",
+          "href": "https://hicap.ai/models",
+          "icon": "microchip"
+        },
+        {
+          "anchor": "Hicap Platform",
+          "href": "https://platform.hicap.ai/",
+          "icon": "arrow-up-right-from-square"
+        }
+      ]
     }
   },
   "logo": {
@@ -66,6 +96,12 @@
       "href": "https://platform.hicap.ai/"
     }
   },
+  "redirects": [
+    {
+      "source": "/providers/table-comparison",
+      "destination": "https://hicap.ai/models"
+    }
+  ],
   "footer": {
     "socials": {
       "linkedin": "https://www.linkedin.com/company/hicapai/",
