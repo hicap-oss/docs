@@ -3,11 +3,11 @@ title: 'OpenAI'
 description: 'OpenAI models available through the Hicap API'
 ---
 
-All OpenAI models below are accessible through the **Hicap API** using the standard [OpenAI API spec](https://platform.openai.com/docs/api-reference). Point your OpenAI SDK at `https://api.hicap.ai/v1` and use any model ID listed here. Pricing is sourced from [hicap.ai/models.json](https://hicap.ai/models.json).
+All OpenAI models below are accessible through the **Hicap API** using the standard [OpenAI API spec](https://platform.openai.com/docs/api-reference). Point your OpenAI SDK at `https://api.hicap.ai/v1` and use any model ID listed here. For pricing, see the [Model Catalog](https://hicap.ai/models).
 
 ## gpt-5.4
 
-GPT-5.4 is OpenAI's most advanced model, offering a massive 1.05M token context window with state-of-the-art reasoning, coding, and multimodal capabilities. It features long-context pricing tiers above 272K tokens for cost-efficient processing of very large inputs.
+GPT-5.4 is OpenAI's most advanced model, offering a massive 1.05M token context window with state-of-the-art reasoning, coding, and multimodal capabilities. It features long-context tiers above 272K tokens for cost-efficient processing of very large inputs.
 
 <div className='text-white font-bold'>Best for:</div>
 
@@ -20,20 +20,14 @@ GPT-5.4 is OpenAI's most advanced model, offering a massive 1.05M token context 
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, image` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,050,000 context window</li>
-            <li>* Long-context pricing above 272,000 tokens</li>
+            <li>* Long-context tier above 272,000 tokens</li>
         </ul>
-
-        Pricing: $2.50 / $15.00 / $0.25 (input / output / cache) per 1M tokens. Long-context: $5.00 / $22.50 input / output per 1M tokens.
-
-        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
     </div>
 </Columns>
 
@@ -52,8 +46,6 @@ GPT-5.3 Chat Latest is a conversationally optimized model from the GPT-5.3 famil
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, image` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -61,10 +53,6 @@ GPT-5.3 Chat Latest is a conversationally optimized model from the GPT-5.3 famil
         <ul className='mb-6'>
             <li>* 200,000 context window</li>
         </ul>
-
-        Pricing: $1.75 / $14.00 / $0.175 (input / output / cache) per 1M tokens.
-
-        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
     </div>
 </Columns>
 
@@ -83,8 +71,6 @@ GPT-5.3 Codex is a code-optimized variant from the GPT-5.3 family, purpose-built
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Code` | | `Text, Code` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -92,10 +78,6 @@ GPT-5.3 Codex is a code-optimized variant from the GPT-5.3 family, purpose-built
         <ul className='mb-6'>
             <li>* 200,000 context window</li>
         </ul>
-
-        Pricing: $1.75 / $14.00 / $0.175 (input / output / cache) per 1M tokens.
-
-        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
     </div>
 </Columns>
 
@@ -114,8 +96,6 @@ GPT-5.2 is a highly capable general-purpose language model designed for advanced
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, image` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -126,7 +106,6 @@ GPT-5.2 is a highly capable general-purpose language model designed for advanced
             <li>* August 31, 2025 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
 
@@ -145,8 +124,6 @@ GPT-5.2 Chat is a conversationally optimized variant of GPT-5.2, designed to del
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, image` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -157,7 +134,6 @@ GPT-5.2 Chat is a conversationally optimized variant of GPT-5.2, designed to del
             <li>* August 31, 2025 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
 
@@ -176,8 +152,6 @@ GPT-5.1 is a reliable and efficient language model that offers strong general-pu
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, image` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -188,7 +162,6 @@ GPT-5.1 is a reliable and efficient language model that offers strong general-pu
             <li>* September 30, 2024 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
 
@@ -207,8 +180,6 @@ GPT-5.1 Chat is a conversationally tuned language model optimized for responsive
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, image` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -219,7 +190,6 @@ GPT-5.1 Chat is a conversationally tuned language model optimized for responsive
             <li>* September 30, 2024 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
 
@@ -238,8 +208,6 @@ Full-scale flagship OpenAI model. Delivers state-of-the-art reasoning, creativit
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, image` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -250,7 +218,6 @@ Full-scale flagship OpenAI model. Delivers state-of-the-art reasoning, creativit
             <li>* September 30, 2024 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
 
@@ -269,8 +236,6 @@ This use case employs OpenAI's foundational GPT-5 model (which is the default mo
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, image` | | `Text, Image, Code` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -281,7 +246,6 @@ This use case employs OpenAI's foundational GPT-5 model (which is the default mo
             <li>* September 30, 2024 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
 
@@ -300,8 +264,6 @@ A lighter and faster variant of GPT-5. Preserves strong reasoning and coding abi
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -312,7 +274,6 @@ A lighter and faster variant of GPT-5. Preserves strong reasoning and coding abi
             <li>* May 30, 2024 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
 
@@ -331,8 +292,6 @@ Ultra-light, low-latency model. Prioritizes speed and efficiency over advanced r
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -343,7 +302,6 @@ Ultra-light, low-latency model. Prioritizes speed and efficiency over advanced r
             <li>* May 30, 2024 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
 
@@ -362,8 +320,6 @@ OpenAI's high-intelligence flagship model for complex, multi-step tasks. GPT-4o 
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image, Audio, Video, Code` | | `Text, Audio, Image (limited)` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -374,7 +330,6 @@ OpenAI's high-intelligence flagship model for complex, multi-step tasks. GPT-4o 
             <li>* October 1, 2023 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
 
@@ -393,8 +348,6 @@ OpenAI's affordable and intelligent small model for fast, lightweight tasks. GPT
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image, Code` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -405,7 +358,6 @@ OpenAI's affordable and intelligent small model for fast, lightweight tasks. GPT
             <li>* October 1, 2023 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
 
@@ -424,8 +376,6 @@ GPT-4.1 is the flagship model of the new 4.1 family, excelling in coding, follow
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Code` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -436,7 +386,6 @@ GPT-4.1 is the flagship model of the new 4.1 family, excelling in coding, follow
             <li>* June 1, 2024 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
 
@@ -455,8 +404,6 @@ GPT-4.1 mini is optimized for speed and efficiency, being 40% faster then GPT-4o
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Code` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -467,7 +414,6 @@ GPT-4.1 mini is optimized for speed and efficiency, being 40% faster then GPT-4o
             <li>* June 1, 2024 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
 
@@ -486,8 +432,6 @@ GPT-4.1 nano is the smallest, fastest, and most cost-effective option of the GPT
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -498,6 +442,5 @@ GPT-4.1 nano is the smallest, fastest, and most cost-effective option of the GPT
             <li>* June 1, 2024 knowledge cutoff</li>
         </ul>
        
-        Information provided from [OpenAI website.](https://platform.openai.com/docs/pricing)
     </div>
 </Columns>
