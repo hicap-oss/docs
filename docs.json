@@ -25,7 +25,8 @@
               "providers/google",
               "providers/moonshot",
               "providers/zhipu",
-              "providers/minimax"
+              "providers/minimax",
+              "providers/elevenlabs"
             ]
           }
         ]
