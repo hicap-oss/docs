@@ -3,11 +3,11 @@ title: 'Google'
 description: 'Google Gemini models available through the Hicap API'
 ---
 
-All Google Gemini models below are accessible through the **Hicap API** using the standard [OpenAI API spec](https://platform.openai.com/docs/api-reference). Point your OpenAI SDK at `https://api.hicap.ai/v1` and use any model ID listed here. Pricing is sourced from [hicap.ai/models.json](https://hicap.ai/models.json).
+All Google Gemini models below are accessible through the **Hicap API** using the standard [OpenAI API spec](https://platform.openai.com/docs/api-reference). Point your OpenAI SDK at `https://api.hicap.ai/v1` and use any model ID listed here. For pricing, see the [Model Catalog](https://hicap.ai/models).
 
 ## gemini-3.1-pro
 
-Gemini 3.1 Pro is Google's latest flagship reasoning model with a 1M token context window, advanced analytical capabilities, and support for long-context pricing tiers. It excels at complex multi-step reasoning and large-scale document analysis.
+Gemini 3.1 Pro is Google's latest flagship reasoning model with a 1M token context window, advanced analytical capabilities, and support for long-context tiers. It excels at complex multi-step reasoning and large-scale document analysis.
 
 <div className='text-white font-bold'>Best for:</div>
 
@@ -20,20 +20,14 @@ Gemini 3.1 Pro is Google's latest flagship reasoning model with a 1M token conte
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image, Audio, Video, PDF` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,000,000 context window</li>
-            <li>* Long-context pricing above 200,000 tokens</li>
+            <li>* Long-context tier above 200,000 tokens</li>
         </ul>
-
-        Pricing: $2.00 / $12.00 / $0.20 (input / output / cache) per 1M tokens. Long-context: $4.00 / $18.00 / $0.40 per 1M tokens.
-
-        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
     </div>
 </Columns>
 
@@ -52,20 +46,14 @@ Gemini 3.1 Pro Preview is the preview channel of Gemini 3.1 Pro with identical c
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image, Audio, Video, PDF` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,000,000 context window</li>
-            <li>* Long-context pricing above 200,000 tokens</li>
+            <li>* Long-context tier above 200,000 tokens</li>
         </ul>
-
-        Pricing: $2.00 / $12.00 / $0.20 (input / output / cache) per 1M tokens. Long-context: $4.00 / $18.00 / $0.40 per 1M tokens.
-
-        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
     </div>
 </Columns>
 
@@ -84,13 +72,9 @@ Gemini 3.1 Flash Image Preview is a fast, cost-efficient model specialized for t
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image` | | `Image` |
-
-
 <Columns cols={1}>
     <div>
-        Pricing: $0.50 / $3.00 (input / output) per 1M tokens.
 
-        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
     </div>
 </Columns>
 
@@ -109,8 +93,6 @@ Gemini 3 Pro Image Preview is a high-capability model for image generation and m
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image` | | `Image` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -118,10 +100,6 @@ Gemini 3 Pro Image Preview is a high-capability model for image generation and m
         <ul className='mb-6'>
             <li>* 1,000,000 context window</li>
         </ul>
-
-        Pricing: $2.00 / $12.00 (input / output) per 1M tokens.
-
-        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
     </div>
 </Columns>
 
@@ -140,8 +118,6 @@ Gemini 3 Pro Preview is a next-generation, high-capability model focused on adva
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image, Audio, Video, PDF` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -151,7 +127,6 @@ Gemini 3 Pro Preview is a next-generation, high-capability model focused on adva
             <li>* 64,000 max output tokens</li>
         </ul>
 
-        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
 </Columns>
 
@@ -170,11 +145,8 @@ Gemini 3 Flash is a fast and cost-efficient multimodal model designed for respon
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
-        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
 </Columns>
 
@@ -193,11 +165,8 @@ Extended version of Gemini 2.5 Pro with ultra-long context support (beyond 200k 
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image, Audio, Video, Code` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
-        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
 </Columns>
 
@@ -216,8 +185,6 @@ Gemini 2.5 Flash is a fast and cost-effective model that balances performance wi
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image, Audio, Video, Code` | | `Text, Image, Audio, Video, Code` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -228,7 +195,6 @@ Gemini 2.5 Flash is a fast and cost-effective model that balances performance wi
             <li>* January 1, 2025 knowledge cutoff</li>
         </ul>
        
-        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
 </Columns>
 
@@ -247,8 +213,6 @@ Gemini 2.5 Flash Preview provides early access to the latest Gemini 2.5 Flash im
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image, Audio, Video, Code` | | `Text, Image, Audio, Video, Code` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -256,10 +220,6 @@ Gemini 2.5 Flash Preview provides early access to the latest Gemini 2.5 Flash im
         <ul className='mb-6'>
             <li>* 1,048,576 context window</li>
         </ul>
-
-        Pricing: $0.15 / $0.60 / $0.0375 (input / output / cache) per 1M tokens.
-
-        Information provided from [hicap.ai/models.json](https://hicap.ai/models.json)
     </div>
 </Columns>
 
@@ -278,8 +238,6 @@ Lightweight, optimized version of Gemini Flash, designed for speed and low cost.
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image, Audio` | | `Text, Audio` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -290,7 +248,6 @@ Lightweight, optimized version of Gemini Flash, designed for speed and low cost.
             <li>* January 1, 2025 knowledge cutoff</li>
         </ul>
        
-        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
 </Columns>
 
@@ -309,8 +266,6 @@ A Google model that performs like a Pro model with the speed of a Flash model. M
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image, Audio, Video, Code` | | `Text, Image, Audio` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -321,7 +276,6 @@ A Google model that performs like a Pro model with the speed of a Flash model. M
             <li>* August 1, 2024 knowledge cutoff</li>
         </ul>
        
-        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
 </Columns>
 
@@ -340,8 +294,6 @@ Ultra-light, lowest-latency Gemini variant. Optimized for efficiency rather than
 |  Input | | Output |
 | ----- | - | ------ |
 | `Text, Image, Audio` | | `Text` |
-
-
 <Columns cols={1}>
     <div>
         <div className='text-white font-bold'>This model offers</div>
@@ -352,6 +304,5 @@ Ultra-light, lowest-latency Gemini variant. Optimized for efficiency rather than
             <li>* February 5, 2025 knowledge cutoff</li>
         </ul>
        
-        Information provided from [Gemini website.](https://ai.google.dev/gemini-api/docs/pricing)
     </div>
 </Columns>

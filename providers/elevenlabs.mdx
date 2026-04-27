@@ -1,0 +1,111 @@
+---
+title: 'ElevenLabs'
+description: 'ElevenLabs voice AI models available through the Hicap API'
+---
+
+All ElevenLabs models below are accessible through the **Hicap API**. ElevenLabs provides industry-leading text-to-speech (TTS) and speech-to-text (STT) capabilities. For pricing, see the [Model Catalog](https://hicap.ai/models).
+
+## Text-to-Speech Models
+
+### eleven_multilingual_v2
+
+Eleven Multilingual v2 is ElevenLabs' flagship multilingual text-to-speech model, supporting 29 languages with natural-sounding, expressive voice synthesis. It delivers high-quality speech with nuanced prosody and emotional range.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Multilingual voice applications, audiobook narration, content localization, accessibility features, and customer-facing voice experiences where natural speech quality is essential.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text` | | `Audio` |
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 10,000 character context window</li>
+            <li>* 29 language support</li>
+        </ul>
+    </div>
+</Columns>
+
+### eleven_v3
+
+Eleven v3 is the latest generation ElevenLabs TTS model, delivering improved voice quality, faster generation, and enhanced expressiveness in a compact context window.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Real-time voice assistants, interactive applications, short-form content, and latency-sensitive voice experiences where fast generation matters.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text` | | `Audio` |
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 5,000 character context window</li>
+        </ul>
+    </div>
+</Columns>
+
+## Speech-to-Text Models
+
+### scribe_v1
+
+Scribe v1 is ElevenLabs' speech-to-text transcription model, supporting 90+ languages with accurate transcription of spoken audio into text.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Audio transcription, meeting notes, podcast indexing, subtitle generation, and voice-to-text workflows across multiple languages.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Audio` | | `Text` |
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 90+ language support</li>
+        </ul>
+    </div>
+</Columns>
+
+### scribe_v2
+
+Scribe v2 is the latest generation of ElevenLabs' transcription model, offering improved accuracy and language coverage over Scribe v1.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    High-accuracy transcription, professional media workflows, real-time captioning, and enterprise audio processing where transcription quality is critical.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Audio` | | `Text` |
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* 90+ language support</li>
+        </ul>
+    </div>
+</Columns>
