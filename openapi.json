@@ -2728,6 +2728,98 @@
           }
         }
       }
+    },
+    "/models": {
+      "get": {
+        "summary": "Lists available models",
+        "description": "Returns the public model catalog available through the Hicap API. Use model IDs from this response in OpenAI-compatible endpoints such as /chat/completions.",
+        "operationId": "Models_List",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "object",
+                    "data"
+                  ],
+                  "properties": {
+                    "object": {
+                      "type": "string",
+                      "enum": [
+                        "list"
+                      ],
+                      "example": "list",
+                      "description": "The object type, always list."
+                    },
+                    "data": {
+                      "type": "array",
+                      "description": "Public model objects available through the Hicap API.",
+                      "items": {
+                        "$ref": "#/components/schemas/modelObject"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "models": {
+                    "summary": "Model list",
+                    "value": {
+                      "object": "list",
+                      "data": [
+                        {
+                          "id": "gpt-5.5",
+                          "object": "model",
+                          "owned_by": "openai"
+                        },
+                        {
+                          "id": "gpt-5.5-pro",
+                          "object": "model",
+                          "owned_by": "openai"
+                        },
+                        {
+                          "id": "gpt-5",
+                          "object": "model",
+                          "owned_by": "openai"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-request-id": {
+                "description": "Request ID for troubleshooting purposes.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                }
+              }
+            },
+            "headers": {
+              "x-request-id": {
+                "description": "Request ID for troubleshooting purposes.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
     }
   },
   "components": {
@@ -12603,6 +12695,38 @@
           "data"
         ],
         "description": "Occurs when a stream ends."
+      },
+      "modelObject": {
+        "type": "object",
+        "required": [
+          "id",
+          "object"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The model ID to pass in the model field of compatible API requests.",
+            "example": "gpt-5"
+          },
+          "object": {
+            "type": "string",
+            "enum": [
+              "model"
+            ],
+            "description": "The object type, always model.",
+            "example": "model"
+          },
+          "created": {
+            "type": "integer",
+            "description": "Unix timestamp for when the model object was created, when available.",
+            "example": 1700000000
+          },
+          "owned_by": {
+            "type": "string",
+            "description": "Provider or organization that owns the model.",
+            "example": "openai"
+          }
+        }
       }
     },
     "securitySchemes": {

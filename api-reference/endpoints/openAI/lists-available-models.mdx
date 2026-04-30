@@ -1,0 +1,49 @@
+---
+title: Lists available models
+openapi: get /models
+---
+
+Use `GET /v1/models` to list public Hicap model IDs. This endpoint does not require authentication. Pass one of these IDs as the `model` value in OpenAI-compatible endpoints such as [chat completions](/api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message).
+
+<Info>
+  For the full public model catalog with pricing and context windows, see [All Models](https://hicap.ai/models).
+</Info>
+
+```bash
+curl https://api.hicap.ai/v1/models
+```
+
+The response follows the OpenAI-compatible list shape:
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "gpt-5.5",
+      "object": "model",
+      "owned_by": "openai"
+    },
+    {
+      "id": "gpt-5.5-pro",
+      "object": "model",
+      "owned_by": "openai"
+    },
+    {
+      "id": "gpt-5",
+      "object": "model",
+      "owned_by": "openai"
+    }
+  ]
+}
+```
+
+
+## OpenAI model references
+
+The public model list can include these OpenAI models:
+
+| Model ID | Object | Reference |
+| --- | --- | --- |
+| `gpt-5.5` | `model` | [GPT-5.5 Model ↗](https://developers.openai.com/api/docs/models/gpt-5.5) |
+| `gpt-5.5-pro` | `model` | [GPT-5.5 pro Model ↗](https://developers.openai.com/api/docs/models/gpt-5.5-pro) |
