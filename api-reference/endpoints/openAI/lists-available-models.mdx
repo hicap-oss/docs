@@ -20,6 +20,16 @@ The response follows the OpenAI-compatible list shape:
   "object": "list",
   "data": [
     {
+      "id": "gpt-5.5",
+      "object": "model",
+      "owned_by": "openai"
+    },
+    {
+      "id": "gpt-5.5-pro",
+      "object": "model",
+      "owned_by": "openai"
+    },
+    {
       "id": "gpt-5",
       "object": "model",
       "owned_by": "openai"
@@ -27,3 +37,13 @@ The response follows the OpenAI-compatible list shape:
   ]
 }
 ```
+
+
+## OpenAI model references
+
+The public model list can include these OpenAI models:
+
+| Model ID | Object | Reference |
+| --- | --- | --- |
+| `gpt-5.5` | `model` | [GPT-5.5 Model ↗](https://developers.openai.com/api/docs/models/gpt-5.5) |
+| `gpt-5.5-pro` | `model` | [GPT-5.5 pro Model ↗](https://developers.openai.com/api/docs/models/gpt-5.5-pro) |
