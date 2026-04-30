@@ -3,15 +3,14 @@ title: Lists available models
 openapi: get /models
 ---
 
-Use `GET /v1/models` to list the model IDs available to your Hicap API key. Pass one of these IDs as the `model` value in OpenAI-compatible endpoints such as [chat completions](/api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message).
+Use `GET /v1/models` to list public Hicap model IDs. This endpoint does not require authentication. Pass one of these IDs as the `model` value in OpenAI-compatible endpoints such as [chat completions](/api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message).
 
 <Info>
   For the full public model catalog with pricing and context windows, see [All Models](https://hicap.ai/models).
 </Info>
 
 ```bash
-curl https://api.hicap.ai/v1/models \
-  -H "Authorization: Bearer $HICAP_API_KEY"
+curl https://api.hicap.ai/v1/models
 ```
 
 The response follows the OpenAI-compatible list shape:

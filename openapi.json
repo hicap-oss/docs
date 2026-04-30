@@ -2732,7 +2732,7 @@
     "/models": {
       "get": {
         "summary": "Lists available models",
-        "description": "Returns the models available through the Hicap API for the authenticated API key. Use model IDs from this response in OpenAI-compatible endpoints such as /chat/completions.",
+        "description": "Returns the public model catalog available through the Hicap API. Use model IDs from this response in OpenAI-compatible endpoints such as /chat/completions.",
         "operationId": "Models_List",
         "responses": {
           "200": {
@@ -2807,7 +2807,8 @@
               }
             }
           }
-        }
+        },
+        "security": []
       }
     }
   },
