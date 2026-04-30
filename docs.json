@@ -44,6 +44,12 @@
             "group": "Endpoints",
             "pages": [
               {
+                "group": "Models",
+                "pages": [
+                  "api-reference/endpoints/openAI/lists-available-models"
+                ]
+              },
+              {
                 "group": "Chat Completions",
                 "pages": [
                   "api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message"
