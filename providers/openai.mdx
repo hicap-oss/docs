@@ -5,6 +5,58 @@ description: 'OpenAI models available through the Hicap API'
 
 All OpenAI models below are accessible through the **Hicap API** using the standard [OpenAI API spec](https://platform.openai.com/docs/api-reference). Point your OpenAI SDK at `https://api.hicap.ai/v1` and use any model ID listed here. For pricing, see the [Model Catalog](https://hicap.ai/models).
 
+## gpt-5.5
+
+GPT-5.5 is OpenAI's latest flagship model available through the Hicap API. Use the `gpt-5.5` model ID in OpenAI-compatible endpoints for top-tier general-purpose reasoning, coding, analysis, and multimodal workloads.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Advanced reasoning, agentic coding, complex analysis, multimodal applications, and production assistants that need the strongest general-purpose OpenAI model available through Hicap.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, image` | | `Text` |
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* OpenAI-compatible model ID: `gpt-5.5`</li>
+            <li>* Reference: <a href="https://developers.openai.com/api/docs/models/gpt-5.5">GPT-5.5 Model</a></li>
+        </ul>
+    </div>
+</Columns>
+
+## gpt-5.5-pro
+
+GPT-5.5 Pro is the pro-tier GPT-5.5 model available through the Hicap API. Use the `gpt-5.5-pro` model ID when your workload needs the highest capability option in the GPT-5.5 family.
+
+<div className='text-white font-bold'>Best for:</div>
+
+<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+    <span>
+    Deep research, demanding enterprise analysis, high-stakes coding and review workflows, and complex reasoning tasks where quality matters more than speed.
+    </span>
+</div>
+
+|  Input | | Output |
+| ----- | - | ------ |
+| `Text, image` | | `Text` |
+<Columns cols={1}>
+    <div>
+        <div className='text-white font-bold'>This model offers</div>
+
+        <ul className='mb-6'>
+            <li>* OpenAI-compatible model ID: `gpt-5.5-pro`</li>
+            <li>* Reference: <a href="https://developers.openai.com/api/docs/models/gpt-5.5-pro">GPT-5.5 pro Model</a></li>
+        </ul>
+    </div>
+</Columns>
+
 ## gpt-5.4
 
 GPT-5.4 is OpenAI's most advanced model, offering a massive 1.05M token context window with state-of-the-art reasoning, coding, and multimodal capabilities. It features long-context tiers above 272K tokens for cost-efficient processing of very large inputs.
