@@ -1,32 +1,56 @@
-# Mintlify Starter Kit
+# Hicap Docs
 
-Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
+This repository contains the Mintlify documentation site for Hicap.
 
-- Guide pages
-- Navigation
-- Customizations
-- API Reference pages
-- Use of popular components
+The docs explain how developers can use the Hicap API to access OpenAI, Anthropic, Google Gemini, Moonshot, Zhipu, MiniMax, ElevenLabs, and other model providers through a single OpenAI-compatible API.
 
-### Development
+## What is included
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
+- Developer quickstart for making the first Hicap API request
+- Provider guides for supported model families
+- FAQ covering pricing, security, architecture, and data handling
+- OpenAI-compatible API reference generated from `openapi.json`
+- Mintlify site configuration in `docs.json`
 
+## Key URLs
+
+- Docs site: configured as the Hicap Mintlify docs site
+- API base URL: `https://api.hicap.ai/v1`
+- Platform dashboard: `https://platform.hicap.ai/`
+- Model list: `https://hicap.ai/models`
+- Support: `support@hicap.ai`
+
+## Local development
+
+Install dependencies:
+
+```bash
+pnpm install
 ```
-npm i -g mintlify
+
+Run the docs locally:
+
+```bash
+pnpm dev
 ```
 
-Run the following command at the root of your documentation (where docs.json is)
+This starts `mintlify dev` from the project root, where `docs.json` lives.
 
+## Maintenance checks
+
+Use these commands before publishing changes:
+
+```bash
+pnpm install --frozen-lockfile
+pnpm audit
+pnpm outdated
+pnpm exec mintlify --version
 ```
-mintlify dev
-```
 
-### Publishing Changes
+The repo uses pnpm overrides and a small pnpm patch for Mintlify's preview package so current transitive dependency audit requirements can pass while the Mintlify CLI remains usable.
 
-Install our Github App to auto propagate changes from your repo to your deployment. Changes will be deployed to production automatically after pushing to the default branch. Find the link to install on your dashboard. 
+## Publishing
 
-#### Troubleshooting
+Changes are deployed through the Hicap Mintlify/GitHub integration after updates are pushed to the configured production branch.
 
-- Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
-- Page loads as a 404 - Make sure you are running in a folder with `docs.json`
+If local preview fails, first reinstall dependencies with `pnpm install`. If a page 404s locally, confirm the route is listed in `docs.json` and that you are running commands from this repository root.
