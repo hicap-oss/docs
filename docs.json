@@ -18,6 +18,13 @@
             "pages": ["quickstart", "faq"]
           },
           {
+            "group": "Concepts",
+            "pages": [
+              "concepts/applications-connections-keys",
+              "concepts/tags-dimensions-segments"
+            ]
+          },
+          {
             "group": "Providers",
             "pages": [
               "providers/openai",
