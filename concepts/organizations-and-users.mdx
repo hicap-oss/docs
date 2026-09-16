@@ -1,0 +1,45 @@
+---
+title: 'Organizations & Users'
+description: 'How accounts, users, and personal keys fit together on the Hicap AI Gateway'
+icon: 'users'
+---
+
+Your account on the Hicap AI Gateway is an **Organization** — a company or team made up of **Users**. Applications, Connections, and Keys are owned by the Organization by default, so usage and spend roll up across everyone who works in it. Individual Users can also own **personal** keys, which appear in their own space and still roll up to the Organization.
+
+## Organizations
+
+An **Organization** is the top-level account. It contains your Users and the Applications they build, and it is where billing and usage ultimately roll up. A User can belong to more than one Organization, but there is no standalone "personal account" that exists outside of an Organization — personal work still lives within one.
+
+Think of the Organization as the company, and each User as a seat within it. An Organization doesn't have to be a big team, though: a **solo user is simply an Organization of one**. You still get the same structure — billing, Applications, and usage roll up to your Organization — whether you're the only member or one of hundreds.
+
+## Users
+
+A **User** is an individual person. A User can belong to one or more Organizations; within each one they sign in, build, operate, and govern Applications, and view the usage and spend they're allowed to see. Billing and usage always roll up to the Organization the work was done in.
+
+## Who owns what
+
+Ownership sits at two levels. The Organization owns things by default; a User can additionally own personal work.
+
+<CardGroup cols={2}>
+  <Card title="Organization-owned" icon="building">
+    The default. Applications — and therefore their Connections and Keys — belong to the **Organization**. Anyone with the right access in the Organization can see them, and their usage rolls up to the Organization.
+  </Card>
+  <Card title="User-owned (personal)" icon="user">
+    A User can own their **own** Applications and Keys for personal tooling — an IDE assistant, a local script, an API client, and the like. These live in the User's personal space and roll up to **both** the User and the Organization.
+  </Card>
+</CardGroup>
+
+Personal keys are ordinary Applications and Keys — they simply carry an ownership marker that says they belong to a User rather than to the Organization at large. Everything in the [Applications, Connections & Keys](/concepts/applications-connections-keys) hierarchy still applies.
+
+## Access
+
+Access is intentionally simple today:
+
+- **Organization admins** manage Organization-owned Applications and can see and manage the Organization's keys — their names, status, and usage, not the secret values.
+- **Members** manage their own personal keys.
+
+Finer-grained roles beyond admin and member aren't part of the model yet.
+
+## How this connects to attribution
+
+Organizations and Users describe *who* people are and *what they can reach* — this is different from how a request is labeled. For the structural hierarchy that spend rolls up through, see [Applications, Connections & Keys](/concepts/applications-connections-keys). For the labels you choose per request, see [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments).

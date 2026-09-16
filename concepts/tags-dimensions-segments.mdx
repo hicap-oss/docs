@@ -1,0 +1,140 @@
+---
+title: 'Tags, Dimensions & Segments'
+description: 'How the Hicap AI Gateway labels and groups traffic so you can slice usage and spend by what you send on each request'
+icon: 'tags'
+---
+
+Dimensions are tag keys attached to each request. Segments group requests using rules across one or more dimensions.
+
+## Definitions
+
+- A **tag** is a `key:value` pair attached to a request.
+- A **dimension** is the key part of a tag, such as `agent`, `channel`, `env`, `feature`, or `system`.
+- A **dimension value** is the value assigned to that key.
+- A **segment** is a named, rule-defined subset of traffic created by combining tags across one or more dimensions with `AND`/`OR`.
+
+Tags are how you describe a request as you send it. Dimensions are the keys you tag along, and segments are named combinations of tags that select the requests you care about.
+
+<Note>
+  Dimensions describe a *request*. They are not the same thing as **Organizations**, **Applications**, **Connections**, or **Keys**, which describe how you are provisioned and roll up on their own — see [Organizations, Applications, Connections & Keys](/concepts/applications-connections-keys). In particular, a **team** is a group of users inside your Organization, not a dimension you send on a request.
+</Note>
+
+## How tags are sent
+
+Attach tags to any request with the `x-hicap-tags` header. Its value is a JSON object mapping dimension keys to their values.
+
+<Tabs>
+  <Tab title="curl">
+    ```bash
+    curl https://api.hicap.ai/v1/chat/completions \
+      -H "api-key: $HICAP_API_KEY" \
+      -H "Content-Type: application/json" \
+      -H 'x-hicap-tags: {"feature": "product-recommendations", "channel": "web", "env": "production"}' \
+      -d '{
+        "model": "gpt-5.5",
+        "messages": [
+          { "role": "user", "content": "Recommend a product" }
+        ]
+      }'
+    ```
+  </Tab>
+  <Tab title="JavaScript">
+    ```javascript example.mjs
+    import OpenAI from "openai";
+
+    const client = new OpenAI({
+      baseURL: "https://api.hicap.ai/v1",
+      apiKey: process.env.HICAP_API_KEY,
+      defaultHeaders: { "api-key": process.env.HICAP_API_KEY },
+    });
+
+    const tags = { feature: "product-recommendations", channel: "web", env: "production" };
+
+    const response = await client.chat.completions.create(
+      {
+        model: "gpt-5.5",
+        messages: [{ role: "user", content: "Recommend a product" }],
+      },
+      { headers: { "x-hicap-tags": JSON.stringify(tags) } },
+    );
+
+    console.log(response.choices[0].message.content);
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python example.py
+    import json
+    import os
+    from openai import OpenAI
+
+    client = OpenAI(
+        base_url="https://api.hicap.ai/v1",
+        api_key=os.environ["HICAP_API_KEY"],
+        default_headers={"api-key": os.environ["HICAP_API_KEY"]},
+    )
+
+    tags = {"feature": "product-recommendations", "channel": "web", "env": "production"}
+
+    response = client.chat.completions.create(
+        model="gpt-5.5",
+        messages=[{"role": "user", "content": "Recommend a product"}],
+        extra_headers={"x-hicap-tags": json.dumps(tags)},
+    )
+
+    print(response.choices[0].message.content)
+    ```
+  </Tab>
+</Tabs>
+
+<Note>
+  The header is `x-hicap-tags` (plural), and its value is a single JSON object. Send one header per request — don't repeat the header or use comma-separated pairs.
+</Note>
+
+## Reserved and conventional dimensions
+
+Some dimensions are best set once per service so spend can be sliced consistently across every request it makes. Dimensions like `env`, `system`, and `channel` fall into this group — set them once in your client and they ride along on everything. Per-call dimensions like `feature` or `agent` then pinpoint what a specific request was doing inside that service.
+
+Note that you don't need a dimension for which Application a request came from — that already rolls up from the Key you called with.
+
+This is a convention and a good practice, not an enforced API restriction: enforcement is caller-side today, so it's up to your client to apply these consistently.
+
+## Segments
+
+A segment is a named combination of tags. For example, a segment might select every request where the `env` dimension is `production` and the `locale` dimension starts with a European country code. You define the rule once, give it a name, and use it everywhere you report on traffic.
+
+### Segments may overlap
+
+Segments are **not** mutually exclusive, and a request does not belong to exactly one segment. Any request can match several segment rules at the same time, and that's expected — segments are lenses you point at traffic, not bins you sort requests into.
+
+For example, consider these two segments:
+
+- **EMEA Locales** — requests whose `locale` dimension falls in Europe, the Middle East, or Africa.
+- **Non-English Traffic** — requests whose `locale` dimension is any non-English language.
+
+A request from a French-speaking user in Paris matches **both**: it's an EMEA locale *and* it's non-English. Neither segment excludes the other, and reporting on each will legitimately count that request.
+
+### All traffic
+
+The unfiltered view of everything is called **All traffic**. All traffic is not itself a segment — it's simply the starting point you see before any segment rule is applied.
+
+### Representative segments
+
+These are examples of the kinds of rule-defined segments teams build:
+
+| Segment | Selects |
+| --- | --- |
+| Batch Workloads | Requests tagged as asynchronous or bulk processing |
+| Content Supply Chain | Requests that power content generation and enrichment |
+| EMEA Locales | Requests whose `locale` is in Europe, the Middle East, or Africa |
+| Non-English Traffic | Requests whose `locale` is any non-English language |
+| Non-Production Spend | Requests where `env` is anything other than production |
+| Unattributed Traffic | Requests that arrived without the tags you expect |
+| Voice Deflection Production | Production requests serving voice deflection |
+
+**Unattributed Traffic** is worth calling out: it's how untagged requests surface. If requests show up here, they arrived without the dimensions you rely on — which is the clearest signal that something upstream needs to start tagging.
+
+## Structural vs. descriptive attribution
+
+Tags and segments give you **descriptive** attribution: it comes from what you send on the request, is chosen per call, and can be redefined after the fact by editing a segment rule. This complements the **structural** attribution described in [Organizations, Applications, Connections & Keys](/concepts/applications-connections-keys), which comes from which Key you used and is fixed by how you provisioned things. Both roll up into the same spend reporting; they answer different questions.
+
+Ready to wire this into your codebase? Hand a coding agent the prompt in [Implement attribution with an agent](/concepts/implement-attribution-with-an-agent).
