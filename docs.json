@@ -20,6 +20,7 @@
           {
             "group": "Concepts",
             "pages": [
+              "concepts/organizations-and-users",
               "concepts/applications-connections-keys",
               "concepts/tags-dimensions-segments"
             ]
