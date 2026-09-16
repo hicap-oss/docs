@@ -1,0 +1,141 @@
+---
+title: 'Implement attribution with an agent'
+description: 'A ready-to-use prompt that has a coding agent add Hicap setup and base attribution to your codebase'
+icon: 'robot'
+---
+
+This page gives you a prompt you can hand to a coding agent — GitHub Copilot, or any agent that can read and edit your repository — to add a working **base attribution** setup to your application. It wires up the Hicap client and starts tagging requests so usage and spend roll up the way the rest of the [Concepts](/concepts/organizations-and-users) pages describe.
+
+Start with the [master prompt](#master-prompt) for a complete pass, or use the [focused prompts](#focused-prompts) to do it one step at a time.
+
+<Note>
+  These prompts describe the outcome, not a fixed set of edits. Review the agent's changes like any other pull request — where things land depends on how your codebase is structured.
+</Note>
+
+## Before you start
+
+The agent will need a few things to be true. You can either set these up first or let the prompt ask you for them:
+
+- **A Hicap API key.** Create one in the [Hicap Platform dashboard ↗](https://platform.hicap.ai/) and make it available as the `HICAP_API_KEY` environment variable. The agent should never hard-code it.
+- **The base URL and auth header.** Requests go to `https://api.hicap.ai/v1`, and the key is sent as the `api-key` header. Any OpenAI-compatible SDK works — see the [Developer Quickstart](/quickstart).
+- **A sense of your dimensions.** Decide which labels you want to slice spend by. See [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments) for the model; the prompt defaults to a sensible starter set.
+
+## Master prompt
+
+Copy this into your agent. It covers Hicap setup and base attribution in one pass.
+
+````text
+You are adding Hicap AI Gateway support and base usage attribution to this codebase.
+
+Context — how Hicap attribution works:
+- Requests go through an OpenAI-compatible endpoint at https://api.hicap.ai/v1.
+  Authentication is the API key sent as the `api-key` HTTP header. The key comes
+  from the HICAP_API_KEY environment variable — never hard-code it.
+- "Structural" attribution (which Organization/Application/Key a request belongs
+  to) rolls up automatically from the key, so I do NOT need to send anything for
+  that at call time.
+- "Descriptive" attribution is what I DO send per request: a set of tags. Tags are
+  sent in a single HTTP header called `x-hicap-tags` (plural). Its value is ONE
+  JSON object mapping dimension keys to string values, e.g.
+  {"feature": "checkout", "channel": "web", "env": "production"}.
+  Send exactly one such header per request. Do not repeat the header or use
+  comma-separated pairs.
+
+Do the following:
+1. Find where this codebase calls language models today (search for the OpenAI SDK,
+   HTTP calls to a model provider, or an existing AI client wrapper). If there is
+   no such call yet, create a small client module in the idiomatic place for this
+   project.
+2. Point the client at Hicap: base URL https://api.hicap.ai/v1, and send the key as
+   the `api-key` header, read from the HICAP_API_KEY environment variable. Keep any
+   existing behavior working. Add HICAP_API_KEY to the project's example env file
+   (e.g. .env.example) with a placeholder value and a short comment.
+3. Add a single helper that builds the `x-hicap-tags` header from a plain map and
+   attaches it to a request. It must JSON-encode the map and set exactly one header.
+   Route model calls through this helper so tagging is consistent.
+4. Establish base attribution. Set these service-level dimensions once, in one place,
+   so every request carries them:
+     - env      (e.g. "production", "staging", "development" — derive from config)
+     - system   (a stable short name for this service/app)
+   Then tag per call with:
+     - feature  (what the specific call is for — pass it in at each call site)
+   Leave the map open so more dimensions can be added later. Use lowercase
+   snake_case dimension keys and short, stable string values.
+5. Update the 2–3 highest-traffic call sites to pass a real `feature` value so the
+   result is demonstrable, and leave a clear pattern for the rest.
+6. Add or update a short section in the project README explaining how attribution is
+   wired: the env var, the tags helper, and how to add a dimension.
+
+Constraints:
+- Keep the diff surgical and idiomatic for this codebase. Match existing style,
+  config, and dependency-management conventions.
+- Do not invent dimensions beyond env, system, and feature unless the codebase
+  clearly needs one. It is better to leave the map extensible than to over-tag.
+- Do not log, print, or commit the API key. Do not add real secrets to any file.
+
+When you're done, show me: the client change, the tags helper, one tagged call site,
+and the README section. Then summarize what remains for me to roll out to the rest of
+the call sites.
+````
+
+## Focused prompts
+
+Prefer smaller steps? Run these in order — each is safe to hand over on its own.
+
+<AccordionGroup>
+  <Accordion title="1. Point the client at Hicap">
+    ````text
+    Configure this codebase to call the Hicap AI Gateway. Requests use an
+    OpenAI-compatible endpoint at https://api.hicap.ai/v1, and the API key is sent as
+    the `api-key` HTTP header, read from the HICAP_API_KEY environment variable — never
+    hard-coded. Find the existing model client (or create one in the idiomatic place),
+    set the base URL and header, and keep current behavior working. Add HICAP_API_KEY to
+    the example env file with a placeholder and a short comment.
+    ````
+  </Accordion>
+  <Accordion title="2. Add a tagging helper">
+    ````text
+    Add one small helper to this codebase that attaches Hicap tags to a model request.
+    Tags are sent in a single HTTP header named `x-hicap-tags` (plural) whose value is
+    ONE JSON object mapping dimension keys to string values, e.g.
+    {"feature": "checkout", "env": "production"}. The helper takes a plain map,
+    JSON-encodes it, and sets exactly one `x-hicap-tags` header — never repeated and
+    never comma-separated. Route model calls through this helper.
+    ````
+  </Accordion>
+  <Accordion title="3. Set base dimensions">
+    ````text
+    Establish base attribution using the tagging helper already in this codebase. Set
+    `env` and `system` once, in one place, so every request carries them: `env` derives
+    from config (production/staging/development) and `system` is a stable short name for
+    this service. Keep the tag map extensible. Use lowercase snake_case keys and short,
+    stable string values.
+    ````
+  </Accordion>
+  <Accordion title="4. Tag per-call features">
+    ````text
+    Add a per-call `feature` dimension at this codebase's model call sites, using the
+    existing tagging helper and base dimensions. Each call site passes a short, stable
+    `feature` value describing what that call is for (e.g. "product-recommendations",
+    "summarize-ticket"). Update the 2–3 highest-traffic call sites now and leave a clear
+    pattern for the rest. Don't change any other behavior.
+    ````
+  </Accordion>
+</AccordionGroup>
+
+## After the agent runs
+
+- **Verify the header.** Confirm each request sends a single `x-hicap-tags` header whose value is one JSON object. See [How tags are sent](/concepts/tags-dimensions-segments#how-tags-are-sent).
+- **Check for untagged traffic.** Requests that arrive without your expected dimensions surface as **Unattributed Traffic** — a signal that a call site still needs the helper. See [Segments](/concepts/tags-dimensions-segments#segments).
+- **Grow into segments.** Once dimensions are flowing, define [segments](/concepts/tags-dimensions-segments#segments) to slice spend without touching code again.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Developer Quickstart" icon="rocket" href="/quickstart">
+    The minimal client setup the prompts build on.
+  </Card>
+  <Card title="Tags, Dimensions & Segments" icon="tags" href="/concepts/tags-dimensions-segments">
+    The attribution model these prompts implement.
+  </Card>
+</CardGroup>

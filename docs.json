@@ -22,7 +22,8 @@
             "pages": [
               "concepts/organizations-and-users",
               "concepts/applications-connections-keys",
-              "concepts/tags-dimensions-segments"
+              "concepts/tags-dimensions-segments",
+              "concepts/implement-attribution-with-an-agent"
             ]
           },
           {
