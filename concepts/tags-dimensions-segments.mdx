@@ -92,7 +92,7 @@ Attach tags to any request with the `x-hicap-tags` header. Its value is a JSON o
 
 ## Reserved and conventional dimensions
 
-Some dimensions are best set once per service so spend can be sliced consistently across every request it makes. Dimensions like `env`, `system`, and `channel` fall into this group — set them once in your client and they ride along on everything. Per-call dimensions like `feature` or `agent` then narrow the activity within a service.
+Some dimensions are best set once per service so spend can be sliced consistently across every request it makes. Dimensions like `env`, `system`, and `channel` fall into this group — set them once in your client and they ride along on everything. Per-call dimensions like `feature` or `agent` then pinpoint what a specific request was doing inside that service.
 
 Note that you don't need a dimension for which Application a request came from — that already rolls up from the Key you called with.
 
