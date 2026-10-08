@@ -1,0 +1,65 @@
+/* Only these five prose prompts opt in; native code and copy controls are retained. */
+.attribution-prompt {
+  --attribution-header-background: #f4f4f5;
+  min-width: 0;
+  max-width: 100%;
+  max-height: min(65vh, 42rem);
+  margin: 1.25rem 0 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid rgb(0 0 0 / 10%);
+  border-radius: 1rem;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dark .attribution-prompt {
+  --attribution-header-background: #18181b;
+  border-color: rgb(255 255 255 / 10%);
+}
+
+.attribution-prompt:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.attribution-prompt .code-block {
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  border: 0;
+}
+
+/* Scroll the wrapper, not Mintlify's viewport with its hidden-overflow utilities. */
+.attribution-prompt [data-component-part="code-block-header"] {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--attribution-header-background);
+}
+
+.attribution-prompt [data-component-part="scroll-area-content"] {
+  min-width: 0 !important;
+  width: 100%;
+}
+
+.attribution-prompt pre,
+.attribution-prompt pre code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+@media print {
+  .attribution-prompt {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .attribution-prompt [data-component-part="code-block-header"] {
+    position: static;
+  }
+}
