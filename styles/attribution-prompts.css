@@ -1,0 +1,47 @@
+/* Only the five attribution prompts opt in. Keep Mintlify's native copy controls. */
+.attribution-prompt {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.attribution-prompt .code-block {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Mintlify's documented scroll-area hook is already keyboard-focusable. */
+.attribution-prompt [data-component-part="scroll-area-viewport"] {
+  max-height: min(65vh, 42rem);
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scrollbar-width: thin !important;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+
+.attribution-prompt [data-component-part="scroll-area-content"] {
+  min-width: 0 !important;
+  width: 100%;
+}
+
+.attribution-prompt pre,
+.attribution-prompt pre code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+/* The native viewport suppresses focus rings; restore one for keyboard readers. */
+.attribution-prompt [data-component-part="scroll-area-viewport"]:focus-visible {
+  outline: 2px solid currentColor !important;
+  outline-offset: -3px;
+}
+
+@media print {
+  .attribution-prompt [data-component-part="scroll-area-viewport"] {
+    max-height: none;
+    overflow: visible !important;
+  }
+}

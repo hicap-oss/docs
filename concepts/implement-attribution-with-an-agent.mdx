@@ -23,8 +23,12 @@ The agent will need a few things to be true. You can either set these up first o
 ## Master prompt
 
 Copy this into your agent. It covers Hicap setup and base attribution in one pass.
+The prompt wraps to fit your screen. Scroll within the panel to read it, or use
+the copy button to copy the complete prompt.
 
-````text
+<div className="attribution-prompt" role="region" aria-label="Master attribution prompt">
+
+````text wrap title="Master prompt"
 You are adding Hicap AI Gateway support and evidence-backed usage attribution to
 this application. Scan first, then implement and verify; do not stop at an audit.
 
@@ -205,13 +209,17 @@ remaining gaps. Report zero AI call sites honestly; a prepared client and propos
 industry mapping do not prove production traffic has been instrumented.
 ````
 
+</div>
+
 ## Focused prompts
 
 Prefer smaller steps? Run these in order — each is safe to hand over on its own.
 
 <AccordionGroup>
   <Accordion title="1. Point the client at Hicap">
-    ````text
+    <div className="attribution-prompt" role="region" aria-label="Hicap client setup prompt">
+
+    ````text wrap title="Client setup"
     Configure this application's compatible model clients for Hicap. First scan the
     whole repository, its entrypoints, jobs, wrappers, deployment config and existing
     tags; trace callers to sinks with file:line evidence and report scope/gaps. Inventory
@@ -268,9 +276,13 @@ Prefer smaller steps? Run these in order — each is safe to hand over on its ow
     captured contexts/headers, not compare a value with itself. Report deferred
     integration honestly; never force an unsupported provider migration.
     ````
+
+    </div>
   </Accordion>
   <Accordion title="2. Add a tagging helper">
-    ````text
+    <div className="attribution-prompt" role="region" aria-label="Hicap tagging helper prompt">
+
+    ````text wrap title="Tagging helper"
     Add one small shared Hicap tagging helper. First inspect the whole application's
     clients and request/process paths, tracing shared callers and queued/retried work;
     report existing tags, merge precedence and gaps with file:line evidence.
@@ -330,9 +342,13 @@ Prefer smaller steps? Run these in order — each is safe to hand over on its ow
     captured contexts/headers, not compare a value with itself. Report deferred
     integration honestly; never force an unsupported provider migration.
     ````
+
+    </div>
   </Accordion>
   <Accordion title="3. Set base dimensions">
-    ````text
+    <div className="attribution-prompt" role="region" aria-label="Hicap base dimensions prompt">
+
+    ````text wrap title="Base dimensions"
     Establish evidence-backed attribution using the existing Hicap helper. Scan the
     whole application's entrypoints, processes, model clients and current tags before
     choosing defaults. Trace each logical caller to its sink, cite file:line evidence,
@@ -392,9 +408,13 @@ Prefer smaller steps? Run these in order — each is safe to hand over on its ow
     captured contexts/headers, not compare a value with itself. Report deferred
     integration honestly; never force an unsupported provider migration.
     ````
+
+    </div>
   </Accordion>
   <Accordion title="4. Tag per-call features">
-    ````text
+    <div className="attribution-prompt" role="region" aria-label="Hicap per-call features prompt">
+
+    ````text wrap title="Per-call features"
     Instrument all discovered model-call paths with caller-specific attribution.
     Scan the whole application, including routes/actions, jobs, queue consumers and
     shared helpers. Inventory physical AI call sites separately from logical process
@@ -454,6 +474,8 @@ Prefer smaller steps? Run these in order — each is safe to hand over on its ow
     captured contexts/headers, not compare a value with itself. Report deferred
     integration honestly; never force an unsupported provider migration.
     ````
+
+    </div>
   </Accordion>
 </AccordionGroup>
 

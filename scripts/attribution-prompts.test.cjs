@@ -6,7 +6,7 @@ const test = require('node:test');
 
 const root = join(__dirname, '..');
 const page = readFileSync(join(root, 'concepts/implement-attribution-with-an-agent.mdx'), 'utf8');
-const prompts = [...page.matchAll(/````text\n([\s\S]*?)````/g)]
+const prompts = [...page.matchAll(/````text[^\n]*\n([\s\S]*?)````/g)]
   .map((match) => match[1].replace(/\s+/g, ' ').toLowerCase());
 const eachPromptIncludes = (terms) => {
   for (const [index, prompt] of prompts.entries()) {
@@ -18,7 +18,7 @@ const eachPromptIncludes = (terms) => {
 
 test('master and four focused prompts have balanced fences/components', () => {
   assert.equal(prompts.length, 5);
-  assert.equal([...page.matchAll(/^\s*````(?:text)?$/gm)].length, 10);
+  assert.equal([...page.matchAll(/^\s*````(?:text[^\n]*)?$/gm)].length, 10);
   for (const tag of ['Note', 'AccordionGroup', 'Accordion', 'CardGroup', 'Card']) {
     assert.equal([...page.matchAll(new RegExp(`<${tag}(?:\\s|>)`, 'g'))].length,
       [...page.matchAll(new RegExp(`</${tag}>`, 'g'))].length, tag);
@@ -68,4 +68,16 @@ test('documented site route and local page links resolve', () => {
   for (const [, target] of page.matchAll(/(?:\]\(|href=")(\/[^\s)"#]+)/g)) {
     assert.ok(existsSync(join(root, `${target.slice(1)}.mdx`)), target);
   }
+});
+
+
+test('all prompt panels wrap and use narrowly scoped scrolling styles', () => {
+  assert.equal([...page.matchAll(/````text wrap title="[^"]+"\n/g)].length, 5);
+  assert.equal([...page.matchAll(/className="attribution-prompt" role="region" aria-label=/g)].length, 5);
+  const css = readFileSync(join(root, 'styles/attribution-prompts.css'), 'utf8');
+  assert.ok(css.includes('.attribution-prompt'));
+  assert.ok(css.includes('max-height: min(65vh, 42rem)'));
+  assert.ok(css.includes('overflow-y: auto !important'));
+  assert.ok(css.includes('overflow-wrap: anywhere'));
+  assert.ok(!css.includes('display: none'));
 });
