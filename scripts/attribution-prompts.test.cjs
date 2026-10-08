@@ -73,11 +73,11 @@ test('documented site route and local page links resolve', () => {
 
 test('all prompt panels wrap and use narrowly scoped scrolling styles', () => {
   assert.equal([...page.matchAll(/````text wrap title="[^"]+"\n/g)].length, 5);
-  assert.equal([...page.matchAll(/className="attribution-prompt" role="region" aria-label=/g)].length, 5);
+  assert.equal([...page.matchAll(/className="attribution-prompt" role="region" tabIndex=\{0\} aria-label=/g)].length, 5);
   const css = readFileSync(join(root, 'styles/attribution-prompts.css'), 'utf8');
   assert.ok(css.includes('.attribution-prompt'));
   assert.ok(css.includes('max-height: min(65vh, 42rem)'));
-  assert.ok(css.includes('overflow-y: auto !important'));
+  assert.ok(css.includes('overflow-y: auto'));
   assert.ok(css.includes('overflow-wrap: anywhere'));
   assert.ok(!css.includes('display: none'));
 });

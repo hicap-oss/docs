@@ -1,22 +1,42 @@
-/* Only the five attribution prompts opt in. Keep Mintlify's native copy controls. */
+/* Only these five prose prompts opt in; native code and copy controls are retained. */
 .attribution-prompt {
+  --attribution-header-background: #f4f4f5;
   min-width: 0;
   max-width: 100%;
+  max-height: min(65vh, 42rem);
+  margin: 1.25rem 0 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid rgb(0 0 0 / 10%);
+  border-radius: 1rem;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dark .attribution-prompt {
+  --attribution-header-background: #18181b;
+  border-color: rgb(255 255 255 / 10%);
+}
+
+.attribution-prompt:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 .attribution-prompt .code-block {
   min-width: 0;
   max-width: 100%;
+  margin: 0;
+  border: 0;
 }
 
-/* Mintlify's documented scroll-area hook is already keyboard-focusable. */
-.attribution-prompt [data-component-part="scroll-area-viewport"] {
-  max-height: min(65vh, 42rem);
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  scrollbar-width: thin !important;
-  scrollbar-gutter: stable;
-  -webkit-overflow-scrolling: touch;
+/* Scroll the wrapper, not Mintlify's viewport with its hidden-overflow utilities. */
+.attribution-prompt [data-component-part="code-block-header"] {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--attribution-header-background);
 }
 
 .attribution-prompt [data-component-part="scroll-area-content"] {
@@ -33,15 +53,13 @@
   line-height: 1.65;
 }
 
-/* The native viewport suppresses focus rings; restore one for keyboard readers. */
-.attribution-prompt [data-component-part="scroll-area-viewport"]:focus-visible {
-  outline: 2px solid currentColor !important;
-  outline-offset: -3px;
-}
-
 @media print {
-  .attribution-prompt [data-component-part="scroll-area-viewport"] {
+  .attribution-prompt {
     max-height: none;
-    overflow: visible !important;
+    overflow: visible;
+  }
+
+  .attribution-prompt [data-component-part="code-block-header"] {
+    position: static;
   }
 }

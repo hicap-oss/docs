@@ -26,7 +26,7 @@ Copy this into your agent. It covers Hicap setup and base attribution in one pas
 The prompt wraps to fit your screen. Scroll within the panel to read it, or use
 the copy button to copy the complete prompt.
 
-<div className="attribution-prompt" role="region" aria-label="Master attribution prompt">
+<div className="attribution-prompt" role="region" tabIndex={0} aria-label="Master attribution prompt">
 
 ````text wrap title="Master prompt"
 You are adding Hicap AI Gateway support and evidence-backed usage attribution to
@@ -217,7 +217,7 @@ Prefer smaller steps? Run these in order — each is safe to hand over on its ow
 
 <AccordionGroup>
   <Accordion title="1. Point the client at Hicap">
-    <div className="attribution-prompt" role="region" aria-label="Hicap client setup prompt">
+    <div className="attribution-prompt" role="region" tabIndex={0} aria-label="Hicap client setup prompt">
 
     ````text wrap title="Client setup"
     Configure this application's compatible model clients for Hicap. First scan the
@@ -280,7 +280,7 @@ Prefer smaller steps? Run these in order — each is safe to hand over on its ow
     </div>
   </Accordion>
   <Accordion title="2. Add a tagging helper">
-    <div className="attribution-prompt" role="region" aria-label="Hicap tagging helper prompt">
+    <div className="attribution-prompt" role="region" tabIndex={0} aria-label="Hicap tagging helper prompt">
 
     ````text wrap title="Tagging helper"
     Add one small shared Hicap tagging helper. First inspect the whole application's
@@ -346,7 +346,7 @@ Prefer smaller steps? Run these in order — each is safe to hand over on its ow
     </div>
   </Accordion>
   <Accordion title="3. Set base dimensions">
-    <div className="attribution-prompt" role="region" aria-label="Hicap base dimensions prompt">
+    <div className="attribution-prompt" role="region" tabIndex={0} aria-label="Hicap base dimensions prompt">
 
     ````text wrap title="Base dimensions"
     Establish evidence-backed attribution using the existing Hicap helper. Scan the
@@ -412,7 +412,7 @@ Prefer smaller steps? Run these in order — each is safe to hand over on its ow
     </div>
   </Accordion>
   <Accordion title="4. Tag per-call features">
-    <div className="attribution-prompt" role="region" aria-label="Hicap per-call features prompt">
+    <div className="attribution-prompt" role="region" tabIndex={0} aria-label="Hicap per-call features prompt">
 
     ````text wrap title="Per-call features"
     Instrument all discovered model-call paths with caller-specific attribution.
