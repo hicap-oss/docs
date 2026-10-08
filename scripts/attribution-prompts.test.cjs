@@ -44,7 +44,19 @@ test('all prompts require actual update-safe application-root Markdown reports',
 });
 
 test('all prompts retain concrete queue, retry and duplicate-input acceptance', () => {
-  eachPromptIncludes(['duplicate', 'JSON', 'producer', 'consumer', 'retry']);
+  eachPromptIncludes(['duplicate', 'JSON', 'retry re-enqueue']);
+  for (const [index, prompt] of prompts.entries()) {
+    // Permit the master/focused wording to differ, but require the same behavior.
+    const requirements = [
+      /producer persist(?:ence|ing)/,
+      /consumer (?:validation\/)?restoration/,
+      /(?:attempt that fails and a subsequent attempt that succeeds|failing attempt then a successful retry)/,
+      /(?:independently|separately) captured (?:headers\/context|contexts\/headers)/,
+    ];
+    for (const requirement of requirements) {
+      assert.match(prompt, requirement, `Prompt ${index + 1}: ${requirement}`);
+    }
+  }
   assert.ok(page.includes('escaped-equivalent'));
   assert.ok(page.includes('independently captured'));
   assert.ok(!page.includes('2–3 highest-traffic'));
