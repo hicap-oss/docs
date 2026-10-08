@@ -1,10 +1,10 @@
 ---
 title: 'Implement attribution with an agent'
-description: 'A ready-to-use prompt that has a coding agent add Hicap setup and base attribution to your codebase'
+description: 'Scan application requests and processes, assess existing tags, and implement evidence-backed Hicap attribution across five starter dimensions'
 icon: 'robot'
 ---
 
-This page gives you a prompt you can hand to a coding agent — GitHub Copilot, or any agent that can read and edit your repository — to add a working **base attribution** setup to your application. It wires up the Hicap client and starts tagging requests so usage and spend roll up the way the rest of the [Concepts](/concepts/organizations-and-users) pages describe.
+This page gives you a prompt you can hand to a coding agent — GitHub Copilot, or any agent that can read and edit your repository — to add a working **base attribution** setup to your application. It scans the whole application, distinguishes ordinary traffic from model calls, assesses existing client tags, and wires up evidence-backed attribution using **agent, env, system, feature, and domain**. Structural usage and spend still roll up as the [Concepts](/concepts/organizations-and-users) pages describe.
 
 Start with the [master prompt](#master-prompt) for a complete pass, or use the [focused prompts](#focused-prompts) to do it one step at a time.
 
@@ -18,64 +18,191 @@ The agent will need a few things to be true. You can either set these up first o
 
 - **A Hicap API key.** Create one in the [Hicap Platform dashboard ↗](https://platform.hicap.ai/) and make it available as the `HICAP_API_KEY` environment variable. The agent should never hard-code it.
 - **The base URL and auth header.** Requests go to `https://api.hicap.ai/v1`, and the key is sent as the `api-key` header. Any OpenAI-compatible SDK works — see the [Developer Quickstart](/quickstart).
-- **A sense of your dimensions.** Decide which labels you want to slice spend by. See [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments) for the model; the prompt defaults to a sensible starter set.
+- **A sense of your dimensions.** Decide which labels you want to slice spend by. See [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments) for the model; the prompts use five canonical starter dimensions and distinguish observed values from proposed industry defaults. Domain here means broad business/industry context; this is a starter convention, not a gateway-enforced taxonomy.
 
 ## Master prompt
 
 Copy this into your agent. It covers Hicap setup and base attribution in one pass.
 
 ````text
-You are adding Hicap AI Gateway support and base usage attribution to this codebase.
+You are adding Hicap AI Gateway support and evidence-backed usage attribution to
+this application. Scan first, then implement and verify; do not stop at an audit.
 
-Context — how Hicap attribution works:
-- Requests go through an OpenAI-compatible endpoint at https://api.hicap.ai/v1.
-  Authentication is the API key sent as the `api-key` HTTP header. The key comes
-  from the HICAP_API_KEY environment variable — never hard-code it.
-- "Structural" attribution (which Organization/Application/Key a request belongs
-  to) rolls up automatically from the key, so I do NOT need to send anything for
-  that at call time.
-- "Descriptive" attribution is what I DO send per request: a set of tags. Tags are
-  sent in a single HTTP header called `x-hicap-tags` (plural). Its value is ONE
-  JSON object mapping dimension keys to string values, e.g.
-  {"feature": "checkout", "channel": "web", "env": "production"}.
-  Send exactly one such header per request. Do not repeat the header or use
-  comma-separated pairs.
+Gateway contract:
+- Use https://api.hicap.ai/v1 and the `api-key` HTTP header, with its secret read
+  server-side from HICAP_API_KEY. Never hard-code, expose to the browser, or log it.
+- Organization/Application/Key attribution already rolls up from the key. Do not
+  duplicate that structural attribution in tags.
+- Send exactly one `x-hicap-tags` header per model request. Its value is ONE JSON
+  object mapping dimension keys to string values, never repeated headers,
+  comma-separated pairs, nested objects, numbers, booleans, or null.
 
-Do the following:
-1. Find where this codebase calls language models today (search for the OpenAI SDK,
-   HTTP calls to a model provider, or an existing AI client wrapper). If there is
-   no such call yet, create a small client module in the idiomatic place for this
-   project.
-2. Point the client at Hicap: base URL https://api.hicap.ai/v1, and send the key as
-   the `api-key` header, read from the HICAP_API_KEY environment variable. Keep any
-   existing behavior working. Add HICAP_API_KEY to the project's example env file
-   (e.g. .env.example) with a placeholder value and a short comment.
-3. Add a single helper that builds the `x-hicap-tags` header from a plain map and
-   attaches it to a request. It must JSON-encode the map and set exactly one header.
-   Route model calls through this helper so tagging is consistent.
-4. Establish base attribution. Set these service-level dimensions once, in one place,
-   so every request carries them:
-     - env      (e.g. "production", "staging", "development" — derive from config)
-     - system   (a stable short name for this service/app)
-   Then tag per call with:
-     - feature  (what the specific call is for — pass it in at each call site)
-   Leave the map open so more dimensions can be added later. Use lowercase
-   snake_case dimension keys and short, stable string values.
-5. Update the 2–3 highest-traffic call sites to pass a real `feature` value so the
-   result is demonstrable, and leave a clear pattern for the rest.
-6. Add or update a short section in the project README explaining how attribution is
-   wired: the env var, the tags helper, and how to add a dimension.
+1. Discover the whole application before editing.
+   Read repository instructions, manifests, deployment config, routes/pages/server
+   actions, client modules, middleware, workers, jobs, webhooks, queues and tests.
+   Follow imports and callers, including shared helpers, aliases and dynamic
+   configuration. Skip generated/vendor/build output; list inaccessible areas and
+   unresolved dynamic edges rather than calling the scan complete.
+   Inventory ordinary inbound/outbound requests and background processes separately
+   from actual AI model invocations. HTTP fetch, SQL, payment, auth, health checks
+   and product recommendations are not automatically AI calls. Discover SDK and
+   raw HTTP calls, wrappers, streaming, embeddings, images/audio and agent tools.
+   Distinguish physical model-call sites from logical caller/process paths and
+   runtime request counts (the latter require telemetry).
+   For each discovered path, trace entrypoint -> business operation -> helper ->
+   model/provider or ordinary sink. Include async enqueue/consume, retries, fan-out
+   and scheduled work. A shared helper can serve several features or agents; do
+   not assign every caller the helper filename as its feature.
+   Cite file:line evidence, scope/exclusions and confidence. Label inferred,
+   unknown, not applicable and observed facts separately. Do not invent paths.
 
-Constraints:
-- Keep the diff surgical and idiomatic for this codebase. Match existing style,
-  config, and dependency-management conventions.
-- Do not invent dimensions beyond env, system, and feature unless the codebase
-  clearly needs one. It is better to leave the map extensible than to over-tag.
-- Do not log, print, or commit the API key. Do not add real secrets to any file.
+2. Assess current attribution before replacing anything.
+   Find existing clients, gateway URLs, tags, defaults and per-call overrides.
+   Record where each value comes from, merge precedence, effective values, missing
+   dimensions, conflicts and privacy risks. Redact secret/personal values in the
+   report. Preserve valid existing extra dimensions and integrations; propose any
+   renaming/removal as a migration rather than silently dropping them. Preserve
+   tags across wrappers and queued work, after checking their meaning and safety.
 
-When you're done, show me: the client change, the tags helper, one tagged call site,
-and the README section. Then summarize what remains for me to roll out to the rest of
-the call sites.
+3. Use exactly these five canonical starter dimensions in the assessment:
+   - agent: the stable logical AI agent/automation identity responsible for this
+     call, if one exists. Not the human user, coding assistant, SDK, model vendor
+     or request ID. Direct non-agent calls are not applicable; do not invent an
+     agent. A sentinel such as "none" requires an explicit documented convention
+     compatible with existing consumers; otherwise omit it and report the gap.
+   - env: the deployment environment from explicit runtime/deployment config.
+     NODE_ENV=production alone does not distinguish preview/staging/production.
+     Report unresolved mapping and propose a dedicated config variable if needed.
+   - system: a stable application/service identity derived from repository or
+     deployment ownership. A package name is a candidate, not proof of its
+     deployed service name; avoid hostnames, ephemeral builds and tenant IDs.
+   - feature: the bounded business capability this particular request/process
+     performs. Derive it from its caller and user/job intent, not merely endpoint,
+     HTTP method or helper name. Propagate it explicitly through shared code.
+   - domain: the broad business/industry context, at consistent granularity across
+     this application. For this starter convention use e.g. commerce, healthcare,
+     financial_services, education, software or media. It is not a DNS domain,
+     URL, department, tenant, or substitute for feature or system.
+   For every dimension, provide two clearly separated layers:
+   A. Observed state: current value or unknown/not applicable, source and confidence.
+   B. Recommended setup: a concrete proposed value or config source, rationale,
+      adoption step and validation check. Unknown observations must not become an
+      empty recommendation. Where evidence supports a starter choice, recommend
+      it clearly without claiming it already exists or is approved for deployment.
+   Always report all five, with value/proposal, evidence, confidence and gaps.
+   Only serialize resolved, approved string values. Unknown/not-applicable status
+   belongs in the assessment, never JSON null or a fabricated fact on the wire.
+   Do not claim fully attributed traffic while canonical dimensions are missing.
+   These five are the starter vocabulary, not a new gateway allowlist: preserve
+   compatible existing extras, but do not invent more dimensions.
+
+   Industry defaults are suggestions, not detected facts or an external standard:
+   - commerce: domain=commerce; possible features catalog_search, checkout,
+     product_recommendations, order_support.
+   - healthcare: domain=healthcare; possible features patient_support,
+     clinical_documentation, appointment_scheduling. An auth/profile demo alone
+     is not evidence of any clinical workflow or AI use.
+   - financial services: domain=financial_services; possible features
+     transaction_review, document_extraction, customer_support.
+   - education: domain=education; possible features tutoring, lesson_planning.
+   - software: domain=software; possible features code_review, incident_triage.
+   - media: domain=media; possible features content_drafting, content_search.
+   Choose only source-supported capabilities; label unverified defaults proposed.
+   Never derive env/system/agent from an industry preset. Mixed-domain services
+   need per-process domain context. If unclear, ask one focused question or leave
+   an explicit unresolved item while completing the safe implementation work.
+
+4. Implement the integration, preserving application behavior.
+   Configure existing compatible model clients for Hicap; account for provider
+   compatibility instead of blindly rewriting unrelated or unsupported calls.
+   If no AI calls exist, say so and create an unused server-only client/helper in
+   the idiomatic location; do not add AI behavior or reroute ordinary traffic.
+   Add HICAP_API_KEY with a placeholder/comment to the example env file.
+   Build one small shared tags helper. Set service defaults in one place; accept
+   validated per-call context. Document precedence after reviewing legacy values
+   (typically defaults < existing tags < explicit reviewed per-call context).
+   Handle header names case-insensitively and replace the existing tags header
+   with one serialized merged map; reject/report malformed or duplicate input
+   safely. Reject duplicate keys inside serialized tag JSON, including escaped
+   spellings of the same key; JSON.parse alone silently keeps the last value.
+   Use duplicate-aware parsing or explicitly reject serialized legacy input with
+   a documented migration. Validate keys/string values; never coerce null to "null".
+   Use lowercase snake_case keys and short, stable, low-cardinality values.
+   Never include prompts, email, patient/user/tenant identifiers, secrets, raw
+   URLs/query strings or other personal data in tags. Assess legacy sensitive
+   tags for a safe migration; do not blindly forward them.
+   Carry trusted server-side feature/agent/domain context across request helpers,
+   tool calls and queue payloads/retries. Do not trust arbitrary incoming headers
+   to override it, and never mutate a shared client's global headers per request.
+   Cover all discovered model-call sites and logical paths. If a staged rollout
+   is necessary, name every deferred site and reason. Do not claim highest traffic
+   without telemetry. Preserve streaming, retries, error handling and concurrency.
+   Queue acceptance: show the trusted producer persisting the resolved context,
+   serialization, consumer validation/restoration and retry re-enqueue. Test that
+   every resolved feature/agent/domain survives each boundary. If domain remains
+   unapproved, preserve that gap explicitly; do not claim context work complete
+   while an approved value is lost or enqueue persistence is only a TODO.
+
+   Supply a ready-to-edit environment plan, separate from observed runtime facts:
+   local developer config HICAP_ENV=development; the staging deployment explicitly
+   sets HICAP_ENV=staging; production explicitly sets HICAP_ENV=production. For a
+   preview deployment recommend HICAP_ENV=preview only after confirming that
+   platform context. Dedicated config wins; never infer production from NODE_ENV.
+   These are proposed configuration entries, not an automatic runtime fallback or
+   evidence about the current deployment. Identify exact repo/config destinations
+   when known, otherwise name the required deployment settings and confirmation.
+   Recommend a stable system name from source and an industry-aligned domain when
+   supported; distinguish service/domain recommendations from unknown live values.
+   Show the setup even for a zero-AI application, while keeping its client unused.
+
+5. Verify and document.
+   Add tests for exactly one JSON/string-valued header, merge precedence, existing
+   extras, malformed input, canonical-dimension gaps, privacy, two features using
+   one helper concurrently, queued/retried context and unchanged ordinary traffic.
+   Use mocks; do not call paid providers to test attribution. Run relevant existing
+   checks; clearly separate passed, failed and unrun tests and their limits.
+   Retry tests must exercise an attempt that fails and a subsequent attempt that
+   succeeds, then inspect independently captured headers/context at both calls.
+   Concurrent tests must use two different callers. Self-equality assertions or
+   rebuilding the same map twice are scaffolding, not retry/queue verification.
+   Update README with client setup, the five definitions, evidence/config sources,
+   helper use, context propagation, industry suggestions and unresolved rollout.
+
+6. Write the report to the application repository, not just the chat.
+   Inspect the application's existing .hicap Markdown examples and naming/section
+   conventions first. Reuse their structure when available; say explicitly when
+   no example was found. Here /.hicap means <application-root>/.hicap, not the
+   operating-system root. Create that directory if needed. Default destination:
+   .hicap/tagging-report.md. Preserve all existing files and human notes. If that
+   path already exists, write a new .hicap/tagging-report-<UTC-timestamp>.md sibling
+   (add a collision suffix if necessary); never overwrite an existing report.
+   Follow an existing naming convention only when it remains equally update-safe.
+   Include report schema/version, generated UTC time, inspected source revision
+   (or explicitly unknown), app root and whether changes were applied or proposed.
+   Use these sections, extending any existing example without losing its content:
+   - Scope and evidence: scanned areas, exclusions and source file:line references.
+   - Observed attribution: current clients/tags and all five dimensions with
+     observed/unknown/not-applicable status, source and confidence.
+   - Recommended configuration: concrete proposed defaults/config locations,
+     local/staging/production/conditional-preview plan, adoption and validation.
+   - Request and process mapping: every discovered ordinary and AI logical path,
+     entrypoint -> helper/job -> sink, all five dimension mappings and status.
+     Distinguish physical AI sites, logical paths and unknown runtime counts.
+   - Implementation coverage: applied/proposed/deferred sites, zero-call findings,
+     preserved existing tags, compatibility limits and actual emitted-tag evidence.
+   - Validation and open decisions: commands, passed/failed/unrun tests, unresolved
+     configuration, rollout blockers and any deliberate provider deferrals.
+   Keep observed facts separate from recommendations and mocked/example headers.
+   Never present a proposal as an emitted tag. Redact secrets and personal data.
+   Link this report from the README when updating attribution docs. Verify the
+   Markdown file exists, is readable and contains those sections; show its exact
+   application-relative path and a short summary in the final response.
+
+Keep the diff surgical and idiomatic. When done, show the client, tags helper,
+representative tagged paths and README changes; include the complete inventory,
+existing-tag assessment, evidence-backed five-dimension mapping, test results and
+remaining gaps. Report zero AI call sites honestly; a prepared client and proposed
+industry mapping do not prove production traffic has been instrumented.
 ````
 
 ## Focused prompts
@@ -85,47 +212,257 @@ Prefer smaller steps? Run these in order — each is safe to hand over on its ow
 <AccordionGroup>
   <Accordion title="1. Point the client at Hicap">
     ````text
-    Configure this codebase to call the Hicap AI Gateway. Requests use an
-    OpenAI-compatible endpoint at https://api.hicap.ai/v1, and the API key is sent as
-    the `api-key` HTTP header, read from the HICAP_API_KEY environment variable — never
-    hard-coded. Find the existing model client (or create one in the idiomatic place),
-    set the base URL and header, and keep current behavior working. Add HICAP_API_KEY to
-    the example env file with a placeholder and a short comment.
+    Configure this application's compatible model clients for Hicap. First scan the
+    whole repository, its entrypoints, jobs, wrappers, deployment config and existing
+    tags; trace callers to sinks with file:line evidence and report scope/gaps. Inventory
+    ordinary request/process paths separately from physical AI call sites. Assess
+    existing tag values, precedence and privacy before changing clients.
+
+    The gateway is https://api.hicap.ai/v1; use server-side HICAP_API_KEY in the
+    `api-key` header. Every model request has one `x-hicap-tags` header containing
+    one JSON object of string values. Never expose keys, personal data or prompts.
+    Assess exactly agent/env/system/feature/domain: agent is a logical AI automation
+    (not a user/SDK); env is verified deployment config (NODE_ENV alone is insufficient);
+    system is the stable service; feature is the caller's business capability; domain
+    is broad business/industry context, never DNS. Industry examples commerce,
+    healthcare and financial_services are proposed defaults, not evidence. Do not
+    invent clinical or financial workflows from a template. Report evidence and
+    unknown/not-applicable states for all five; send only resolved strings, never null.
+    Use a non-agent sentinel only after documenting compatibility with consumers.
+    Preserve safe existing extra dimensions; do not invent new ones or silently
+    rename/delete legacy values. Distinguish ordinary requests from actual AI calls.
+
+    Keep provider compatibility, streaming and error behavior working. Do not route
+    ordinary HTTP/SQL/auth traffic through Hicap. If no model calls exist, report zero
+    and prepare an unused server-only client; do not invent an AI feature. Add the key
+    placeholder/comment to the example env file, preserve existing safe tags, document
+    client setup and unresolved dimension config, and run relevant mocked checks.
+
+    Report two layers for all five dimensions: observed state with evidence, then
+    concrete recommended setup with config source, adoption step and check. An
+    unknown observed value is not an empty recommendation. Propose local-only
+    HICAP_ENV=development, explicit staging=staging and production=production;
+    preview=preview requires platform-context confirmation. These are proposed
+    config entries, not detected values or automatic NODE_ENV runtime fallbacks.
+    Give source-supported system/domain recommendations and exact config locations
+    when known; keep an unused client unused when no AI calls exist.
+
+    Write this step's findings to Markdown under the application's repository-root
+    .hicap directory (never filesystem root). Inspect/reuse existing tagging
+    examples/conventions first; if none exists, say so and use
+    .hicap/tagging-report.md. Preserve all existing files and human notes; if the
+    destination exists, write a timestamped sibling instead of overwriting it.
+    Include schema/version, UTC timestamp, source revision and applied/proposed
+    status, then sections: Scope and evidence; Observed attribution; Recommended
+    configuration; Request and process mapping; Implementation coverage; Validation
+    and open decisions. Include all five dimensions, source lines, concrete env
+    setup, ordinary-versus-AI paths, test results and deferrals. Do not claim
+    proposed tags were emitted. Verify the file exists/readable, link it from the
+    README when updating docs, and return its exact relative path.
+
+    Acceptance checks for affected paths: reject duplicate JSON dimension keys
+    (including escaped-equivalent keys), not only repeated HTTP headers. Show
+    trusted producer persistence, serialization, consumer restoration and retry
+    re-enqueue for resolved feature/agent/domain; keep unknowns explicit. Tests
+    must run a failing attempt then a successful retry and inspect separately
+    captured contexts/headers, not compare a value with itself. Report deferred
+    integration honestly; never force an unsupported provider migration.
     ````
   </Accordion>
   <Accordion title="2. Add a tagging helper">
     ````text
-    Add one small helper to this codebase that attaches Hicap tags to a model request.
-    Tags are sent in a single HTTP header named `x-hicap-tags` (plural) whose value is
-    ONE JSON object mapping dimension keys to string values, e.g.
-    {"feature": "checkout", "env": "production"}. The helper takes a plain map,
-    JSON-encodes it, and sets exactly one `x-hicap-tags` header — never repeated and
-    never comma-separated. Route model calls through this helper.
+    Add one small shared Hicap tagging helper. First inspect the whole application's
+    clients and request/process paths, tracing shared callers and queued/retried work;
+    report existing tags, merge precedence and gaps with file:line evidence.
+
+    The gateway is https://api.hicap.ai/v1; use server-side HICAP_API_KEY in the
+    `api-key` header. Every model request has one `x-hicap-tags` header containing
+    one JSON object of string values. Never expose keys, personal data or prompts.
+    Assess exactly agent/env/system/feature/domain: agent is a logical AI automation
+    (not a user/SDK); env is verified deployment config (NODE_ENV alone is insufficient);
+    system is the stable service; feature is the caller's business capability; domain
+    is broad business/industry context, never DNS. Industry examples commerce,
+    healthcare and financial_services are proposed defaults, not evidence. Do not
+    invent clinical or financial workflows from a template. Report evidence and
+    unknown/not-applicable states for all five; send only resolved strings, never null.
+    Use a non-agent sentinel only after documenting compatibility with consumers.
+    Preserve safe existing extra dimensions; do not invent new ones or silently
+    rename/delete legacy values. Distinguish ordinary requests from actual AI calls.
+
+    Merge service defaults, safe existing tags and explicit reviewed per-call context
+    in a documented order. Validate lowercase snake_case keys and short string values.
+    Handle header names case-insensitively; replace rather than append the header,
+    and reject/report malformed input safely. Never mutate a shared client's headers
+    per request or trust incoming client tags to override server-owned context. Pass
+    context across helpers/queues/retries, preserving different features per caller.
+    Route all compatible model calls through the helper; list deferred paths and why.
+    Test serialization, invalid values, precedence, existing extras, privacy and
+    concurrent isolation. Do not send paid requests. Keep ordinary traffic untouched,
+    document helper usage and report zero model calls if that is what the scan found.
+
+    Report two layers for all five dimensions: observed state with evidence, then
+    concrete recommended setup with config source, adoption step and check. An
+    unknown observed value is not an empty recommendation. Propose local-only
+    HICAP_ENV=development, explicit staging=staging and production=production;
+    preview=preview requires platform-context confirmation. These are proposed
+    config entries, not detected values or automatic NODE_ENV runtime fallbacks.
+    Give source-supported system/domain recommendations and exact config locations
+    when known; keep an unused client unused when no AI calls exist.
+
+    Write this step's findings to Markdown under the application's repository-root
+    .hicap directory (never filesystem root). Inspect/reuse existing tagging
+    examples/conventions first; if none exists, say so and use
+    .hicap/tagging-report.md. Preserve all existing files and human notes; if the
+    destination exists, write a timestamped sibling instead of overwriting it.
+    Include schema/version, UTC timestamp, source revision and applied/proposed
+    status, then sections: Scope and evidence; Observed attribution; Recommended
+    configuration; Request and process mapping; Implementation coverage; Validation
+    and open decisions. Include all five dimensions, source lines, concrete env
+    setup, ordinary-versus-AI paths, test results and deferrals. Do not claim
+    proposed tags were emitted. Verify the file exists/readable, link it from the
+    README when updating docs, and return its exact relative path.
+
+    Acceptance checks for affected paths: reject duplicate JSON dimension keys
+    (including escaped-equivalent keys), not only repeated HTTP headers. Show
+    trusted producer persistence, serialization, consumer restoration and retry
+    re-enqueue for resolved feature/agent/domain; keep unknowns explicit. Tests
+    must run a failing attempt then a successful retry and inspect separately
+    captured contexts/headers, not compare a value with itself. Report deferred
+    integration honestly; never force an unsupported provider migration.
     ````
   </Accordion>
   <Accordion title="3. Set base dimensions">
     ````text
-    Establish base attribution using the tagging helper already in this codebase. Set
-    `env` and `system` once, in one place, so every request carries them: `env` derives
-    from config (production/staging/development) and `system` is a stable short name for
-    this service. Keep the tag map extensible. Use lowercase snake_case keys and short,
-    stable string values.
+    Establish evidence-backed attribution using the existing Hicap helper. Scan the
+    whole application's entrypoints, processes, model clients and current tags before
+    choosing defaults. Trace each logical caller to its sink, cite file:line evidence,
+    and distinguish existing facts, proposals, unknowns and not-applicable values.
+
+    The gateway is https://api.hicap.ai/v1; use server-side HICAP_API_KEY in the
+    `api-key` header. Every model request has one `x-hicap-tags` header containing
+    one JSON object of string values. Never expose keys, personal data or prompts.
+    Assess exactly agent/env/system/feature/domain: agent is a logical AI automation
+    (not a user/SDK); env is verified deployment config (NODE_ENV alone is insufficient);
+    system is the stable service; feature is the caller's business capability; domain
+    is broad business/industry context, never DNS. Industry examples commerce,
+    healthcare and financial_services are proposed defaults, not evidence. Do not
+    invent clinical or financial workflows from a template. Report evidence and
+    unknown/not-applicable states for all five; send only resolved strings, never null.
+    Use a non-agent sentinel only after documenting compatibility with consumers.
+    Preserve safe existing extra dimensions; do not invent new ones or silently
+    rename/delete legacy values. Distinguish ordinary requests from actual AI calls.
+
+    Centralize resolved env/system and domain only if truly service-wide. Keep agent,
+    feature and mixed-domain values in per-process context. Explicit deployment
+    configuration takes precedence over guesses from NODE_ENV, repository names or
+    hostnames. Suggested capabilities include commerce catalog_search/order_support,
+    healthcare appointment_scheduling, and financial_services transaction_review;
+    use them only when code supports them. Do not infer agent/env/system from industry.
+    Document conflicts and ask a focused question if necessary, while doing safe work.
+    Never claim full coverage with missing canonical values. Test configured defaults,
+    caller overrides and gaps, update README definitions and report remaining work.
+
+    Report two layers for all five dimensions: observed state with evidence, then
+    concrete recommended setup with config source, adoption step and check. An
+    unknown observed value is not an empty recommendation. Propose local-only
+    HICAP_ENV=development, explicit staging=staging and production=production;
+    preview=preview requires platform-context confirmation. These are proposed
+    config entries, not detected values or automatic NODE_ENV runtime fallbacks.
+    Give source-supported system/domain recommendations and exact config locations
+    when known; keep an unused client unused when no AI calls exist.
+
+    Write this step's findings to Markdown under the application's repository-root
+    .hicap directory (never filesystem root). Inspect/reuse existing tagging
+    examples/conventions first; if none exists, say so and use
+    .hicap/tagging-report.md. Preserve all existing files and human notes; if the
+    destination exists, write a timestamped sibling instead of overwriting it.
+    Include schema/version, UTC timestamp, source revision and applied/proposed
+    status, then sections: Scope and evidence; Observed attribution; Recommended
+    configuration; Request and process mapping; Implementation coverage; Validation
+    and open decisions. Include all five dimensions, source lines, concrete env
+    setup, ordinary-versus-AI paths, test results and deferrals. Do not claim
+    proposed tags were emitted. Verify the file exists/readable, link it from the
+    README when updating docs, and return its exact relative path.
+
+    Acceptance checks for affected paths: reject duplicate JSON dimension keys
+    (including escaped-equivalent keys), not only repeated HTTP headers. Show
+    trusted producer persistence, serialization, consumer restoration and retry
+    re-enqueue for resolved feature/agent/domain; keep unknowns explicit. Tests
+    must run a failing attempt then a successful retry and inspect separately
+    captured contexts/headers, not compare a value with itself. Report deferred
+    integration honestly; never force an unsupported provider migration.
     ````
   </Accordion>
   <Accordion title="4. Tag per-call features">
     ````text
-    Add a per-call `feature` dimension at this codebase's model call sites, using the
-    existing tagging helper and base dimensions. Each call site passes a short, stable
-    `feature` value describing what that call is for (e.g. "product-recommendations",
-    "summarize-ticket"). Update the 2–3 highest-traffic call sites now and leave a clear
-    pattern for the rest. Don't change any other behavior.
+    Instrument all discovered model-call paths with caller-specific attribution.
+    Scan the whole application, including routes/actions, jobs, queue consumers and
+    shared helpers. Inventory physical AI call sites separately from logical process
+    paths and ordinary traffic. Trace entrypoint -> operation -> helper -> model with
+    file:line evidence; report unresolved edges, existing tags, conflicts and gaps.
+
+    The gateway is https://api.hicap.ai/v1; use server-side HICAP_API_KEY in the
+    `api-key` header. Every model request has one `x-hicap-tags` header containing
+    one JSON object of string values. Never expose keys, personal data or prompts.
+    Assess exactly agent/env/system/feature/domain: agent is a logical AI automation
+    (not a user/SDK); env is verified deployment config (NODE_ENV alone is insufficient);
+    system is the stable service; feature is the caller's business capability; domain
+    is broad business/industry context, never DNS. Industry examples commerce,
+    healthcare and financial_services are proposed defaults, not evidence. Do not
+    invent clinical or financial workflows from a template. Report evidence and
+    unknown/not-applicable states for all five; send only resolved strings, never null.
+    Use a non-agent sentinel only after documenting compatibility with consumers.
+    Preserve safe existing extra dimensions; do not invent new ones or silently
+    rename/delete legacy values. Distinguish ordinary requests from actual AI calls.
+
+    Pass feature/agent/domain from each trusted business caller rather than hard-coding
+    one helper-wide identity. Preserve context through fan-out, tools, queues and
+    retries; keep concurrent callers isolated. Keep resolved service env/system defaults
+    centralized. Don't call a route highest-traffic without telemetry. Cover every
+    model site/path, or list each staged deferral with reason. Preserve streaming,
+    errors and ordinary requests. If there are no model calls, report zero rather than
+    adding AI behavior. Add mocked request/header and context tests and README examples;
+    show evidence-backed mappings, implementation diff, test limits and rollout gaps.
+
+    Report two layers for all five dimensions: observed state with evidence, then
+    concrete recommended setup with config source, adoption step and check. An
+    unknown observed value is not an empty recommendation. Propose local-only
+    HICAP_ENV=development, explicit staging=staging and production=production;
+    preview=preview requires platform-context confirmation. These are proposed
+    config entries, not detected values or automatic NODE_ENV runtime fallbacks.
+    Give source-supported system/domain recommendations and exact config locations
+    when known; keep an unused client unused when no AI calls exist.
+
+    Write this step's findings to Markdown under the application's repository-root
+    .hicap directory (never filesystem root). Inspect/reuse existing tagging
+    examples/conventions first; if none exists, say so and use
+    .hicap/tagging-report.md. Preserve all existing files and human notes; if the
+    destination exists, write a timestamped sibling instead of overwriting it.
+    Include schema/version, UTC timestamp, source revision and applied/proposed
+    status, then sections: Scope and evidence; Observed attribution; Recommended
+    configuration; Request and process mapping; Implementation coverage; Validation
+    and open decisions. Include all five dimensions, source lines, concrete env
+    setup, ordinary-versus-AI paths, test results and deferrals. Do not claim
+    proposed tags were emitted. Verify the file exists/readable, link it from the
+    README when updating docs, and return its exact relative path.
+
+    Acceptance checks for affected paths: reject duplicate JSON dimension keys
+    (including escaped-equivalent keys), not only repeated HTTP headers. Show
+    trusted producer persistence, serialization, consumer restoration and retry
+    re-enqueue for resolved feature/agent/domain; keep unknowns explicit. Tests
+    must run a failing attempt then a successful retry and inspect separately
+    captured contexts/headers, not compare a value with itself. Report deferred
+    integration honestly; never force an unsupported provider migration.
     ````
   </Accordion>
 </AccordionGroup>
 
 ## After the agent runs
 
-- **Verify the header.** Confirm each request sends a single `x-hicap-tags` header whose value is one JSON object. See [How tags are sent](/concepts/tags-dimensions-segments#how-tags-are-sent).
+- **Review coverage and evidence.** Check the whole-app inventory, separate ordinary traffic from AI call sites, and review every deferred or unresolved path. Zero model calls is a valid finding; a prepared client is not proof of live attribution.
+- **Review all five dimensions.** Confirm agent, env, system, feature and domain definitions and sources. Approve proposed industry labels before treating them as facts. Preserve compatible existing dimensions and review any migration.
+
+- **Verify the header.** Confirm each model request sends a single `x-hicap-tags` header whose value is one JSON object of strings; check safe merge precedence, privacy, concurrency and queued/retried context. Unknown assessment values must not become JSON null. See [How tags are sent](/concepts/tags-dimensions-segments#how-tags-are-sent).
 - **Check for untagged traffic.** Requests that arrive without your expected dimensions surface as **Unattributed Traffic** — a signal that a call site still needs the helper. See [Segments](/concepts/tags-dimensions-segments#segments).
 - **Grow into segments.** Once dimensions are flowing, define [segments](/concepts/tags-dimensions-segments#segments) to slice spend without touching code again.
 

@@ -21,7 +21,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "mintlify dev"
+    "dev": "mintlify dev",
+    "test:attribution": "node --test scripts/attribution-prompts.test.cjs"
   },
   "devDependencies": {
     "mintlify": "^4.2.546"
