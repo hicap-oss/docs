@@ -71,8 +71,10 @@ The managed prompts require coverage of named AI pipeline roles in ordinary work
 
 ## Keeping the API reference current
 
-The primary API pages use the routes registered in `docs.json`. Keep redirects when moving a published page. `openapi.json` describes the Hicap URL and request format; do not import Azure deployment paths or assume all upstream OpenAI operations are available. Historical schema pages are explicitly marked as legacy references.
+The primary API pages use the routes registered in `docs.json`. Keep redirects when moving a published page. `openapi.json` describes the Hicap URL and request format; do not import Azure deployment paths or assume all upstream OpenAI operations are available. Assistants, Threads and Vector Stores use versioned routes: include the required api-version query parameter documented by each operation.
 
 Before changing availability claims, compare provider-page IDs with the public `GET https://api.hicap.ai/v1/models` response and record the check date. Keep catalog listings, native model capabilities, endpoint support, and connection access distinct. Verify modality claims against official provider documentation. Route recognition and invalid-key error checks do not establish successful inference support.
 
 Run `pnpm test:attribution`, `pnpm exec mintlify validate --no-telemetry`, and `pnpm exec mintlify broken-links --no-telemetry`. In the preview, check old redirects and generated request examples. Security/retention, reserved-capacity, and compliance wording must reflect verified deployment behavior and current agreements.
+
+Operation routing was checked against the production API Management registration and public endpoint probes on October 26, 2026. See [the routing verification](verification/operation-routing-2026-10-26.md). Route verification is distinct from authenticated backend execution.
