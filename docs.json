@@ -27,6 +27,10 @@
             ]
           },
           {
+            "group": "Audio",
+            "pages": ["guides/voice-cloning"]
+          },
+          {
             "group": "Providers",
             "pages": [
               "providers/openai",
