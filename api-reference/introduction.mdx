@@ -134,9 +134,9 @@ Each SSE event contains a JSON chunk with incremental content. The stream ends w
 
 ## Rate limits
 
-Rate limits vary by plan and are applied per API key. When you exceed your limit, the API returns a `429` status code. Use exponential backoff to retry.
+For inference endpoints, rate limits vary by plan and are applied per API key. When you exceed your limit, the API returns a `429` status code. Use exponential backoff to retry.
 
-The following rate limit headers are included in API responses:
+The following rate limit headers are included in inference API responses:
 
 | Header | Description |
 | --- | --- |
@@ -149,11 +149,13 @@ The following rate limit headers are included in API responses:
 
 For higher limits, contact [support@hicap.ai](mailto:support@hicap.ai) or upgrade your plan in the [Hicap Platform ↗](https://platform.hicap.ai/).
 
+The [usage endpoint](/api-reference/endpoints/usage/get-daily-usage) has a separate limit of **30 requests per minute per subscription**, shared by its primary and secondary keys. For usage requests, respect `Retry-After` when present and use bounded retries with backoff; do not rely on the inference `x-ratelimit-*` headers.
+
 ---
 
 ## Errors
 
-The Hicap API uses standard HTTP status codes and returns JSON error bodies.
+Inference endpoints use the following HTTP status codes and JSON error format. The [usage endpoint](/api-reference/endpoints/usage/get-daily-usage) has its own documented statuses and returns errors with `error.code` and `error.message`, without an `error.type` field.
 
 | Status | Type | Description |
 | --- | --- | --- |
