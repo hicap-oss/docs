@@ -1,0 +1,68 @@
+---
+title: 'Tag Hicap per-call features'
+description: 'Full implementation prompt for a coding agent working in your application repository'
+hidden: true
+---
+
+Follow the implementation prompt below in the user's application repository. Read the repository instructions before making changes.
+
+````text wrap title="Per-call features"
+Instrument all discovered model-call paths with caller-specific attribution.
+Scan the whole application, including routes/actions, jobs, queue consumers and
+shared helpers. Inventory physical AI call sites separately from logical process
+paths and ordinary traffic. Trace entrypoint -> operation -> helper -> model with
+file:line evidence; report unresolved edges, existing tags, conflicts and gaps.
+
+The gateway is https://api.hicap.ai/v1; use server-side HICAP_API_KEY in the
+`api-key` header. Every model request has one `x-hicap-tags` header containing
+one JSON object of string values. Never expose keys, personal data or prompts.
+Assess exactly agent/env/system/feature/domain: agent is a logical AI automation
+(not a user/SDK); env is verified deployment config (NODE_ENV alone is insufficient);
+system is the stable service; feature is the caller's business capability; domain
+is broad business/industry context, never DNS. Industry examples commerce,
+healthcare and financial_services are proposed defaults, not evidence. Do not
+invent clinical or financial workflows from a template. Report evidence and
+unknown/not-applicable states for all five; send only resolved strings, never null.
+Use a non-agent sentinel only after documenting compatibility with consumers.
+Preserve safe existing extra dimensions; do not invent new ones or silently
+rename/delete legacy values. Distinguish ordinary requests from actual AI calls.
+
+Pass feature/agent/domain from each trusted business caller rather than hard-coding
+one helper-wide identity. Preserve context through fan-out, tools, queues and
+retries; keep concurrent callers isolated. Keep resolved service env/system defaults
+centralized. Don't call a route highest-traffic without telemetry. Cover every
+model site/path, or list each staged deferral with reason. Preserve streaming,
+errors and ordinary requests. If there are no model calls, report zero rather than
+adding AI behavior. Add mocked request/header and context tests and README examples;
+show evidence-backed mappings, implementation diff, test limits and rollout gaps.
+
+Report two layers for all five dimensions: observed state with evidence, then
+concrete recommended setup with config source, adoption step and check. An
+unknown observed value is not an empty recommendation. Propose local-only
+HICAP_ENV=development, explicit staging=staging and production=production;
+preview=preview requires platform-context confirmation. These are proposed
+config entries, not detected values or automatic NODE_ENV runtime fallbacks.
+Give source-supported system/domain recommendations and exact config locations
+when known; keep an unused client unused when no AI calls exist.
+
+Write this step's findings to Markdown under the application's repository-root
+.hicap directory (never filesystem root). Inspect/reuse existing tagging
+examples/conventions first; if none exists, say so and use
+.hicap/tagging-report.md. Preserve all existing files and human notes; if the
+destination exists, write a timestamped sibling instead of overwriting it.
+Include schema/version, UTC timestamp, source revision and applied/proposed
+status, then sections: Scope and evidence; Observed attribution; Recommended
+configuration; Request and process mapping; Implementation coverage; Validation
+and open decisions. Include all five dimensions, source lines, concrete env
+setup, ordinary-versus-AI paths, test results and deferrals. Do not claim
+proposed tags were emitted. Verify the file exists/readable, link it from the
+README when updating docs, and return its exact relative path.
+
+Acceptance checks for affected paths: reject duplicate JSON dimension keys
+(including escaped-equivalent keys), not only repeated HTTP headers. Show
+trusted producer persistence, serialization, consumer restoration and retry
+re-enqueue for resolved feature/agent/domain; keep unknowns explicit. Tests
+must run a failing attempt then a successful retry and inspect separately
+captured contexts/headers, not compare a value with itself. Report deferred
+integration honestly; never force an unsupported provider migration.
+````

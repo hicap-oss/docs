@@ -23,7 +23,12 @@
               "concepts/organizations-and-users",
               "concepts/applications-connections-keys",
               "concepts/tags-dimensions-segments",
-              "concepts/implement-attribution-with-an-agent"
+              "concepts/implement-attribution-with-an-agent",
+              "onboarding-prompts/attribution",
+              "onboarding-prompts/configure-client",
+              "onboarding-prompts/tagging-helper",
+              "onboarding-prompts/base-dimensions",
+              "onboarding-prompts/per-call-features"
             ]
           },
           {
