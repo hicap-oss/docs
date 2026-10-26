@@ -6,10 +6,6 @@ icon: 'microphone'
 
 Create a private voice from an audio sample using ElevenLabs Instant Voice Cloning, then use it through Hicap's OpenAI-compatible speech endpoint. You need a Hicap API key, the speaker's recorded consent, and a voice sample from that speaker. You do not need an ElevenLabs API key.
 
-<Note>
-  This feature is pending rollout. These examples apply once voice cloning is enabled in your API environment. Contact [support@hicap.ai](mailto:support@hicap.ai) to confirm availability and the base URL to use.
-</Note>
-
 ## How the IDs work
 
 The flow is **consent recording → consent ID → voice sample → Hicap voice ID → speech**.
@@ -35,7 +31,7 @@ Replace `[customer name]` with the actual customer. This is suggested attestatio
   Hicap stores the consent recording encrypted. It does not transcribe the recording, check its wording, compare speakers, or perform biometric identity verification. A consent ID records the uploaded attestation; it is not proof of provider or OpenAI verification.
 </Info>
 
-The shell examples use `curl`, `jq`, and `uuidgen`. Set your API key in `HICAP_API_KEY` and use the base URL provided for your enabled environment:
+The shell examples use `curl`, `jq`, and `uuidgen`. Set your API key in `HICAP_API_KEY` and configure the Hicap API base URL:
 
 ```bash
 export HICAP_BASE_URL="https://api.hicap.ai/v1"
