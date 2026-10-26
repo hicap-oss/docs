@@ -1,0 +1,12 @@
+---
+title: 'List models'
+openapi: get /models
+---
+
+List public model IDs without authentication. This list is not filtered to a particular connection. Check connection policy and endpoint compatibility before making an inference request.
+
+```bash
+curl https://api.hicap.ai/v1/models
+```
+
+For pricing and context information, see the [model catalog](https://hicap.ai/models). If the catalog and API list differ, confirm the ID with [support](mailto:support@hicap.ai).

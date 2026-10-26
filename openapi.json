@@ -1,12 +1,13 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
+    "title": "Hicap API",
+    "description": "OpenAI-compatible inference reference. Authenticate using the api-key header. Endpoint and parameter support depends on the selected model and connection. Legacy definitions do not establish availability; see https://docs.hicap.ai/api-reference/introduction#endpoint-availability.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Hicap Support",
+      "email": "support@hicap.ai"
+    }
   },
   "servers": [
     {
@@ -14,35 +15,15 @@
     }
   ],
   "security": [
-    { "apiKeyAuth": [] }
+    {
+      "apiKeyAuth": []
+    }
   ],
   "paths": {
-    "/deployments/{deploymentId}/completions": {
+    "/completions": {
       "post": {
         "summary": "Creates a completion for the provided prompt, parameters and chosen model.",
         "operationId": "Completions_Create",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "deploymentId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "davinci",
-              "description": "Deployment id of the model which was deployed."
-            }
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "2025-01-01-preview",
-              "description": "api version"
-            }
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -52,7 +33,8 @@
               },
               "example": {
                 "prompt": "Negate the following sentence.The price for bubblegum increased on thursday.\n\n Negated Sentence:",
-                "max_tokens": 50
+                "max_tokens": 50,
+                "model": "gpt-5"
               }
             }
           }
@@ -91,52 +73,48 @@
             }
           },
           "default": {
-            "description": "Service unavailable",
+            "description": "Gateway or backend error. Body shape varies; inspect HTTP status before parsing.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/errorResponse"
-                }
-              }
-            },
-            "headers": {
-              "apim-request-id": {
-                "description": "Request ID for troubleshooting purposes",
-                "schema": {
-                  "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  },
+                  "additionalProperties": true
                 }
               }
             }
           }
-        }
+        },
+        "description": "\n\nUse a compatible Hicap model ID in the request body. Azure deployment IDs and api-version are not part of this route. Supported optional parameters depend on the model.",
+        "parameters": [
+          {
+            "name": "x-hicap-tags",
+            "in": "header",
+            "required": false,
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{\"feature\":\"support\",\"env\":\"production\"}"
+          }
+        ]
       }
     },
-    "/deployments/{deploymentId}/embeddings": {
+    "/embeddings": {
       "post": {
         "summary": "Get a vector representation of a given input that can be easily consumed by machine learning models and algorithms.",
         "operationId": "embeddings_create",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "deploymentId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "ada-search-index-v1"
-            },
-            "description": "The deployment id of the model which was deployed."
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "2025-01-01-preview",
-              "description": "api version"
-            }
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -188,10 +166,16 @@
                     "type": "integer",
                     "example": 1,
                     "nullable": true
+                  },
+                  "model": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Exact compatible Hicap model ID from GET /v1/models."
                   }
                 },
                 "required": [
-                  "input"
+                  "input",
+                  "model"
                 ]
               }
             }
@@ -261,8 +245,44 @@
                 }
               }
             }
+          },
+          "default": {
+            "description": "Gateway or backend error. Body shape varies; inspect HTTP status before parsing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
           }
-        }
+        },
+        "description": "\n\nUse a compatible Hicap model ID in the request body. Azure deployment IDs and api-version are not part of this route. Supported optional parameters depend on the model.",
+        "parameters": [
+          {
+            "name": "x-hicap-tags",
+            "in": "header",
+            "required": false,
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{\"feature\":\"support\",\"env\":\"production\"}"
+          }
+        ]
       }
     },
     "/chat/completions": {
@@ -306,52 +326,47 @@
             }
           },
           "default": {
-            "description": "Service unavailable",
+            "description": "Gateway or backend error. Body shape varies; inspect HTTP status before parsing.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/errorResponse"
-                }
-              }
-            },
-            "headers": {
-              "apim-request-id": {
-                "description": "Request ID for troubleshooting purposes",
-                "schema": {
-                  "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  },
+                  "additionalProperties": true
                 }
               }
             }
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "x-hicap-tags",
+            "in": "header",
+            "required": false,
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{\"feature\":\"support\",\"env\":\"production\"}"
+          }
+        ]
       }
     },
-    "/deployments/{deploymentId}/audio/transcriptions": {
+    "/audio/transcriptions": {
       "post": {
         "summary": "Transcribes audio into the input language.",
         "operationId": "Transcriptions_Create",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "deploymentId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "whisper",
-              "description": "Deployment id of the whisper model."
-            }
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "2025-01-01-preview",
-              "description": "api version"
-            }
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -385,36 +400,50 @@
                 }
               }
             }
+          },
+          "default": {
+            "description": "Gateway or backend error. Body shape varies; inspect HTTP status before parsing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
           }
-        }
+        },
+        "description": "\n\nUse a compatible Hicap model ID in the request body. Azure deployment IDs and api-version are not part of this route. Supported optional parameters depend on the model.",
+        "parameters": [
+          {
+            "name": "x-hicap-tags",
+            "in": "header",
+            "required": false,
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{\"feature\":\"support\",\"env\":\"production\"}"
+          }
+        ]
       }
     },
-    "/deployments/{deploymentId}/audio/translations": {
+    "/audio/translations": {
       "post": {
         "summary": "Transcribes and translates input audio into English text.",
         "operationId": "Translations_Create",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "deploymentId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "whisper",
-              "description": "Deployment id of the whisper model which was deployed."
-            }
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "2025-01-01-preview",
-              "description": "api version"
-            }
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -448,40 +477,54 @@
                 }
               }
             }
+          },
+          "default": {
+            "description": "Gateway or backend error. Body shape varies; inspect HTTP status before parsing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
           }
-        }
+        },
+        "description": "\n\nUse a compatible Hicap model ID in the request body. Azure deployment IDs and api-version are not part of this route. Supported optional parameters depend on the model.",
+        "parameters": [
+          {
+            "name": "x-hicap-tags",
+            "in": "header",
+            "required": false,
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{\"feature\":\"support\",\"env\":\"production\"}"
+          }
+        ]
       }
     },
-    "/deployments/{deploymentId}/audio/speech": {
+    "/audio/speech": {
       "post": {
         "summary": "Generates audio from the input text.",
         "operationId": "Speech_Create",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "deploymentId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "tts-1",
-              "description": "Deployment id of the tts model which was deployed."
-            }
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "2025-01-01-preview",
-              "description": "api version"
-            }
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/createSpeechRequest"
               }
@@ -499,11 +542,47 @@
                 }
               }
             }
+          },
+          "default": {
+            "description": "Gateway or backend error. Body shape varies; inspect HTTP status before parsing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
           }
-        }
+        },
+        "description": "\n\nUse a compatible Hicap model ID in the request body. Azure deployment IDs and api-version are not part of this route. Supported optional parameters depend on the model.",
+        "parameters": [
+          {
+            "name": "x-hicap-tags",
+            "in": "header",
+            "required": false,
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{\"feature\":\"support\",\"env\":\"production\"}"
+          }
+        ]
       }
     },
-    "/deployments/{deploymentId}/images/generations": {
+    "/images/generations": {
       "post": {
         "summary": "Generates a batch of images from a text caption on a given DALLE model deployment",
         "operationId": "ImageGenerations_Create",
@@ -517,28 +596,6 @@
             }
           }
         },
-        "parameters": [
-          {
-            "in": "path",
-            "name": "deploymentId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "dalle-deployment",
-              "description": "Deployment id of the dalle model which was deployed."
-            }
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "2025-01-01-preview",
-              "description": "api version"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Ok",
@@ -551,16 +608,42 @@
             }
           },
           "default": {
-            "description": "An error occurred.",
+            "description": "Gateway or backend error. Body shape varies; inspect HTTP status before parsing.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/dalleErrorResponse"
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  },
+                  "additionalProperties": true
                 }
               }
             }
           }
-        }
+        },
+        "description": "\n\nUse a compatible Hicap model ID in the request body. Azure deployment IDs and api-version are not part of this route. Supported optional parameters depend on the model.",
+        "parameters": [
+          {
+            "name": "x-hicap-tags",
+            "in": "header",
+            "required": false,
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{\"feature\":\"support\",\"env\":\"production\"}"
+          }
+        ]
       }
     },
     "/assistants": {
@@ -646,7 +729,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "post": {
         "operationId": "Create_Assistant",
@@ -687,7 +771,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/assistants/{assistantId}": {
@@ -729,7 +814,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "post": {
         "operationId": "Modify_Assistant",
@@ -779,7 +865,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "delete": {
         "operationId": "Delete_Assistant",
@@ -819,7 +906,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/threads": {
@@ -862,7 +950,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/threads/{threadId}": {
@@ -904,7 +993,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "post": {
         "operationId": "Modify_Thread",
@@ -954,7 +1044,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "delete": {
         "operationId": "Delete_Thread",
@@ -994,7 +1085,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/threads/{threadId}/messages": {
@@ -1097,7 +1189,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "post": {
         "operationId": "Create_Message",
@@ -1147,7 +1240,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/threads/{threadId}/messages/{messageId}": {
@@ -1198,7 +1292,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "post": {
         "operationId": "Modify_Message",
@@ -1257,7 +1352,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/threads/runs": {
@@ -1300,7 +1396,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/threads/{threadId}/runs": {
@@ -1395,7 +1492,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "post": {
         "operationId": "Create_Run",
@@ -1468,7 +1566,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/threads/{threadId}/runs/{runId}": {
@@ -1519,7 +1618,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "post": {
         "operationId": "Modify_Run",
@@ -1578,7 +1678,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/threads/{threadId}/runs/{runId}/submit_tool_outputs": {
@@ -1639,7 +1740,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/threads/{threadId}/runs/{runId}/cancel": {
@@ -1690,7 +1792,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/threads/{threadId}/runs/{runId}/steps": {
@@ -1817,7 +1920,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/threads/{threadId}/runs/{runId}/steps/{stepId}": {
@@ -1900,7 +2004,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/vector_stores": {
@@ -1984,7 +2089,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "post": {
         "operationId": "Create_Vector_Store",
@@ -2025,7 +2131,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/vector_stores/{vectorStoreId}": {
@@ -2067,7 +2174,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "post": {
         "operationId": "Modify_Vector_Store",
@@ -2117,7 +2225,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "delete": {
         "operationId": "Delete_Vector_Store",
@@ -2157,7 +2266,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/vector_stores/{vectorStoreId}/files": {
@@ -2282,7 +2392,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "post": {
         "operationId": "Create_Vector_Store_File",
@@ -2333,7 +2444,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/vector_stores/{vectorStoreId}/files/{fileId}": {
@@ -2386,7 +2498,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       },
       "delete": {
         "operationId": "Delete_Vector_Store_File",
@@ -2435,7 +2548,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/vector_stores/{vectorStoreId}/file_batches": {
@@ -2488,7 +2602,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/vector_stores/{vectorStoreId}/file_batches/{batchId}": {
@@ -2541,7 +2656,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/vector_stores/{vectorStoreId}/file_batches/{batchId}/cancel": {
@@ -2592,7 +2708,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/vector_stores/{vectorStoreId}/file_batches/{batchId}/files": {
@@ -2726,7 +2843,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
       }
     },
     "/models": {
@@ -2800,19 +2918,24 @@
             }
           },
           "default": {
-            "description": "An error occurred.",
+            "description": "Gateway or backend error. Body shape varies; inspect HTTP status before parsing.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/errorResponse"
-                }
-              }
-            },
-            "headers": {
-              "x-request-id": {
-                "description": "Request ID for troubleshooting purposes.",
-                "schema": {
-                  "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  },
+                  "additionalProperties": true
                 }
               }
             }
@@ -3454,8 +3577,8 @@
           },
           "seed": {
             "type": "integer",
-            "minimum": -9223372036854775808,
-            "maximum": 9223372036854775807,
+            "minimum": -9223372036854776000,
+            "maximum": 9223372036854776000,
             "nullable": true,
             "description": "If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.\n\nDeterminism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.\n"
           },
@@ -3516,10 +3639,16 @@
             "type": "string",
             "example": "user-1234",
             "description": "A unique identifier representing your end-user, which can help to monitor and detect abuse.\n"
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact compatible Hicap model ID from GET /v1/models."
           }
         },
         "required": [
-          "prompt"
+          "prompt",
+          "model"
         ]
       },
       "createCompletionResponse": {
@@ -3691,7 +3820,7 @@
                         },
                         "required": [
                           "id"
-                        ] 
+                        ]
                       }
                     ]
                   },
@@ -3777,8 +3906,8 @@
               },
               "seed": {
                 "type": "integer",
-                "minimum": -9223372036854775808,
-                "maximum": 9223372036854775807,
+                "minimum": -9223372036854776000,
+                "maximum": 9223372036854776000,
                 "nullable": true,
                 "deprecated": true,
                 "description": "This feature is in Beta.\nIf specified, our system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.\nDeterminism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.\n"
@@ -4026,7 +4155,9 @@
           },
           "role": {
             "type": "string",
-            "enum": ["developer"],
+            "enum": [
+              "developer"
+            ],
             "description": "The role of the messages author, in this case `developer`."
           },
           "name": {
@@ -4087,8 +4218,14 @@
         "allOf": [
           {
             "not": {
-              "required": ["name"],
-              "properties": { "name": { "const": "developer" } }
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "const": "developer"
+                }
+              }
             }
           }
         ],
@@ -6378,8 +6515,12 @@
             "description": "The tool calls generated by the model, such as function calls.",
             "items": {
               "oneOf": [
-                { "$ref": "#/components/schemas/chatCompletionMessageToolCall" },
-                { "$ref": "#/components/schemas/chatCompletionMessageCustomToolCall" }
+                {
+                  "$ref": "#/components/schemas/chatCompletionMessageToolCall"
+                },
+                {
+                  "$ref": "#/components/schemas/chatCompletionMessageCustomToolCall"
+                }
               ]
             }
           },
@@ -6520,7 +6661,7 @@
                   "tools": {
                     "type": "array",
                     "description": "A list of tool definitions that the model should be allowed to call.\n\nFor the Chat Completions API, the list of tool definitions might look like:",
-                    "items":{
+                    "items": {
                       "type": "object",
                       "properties": {
                         "type": {
@@ -6680,7 +6821,7 @@
             {
               "$ref": "#/components/schemas/chatCompletionMessageCustomToolCall"
             }
-          ]  
+          ]
         }
       },
       "ChatCompletionModalities": {
@@ -6773,7 +6914,7 @@
       },
       "chatCompletionTool": {
         "type": "object",
-        "oneOf":[
+        "oneOf": [
           {
             "type": "object",
             "description": "A function tool that can be used to generate a response.",
@@ -6883,7 +7024,7 @@
                     ]
                   }
                 },
-                "required":[
+                "required": [
                   "name"
                 ]
               }
@@ -7040,10 +7181,16 @@
             "type": "number",
             "default": 0,
             "description": "The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit."
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact compatible Hicap model ID from GET /v1/models."
           }
         },
         "required": [
-          "file"
+          "file",
+          "model"
         ]
       },
       "audioResponse": {
@@ -7159,10 +7306,16 @@
             "default": [
               "segment"
             ]
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact compatible Hicap model ID from GET /v1/models."
           }
         },
         "required": [
-          "file"
+          "file",
+          "model"
         ]
       },
       "audioSegment": {
@@ -7239,44 +7392,34 @@
         "properties": {
           "input": {
             "type": "string",
-            "description": "The text to synthesize audio for. The maximum length is 4096 characters.",
-            "maxLength": 4096
+            "minLength": 1,
+            "description": "Text to synthesize. Length limits depend on the selected model."
           },
           "voice": {
             "type": "string",
-            "description": "The voice to use for speech synthesis.",
-            "enum": [
-              "alloy",
-              "echo",
-              "fable",
-              "onyx",
-              "nova",
-              "shimmer"
-            ]
+            "description": "A voice identifier supported by the selected model. Voice identifiers and availability are model-specific."
           },
           "response_format": {
             "type": "string",
-            "description": "The format to synthesize the audio in.",
-            "enum": [
-              "mp3",
-              "opus",
-              "aac",
-              "flac",
-              "wav",
-              "pcm"
-            ]
+            "description": "A supported audio output format; available formats depend on the model."
           },
           "speed": {
             "description": "The speed of the synthesize audio. Select a value from `0.25` to `4.0`. `1.0` is the default.",
             "type": "number",
-            "default": 1.0,
+            "default": 1,
             "minimum": 0.25,
-            "maximum": 4.0
+            "maximum": 4
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact compatible Hicap model ID from GET /v1/models."
           }
         },
         "required": [
           "input",
-          "voice"
+          "voice",
+          "model"
         ]
       },
       "imageQuality": {
@@ -7401,24 +7544,23 @@
         "type": "object",
         "properties": {
           "prompt": {
-            "description": "A text description of the desired image(s). The maximum length is 4000 characters.",
             "type": "string",
-            "format": "string",
-            "example": "a corgi in a field",
-            "minLength": 1
+            "minLength": 1,
+            "description": "Describe the image to generate. Prompt limits depend on the selected model.",
+            "example": "A corgi in a field"
           },
           "n": {
-            "description": "The number of images to generate.",
             "type": "integer",
             "minimum": 1,
-            "maximum": 1,
-            "default": 1
+            "description": "Requested image count. Supported counts depend on the model."
           },
           "size": {
-            "$ref": "#/components/schemas/imageSize"
+            "type": "string",
+            "description": "A size value supported by the selected image model. Confirm supported values before use."
           },
           "response_format": {
-            "$ref": "#/components/schemas/imagesResponseFormat"
+            "type": "string",
+            "description": "A response format value supported by the selected image model. Confirm supported values before use."
           },
           "user": {
             "description": "A unique identifier representing your end-user, which can help to monitor and detect abuse.",
@@ -7427,14 +7569,22 @@
             "example": "user123456"
           },
           "quality": {
-            "$ref": "#/components/schemas/imageQuality"
+            "type": "string",
+            "description": "A quality value supported by the selected image model. Confirm supported values before use."
           },
           "style": {
-            "$ref": "#/components/schemas/imageStyle"
+            "type": "string",
+            "description": "A style value supported by the selected image model. Confirm supported values before use."
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact compatible Hicap model ID from GET /v1/models."
           }
         },
         "required": [
-          "prompt"
+          "prompt",
+          "model"
         ]
       },
       "generateImagesResponse": {
