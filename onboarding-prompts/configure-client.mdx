@@ -1,65 +1,64 @@
 ---
 title: 'Configure the Hicap client'
-description: 'Full implementation prompt for a coding agent working in your application repository'
+description: 'Implementation prompt with coverage checks for actual outgoing Hicap requests'
 hidden: true
 ---
 
-Follow the implementation prompt below in the user's application repository. Read the repository instructions before making changes.
+````text wrap title="Implementation prompt"
+Configure or repair this application's Hicap model client. Read repository
+instructions and trace all existing model transports and callers before editing.
+Reuse the existing compatible client, preserve provider behavior and ordinary
+traffic, and add only a placeholder HICAP_API_KEY to the example environment file.
+If no model calls exist, report zero; do not add AI behavior. Identify deferred
+transports and the deployment configuration still needed.
 
-````text wrap title="Client setup"
-Configure this application's compatible model clients for Hicap. First scan the
-whole repository, its entrypoints, jobs, wrappers, deployment config and existing
-tags; trace callers to sinks with file:line evidence and report scope/gaps. Inventory
-ordinary request/process paths separately from physical AI call sites. Assess
-existing tag values, precedence and privacy before changing clients.
+Hicap contract:
+- Use the existing compatible client with https://api.hicap.ai/v1. Read
+  HICAP_API_KEY on the server and send it in the api-key header. Never expose,
+  log or commit credentials. Do not reroute unrelated HTTP calls.
+- Each model request sends exactly one x-hicap-tags header: one JSON object
+  with string values. Preserve reviewed existing tags and merge precedence;
+  reject malformed/duplicate keys or headers and unsafe values. Keep defaults
+  immutable and caller context isolated across concurrent requests.
+- Reuse the application's approved naming and configuration. Assess agent,
+  env, system, feature and domain; preserve useful existing dimensions such as
+  trigger. These are conventions, not a gateway allowlist.
+  agent = the responsible AI workflow or named model-powered pipeline role;
+  env = explicit deployment context (NODE_ENV alone is insufficient);
+  system = stable application/service; feature = the caller's business capability;
+  domain = the application's approved business context or existing convention.
+  Keep model steps separate from business features where both exist.
+- A pipeline can have named AI roles without being called "multi-agent".
+  Check existing workflow definitions, prompts and execution events. Reuse real
+  roles; do not invent agents from filenames, SDKs, models or arbitrary strings.
+- For each missing dimension distinguish a bug, unresolved configuration and
+  genuinely not applicable. Do not silently omit a known role. Do not fill gaps
+  with "unknown", "default", "none" or fake values just to clear a chart.
+  If non-agent calls need an explicit reporting value, propose a documented
+  convention and get approval before emitting it. Never tag secrets, prompts,
+  personal identifiers, raw URLs or high-cardinality request/session IDs.
 
-The gateway is https://api.hicap.ai/v1; use server-side HICAP_API_KEY in the
-`api-key` header. Every model request has one `x-hicap-tags` header containing
-one JSON object of string values. Never expose keys, personal data or prompts.
-Assess exactly agent/env/system/feature/domain: agent is a logical AI automation
-(not a user/SDK); env is verified deployment config (NODE_ENV alone is insufficient);
-system is the stable service; feature is the caller's business capability; domain
-is broad business/industry context, never DNS. Industry examples commerce,
-healthcare and financial_services are proposed defaults, not evidence. Do not
-invent clinical or financial workflows from a template. Report evidence and
-unknown/not-applicable states for all five; send only resolved strings, never null.
-Use a non-agent sentinel only after documenting compatibility with consumers.
-Preserve safe existing extra dimensions; do not invent new ones or silently
-rename/delete legacy values. Distinguish ordinary requests from actual AI calls.
+Verification and completion:
+- Use mocked provider responses. Capture the FINAL outgoing HTTP headers from
+  real application functions, not just the tag builder. Do not insert the
+  expected agent/feature into the test context when production does not supply it.
+- Check representative normal workflows and alternate modes, scripts/jobs and
+  fallbacks. Reconcile every discovered model path with an emitted-tag assertion,
+  a documented non-applicable dimension, or an explicit untested/deferred gap.
+  Exercise concurrent callers and a failed attempt followed by a successful retry.
+  Test enqueue/consume context when queues exist. Run relevant existing checks.
+- A valid JSON header is not proof of complete attribution. Assert the expected
+  values of each applicable dimension, especially named pipeline roles. An
+  "Unattributed" dashboard group can mean one missing dimension while others work.
+- Separate source changes, mock-tested behavior, deployed revision and fresh
+  observed traffic. Historical requests retain their old tags. For live follow-up,
+  use a time window after deployment, the correct application/environment, and
+  the same dimensions as the chart. Compare redacted outgoing tags with recorded
+  usage; do not claim a dashboard is fixed from mocks or an old 30-day aggregate.
+  Do not deploy, change dashboard rules or generate paid traffic without approval.
 
-Keep provider compatibility, streaming and error behavior working. Do not route
-ordinary HTTP/SQL/auth traffic through Hicap. If no model calls exist, report zero
-and prepare an unused server-only client; do not invent an AI feature. Add the key
-placeholder/comment to the example env file, preserve existing safe tags, document
-client setup and unresolved dimension config, and run relevant mocked checks.
-
-Report two layers for all five dimensions: observed state with evidence, then
-concrete recommended setup with config source, adoption step and check. An
-unknown observed value is not an empty recommendation. Propose local-only
-HICAP_ENV=development, explicit staging=staging and production=production;
-preview=preview requires platform-context confirmation. These are proposed
-config entries, not detected values or automatic NODE_ENV runtime fallbacks.
-Give source-supported system/domain recommendations and exact config locations
-when known; keep an unused client unused when no AI calls exist.
-
-Write this step's findings to Markdown under the application's repository-root
-.hicap directory (never filesystem root). Inspect/reuse existing tagging
-examples/conventions first; if none exists, say so and use
-.hicap/tagging-report.md. Preserve all existing files and human notes; if the
-destination exists, write a timestamped sibling instead of overwriting it.
-Include schema/version, UTC timestamp, source revision and applied/proposed
-status, then sections: Scope and evidence; Observed attribution; Recommended
-configuration; Request and process mapping; Implementation coverage; Validation
-and open decisions. Include all five dimensions, source lines, concrete env
-setup, ordinary-versus-AI paths, test results and deferrals. Do not claim
-proposed tags were emitted. Verify the file exists/readable, link it from the
-README when updating docs, and return its exact relative path.
-
-Acceptance checks for affected paths: reject duplicate JSON dimension keys
-(including escaped-equivalent keys), not only repeated HTTP headers. Show
-trusted producer persistence, serialization, consumer restoration and retry
-re-enqueue for resolved feature/agent/domain; keep unknowns explicit. Tests
-must run a failing attempt then a successful retry and inspect separately
-captured contexts/headers, not compare a value with itself. Report deferred
-integration honestly; never force an unsupported provider migration.
+Update README as needed and save a concise coverage/test report under the
+application repository's .hicap directory, preserving existing reports with a
+timestamped sibling. Include source revision, redacted headers, remaining gaps
+and post-deployment verification steps. Show the exact report path when done.
 ````

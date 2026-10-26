@@ -18,7 +18,7 @@ The agent will need a few things to be true. You can either set these up first o
 
 - **A Hicap API key.** Create one in the [Hicap Platform dashboard ↗](https://platform.hicap.ai/) and make it available as the `HICAP_API_KEY` environment variable. The agent should never hard-code it.
 - **The base URL and auth header.** Requests go to `https://api.hicap.ai/v1`, and the key is sent as the `api-key` header. Any OpenAI-compatible SDK works — see the [Developer Quickstart](/quickstart).
-- **A sense of your dimensions.** Decide which labels you want to slice spend by. See [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments) for the model; the prompts use five canonical starter dimensions and distinguish observed values from proposed industry defaults. Domain here means broad business/industry context; this is a starter convention, not a gateway-enforced taxonomy.
+- **A sense of your dimensions.** Decide which labels you want to slice spend by. See [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments) for the model; the prompts assess five starter dimensions, reuse approved application conventions, and distinguish missing instrumentation from intentionally non-applicable values.
 
 ## Master prompt
 
@@ -69,8 +69,10 @@ Prefer smaller steps? Run these in order — each is safe to hand over on its ow
 
 ## After the agent runs
 
+Review the emitted tags for real workflows, not only whether a helper exists. A valid tags header can still omit a named agent role. After deployment, inspect fresh traffic in the correct application and environment; a 30-day chart can still include older untagged requests.
+
 - **Review coverage and evidence.** Check the whole-app inventory, separate ordinary traffic from AI call sites, and review every deferred or unresolved path. Zero model calls is a valid finding; a prepared client is not proof of live attribution.
-- **Review all five dimensions.** Confirm agent, env, system, feature and domain definitions and sources. Approve proposed industry labels before treating them as facts. Preserve compatible existing dimensions and review any migration.
+- **Review all five dimensions.** Confirm agent, env, system, feature and domain definitions and sources. Reuse approved application conventions and distinguish missing values from dimensions that do not apply. Preserve compatible existing dimensions and review any migration.
 
 - **Verify the header.** Confirm each model request sends a single `x-hicap-tags` header whose value is one JSON object of strings; check safe merge precedence, privacy, concurrency and queued/retried context. Unknown assessment values must not become JSON null. See [How tags are sent](/concepts/tags-dimensions-segments#how-tags-are-sent).
 - **Check for untagged traffic.** Requests that arrive without your expected dimensions surface as **Unattributed Traffic** — a signal that a call site still needs the helper. See [Segments](/concepts/tags-dimensions-segments#segments).
