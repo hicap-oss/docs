@@ -1,0 +1,63 @@
+---
+title: 'Get daily usage'
+description: 'Retrieve daily development usage and spend for your authenticated subscription'
+openapi: get /usage
+---
+
+Returns daily **billed usage** for the subscription associated with your development Basic product key. Send the key in the `api-key` header to `https://api.hicap.dev/v1/usage`.
+
+For integration examples and guidance on reading the data, see [Retrieve usage and spend](/guides/retrieve-usage).
+
+## Date range and scope
+
+`from` is inclusive and `to` is exclusive. Both use UTC `YYYY-MM-DD` dates, and the range must span 1–31 days. Only one value for each parameter is accepted. For a longer report, use consecutive date windows; there is no pagination token.
+
+The key determines the subscription. Only active Basic product subscriptions are accepted; inference-only API keys and all-APIs keys do not qualify. The endpoint reports development data and does not accept a caller-selected customer, subscription, or environment.
+
+## Response fields
+
+| Field | Meaning |
+| --- | --- |
+| `environment` | Always `dev`. |
+| `from`, `to` | The requested inclusive start and exclusive end dates. |
+| `granularity` | Always `day`. |
+| `refresh_interval_seconds` | Hourly refresh cadence: `3600`. |
+| `data_updated_at` | Newest refresh timestamp among returned rows; `null` for an empty result. |
+| `latest_event_at` | Newest billed event timestamp among returned rows; `null` for an empty result. |
+| `data` | Up to 31 daily rows, ordered by UTC date. Days without recorded bills are omitted. |
+| `data[].date` | UTC date of the billed events. |
+| `data[].requests` | Number of billed debit records, rather than all attempted requests. |
+| `data[].input_tokens` | Recorded input tokens. |
+| `data[].output_tokens` | Recorded output tokens. |
+| `data[].cached_tokens` | Recorded cached tokens; provider accounting may overlap input tokens. |
+| `data[].cache_write_tokens` | Recorded cache-write tokens. |
+| `data[].audio_ms` | Recorded audio duration in milliseconds. |
+| `data[].characters` | Recorded character usage. |
+| `data[].spend_usd` | Daily debit spend as a USD string rounded to eight decimal places. |
+
+Unit counts are nonnegative integers; absent unit measures contribute zero. Spend excludes credit transactions and is not a live balance. Timestamps describe the returned records, not a guarantee of complete ingestion.
+
+## Errors and rate limit
+
+| Status | Meaning | Action |
+| --- | --- | --- |
+| `400` | Missing or invalid dates, a range outside 1–31 days, duplicate dates, or unsupported query parameters. | Correct the request. |
+| `401` | Missing or invalid API key. | Use an active development key. |
+| `403` | The subscription or authorization does not permit usage access. | Check that the key belongs to an active Basic product subscription. |
+| `404` | No operation matches the requested route. | Use `/v1/usage`. |
+| `429` | More than 30 requests per minute for the subscription. | Respect `Retry-After` when present. |
+| `503` | Usage reporting is temporarily unavailable. | Retry with backoff. |
+| `504` | The reporting request timed out. | Retry with backoff. |
+
+A reporting dependency failure returns a sanitized JSON error, for example:
+
+```json
+{
+  "error": {
+    "code": "usage_unavailable",
+    "message": "Usage reporting is temporarily unavailable."
+  }
+}
+```
+
+For transient errors, respect `Retry-After` when present. Successful usage responses are private and must not be publicly cached.
