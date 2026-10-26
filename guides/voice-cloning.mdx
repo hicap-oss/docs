@@ -35,7 +35,7 @@ Replace `[customer name]` with the actual customer. This is suggested attestatio
   Hicap stores the consent recording encrypted. It does not transcribe the recording, check its wording, compare speakers, or perform biometric identity verification. A consent ID records the uploaded attestation; it is not proof of provider or OpenAI verification.
 </Info>
 
-The shell examples use `curl` and `jq`. Set your API key in `HICAP_API_KEY` and use the base URL provided for your enabled environment:
+The shell examples use `curl`, `jq`, and `uuidgen`. Set your API key in `HICAP_API_KEY` and use the base URL provided for your enabled environment:
 
 ```bash
 export HICAP_BASE_URL="https://api.hicap.ai/v1"
@@ -86,11 +86,19 @@ Upload a sample from the consenting speaker and reference the returned consent I
 | `audio_sample` | The audio sample to clone |
 | `type` | Optional; defaults to `audio_sample`, the only supported value |
 
+Generate and save a unique idempotency key for this new clone. Run this command **once**, then keep its value for retries of the same request:
+
+```bash
+export VOICE_CREATION_KEY="$(uuidgen)"
+```
+
+For a different clone, generate a different key. Do not regenerate the key when retrying an uncertain or pending creation.
+
 ```bash
 curl --fail-with-body --silent --show-error \
   "$HICAP_BASE_URL/audio/voices" \
   -H "api-key: $HICAP_API_KEY" \
-  -H "Idempotency-Key: alex-voice-001" \
+  -H "Idempotency-Key: $VOICE_CREATION_KEY" \
   -F "name=Alex" \
   -F "consent=$CONSENT_ID" \
   -F "audio_sample=@sample.wav;type=audio/wav" \
@@ -153,14 +161,21 @@ A successful response contains the audio bytes. Check that the request succeeded
 
 ## Use the OpenAI JavaScript SDK
 
-The HTTP contract works with the unmodified OpenAI JavaScript SDK. The following methods were tested with version `7.43.0`. Use the `api-key` header in addition to the SDK's `apiKey` setting.
+The HTTP contract works with the unmodified OpenAI JavaScript SDK. The following methods were tested with version `7.43.0`. Use the `api-key` header in addition to the SDK's `apiKey` setting. Set `VOICE_CREATION_KEY` to a new, saved key for this clone (for example, using the `uuidgen` command above). Preserve that key and the returned consent ID when retrying the voice-creation call; do not re-upload consent on retries.
 
 ```javascript
 import OpenAI, { toFile } from "openai";
 import { readFile, writeFile } from "node:fs/promises";
 
-const key = process.env.HICAP_API_KEY;
-const baseURL = process.env.HICAP_BASE_URL; // Includes /v1
+const key = process.env.HICAP_API_KEY?.trim();
+const baseURL = process.env.HICAP_BASE_URL?.trim(); // Includes /v1
+const creationKey = process.env.VOICE_CREATION_KEY?.trim();
+if (!key || !baseURL) {
+  throw new Error("Set HICAP_API_KEY and HICAP_BASE_URL before uploading audio.");
+}
+if (!creationKey) {
+  throw new Error("Set VOICE_CREATION_KEY to the saved unique key for this clone.");
+}
 const client = new OpenAI({
   baseURL,
   apiKey: key,
@@ -183,7 +198,7 @@ const voice = await client.audio.voices.create({
     type: "audio/wav",
   }),
 }, {
-  headers: { "Idempotency-Key": "alex-voice-001" },
+  headers: { "Idempotency-Key": creationKey },
 });
 
 console.log({ consentId: consent.id, voiceId: voice.id });
@@ -258,7 +273,7 @@ For voice creation, reuse the **same `Idempotency-Key`, consent ID, name, MIME t
 
 If a timeout or server failure leaves creation pending or uncertain, wait at least 90 seconds and repeat that same voice-creation request. Hicap attempts to recover the existing provider result without submitting another clone. A new key or changed consent could create a second clone, so do not change them while the first outcome is unknown.
 
-If the response reports `voice_reconciliation_required`, contact [support](mailto:support@hicap.ai) with the response's `x-oscuro-request-id` header. A known failed or previously deleted creation request requires a new key only when you intentionally want to create another clone.
+If the response reports `voice_reconciliation_required`, contact [support](mailto:support@hicap.ai) with the response's `x-oscuro-request-id` header. A capacity or entitlement check that fails before sample submission releases the reservation; retry the same request and key after the condition is resolved. A known provider creation failure or previously deleted creation request requires a new key only when you intentionally want to create another clone.
 
 | HTTP status | Common cause |
 | --- | --- |
