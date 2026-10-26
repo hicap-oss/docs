@@ -39,9 +39,22 @@ The model list is public and does not require a key. Inference routes require au
 
 ### Endpoint availability
 
-Image editing, Responses, Realtime sessions, legacy Completions, and Assistants routes require their own model and feature compatibility checks. Confirm requirements with [support](mailto:support@hicap.ai) before building against a feature without a Hicap-specific guide. A recognized gateway route is not proof that every upstream operation works for your model.
+Image editing, Responses, Realtime sessions, and legacy Completions are also registered on the public gateway. Their request formats and model capabilities differ; use a compatible model and endpoint rather than assuming all chat parameters apply.
 
-Image variations and stored Chat Completions retrieval are not included in the documented endpoint set. Do not assume those operations are available from OpenAI's API documentation. Legacy reference pages describe upstream schema shapes and do not establish Hicap availability.
+Image variations and stored Chat Completions retrieval are not included in the documented endpoint set. Do not assume those operations are available from OpenAI's API documentation.
+
+## Versioned workflow operations
+
+The Assistants and Threads and Vector Stores sections in the API Reference navigation describe operations registered on the public gateway.
+
+Include the required `api-version` query parameter shown in each operation’s Query Parameters section. For example:
+
+```bash
+curl "https://api.hicap.ai/v1/assistants?api-version=2025-01-01-preview" \
+  -H "api-key: $HICAP_API_KEY"
+```
+
+Many workflow routes require `api-version` for the gateway to match the operation. Omitting it can return `404 Resource not found` even when the method and path are otherwise correct. Use resource IDs returned by the corresponding create operations. Version, model, and connection compatibility still apply to backend execution.
 
 ## Models
 

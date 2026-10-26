@@ -91,6 +91,51 @@
                   "api-reference/audio-translations",
                   "api-reference/audio-speech"
                 ]
+              },
+              {
+                "group": "Assistants and Threads",
+                "pages": [
+                  "api-reference/endpoints/openAI/assistants/cancels-a-run-that-is-in_progress",
+                  "api-reference/endpoints/openAI/assistants/create-a-message",
+                  "api-reference/endpoints/openAI/assistants/create-a-run",
+                  "api-reference/endpoints/openAI/assistants/create-a-thread-and-run-it-in-one-request",
+                  "api-reference/endpoints/openAI/assistants/create-a-thread",
+                  "api-reference/endpoints/openAI/assistants/create-an-assistant-with-a-model-and-instructions",
+                  "api-reference/endpoints/openAI/assistants/delete-a-thread",
+                  "api-reference/endpoints/openAI/assistants/delete-an-assistant",
+                  "api-reference/endpoints/openAI/assistants/modifies-a-message",
+                  "api-reference/endpoints/openAI/assistants/modifies-a-run",
+                  "api-reference/endpoints/openAI/assistants/modifies-a-thread",
+                  "api-reference/endpoints/openAI/assistants/modifies-an-assistant",
+                  "api-reference/endpoints/openAI/assistants/retrieve-a-message",
+                  "api-reference/endpoints/openAI/assistants/retrieves-a-run-step",
+                  "api-reference/endpoints/openAI/assistants/retrieves-a-run",
+                  "api-reference/endpoints/openAI/assistants/retrieves-a-thread",
+                  "api-reference/endpoints/openAI/assistants/retrieves-an-assistant",
+                  "api-reference/endpoints/openAI/assistants/returns-a-list-of-assistants",
+                  "api-reference/endpoints/openAI/assistants/returns-a-list-of-messages-for-a-given-thread",
+                  "api-reference/endpoints/openAI/assistants/returns-a-list-of-run-steps-belonging-to-a-run",
+                  "api-reference/endpoints/openAI/assistants/returns-a-list-of-runs-belonging-to-a-thread",
+                  "api-reference/endpoints/openAI/assistants/submit_tool_outputs"
+                ]
+              },
+              {
+                "group": "Vector Stores",
+                "pages": [
+                  "api-reference/endpoints/openAI/vector-stores/cancel-vector-store-file-batch",
+                  "api-reference/endpoints/openAI/vector-stores/create-a-vector-store-file-batch",
+                  "api-reference/endpoints/openAI/vector-stores/create-a-vector-store-file-by-attaching-a-file",
+                  "api-reference/endpoints/openAI/vector-stores/create-a-vector-store",
+                  "api-reference/endpoints/openAI/vector-stores/delete-a-vector-store-file",
+                  "api-reference/endpoints/openAI/vector-stores/delete-a-vector-store",
+                  "api-reference/endpoints/openAI/vector-stores/modifies-a-vector-store",
+                  "api-reference/endpoints/openAI/vector-stores/retrieves-a-vector-store-file-batch",
+                  "api-reference/endpoints/openAI/vector-stores/retrieves-a-vector-store-file",
+                  "api-reference/endpoints/openAI/vector-stores/retrieves-a-vector-store",
+                  "api-reference/endpoints/openAI/vector-stores/returns-a-list-of-vector-store-files-in-a-batch",
+                  "api-reference/endpoints/openAI/vector-stores/returns-a-list-of-vector-store-files",
+                  "api-reference/endpoints/openAI/vector-stores/returns-a-list-of-vector-stores"
+                ]
               }
             ]
           }

@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Hicap API",
-    "description": "OpenAI-compatible inference reference. Authenticate using the api-key header. Endpoint and parameter support depends on the selected model and connection. Legacy definitions do not establish availability; see https://docs.hicap.ai/api-reference/introduction#endpoint-availability.",
+    "description": "OpenAI-compatible inference reference. Authenticate using the api-key header. Endpoint and parameter support depends on the selected model and connection. Include the required api-version query parameter for versioned workflow operations; see https://docs.hicap.ai/api-reference/introduction#versioned-workflow-operations.",
     "version": "1.0.0",
     "contact": {
       "name": "Hicap Support",
@@ -730,7 +730,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "post": {
         "operationId": "Create_Assistant",
@@ -772,7 +772,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/assistants/{assistantId}": {
@@ -815,7 +815,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "post": {
         "operationId": "Modify_Assistant",
@@ -866,7 +866,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "delete": {
         "operationId": "Delete_Assistant",
@@ -907,7 +907,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/threads": {
@@ -951,7 +951,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/threads/{threadId}": {
@@ -994,7 +994,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "post": {
         "operationId": "Modify_Thread",
@@ -1045,7 +1045,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "delete": {
         "operationId": "Delete_Thread",
@@ -1086,7 +1086,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/threads/{threadId}/messages": {
@@ -1190,7 +1190,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "post": {
         "operationId": "Create_Message",
@@ -1241,7 +1241,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/threads/{threadId}/messages/{messageId}": {
@@ -1293,7 +1293,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "post": {
         "operationId": "Modify_Message",
@@ -1353,7 +1353,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/threads/runs": {
@@ -1397,7 +1397,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/threads/{threadId}/runs": {
@@ -1493,7 +1493,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "post": {
         "operationId": "Create_Run",
@@ -1567,7 +1567,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/threads/{threadId}/runs/{runId}": {
@@ -1619,7 +1619,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "post": {
         "operationId": "Modify_Run",
@@ -1679,7 +1679,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/threads/{threadId}/runs/{runId}/submit_tool_outputs": {
@@ -1741,7 +1741,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/threads/{threadId}/runs/{runId}/cancel": {
@@ -1793,7 +1793,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/threads/{threadId}/runs/{runId}/steps": {
@@ -1921,7 +1921,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/threads/{threadId}/runs/{runId}/steps/{stepId}": {
@@ -2005,7 +2005,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/vector_stores": {
@@ -2090,7 +2090,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "post": {
         "operationId": "Create_Vector_Store",
@@ -2132,7 +2132,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/vector_stores/{vectorStoreId}": {
@@ -2175,7 +2175,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "post": {
         "operationId": "Modify_Vector_Store",
@@ -2226,7 +2226,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "delete": {
         "operationId": "Delete_Vector_Store",
@@ -2267,7 +2267,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/vector_stores/{vectorStoreId}/files": {
@@ -2393,7 +2393,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "post": {
         "operationId": "Create_Vector_Store_File",
@@ -2445,7 +2445,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/vector_stores/{vectorStoreId}/files/{fileId}": {
@@ -2499,7 +2499,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       },
       "delete": {
         "operationId": "Delete_Vector_Store_File",
@@ -2549,7 +2549,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/vector_stores/{vectorStoreId}/file_batches": {
@@ -2603,7 +2603,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/vector_stores/{vectorStoreId}/file_batches/{batchId}": {
@@ -2657,7 +2657,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/vector_stores/{vectorStoreId}/file_batches/{batchId}/cancel": {
@@ -2709,7 +2709,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/vector_stores/{vectorStoreId}/file_batches/{batchId}/files": {
@@ -2844,7 +2844,7 @@
             }
           }
         },
-        "description": "Legacy upstream reference. Confirm Hicap availability and model compatibility with support before using this operation.\n\n"
+        "description": ""
       }
     },
     "/models": {
