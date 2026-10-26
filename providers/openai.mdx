@@ -3,15 +3,19 @@ title: 'OpenAI'
 description: 'OpenAI models available through the Hicap API'
 ---
 
-All OpenAI models below are accessible through the **Hicap API** using the standard [OpenAI API spec](https://platform.openai.com/docs/api-reference). Point your OpenAI SDK at `https://api.hicap.ai/v1` and use any model ID listed here. For pricing, see the [Model Catalog](https://hicap.ai/models).
+Use the model IDs below with a compatible Hicap endpoint and the required `api-key` header. See the [quickstart](/quickstart).
+
+<Note>
+  These model IDs were checked against the [public model list](/api-reference/models) on October 26, 2026. Consult that list before integration. Native provider capabilities do not guarantee support through every Hicap endpoint; confirm the selected model, route, and parameters. Pricing and context information are in the [model catalog](https://hicap.ai/models).
+</Note>
 
 ## gpt-5.5
 
-GPT-5.5 is OpenAI's latest flagship model available through the Hicap API. Use the `gpt-5.5` model ID in OpenAI-compatible endpoints for top-tier general-purpose reasoning, coding, analysis, and multimodal workloads.
+GPT-5.5 is OpenAI's reasoning model available through the Hicap API. Use the `gpt-5.5` model ID in OpenAI-compatible endpoints for top-tier general-purpose reasoning, coding, analysis, and multimodal workloads.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Advanced reasoning, agentic coding, complex analysis, multimodal applications, and production assistants that need the strongest general-purpose OpenAI model available through Hicap.
     </span>
@@ -22,7 +26,7 @@ GPT-5.5 is OpenAI's latest flagship model available through the Hicap API. Use t
 | `Text, image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* OpenAI-compatible model ID: `gpt-5.5`</li>
@@ -35,9 +39,9 @@ GPT-5.5 is OpenAI's latest flagship model available through the Hicap API. Use t
 
 GPT-5.5 Pro is the pro-tier GPT-5.5 model available through the Hicap API. Use the `gpt-5.5-pro` model ID when your workload needs the highest capability option in the GPT-5.5 family.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Deep research, demanding enterprise analysis, high-stakes coding and review workflows, and complex reasoning tasks where quality matters more than speed.
     </span>
@@ -48,7 +52,7 @@ GPT-5.5 Pro is the pro-tier GPT-5.5 model available through the Hicap API. Use t
 | `Text, image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* OpenAI-compatible model ID: `gpt-5.5-pro`</li>
@@ -59,11 +63,11 @@ GPT-5.5 Pro is the pro-tier GPT-5.5 model available through the Hicap API. Use t
 
 ## gpt-5.4
 
-GPT-5.4 is OpenAI's most advanced model, offering a massive 1.05M token context window with state-of-the-art reasoning, coding, and multimodal capabilities. It features long-context tiers above 272K tokens for cost-efficient processing of very large inputs.
+GPT-5.4 is an OpenAI model, offering a massive 1.05M token context window with state-of-the-art reasoning, coding, and multimodal capabilities. It features long-context tiers above 272K tokens for cost-efficient processing of very large inputs.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Ultra-long-context analysis, full-codebase reasoning, massive document processing, and demanding enterprise workflows that require the highest intelligence with extended context.
     </span>
@@ -74,7 +78,7 @@ GPT-5.4 is OpenAI's most advanced model, offering a massive 1.05M token context 
 | `Text, image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,050,000 context window</li>
@@ -83,63 +87,13 @@ GPT-5.4 is OpenAI's most advanced model, offering a massive 1.05M token context 
     </div>
 </Columns>
 
-## gpt-5.3-chat-latest
-
-GPT-5.3 Chat Latest is a conversationally optimized model from the GPT-5.3 family, designed for responsive dialogue and instruction fidelity. It supports a 200K token context window and delivers strong performance across chat-based applications.
-
-<div className='text-white font-bold'>Best for:</div>
-
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
-    <span>
-    Interactive chat applications, conversational assistants, customer support, and real-time dialogue where responsiveness and instruction following are critical.
-    </span>
-</div>
-
-|  Input | | Output |
-| ----- | - | ------ |
-| `Text, image` | | `Text` |
-<Columns cols={1}>
-    <div>
-        <div className='text-white font-bold'>This model offers</div>
-
-        <ul className='mb-6'>
-            <li>* 200,000 context window</li>
-        </ul>
-    </div>
-</Columns>
-
-## gpt-5.3-codex
-
-GPT-5.3 Codex is a code-optimized variant from the GPT-5.3 family, purpose-built for software development workflows. It excels at code generation, editing, debugging, and agentic coding tasks with a 200K token context window.
-
-<div className='text-white font-bold'>Best for:</div>
-
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
-    <span>
-    Agentic coding, code generation, debugging, refactoring, automated development workflows, and IDE integrations that require deep code understanding.
-    </span>
-</div>
-
-|  Input | | Output |
-| ----- | - | ------ |
-| `Text, Code` | | `Text, Code` |
-<Columns cols={1}>
-    <div>
-        <div className='text-white font-bold'>This model offers</div>
-
-        <ul className='mb-6'>
-            <li>* 200,000 context window</li>
-        </ul>
-    </div>
-</Columns>
-
 ## gpt-5.2
 
 GPT-5.2 is a highly capable general-purpose language model designed for advanced reasoning, long-context understanding, and instruction fidelity. It delivers stable, coherent outputs across complex tasks and extended conversations, while supporting multimodal inputs for richer and more contextual responses.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Complex reasoning, long-form generation, decision support, and multimodal chat experiences where accuracy, consistency, and instruction adherence are critical.
     </span>
@@ -150,14 +104,14 @@ GPT-5.2 is a highly capable general-purpose language model designed for advanced
 | `Text, image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 400,000 context window</li>
             <li>* 128,000 max output tokens</li>
             <li>* August 31, 2025 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -165,9 +119,9 @@ GPT-5.2 is a highly capable general-purpose language model designed for advanced
 
 GPT-5.2 Chat is a conversationally optimized variant of GPT-5.2, designed to deliver natural, responsive, and context-aware dialogue. It emphasizes turn-by-turn coherence, low-latency interactions, and strong instruction following in chat-based environments, while retaining advanced reasoning and multimodal understanding.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Interactive chat applications, assistants, customer support, and real-time conversational experiences where responsiveness, conversational flow, and contextual continuity are essential.
     </span>
@@ -178,14 +132,14 @@ GPT-5.2 Chat is a conversationally optimized variant of GPT-5.2, designed to del
 | `Text, image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 128,000 context window</li>
             <li>* 16,384 max output tokens</li>
             <li>* August 31, 2025 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -193,9 +147,9 @@ GPT-5.2 Chat is a conversationally optimized variant of GPT-5.2, designed to del
 
 GPT-5.1 is a reliable and efficient language model that offers strong general-purpose capabilities with balanced reasoning, instruction following, and text generation. It provides consistent performance across common NLP tasks while prioritizing stability and cost efficiency.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     General-purpose text generation, summarization, content drafting, and standard chat or assistant workloads where reliability and efficiency are more important than maximum reasoning depth.
     </span>
@@ -206,14 +160,14 @@ GPT-5.1 is a reliable and efficient language model that offers strong general-pu
 | `Text, image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 400,000 context window</li>
             <li>* 128,000 max output tokens</li>
             <li>* September 30, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -221,9 +175,9 @@ GPT-5.1 is a reliable and efficient language model that offers strong general-pu
 
 GPT-5.1 Chat is a conversationally tuned language model optimized for responsive, natural dialogue and consistent instruction following. It builds on GPT-5.1’s stable core capabilities while prioritizing low-latency interactions and smooth conversational flow in chat-based applications.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Everyday chat assistants, customer support, guided interactions, and conversational interfaces where speed, clarity, and reliability are the primary requirements.
     </span>
@@ -234,14 +188,14 @@ GPT-5.1 Chat is a conversationally tuned language model optimized for responsive
 | `Text, image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 128,000 context window</li>
             <li>* 16,384 max output tokens</li>
             <li>* September 30, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -249,9 +203,9 @@ GPT-5.1 Chat is a conversationally tuned language model optimized for responsive
 
 Full-scale flagship OpenAI model. Delivers state-of-the-art reasoning, creativity, coding, and multimodal support. Handles long contexts (hundreds of thousands of tokens) and complex workflows.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Enterprise-grade copilots, advanced software development, strategic research, product/financial/legal analysis, high-quality multimodal content generation. Best when you need maximum depth and reliability.
     </span>
@@ -262,14 +216,14 @@ Full-scale flagship OpenAI model. Delivers state-of-the-art reasoning, creativit
 | `Text, image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 400,000 context window</li>
             <li>* 128,000 max output tokens</li>
             <li>* September 30, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -277,9 +231,9 @@ Full-scale flagship OpenAI model. Delivers state-of-the-art reasoning, creativit
 
 This use case employs OpenAI's foundational GPT-5 model (which is the default model in the ChatGPT interface). It is a general-purpose multimodal reasoning engine designed to understand, generate, and synthesize complex information in a coherent and contextually relevant manner, simulating a fluid human conversation without requiring a specific “chat” model.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     General conversational interaction and multimodal reasoning. Ideal for answering questions, generating creative and explanatory content, summarizing documents, translating languages, analyzing images, and serving as a versatile virtual assistant across a wide range of non-specialized tasks.
     </span>
@@ -287,17 +241,17 @@ This use case employs OpenAI's foundational GPT-5 model (which is the default mo
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, image` | | `Text, Image, Code` |
+| `Text, image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 400,000 context window</li>
             <li>* 128,000 max output tokens</li>
             <li>* September 30, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -305,9 +259,9 @@ This use case employs OpenAI's foundational GPT-5 model (which is the default mo
 
 A lighter and faster variant of GPT-5. Preserves strong reasoning and coding ability, but optimized for lower latency and cost. Good balance between performance and efficiency.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     A lighter and faster variant of GPT-5. Preserves strong reasoning and coding ability, but optimized for lower latency and cost. Good balance between performance and efficiency.
     </span>
@@ -318,14 +272,14 @@ A lighter and faster variant of GPT-5. Preserves strong reasoning and coding abi
 | `Text, Image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 400,000 context window</li>
             <li>* 128,000 max output tokens</li>
             <li>* May 30, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -333,9 +287,9 @@ A lighter and faster variant of GPT-5. Preserves strong reasoning and coding abi
 
 Ultra-light, low-latency model. Prioritizes speed and efficiency over advanced reasoning. Best for lightweight tasks where response time and throughput matter more than nuance.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Real-time assistants, mobile/edge use cases, autocomplete, customer service chat, high-volume RAG queries. Best when cost + speed > deep reasoning.
     </span>
@@ -346,14 +300,14 @@ Ultra-light, low-latency model. Prioritizes speed and efficiency over advanced r
 | `Text, Image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 400,000 context window</li>
             <li>* 128,000 max output tokens</li>
             <li>* May 30, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -361,9 +315,9 @@ Ultra-light, low-latency model. Prioritizes speed and efficiency over advanced r
 
 OpenAI's high-intelligence flagship model for complex, multi-step tasks. GPT-4o is cheaper and faster than GPT-4 Turbo
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Multimodal copilots (voice, image, video), real-time assistants, design/code reviews, customer-facing apps, and enterprise agents that require both contextual reasoning + speed.
     </span>
@@ -371,17 +325,17 @@ OpenAI's high-intelligence flagship model for complex, multi-step tasks. GPT-4o 
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, Image, Audio, Video, Code` | | `Text, Audio, Image (limited)` |
+| `Text, Image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 128,000 context window</li>
             <li>* 16,384 max output tokens</li>
             <li>* October 1, 2023 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -389,9 +343,9 @@ OpenAI's high-intelligence flagship model for complex, multi-step tasks. GPT-4o 
 
 OpenAI's affordable and intelligent small model for fast, lightweight tasks. GPT-4o mini is cheaper and more capable than GPT-3.5 Turbo
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Scalable chatbots, QA systems, RAG pipelines, lightweight coding assistants, and UX/product copilots where cost efficiency + responsiveness matter.
     </span>
@@ -402,14 +356,14 @@ OpenAI's affordable and intelligent small model for fast, lightweight tasks. GPT
 | `Text, Image, Code` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 128,000 context window</li>
             <li>* 16,384 max output tokens</li>
             <li>* October 1, 2023 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -417,9 +371,9 @@ OpenAI's affordable and intelligent small model for fast, lightweight tasks. GPT
 
 GPT-4.1 is the flagship model of the new 4.1 family, excelling in coding, following complex instructions, and managing long contexts (up to 1 million tokens), making it the powerful go-to choice for demanding applications.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Advanced data analysis, high-fidelity content creation, software architecture design, and analytical copilots requiring maximum reliability and depth.
     </span>
@@ -430,14 +384,14 @@ GPT-4.1 is the flagship model of the new 4.1 family, excelling in coding, follow
 | `Text, Code` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,000,000 context window</li>
             <li>* 32,000 max output tokens</li>
             <li>* June 1, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -445,9 +399,9 @@ GPT-4.1 is the flagship model of the new 4.1 family, excelling in coding, follow
 
 GPT-4.1 mini is optimized for speed and efficiency, being 40% faster then GPT-4o. GPT-4.1 mini offers a balanced approach with robust performance for simpler or time-sensitive tasks, providing faster response times compared to its more feature-rich counterpart.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Mid-complexity workflows: documentation QA, data summarization, low-latency coding copilots, or iterative product feedback systems.
     </span>
@@ -458,14 +412,14 @@ GPT-4.1 mini is optimized for speed and efficiency, being 40% faster then GPT-4o
 | `Text, Code` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,000,000 context window</li>
             <li>* 32,000 max output tokens</li>
             <li>* June 1, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -473,9 +427,9 @@ GPT-4.1 mini is optimized for speed and efficiency, being 40% faster then GPT-4o
 
 GPT-4.1 nano is the smallest, fastest, and most cost-effective option of the GPT-4.1 family. GPT-4.1 nano is ideal for high-volume applications such as autocomplete, classification, and extracting details from lengthy documents while maintaining a strong performance profile.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Autocomplete, message classification, semantic search ranking, basic natural-language logic tasks, and embedded AI tools. Ideal for speed-critical micro-agents.
     </span>
@@ -486,13 +440,21 @@ GPT-4.1 nano is the smallest, fastest, and most cost-effective option of the GPT
 | `Text` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,000,000 context window</li>
             <li>* 32,000 max output tokens</li>
             <li>* June 1, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
+
+## Output formats
+
+For the standard `gpt-4o` model, [OpenAI documents text/image input and text output](https://developers.openai.com/api/docs/models/gpt-4o). Audio and image generation use suitable models and endpoints; do not infer those features from the GPT-4o family name.
+
+## Earlier model IDs
+
+The following IDs were not returned by the public model list during the October 26, 2026 check: `gpt-5.3-chat-latest`, `gpt-5.3-codex`. Confirm availability with support before relying on them. They are not interchangeable aliases for the listed models.

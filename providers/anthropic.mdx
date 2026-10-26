@@ -3,15 +3,19 @@ title: 'Anthropic'
 description: 'Anthropic Claude models available through the Hicap API'
 ---
 
-All Anthropic models below are accessible through the **Hicap API** using the standard [OpenAI API spec](https://platform.openai.com/docs/api-reference). Point your OpenAI SDK at `https://api.hicap.ai/v1` and use any model ID listed here. For pricing, see the [Model Catalog](https://hicap.ai/models).
+Use the model IDs below with a compatible Hicap endpoint and the required `api-key` header. See the [quickstart](/quickstart).
+
+<Note>
+  These model IDs were checked against the [public model list](/api-reference/models) on October 26, 2026. Consult that list before integration. Native provider capabilities do not guarantee support through every Hicap endpoint; confirm the selected model, route, and parameters. Pricing and context information are in the [model catalog](https://hicap.ai/models).
+</Note>
 
 ## claude-opus-4.6
 
-Claude Opus 4.6 is the latest and most capable Claude model, delivering state-of-the-art reasoning, coding, analysis, and creative output. It offers a 200K context window with efficient prompt caching for cost-effective processing of long inputs.
+Claude Opus 4.6 is the a Claude model, delivering state-of-the-art reasoning, coding, analysis, and creative output. It offers a 200K context window with efficient prompt caching for cost-effective processing of long inputs.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Maximum-capability tasks: advanced agentic coding, deep research synthesis, complex multi-step reasoning, strategic analysis, and high-stakes content generation where quality and depth are paramount.
     </span>
@@ -22,7 +26,7 @@ Claude Opus 4.6 is the latest and most capable Claude model, delivering state-of
 | `Text, Image, Code` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 200,000 context window</li>
@@ -32,11 +36,11 @@ Claude Opus 4.6 is the latest and most capable Claude model, delivering state-of
 
 ## claude-sonnet-4.6
 
-Claude Sonnet 4.6 is the latest mid-tier Claude model, offering strong reasoning, coding, and instruction following at an excellent cost-to-performance ratio. It balances intelligence and speed with a 200K context window.
+Claude Sonnet 4.6 is the a Claude model, offering strong reasoning, coding, and instruction following at an excellent cost-to-performance ratio. It balances intelligence and speed with a 200K context window.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Enterprise copilots, production coding assistants, document analysis, structured reasoning, and general-purpose AI applications where strong performance at moderate cost is ideal.
     </span>
@@ -47,7 +51,7 @@ Claude Sonnet 4.6 is the latest mid-tier Claude model, offering strong reasoning
 | `Text, Image, Code` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 200,000 context window</li>
@@ -59,9 +63,9 @@ Claude Sonnet 4.6 is the latest mid-tier Claude model, offering strong reasoning
 
 Latest mid-to-high tier Claude model (successor to 3.5-Sonnet) that delivers near-Opus-level reasoning with much lower latency and cost. Strong in long-context comprehension (up to 200k+), precise writing, and multimodal analysis (text + image).
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Enterprise copilots, advanced coding and debugging, legal/financial document analysis, product and design QA, structured reasoning tasks. Ideal when you want high intelligence at practical scale.
     </span>
@@ -72,14 +76,14 @@ Latest mid-to-high tier Claude model (successor to 3.5-Sonnet) that delivers nea
 | `Text, Image, Code` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 200,000 context window</li>
             <li>* 64,000 max output tokens</li>
             <li>* January 1, 2025 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -87,9 +91,9 @@ Latest mid-to-high tier Claude model (successor to 3.5-Sonnet) that delivers nea
 
 Lightweight, fastest Claude 4.5 variant, designed for real-time inference and very low compute cost. Maintains solid understanding and summarization abilities, but not deep reasoning.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     High-throughput chatbots, customer support automation, RAG summarizers, quick document Q&A, or embedded assistants where speed and affordability matter most.
     </span>
@@ -100,14 +104,14 @@ Lightweight, fastest Claude 4.5 variant, designed for real-time inference and ve
 | `Text, Image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 200,000 context window</li>
             <li>* 64,000 max output tokens</li>
             <li>* February 1, 2025 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -115,9 +119,9 @@ Lightweight, fastest Claude 4.5 variant, designed for real-time inference and ve
 
 Extended version of Claude Sonnet 4V with ultra-long context support (beyond 200k tokens, up to ~1M depending on configuration). Maintains multimodal (text + images) while handling very large corpora.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Deep document analysis (legal, technical, research) with embedded visuals, large-scale design system validation, long historical chat/session review, and knowledge-base copilots that need persistent memory across massive inputs.
     </span>
@@ -135,9 +139,9 @@ Extended version of Claude Sonnet 4V with ultra-long context support (beyond 200
 
 Claude Opus 4.5 is a high-end reasoning and language model designed for deep analysis, nuanced understanding, and carefully structured responses. It excels at handling complex instructions, long-form content, and sensitive or high-context tasks with a strong emphasis on clarity, safety, and interpretability.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Deep reasoning, complex analysis, long-form writing, policy-heavy workflows, and high-stakes tasks where precision, context awareness, and thoughtful responses are essential.
     </span>
@@ -148,7 +152,7 @@ Claude Opus 4.5 is a high-end reasoning and language model designed for deep ana
 | `Text, Image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 200,000 context window</li>
@@ -163,9 +167,9 @@ Claude Opus 4.5 is a high-end reasoning and language model designed for deep ana
 
 Claude Opus 4.1 is a drop-in replacement for Opus 4 that delivers superior performance and precision for real-world coding and agentic tasks. It handles complex, multi-step problems with more rigor and attention to detail.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Strategic decision-making, in-depth research, advanced coding and debugging, legal/financial/technical analysis, high-stakes content generation (contracts, reports, product strategy docs). Best when quality > cost/latency.
     </span>
@@ -176,14 +180,14 @@ Claude Opus 4.1 is a drop-in replacement for Opus 4 that delivers superior perfo
 | `Text, Image, Code` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 200,000 context window</li>
             <li>* 32,000 max output tokens</li>
             <li>* March 1, 2025 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -191,9 +195,9 @@ Claude Opus 4.1 is a drop-in replacement for Opus 4 that delivers superior perfo
 
 Excels in deep reasoning, logical coherence, and creative writing. Handles complex instructions, long documents, and multimodal text+image analysis with high factual reliability. Slightly slower and more expensive than Sonnet models but provides top-tier accuracy.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Strategic and analytical tasks where precision, reasoning depth, and interpretability matter most — e.g., legal or financial analysis, multi-step research, technical documentation, and advanced coding/debugging workflows.
     </span>
@@ -204,14 +208,14 @@ Excels in deep reasoning, logical coherence, and creative writing. Handles compl
 | `Text, Image, Code` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 200,000 context window</li>
             <li>* 32,000 max output tokens</li>
             <li>* March 1, 2025 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -219,9 +223,9 @@ Excels in deep reasoning, logical coherence, and creative writing. Handles compl
 
 Claude 3.7 Sonnet shows particularly strong improvements in coding and front-end web development. Along with the model, we’re also introducing a command line tool for agentic coding, Claude Code. Claude Code is available as a limited research preview, and enables developers to delegate substantial engineering tasks to Claude directly from their terminal.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Agents with tools and deep reasoning with “extended thinking” and efficient tool use in tokens.
     </span>
@@ -232,14 +236,14 @@ Claude 3.7 Sonnet shows particularly strong improvements in coding and front-end
 | `Text, Image, Code` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 200,000 context window</li>
             <li>* 64,000 max output tokens</li>
             <li>* October 1, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -247,9 +251,9 @@ Claude 3.7 Sonnet shows particularly strong improvements in coding and front-end
 
 Mid-tier Claude 3.5 model offering strong reasoning, coding, and writing quality at a good cost-to-performance ratio. Supports image input (vision) and long context (200k tokens).
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     General enterprise copilots, technical writing, product documentation, Figma/UI reviews, code explanation and debugging. Ideal when you need smart but affordable reasoning.
     </span>
@@ -260,14 +264,14 @@ Mid-tier Claude 3.5 model offering strong reasoning, coding, and writing quality
 | `Text, Image, Code` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 200,000 context window</li>
             <li>* 8,192 max output tokens</li>
             <li>* April 1, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -275,9 +279,9 @@ Mid-tier Claude 3.5 model offering strong reasoning, coding, and writing quality
 
 Lightweight, fastest and cheapest Claude 3.5 variant. Lower reasoning depth but very low latency. Still capable of handling moderate context sizes and structured reasoning.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Real-time assistants, chatbots, RAG queries, customer support, lightweight summarization, or any latency-sensitive app.
     </span>
@@ -288,13 +292,13 @@ Lightweight, fastest and cheapest Claude 3.5 variant. Lower reasoning depth but 
 | `Text, Image` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 200,000 context window</li>
             <li>* 8,192 max output tokens</li>
             <li>* July 1, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
