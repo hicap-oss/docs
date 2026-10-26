@@ -1,0 +1,64 @@
+---
+title: 'Add a Hicap tagging helper'
+description: 'Implementation prompt with coverage checks for actual outgoing Hicap requests'
+hidden: true
+---
+
+````text wrap title="Implementation prompt"
+Add or repair a shared Hicap tags helper after reviewing existing tags, callers
+and merge precedence. Preserve compatible extras. Attach it to every compatible
+model transport, including scripts and jobs; list deferrals explicitly. Trace
+caller context through shared helpers, fallback paths, retries and queues.
+Inspect the actual named roles already used by product workflows so the helper
+does not serialize valid JSON while dropping the agent dimension.
+
+Hicap contract:
+- Use the existing compatible client with https://api.hicap.ai/v1. Read
+  HICAP_API_KEY on the server and send it in the api-key header. Never expose,
+  log or commit credentials. Do not reroute unrelated HTTP calls.
+- Each model request sends exactly one x-hicap-tags header: one JSON object
+  with string values. Preserve reviewed existing tags and merge precedence;
+  reject malformed/duplicate keys or headers and unsafe values. Keep defaults
+  immutable and caller context isolated across concurrent requests.
+- Reuse the application's approved naming and configuration. Assess agent,
+  env, system, feature and domain; preserve useful existing dimensions such as
+  trigger. These are conventions, not a gateway allowlist.
+  agent = the responsible AI workflow or named model-powered pipeline role;
+  env = explicit deployment context (NODE_ENV alone is insufficient);
+  system = stable application/service; feature = the caller's business capability;
+  domain = the application's approved business context or existing convention.
+  Keep model steps separate from business features where both exist.
+- A pipeline can have named AI roles without being called "multi-agent".
+  Check existing workflow definitions, prompts and execution events. Reuse real
+  roles; do not invent agents from filenames, SDKs, models or arbitrary strings.
+- For each missing dimension distinguish a bug, unresolved configuration and
+  genuinely not applicable. Do not silently omit a known role. Do not fill gaps
+  with "unknown", "default", "none" or fake values just to clear a chart.
+  If non-agent calls need an explicit reporting value, propose a documented
+  convention and get approval before emitting it. Never tag secrets, prompts,
+  personal identifiers, raw URLs or high-cardinality request/session IDs.
+
+Verification and completion:
+- Use mocked provider responses. Capture the FINAL outgoing HTTP headers from
+  real application functions, not just the tag builder. Do not insert the
+  expected agent/feature into the test context when production does not supply it.
+- Check representative normal workflows and alternate modes, scripts/jobs and
+  fallbacks. Reconcile every discovered model path with an emitted-tag assertion,
+  a documented non-applicable dimension, or an explicit untested/deferred gap.
+  Exercise concurrent callers and a failed attempt followed by a successful retry.
+  Test enqueue/consume context when queues exist. Run relevant existing checks.
+- A valid JSON header is not proof of complete attribution. Assert the expected
+  values of each applicable dimension, especially named pipeline roles. An
+  "Unattributed" dashboard group can mean one missing dimension while others work.
+- Separate source changes, mock-tested behavior, deployed revision and fresh
+  observed traffic. Historical requests retain their old tags. For live follow-up,
+  use a time window after deployment, the correct application/environment, and
+  the same dimensions as the chart. Compare redacted outgoing tags with recorded
+  usage; do not claim a dashboard is fixed from mocks or an old 30-day aggregate.
+  Do not deploy, change dashboard rules or generate paid traffic without approval.
+
+Update README as needed and save a concise coverage/test report under the
+application repository's .hicap directory, preserving existing reports with a
+timestamped sibling. Include source revision, redacted headers, remaining gaps
+and post-deployment verification steps. Show the exact report path when done.
+````

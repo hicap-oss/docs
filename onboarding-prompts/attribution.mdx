@@ -1,0 +1,88 @@
+---
+title: 'Hicap setup and attribution'
+description: 'Implementation prompt with coverage checks for actual outgoing Hicap requests'
+hidden: true
+---
+
+````text wrap title="Implementation prompt"
+Add or repair Hicap attribution in this application. Inspect the existing setup,
+make focused changes, and prove the tags on real outbound call paths.
+
+1. Read repository instructions and inspect the current integration.
+   Trace ALL model request transports and their callers: product routes, shared
+   clients, grading/agent modes, workers, scheduled jobs, benchmarks and scripts.
+   Follow retries, fallbacks and queue boundaries. Reuse existing inventories but
+   verify them against current source. Exclude generated/vendor output and ordinary
+   non-model traffic; list inaccessible or unresolved paths.
+
+2. Make a compact coverage table before editing.
+   For each model workflow show entrypoint -> transport, current tags, expected
+   agent/feature/trigger and service defaults, with source references. Distinguish
+   observed values, recommendations and intentional non-applicability. Inspect
+   existing role/event registries; do not limit agent discovery to a multi-agent file.
+   Preserve approved application conventions rather than replacing them with an
+   industry preset. Ask only for decisions that block safe implementation.
+
+3. Repair the missing attribution at the owning boundary.
+   Reuse a small shared helper and trusted caller context. Service defaults belong
+   in configuration; workflow/role values belong at their caller or in a reviewed
+   registry of existing roles. Carry context through async work and retries.
+   Preserve provider compatibility, streaming and existing application behavior.
+   If there are no model calls, report that; do not add AI behavior to create coverage.
+
+Hicap contract:
+- Use the existing compatible client with https://api.hicap.ai/v1. Read
+  HICAP_API_KEY on the server and send it in the api-key header. Never expose,
+  log or commit credentials. Do not reroute unrelated HTTP calls.
+- Each model request sends exactly one x-hicap-tags header: one JSON object
+  with string values. Preserve reviewed existing tags and merge precedence;
+  reject malformed/duplicate keys or headers and unsafe values. Keep defaults
+  immutable and caller context isolated across concurrent requests.
+- Reuse the application's approved naming and configuration. Assess agent,
+  env, system, feature and domain; preserve useful existing dimensions such as
+  trigger. These are conventions, not a gateway allowlist.
+  agent = the responsible AI workflow or named model-powered pipeline role;
+  env = explicit deployment context (NODE_ENV alone is insufficient);
+  system = stable application/service; feature = the caller's business capability;
+  domain = the application's approved business context or existing convention.
+  Keep model steps separate from business features where both exist.
+- A pipeline can have named AI roles without being called "multi-agent".
+  Check existing workflow definitions, prompts and execution events. Reuse real
+  roles; do not invent agents from filenames, SDKs, models or arbitrary strings.
+- For each missing dimension distinguish a bug, unresolved configuration and
+  genuinely not applicable. Do not silently omit a known role. Do not fill gaps
+  with "unknown", "default", "none" or fake values just to clear a chart.
+  If non-agent calls need an explicit reporting value, propose a documented
+  convention and get approval before emitting it. Never tag secrets, prompts,
+  personal identifiers, raw URLs or high-cardinality request/session IDs.
+
+4. Verify the integration, including the paths that previously lacked tags.
+
+Verification and completion:
+- Use mocked provider responses. Capture the FINAL outgoing HTTP headers from
+  real application functions, not just the tag builder. Do not insert the
+  expected agent/feature into the test context when production does not supply it.
+- Check representative normal workflows and alternate modes, scripts/jobs and
+  fallbacks. Reconcile every discovered model path with an emitted-tag assertion,
+  a documented non-applicable dimension, or an explicit untested/deferred gap.
+  Exercise concurrent callers and a failed attempt followed by a successful retry.
+  Test enqueue/consume context when queues exist. Run relevant existing checks.
+- A valid JSON header is not proof of complete attribution. Assert the expected
+  values of each applicable dimension, especially named pipeline roles. An
+  "Unattributed" dashboard group can mean one missing dimension while others work.
+- Separate source changes, mock-tested behavior, deployed revision and fresh
+  observed traffic. Historical requests retain their old tags. For live follow-up,
+  use a time window after deployment, the correct application/environment, and
+  the same dimensions as the chart. Compare redacted outgoing tags with recorded
+  usage; do not claim a dashboard is fixed from mocks or an old 30-day aggregate.
+  Do not deploy, change dashboard rules or generate paid traffic without approval.
+
+5. Leave a short report and clear rollout steps.
+   Reuse existing .hicap report conventions. Write a new Markdown report under
+   <application-root>/.hicap, preserving existing reports and human notes; default
+   to tagging-report.md or a timestamped sibling if it exists. Include inspected
+   revision, coverage table, before/after redacted header samples, tests and gaps.
+   Update README with configuration and helper usage. In the final response show
+   the report path, changes, checks, remaining missing dimensions and the exact
+   fresh-traffic verification needed. Do not claim complete attribution with gaps.
+````
