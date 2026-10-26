@@ -3,43 +3,21 @@ title: 'Google'
 description: 'Google Gemini models available through the Hicap API'
 ---
 
-All Google Gemini models below are accessible through the **Hicap API** using the standard [OpenAI API spec](https://platform.openai.com/docs/api-reference). Point your OpenAI SDK at `https://api.hicap.ai/v1` and use any model ID listed here. For pricing, see the [Model Catalog](https://hicap.ai/models).
+Use the model IDs below with a compatible Hicap endpoint and the required `api-key` header. See the [quickstart](/quickstart).
 
-## gemini-3.1-pro
-
-Gemini 3.1 Pro is Google's latest flagship reasoning model with a 1M token context window, advanced analytical capabilities, and support for long-context tiers. It excels at complex multi-step reasoning and large-scale document analysis.
-
-<div className='text-white font-bold'>Best for:</div>
-
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
-    <span>
-    Advanced reasoning, complex multi-step analysis, large-scale document processing, codebase understanding, and enterprise workflows requiring the highest Google Gemini capability.
-    </span>
-</div>
-
-|  Input | | Output |
-| ----- | - | ------ |
-| `Text, Image, Audio, Video, PDF` | | `Text` |
-<Columns cols={1}>
-    <div>
-        <div className='text-white font-bold'>This model offers</div>
-
-        <ul className='mb-6'>
-            <li>* 1,000,000 context window</li>
-            <li>* Long-context tier above 200,000 tokens</li>
-        </ul>
-    </div>
-</Columns>
+<Note>
+  These model IDs were checked against the [public model list](/api-reference/models) on October 26, 2026. Consult that list before integration. Native provider capabilities do not guarantee support through every Hicap endpoint; confirm the selected model, route, and parameters. Pricing and context information are in the [model catalog](https://hicap.ai/models).
+</Note>
 
 ## gemini-3.1-pro-preview
 
-Gemini 3.1 Pro Preview is the preview channel of Gemini 3.1 Pro with identical capabilities, providing early access to the latest improvements.
+Gemini 3.1 Pro Preview is a preview model for reasoning and multimodal analysis. Use the exact model ID shown here and validate the features required by your application.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
-    Same use cases as gemini-3.1-pro — advanced reasoning, document analysis, and enterprise workflows. Use the preview for early access to latest refinements.
+    Reasoning, document analysis, and enterprise workflows where preview-model behavior and feature compatibility have been evaluated.
     </span>
 </div>
 
@@ -48,57 +26,11 @@ Gemini 3.1 Pro Preview is the preview channel of Gemini 3.1 Pro with identical c
 | `Text, Image, Audio, Video, PDF` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,000,000 context window</li>
             <li>* Long-context tier above 200,000 tokens</li>
-        </ul>
-    </div>
-</Columns>
-
-## gemini-3.1-flash-image-preview
-
-Gemini 3.1 Flash Image Preview is a fast, cost-efficient model specialized for text-to-image generation and visual content creation. Built on the Flash architecture for low-latency responses.
-
-<div className='text-white font-bold'>Best for:</div>
-
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
-    <span>
-    Fast text-to-image generation, iterative image editing, visual asset creation, and design prototyping where speed and cost efficiency are priorities.
-    </span>
-</div>
-
-|  Input | | Output |
-| ----- | - | ------ |
-| `Text, Image` | | `Image` |
-<Columns cols={1}>
-    <div>
-
-    </div>
-</Columns>
-
-## gemini-3-pro-image-preview
-
-Gemini 3 Pro Image Preview is a high-capability model for image generation and multimodal visual workflows. It delivers higher quality image outputs compared to Flash variants.
-
-<div className='text-white font-bold'>Best for:</div>
-
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
-    <span>
-    High-quality image generation, creative visual content, marketing asset creation, and premium visual workflows where output quality matters more than speed.
-    </span>
-</div>
-
-|  Input | | Output |
-| ----- | - | ------ |
-| `Text, Image` | | `Image` |
-<Columns cols={1}>
-    <div>
-        <div className='text-white font-bold'>This model offers</div>
-
-        <ul className='mb-6'>
-            <li>* 1,000,000 context window</li>
         </ul>
     </div>
 </Columns>
@@ -107,9 +39,9 @@ Gemini 3 Pro Image Preview is a high-capability model for image generation and m
 
 Gemini 3 Pro Preview is a next-generation, high-capability model focused on advanced reasoning, deep multimodal understanding, and long-context performance. As a preview release, it showcases cutting-edge improvements in analytical depth, instruction comprehension, and complex problem solving across text and multimodal inputs.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Advanced reasoning, complex multimodal workflows, research-oriented tasks, and early adoption scenarios where maximum capability and depth are prioritized over cost or latency.
     </span>
@@ -120,7 +52,7 @@ Gemini 3 Pro Preview is a next-generation, high-capability model focused on adva
 | `Text, Image, Audio, Video, PDF` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,000,000 context window</li>
@@ -134,9 +66,9 @@ Gemini 3 Pro Preview is a next-generation, high-capability model focused on adva
 
 Gemini 3 Flash is a fast and cost-efficient multimodal model designed for responsive interactions and scalable workloads. It balances solid reasoning and multimodal understanding with low latency, making it well suited for high-throughput applications.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Low-latency, high-throughput chat, summarization, and multimodal extraction in production environments where speed and cost efficiency are critical.
     </span>
@@ -154,9 +86,9 @@ Gemini 3 Flash is a fast and cost-efficient multimodal model designed for respon
 
 Extended version of Gemini 2.5 Pro with ultra-long context support (beyond 200k tokens, reaching into the millions depending on setup). Designed to handle large documents, full repositories, or extensive datasets in a single session.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Long-context processing: legal contracts spanning thousands of pages, large codebases, academic research, reviewing historical chat/log data. Ideal for copilots that need to “remember” or reason over very large corpora.
     </span>
@@ -174,9 +106,9 @@ Extended version of Gemini 2.5 Pro with ultra-long context support (beyond 200k 
 
 Gemini 2.5 Flash is a fast and cost-effective model that balances performance with a wide range of capabilities. It is the first Flash model to feature thinking capabilities, which lets you see the model's thinking process as it generates a response.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Low latency/high throughput for chat, summarization, and multimodal extraction at a lower cost.
     </span>
@@ -184,42 +116,17 @@ Gemini 2.5 Flash is a fast and cost-effective model that balances performance wi
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, Image, Audio, Video, Code` | | `Text, Image, Audio, Video, Code` |
+| `Text, Image, Audio, Video` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,048,576 context window</li>
             <li>* 65,536 max output tokens</li>
             <li>* January 1, 2025 knowledge cutoff</li>
         </ul>
-       
-    </div>
-</Columns>
 
-## gemini-2.5-flash-preview
-
-Gemini 2.5 Flash Preview provides early access to the latest Gemini 2.5 Flash improvements. Same fast, cost-effective architecture with thinking capabilities and multimodal support.
-
-<div className='text-white font-bold'>Best for:</div>
-
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
-    <span>
-    Same use cases as gemini-2.5-flash — low latency chat, summarization, and multimodal extraction. Use the preview for early access to the latest refinements.
-    </span>
-</div>
-
-|  Input | | Output |
-| ----- | - | ------ |
-| `Text, Image, Audio, Video, Code` | | `Text, Image, Audio, Video, Code` |
-<Columns cols={1}>
-    <div>
-        <div className='text-white font-bold'>This model offers</div>
-
-        <ul className='mb-6'>
-            <li>* 1,048,576 context window</li>
-        </ul>
     </div>
 </Columns>
 
@@ -227,9 +134,9 @@ Gemini 2.5 Flash Preview provides early access to the latest Gemini 2.5 Flash im
 
 Lightweight, optimized version of Gemini Flash, designed for speed and low cost. Trades off some reasoning depth and output quality for efficiency. Maintains multimodal capabilities (text + image input) but focuses on ultra-fast responses.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     High-throughput, latency-sensitive tasks: chatbots with large user volumes, quick autocomplete, real-time customer support, fast retrieval-augmented generation (RAG), and mobile/embedded use cases where cost and speed matter more than depth.
     </span>
@@ -237,17 +144,17 @@ Lightweight, optimized version of Gemini Flash, designed for speed and low cost.
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, Image, Audio` | | `Text, Audio` |
+| `Text, Image, Audio` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,000,000 context window</li>
             <li>* 64,000 max output tokens</li>
             <li>* January 1, 2025 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -255,9 +162,9 @@ Lightweight, optimized version of Gemini Flash, designed for speed and low cost.
 
 A Google model that performs like a Pro model with the speed of a Flash model. Multi-modal inputs and outputs, native tool use, great for agentic workflows.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     High-volume workflows: customer interaction, summarization, data extraction, and fast-response agents. Good when you need speed with decent reasoning.
     </span>
@@ -265,17 +172,17 @@ A Google model that performs like a Pro model with the speed of a Flash model. M
 
 |  Input | | Output |
 | ----- | - | ------ |
-| `Text, Image, Audio, Video, Code` | | `Text, Image, Audio` |
+| `Text, Image, Audio, Video` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,000,000 context window</li>
             <li>* 8,000 max output tokens</li>
             <li>* August 1, 2024 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
 
@@ -283,9 +190,9 @@ A Google model that performs like a Pro model with the speed of a Flash model. M
 
 Ultra-light, lowest-latency Gemini variant. Optimized for efficiency rather than depth, while maintaining multimodal support.
 
-<div className='text-white font-bold'>Best for:</div>
+<div className='font-bold'>Best for:</div>
 
-<div className='bg-gray-200 dark:bg-black px-3 py-1 mt-2'>
+<div className='bg-gray-100 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 px-3 py-1 mt-2'>
     <span>
     Mobile or embedded copilots, lightweight RAG, chatbots, autocomplete, and fast contextual lookups where cost and response time are more critical than complex reasoning.
     </span>
@@ -296,13 +203,20 @@ Ultra-light, lowest-latency Gemini variant. Optimized for efficiency rather than
 | `Text, Image, Audio` | | `Text` |
 <Columns cols={1}>
     <div>
-        <div className='text-white font-bold'>This model offers</div>
+        <div className='font-bold'>This model offers</div>
 
         <ul className='mb-6'>
             <li>* 1,000,000 context window</li>
             <li>* 8,000 max output tokens</li>
             <li>* February 5, 2025 knowledge cutoff</li>
         </ul>
-       
+
     </div>
 </Columns>
+## Output formats
+
+The standard Gemini 2.5 Flash and Flash-Lite models generate text; image/audio generation requires a suitable specialized model and endpoint. See [Google’s Flash model reference](https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash) and [Flash-Lite reference](https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash-lite). Native capability is separate from Hicap endpoint support.
+
+## Earlier model IDs
+
+The following IDs were not returned by the public model list during the October 26, 2026 check: `gemini-3.1-pro`, `gemini-3.1-flash-image-preview`, `gemini-3-pro-image-preview`, `gemini-2.5-flash-preview`. Confirm availability with support before relying on them. They are not interchangeable aliases for the listed models.

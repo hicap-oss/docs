@@ -1,91 +1,76 @@
 ---
 title: 'FAQ'
-description: 'Frequently asked questions about Hicap'
+description: 'Common questions about integration, capacity, security, and attribution'
 icon: 'question'
 ---
 
-### General
-
-Everything you need to know about using Hicap on a day-to-day basis
+## Using Hicap
 
 <AccordionGroup>
-  <Accordion title="What exactly does Hicap do in plain terms?">
-    Hicap gives you fast, secure access to top AI models — like GPT-5.4, Claude Opus 4.6, and Gemini 3.1 Pro — at a fraction of the usual cost. We bulk-reserve compute from leading cloud providers and pass the savings to you, all through a simple API.
+  <Accordion title="What does Hicap do?">
+    Hicap connects your application to AI models through a shared API and provides controls and reporting for usage and spend. Start with the [quickstart](/quickstart), then choose a model from the [catalog](https://hicap.ai/models).
   </Accordion>
-  <Accordion title="How is 'reserved throughput' different from pay-as-you-go tokens?">
-    Reserved throughput locks in your compute and pricing — no rate limits, no surprise overages. Think of it like storing water when it's cheap instead of paying full price from the tap during a drought. You commit to a volume up front and get a guaranteed rate, while pay-as-you-go charges you the spot price for every token. If your usage is predictable, reserved throughput saves you money and removes uncertainty.
+  <Accordion title="What do I need to change in an existing integration?">
+    Set the base URL to `https://api.hicap.ai/v1`, configure your server-side Hicap key in the `api-key` header, and select an available model ID. Bearer authentication alone is insufficient. Verify the endpoint, model parameters, streaming, tools, and error handling your application uses; not every upstream API feature is interchangeable. See [API compatibility](/api-reference/introduction#compatibility).
   </Accordion>
-  <Accordion title="Do you offer pay-as-you-go pricing?">
-    Yes. If you're not ready to commit to reserved capacity, you can use Hicap on a pay-per-use basis. You get the same API, the same models, and the same reliability — you just pay per token at standard rates. It's a great way to get started or handle unpredictable workloads before locking in a reservation.
+  <Accordion title="Can I keep using other providers or an existing gateway?">
+    Yes. Configure Hicap as an upstream destination in your existing gateway or router, with the Hicap base URL and `api-key` header. Hicap routes supported requests to configured model backends and provides its own connection-level governance. Your application's separate routing rules still determine which requests it sends to Hicap.
   </Accordion>
-  <Accordion title="How much can customers typically save, and what drives those savings?">
-    Typical savings are up to 25%. Your savings depend on your model usage blend, commitment length, and capacity needs.
-  </Accordion>
-  <Accordion title="Which models and clouds do you cover today?">
-    We support the latest models across OpenAI, Anthropic, Google Gemini, and more. Available in AWS, Azure, Google Cloud, and top Neo Clouds like Alibaba — we try to be as flexible as our customers are. More models and clouds are coming soon; let us know what you need!
-  </Accordion>
-  <Accordion title="Is there a minimum commitment or lock-in period?">
-    Start monthly! Scale up or down with your needs with no long-term lock-in. Want to pay even less? Sign up for a longer commitment for extra savings.
-  </Accordion>
-  <Accordion title="What happens if we burst above our reserved capacity?">
-    No stress. You can burst above your reservation as needed — just contact us, and we'll help you scale up instantly. Your service stays smooth, even during traffic surges.
-  </Accordion>
-  <Accordion title="Can we use Hicap alongside our existing provider accounts?">
-    Yes. Hicap works great as one provider in a multi-provider setup. If you use an AI gateway (like LiteLLM, Portkey, or a custom router), you can configure Hicap as the preferred provider for specific models while keeping your existing provider accounts for others. Note that Hicap itself is an inference API — it doesn't provide gateway or routing services. Your gateway handles the routing logic; Hicap handles the inference.
+  <Accordion title="Which models are available?">
+    Check the [public API model list](/api-reference/models) for exact model IDs and the [catalog](https://hicap.ai/models) for pricing and context information. Availability and supported features can change. A provider's native capabilities do not guarantee the same features through every Hicap endpoint.
   </Accordion>
 </AccordionGroup>
 
-### Security
-
-Your trust and data security are our top priority
+## Capacity and pricing
 
 <AccordionGroup>
-  <Accordion title="Is my data safe with Hicap?">
-    Yes. We use bank-grade encryption (AES-256) and secure communication protocols (TLS 1.3) to protect all data in transit and at rest. Importantly, **Hicap does not store any customer messages or prompts sent to the LLM** — your requests are forwarded to the model provider and responses are returned to you without being logged or retained on our side.
+  <Accordion title="How does reserved capacity differ from pay-as-you-go?">
+    A reservation commits capacity and pricing under your agreement; pay-as-you-go charges for usage without that reservation. Plan limits, connection policies, and backend capacity still apply. Reserved capacity does not mean unlimited requests, automatic unlimited bursting, or the absence of overage charges.
   </Accordion>
-  <Accordion title="Does Hicap share my personal information with third parties?">
-    No. We never sell or share your data with third parties without your explicit consent. Your information is only used to provide our services.
+  <Accordion title="How much can I save?">
+    Savings depend on the models, usage pattern, capacity commitment, and agreement. Compare your workload's quoted rates with the [published model pricing](https://hicap.ai/models). Contact [support](mailto:support@hicap.ai) for a workload-specific quote.
   </Accordion>
-  <Accordion title="What happens if there's a security breach?">
-    Hicap follows strict incident-response protocols. If a breach were ever to occur, users would be notified immediately per our notification timeline, and we would work with affected customers on remediation steps. For full details on our obligations and response procedures, see our [Terms of Service](https://hicap.ai/terms).
+  <Accordion title="What happens if I exceed my reservation or a limit?">
+    Behavior depends on your connection policies, available backend capacity, and agreement. Requests can be limited or rejected; additional capacity or billing may require an arrangement. Plan bursts with support and handle `429` responses using bounded retries. See [rate limits](/api-reference/introduction#rate-limits).
   </Accordion>
-  <Accordion title="Can I delete my data from Hicap?">
-    Absolutely. You can request data deletion at any time, and we will securely remove your information from our systems in compliance with GDPR and other applicable privacy regulations.
-  </Accordion>
-  <Accordion title="Is Hicap compliant with industry security standards?">
-    Yes. Hicap follows best practices such as encryption, role-based access control, and can be configured to meet compliance requirements like SOC 2 or GDPR.
-  </Accordion>
-  <Accordion title="What if I need to connect Hicap to external APIs?">
-    You decide. Hicap gives you full control over which applications you integrate, while keeping internal data and processing private.
-  </Accordion>
-  <Accordion title="How does Hicap protect sensitive information?">
-    All traffic between your application and Hicap is encrypted with TLS 1.3. Hicap does not store your prompts or completions — requests are forwarded to the upstream model provider and responses are returned directly to you. Combined with encryption at rest for account and billing data, your sensitive information stays protected end-to-end.
-  </Accordion>
-  <Accordion title="Can Hicap be deployed inside my AWS account?">
-    Yes. Hicap can be installed within your AWS environment, ensuring that all processing and data requests remain private and isolated.
+  <Accordion title="Is there a minimum commitment?">
+    Commitment length, cancellation, and scaling terms depend on the selected plan or agreement. Confirm the applicable terms before reserving capacity.
   </Accordion>
 </AccordionGroup>
 
-### Architecture
-
-How Hicap fits into your stack
+## Data and security
 
 <AccordionGroup>
-  <Accordion title="How does the integration architecture work?">
-    Hicap sits between your application and the upstream model providers. Here's the typical flow:
-
-    ```
-    Your App ──▶ Hicap API ──▶ Model Provider
-    (OpenAI SDK)  api.hicap.ai  (OpenAI / Anthropic / Google / etc.)
-    ```
-
-    1. **Your application** calls `api.hicap.ai/v1` using any standard OpenAI SDK
-    2. **Hicap** authenticates the request, routes it to the optimal provider endpoint using your reserved capacity (or pay-as-you-go), and returns the response
-    3. **No prompts or completions are stored** by Hicap — only usage metadata for billing
-
-    If you use an AI gateway, Hicap is configured as a provider upstream — the gateway routes to Hicap, and Hicap routes to the model provider.
+  <Accordion title="What happens to the data in my requests?">
+    Hicap processes requests and forwards inference content to the selected model backend. Account, usage, billing, diagnostic, and inference-content data can have different handling requirements. Confirm the deployed logging configuration, model provider's policies, and applicable data-processing terms for your workload. Do not assume zero retention across all routes or providers from API compatibility alone.
   </Accordion>
-  <Accordion title="What do I need to change in my existing code?">
-    Two things: the base URL and the API key. If you're already using the OpenAI SDK, just set `base_url` to `https://api.hicap.ai/v1` and use your Hicap API key. No other code changes are needed — the API is fully OpenAI-compatible.
+  <Accordion title="Does my data go to third parties?">
+    Model providers and service providers can process data as needed to deliver the service. Review the applicable processing terms, provider selection, and any residency or retention requirements before sending sensitive data. Contact [support](mailto:support@hicap.ai) for details relevant to your deployment.
+  </Accordion>
+  <Accordion title="How should I protect credentials and sensitive content?">
+    Use HTTPS, keep API keys in server-side configuration or a secrets manager, and rotate keys when necessary. Do not include secrets or personal identifiers in attribution tags. Confirm required encryption, logging, access, and retention controls for the selected deployment rather than assuming one configuration applies everywhere.
+  </Accordion>
+  <Accordion title="What compliance documentation is available?">
+    Request current security and compliance documentation for the service and deployment you plan to use. An API integration or configuration option does not by itself establish SOC 2 certification, GDPR compliance, or suitability for a regulated workload.
+  </Accordion>
+  <Accordion title="How do I request deletion or report a security concern?">
+    Contact [support@hicap.ai](mailto:support@hicap.ai) with the account and request details, without including credentials or sensitive inference content. Applicable deletion, retention, incident-response, and notification obligations depend on the relevant terms and agreement; see the [Terms of Service](https://hicap.ai/terms).
+  </Accordion>
+  <Accordion title="Can I use a private or customer-cloud deployment?">
+    Discuss deployment options with support. Confirm supported models, network paths, processing locations, logging, and provider dependencies for the proposed design. A component running in your cloud account does not by itself keep every inference request inside that account.
+  </Accordion>
+</AccordionGroup>
+
+## Usage and attribution
+
+<AccordionGroup>
+  <Accordion title="How do requests appear under my application?">
+    The key identifies its Connection and Application, so structural usage rolls up automatically. For labels such as feature, agent, and environment, send request tags. See [Applications, Connections & Keys](/concepts/applications-connections-keys) and [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments).
+  </Accordion>
+  <Accordion title="Why can traffic still appear as Unattributed?">
+    A selected dimension may be missing even when other tags are present. Distinguish a missing known role, a dimension that does not apply, unresolved configuration, old traffic, and an ingestion or display problem. Verify new requests after deployment in the matching application and environment. Changing a helper does not backfill historical tags.
+  </Accordion>
+  <Accordion title="Can an agent help set this up?">
+    Use the short instruction in [Implement attribution with an agent](/concepts/implement-attribution-with-an-agent). The maintained prompt asks the agent to inspect real workflows, implement attribution, and verify final outgoing headers with mocked model responses.
   </Accordion>
 </AccordionGroup>

@@ -15,7 +15,10 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["quickstart", "faq"]
+            "pages": [
+              "quickstart",
+              "faq"
+            ]
           },
           {
             "group": "Concepts",
@@ -60,19 +63,78 @@
               {
                 "group": "Models",
                 "pages": [
-                  "api-reference/endpoints/openAI/lists-available-models"
+                  "api-reference/models"
                 ]
               },
               {
                 "group": "Chat Completions",
                 "pages": [
-                  "api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message"
+                  "api-reference/chat-completions"
+                ]
+              },
+              {
+                "group": "Embeddings",
+                "pages": [
+                  "api-reference/embeddings"
                 ]
               },
               {
                 "group": "Images",
                 "pages": [
-                  "api-reference/endpoints/openAI/generates-a-batch-of-images-from-a-text-caption-on-a-given-dalle-model-deployment"
+                  "api-reference/images"
+                ]
+              },
+              {
+                "group": "Audio",
+                "pages": [
+                  "api-reference/audio-transcriptions",
+                  "api-reference/audio-translations",
+                  "api-reference/audio-speech"
+                ]
+              },
+              {
+                "group": "Assistants and Threads",
+                "pages": [
+                  "api-reference/endpoints/openAI/assistants/cancels-a-run-that-is-in_progress",
+                  "api-reference/endpoints/openAI/assistants/create-a-message",
+                  "api-reference/endpoints/openAI/assistants/create-a-run",
+                  "api-reference/endpoints/openAI/assistants/create-a-thread-and-run-it-in-one-request",
+                  "api-reference/endpoints/openAI/assistants/create-a-thread",
+                  "api-reference/endpoints/openAI/assistants/create-an-assistant-with-a-model-and-instructions",
+                  "api-reference/endpoints/openAI/assistants/delete-a-thread",
+                  "api-reference/endpoints/openAI/assistants/delete-an-assistant",
+                  "api-reference/endpoints/openAI/assistants/modifies-a-message",
+                  "api-reference/endpoints/openAI/assistants/modifies-a-run",
+                  "api-reference/endpoints/openAI/assistants/modifies-a-thread",
+                  "api-reference/endpoints/openAI/assistants/modifies-an-assistant",
+                  "api-reference/endpoints/openAI/assistants/retrieve-a-message",
+                  "api-reference/endpoints/openAI/assistants/retrieves-a-run-step",
+                  "api-reference/endpoints/openAI/assistants/retrieves-a-run",
+                  "api-reference/endpoints/openAI/assistants/retrieves-a-thread",
+                  "api-reference/endpoints/openAI/assistants/retrieves-an-assistant",
+                  "api-reference/endpoints/openAI/assistants/returns-a-list-of-assistants",
+                  "api-reference/endpoints/openAI/assistants/returns-a-list-of-messages-for-a-given-thread",
+                  "api-reference/endpoints/openAI/assistants/returns-a-list-of-run-steps-belonging-to-a-run",
+                  "api-reference/endpoints/openAI/assistants/returns-a-list-of-runs-belonging-to-a-thread",
+                  "api-reference/endpoints/openAI/assistants/submit_tool_outputs"
+                ]
+              },
+              {
+                "group": "Vector Stores",
+                "pages": [
+                  "api-reference/endpoints/openAI/vector-stores/cancel-vector-store-file-batch",
+                  "api-reference/endpoints/openAI/vector-stores/create-a-vector-store-file-batch",
+                  "api-reference/endpoints/openAI/vector-stores/create-a-vector-store-file-by-attaching-a-file",
+                  "api-reference/endpoints/openAI/vector-stores/create-a-vector-store",
+                  "api-reference/endpoints/openAI/vector-stores/delete-a-vector-store-file",
+                  "api-reference/endpoints/openAI/vector-stores/delete-a-vector-store",
+                  "api-reference/endpoints/openAI/vector-stores/modifies-a-vector-store",
+                  "api-reference/endpoints/openAI/vector-stores/retrieves-a-vector-store-file-batch",
+                  "api-reference/endpoints/openAI/vector-stores/retrieves-a-vector-store-file",
+                  "api-reference/endpoints/openAI/vector-stores/retrieves-a-vector-store",
+                  "api-reference/endpoints/openAI/vector-stores/returns-a-list-of-vector-store-files-in-a-batch",
+                  "api-reference/endpoints/openAI/vector-stores/returns-a-list-of-vector-store-files",
+                  "api-reference/endpoints/openAI/vector-stores/returns-a-list-of-vector-stores"
                 ]
               }
             ]
@@ -121,6 +183,38 @@
     {
       "source": "/providers/table-comparison",
       "destination": "https://hicap.ai/models"
+    },
+    {
+      "source": "/api-reference/endpoints/openAI/lists-available-models",
+      "destination": "/api-reference/models"
+    },
+    {
+      "source": "/api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message",
+      "destination": "/api-reference/chat-completions"
+    },
+    {
+      "source": "/api-reference/endpoints/openAI/generates-a-batch-of-images-from-a-text-caption-on-a-given-dalle-model-deployment",
+      "destination": "/api-reference/images"
+    },
+    {
+      "source": "/api-reference/endpoints/openAI/get-a-vector-representation-of-a-given-input-that-can-be-easily-consumed-by-machine-learning-models-and-algorithms",
+      "destination": "/api-reference/embeddings"
+    },
+    {
+      "source": "/api-reference/endpoints/openAI/transcribes-audio-into-the-input-language",
+      "destination": "/api-reference/audio-transcriptions"
+    },
+    {
+      "source": "/api-reference/endpoints/openAI/transcribes-and-translates-input-audio-into-english-text",
+      "destination": "/api-reference/audio-translations"
+    },
+    {
+      "source": "/api-reference/endpoints/openAI/generates-audio-from-the-input-text",
+      "destination": "/api-reference/audio-speech"
+    },
+    {
+      "source": "/api-reference/endpoints/openAI/creates-a-completion-for-the-provided-prompt-parameters-and-chosen-model",
+      "destination": "/api-reference/legacy-completions"
     }
   ],
   "footer": {

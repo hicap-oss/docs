@@ -21,7 +21,7 @@ Tags are how you describe a request as you send it. Dimensions are the keys you 
 
 ## How tags are sent
 
-Attach tags to any request with the `x-hicap-tags` header. Its value is a JSON object mapping dimension keys to their values.
+Attach tags to any request with the `x-hicap-tags` header. Its value is one flat JSON object mapping dimension keys to string values. Keep values short and stable; do not include credentials, prompts, personal identifiers, or request/session IDs.
 
 <Tabs>
   <Tab title="curl">
@@ -131,7 +131,9 @@ These are examples of the kinds of rule-defined segments teams build:
 | Unattributed Traffic | Requests that arrived without the tags you expect |
 | Voice Deflection Production | Production requests serving voice deflection |
 
-**Unattributed Traffic** is worth calling out: it's how untagged requests surface. If requests show up here, they arrived without the dimensions you rely on — which is the clearest signal that something upstream needs to start tagging.
+An **Unattributed** group can mean a missing value for one selected dimension even when other tags are present. A named AI pipeline role should be tagged even outside an explicit multi-agent mode; a direct non-agent call may legitimately have no agent. Distinguish missing instrumentation, intentional non-applicability, unresolved configuration, historical requests, and an ingestion or display mismatch. Do not invent placeholder agents merely to clear a chart.
+
+After deploying a tagging change, inspect fresh traffic for the correct Application, environment, and dimensions. Compare redacted outgoing tags with recorded usage. Historical requests retain their original tags; changing a helper does not backfill them.
 
 ## Structural vs. descriptive attribution
 
