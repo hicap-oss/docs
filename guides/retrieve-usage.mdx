@@ -1,0 +1,140 @@
+---
+title: 'Retrieve usage and spend'
+description: 'Pull daily billed usage into your application with the Hicap usage API'
+icon: 'chart-column'
+---
+
+Use the usage API to display daily request counts, usage units, and spend in your application. Each request returns the billed usage for the subscription associated with your API key.
+
+```text
+GET https://api.hicap.dev/v1/usage
+```
+
+This endpoint reports **development usage**. Its response has `environment: "dev"`. Use it from your application server with an active development **Basic product subscription** key in the `api-key` header.
+
+## Choose the key and date range
+
+Use the subscription key that made the inference requests you want to report on. The subscription's primary and secondary keys return the same history. A key scoped only to an inference API, or an all-APIs key, does not meet this endpoint's Basic product requirement.
+
+Keep the key on your server. Your server authenticates its own application users and retrieves usage with the appropriate subscription key; the browser never receives that key. The usage API determines the subscription from the key, so you do not send a customer ID or subscription ID.
+
+Both query parameters are required:
+
+- `from`: the first UTC calendar date to include.
+- `to`: the first UTC calendar date to exclude.
+
+A request spans **1–31 days**. For all usage on October 15, use `from=2026-10-15&to=2026-10-16`. For a longer report, request adjacent windows of at most 31 days, using each window's `to` as the next window's `from`.
+
+## Make a request
+
+Store your development key in the server environment as `HICAP_DEV_API_KEY`.
+
+<Tabs>
+  <Tab title="curl">
+    ```bash
+    curl --fail-with-body --get 'https://api.hicap.dev/v1/usage' \
+      --header "api-key: $HICAP_DEV_API_KEY" \
+      --data-urlencode 'from=2026-10-15' \
+      --data-urlencode 'to=2026-10-16'
+    ```
+  </Tab>
+  <Tab title="JavaScript">
+    ```javascript usage.mjs
+    // Run on your server with Node.js 18 or later.
+    const apiKey = process.env.HICAP_DEV_API_KEY;
+    if (!apiKey) throw new Error("Set HICAP_DEV_API_KEY on your server");
+
+    const url = new URL("https://api.hicap.dev/v1/usage");
+    url.search = new URLSearchParams({
+      from: "2026-10-15",
+      to: "2026-10-16",
+    }).toString();
+
+    const response = await fetch(url, {
+      headers: { "api-key": apiKey },
+      signal: AbortSignal.timeout(35_000),
+    });
+    if (!response.ok) {
+      throw new Error(`Usage request failed: HTTP ${response.status}`);
+    }
+
+    const usage = await response.json();
+    for (const day of usage.data) {
+      console.log(day.date, day.requests, day.spend_usd);
+    }
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python usage.py
+    import json
+    import os
+    from urllib.parse import urlencode
+    from urllib.request import Request, urlopen
+
+    query = urlencode({"from": "2026-10-15", "to": "2026-10-16"})
+    request = Request(
+        f"https://api.hicap.dev/v1/usage?{query}",
+        headers={"api-key": os.environ["HICAP_DEV_API_KEY"]},
+    )
+    # HTTP failures raise urllib.error.HTTPError; inspect its code and headers.
+    with urlopen(request, timeout=35) as response:
+        usage = json.load(response)
+
+    for day in usage["data"]:
+        print(day["date"], day["requests"], day["spend_usd"])
+    ```
+  </Tab>
+</Tabs>
+
+These examples use ordinary HTTP requests. The usage API is a Hicap reporting endpoint and does not require a provider SDK.
+
+## Read the response
+
+Example values:
+
+```json
+{
+  "environment": "dev",
+  "from": "2026-10-15",
+  "to": "2026-10-16",
+  "granularity": "day",
+  "refresh_interval_seconds": 3600,
+  "data_updated_at": "2026-10-16T00:20:00.000Z",
+  "latest_event_at": "2026-10-15T12:00:00.000Z",
+  "data": [
+    {
+      "date": "2026-10-15",
+      "requests": 2,
+      "input_tokens": 100,
+      "output_tokens": 50,
+      "cached_tokens": 20,
+      "cache_write_tokens": 0,
+      "audio_ms": 0,
+      "characters": 0,
+      "spend_usd": "0.12345678"
+    }
+  ]
+}
+```
+
+Rows are ordered by UTC date. `requests` counts billed debit records, so it is not a count of every attempted API call. Token, audio, and character measures are reported separately. Cache-token semantics vary by provider; do not assume cached tokens are additional to input tokens.
+
+`spend_usd` is a USD reporting amount formatted as a string with eight decimal places. Use decimal arithmetic when adding amounts across days. It describes billed debit spend, not your current wallet balance or a net total after credits and refunds.
+
+## Account for refresh timing
+
+Usage refreshes hourly. Display the returned timestamps alongside a chart or report so users can see how current the returned data is:
+
+- `data_updated_at` is the newest refresh timestamp among the returned rows.
+- `latest_event_at` is the newest billed event timestamp in those rows.
+- `refresh_interval_seconds` is `3600`; it describes the refresh cadence, not a guarantee that every recent event has arrived.
+
+Missing days have no recorded bills in this result. An empty result contains `data: []` and `null` for both timestamps. Neither an empty result nor those timestamps proves that all usage has been processed. For recent activity, refresh the report after the next hourly update rather than treating a missing row as confirmed zero usage.
+
+## Handle limits and errors
+
+The limit is **30 requests per minute per subscription**, shared by its primary and secondary keys. Reading usage does not perform inference and remains available when the subscription's inference budget is exhausted, provided the subscription is active.
+
+For `429`, `503`, and `504`, respect `Retry-After` when present and use bounded retries with backoff. For other `4xx` responses, correct the key, path, or date range before retrying. Responses use `Cache-Control: private, no-store`; do not put a shared public cache in front of customer usage reports.
+
+The endpoint aggregates by day for one subscription. It does not accept model, tag, application, organization, customer, or environment filters. See the [endpoint reference](/api-reference/endpoints/usage/get-daily-usage) for all response fields and error statuses.

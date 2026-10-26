@@ -45,7 +45,7 @@ curl https://api.hicap.ai/v1/chat/completions \
 
 ## Endpoints
 
-All endpoints follow the [OpenAI OpenAPI specification](https://github.com/openai/openai-openapi).
+Inference endpoints use OpenAI-compatible request formats. The [usage API](/api-reference/endpoints/usage/get-daily-usage) is a separate Hicap reporting endpoint.
 
 ### Production
 
@@ -72,6 +72,12 @@ These endpoints are available on the production Hicap API (`api.hicap.ai`).
 | [`/v1/images/generations`](/api-reference/endpoints/openAI/generates-a-batch-of-images-from-a-text-caption-on-a-given-dalle-model-deployment) | `POST` | Generate images from text prompts |
 | `/v1/images/edits` | `POST` | Edit or extend existing images |
 | `/v1/images/variations` | `POST` | Generate variations of an image |
+
+### Usage reporting
+
+Retrieve daily development usage with `GET https://api.hicap.dev/v1/usage` and an active development Basic product key in the `api-key` header. This endpoint reports the authenticated subscription's billed usage, refreshed hourly, with an inclusive `from` date and exclusive `to` date.
+
+[Read the usage guide](/guides/retrieve-usage) or open the [endpoint reference](/api-reference/endpoints/usage/get-daily-usage).
 
 ### Developer Preview
 
