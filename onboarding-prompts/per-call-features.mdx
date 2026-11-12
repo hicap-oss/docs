@@ -86,6 +86,9 @@ Verification and completion:
   fallbacks. Reconcile each Hicap-bound path with an emitted-tag assertion, a
   documented non-applicable dimension, or an untested/deferred gap. Inventory
   non-Hicap paths separately; do not claim Hicap attribution for them.
+  Capture the final destination and headers of each non-Hicap route and fallback,
+  and assert that they carry no Hicap key or x-hicap-tags header. Report any path
+  that cannot be exercised as untested; do not claim isolation without evidence.
   Exercise concurrent callers and a failed attempt followed by a successful retry
   where those behaviors exist; do not invent them for coverage.
   Test enqueue/consume context when queues exist. Run relevant existing checks.

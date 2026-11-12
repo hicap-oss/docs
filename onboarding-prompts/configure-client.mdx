@@ -125,15 +125,10 @@ Current-state report requirements:
   attribution verified. Use passed/failed/untested/not-applicable, with evidence.
   State the denominator before reporting coverage; aggregated dimension values
   must not hide distinct call sites or untested paths.
-- For Env, Feature, Operation, System, Agent and Domain show observed/emitted values,
-  source and scope, suggestions separately, and reasons for omission. Explain
-  intentional aggregation, such as multiple artifact formats sharing one feature.
-  A generic starter package name is a candidate system name, not an approved
-  business identity. Distinguish named AI roles from harness agent_type and agent_id;
-  do not duplicate equivalent role dimensions or emit instance IDs without an
-  established approved convention. A named persona is source evidence, not proof
-  of an approved business-role taxonomy; distinguish observed persona, proposed
-  role and emitted convention. Identify unresolved semantics explicitly.
+- For Env, Feature, Operation, System, Agent and Domain, record only existing
+  emitted values, their source and scope, and missing or unresolved configuration.
+  Describe existing aggregation and role/harness conventions without proposing
+  new values or a taxonomy. Leave dimension recommendations to attribution.
 - Separate pre-existing application defects, introduced regressions, untested
   integration paths and unresolved configuration. Lead with a short customer
   summary; keep detailed evidence below it.

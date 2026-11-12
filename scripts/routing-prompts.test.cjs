@@ -76,3 +76,33 @@ for (const name of ['attribution', 'tagging-helper', 'base-dimensions', 'per-cal
     for (const required of ['Shared-client acceptance case', 'question rewriting and answering', 'single caller', 'Do not add production workflows, roles or queues', 'pre-existing application defects', 'observed persona, proposed role and emitted convention']) assert.ok(prompt.includes(required), required);
   });
 }
+
+test('guide qualifies API compatibility, helper prerequisites and header scope', () => {
+  const guide = compact(readFileSync(join(root, 'concepts/implement-attribution-with-an-agent.mdx'), 'utf8'));
+  assert.match(guide, /SDK or adapter that supports the API workflows and Hicap capabilities/);
+  assert.doesNotMatch(guide, /Any OpenAI-compatible SDK works/);
+  assert.match(guide, /Base dimensions requires an existing tagging helper/);
+  assert.doesNotMatch(guide, /Each can be handed to an agent on its own/);
+  assert.match(guide, /Confirm each Hicap-bound model request sends/);
+  assert.doesNotMatch(guide, /Confirm each model request sends/);
+});
+test('base dimensions assesses six dimensions and handles a missing helper', () => {
+  const prompt = compact(load('base-dimensions'));
+  assert.match(prompt, /all six dimensions/);
+  assert.doesNotMatch(prompt, /all five dimensions/);
+  assert.match(prompt, /If the helper is missing[\s\S]*skip base-dimension implementation until it exists/);
+});
+test('client report assesses existing attribution without recommending dimensions', () => {
+  const report = compact(load('configure-client')).split('Current-state report requirements:')[1];
+  assert.match(report, /record only existing emitted values/);
+  assert.match(report, /Leave dimension recommendations to attribution/);
+  assert.doesNotMatch(report, /suggestions separately|candidate system name|proposed role/);
+});
+for (const name of ['tagging-helper', 'base-dimensions', 'per-call-features']) {
+  test(`${name} verifies non-Hicap destinations cannot receive credentials or tags`, () => {
+    const prompt = compact(load(name));
+    assert.match(prompt, /Capture the final destination and headers of each non-Hicap route and fallback/);
+    assert.match(prompt, /assert that they carry no Hicap key or x-hicap-tags header/);
+    assert.match(prompt, /do not claim isolation without evidence/);
+  });
+}
