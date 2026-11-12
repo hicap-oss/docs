@@ -33,7 +33,7 @@ The agent works within your repository and may update code, tests, configuration
 - Use an SDK or adapter that supports the API workflows and Hicap capabilities your application needs. Decide which workflows should use Hicap. The agent inventories API families and reports compatibility it cannot establish; an OpenAI-compatible client alone does not establish support for every endpoint or model.
 - For the attribution prompts, configure the Hicap client first. Read [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments) for how request dimensions work.
 
-The diagrams summarize the prompts’ intended decisions. The complete instructions remain the source of truth; an agent may need to report gaps or ask for context.
+The diagrams summarize the prompts’ intended decisions. Unverified client routes remain gaps, and authorized exceptions are reported. In attribution, a supported value is grounded in the application and its approved conventions; reviewed existing tags are preserved. The complete instructions remain the source of truth.
 
 ## 1. Configure the client
 
@@ -93,7 +93,7 @@ For example, the same service might use `operation: rewrite-question` for one mo
 
 ## Focused prompts
 
-Use these instead of the complete attribution pass when you want to work on a narrower part of an existing Hicap integration. Each prompt still asks the agent to inspect the affected call paths and report what was verified.
+Use these instead of the complete attribution pass when you want to work on a narrower part of an existing Hicap integration. To verify coverage and provider isolation, the agent may still inspect and test related call paths across the application. Each prompt asks for a coverage report and may update your README.
 
 <AccordionGroup>
   <Accordion title="Tagging helper: build and attach tags">
