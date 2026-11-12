@@ -23,17 +23,31 @@ make focused changes, and prove the tags on real outbound call paths.
    Preserve approved application conventions rather than replacing them with an
    industry preset. Ask only for decisions that block safe implementation.
 
-3. Repair the missing attribution at the owning boundary.
-   Reuse a small shared helper and trusted caller context. Service defaults belong
-   in configuration; workflow/role values belong at their caller or in a reviewed
+3. Repair routing and missing attribution at the owning boundary.
+   Route every in-scope model inference path through an OpenAI-compatible Hicap
+   client or SDK adapter, including defaults, title models, tools, alternate
+   models and retries. Do not treat a disabled integration, opt-in switch or
+   silent old-gateway fallback as a completed migration. Preserve a non-Hicap
+   route only if the user or existing product requirements authorize it, and
+   document and test the exception. Reuse a small shared helper and trusted
+   caller context. Service defaults belong in configuration; workflow/role values belong at their caller or in a reviewed
    registry of existing roles. Carry context through async work and retries.
    Preserve provider compatibility, streaming and existing application behavior.
    If there are no model calls, report that; do not add AI behavior to create coverage.
 
 Hicap contract:
-- Use the existing compatible client with https://api.hicap.ai/v1. Read
-  HICAP_API_KEY on the server and send it in the api-key header. Never expose,
+- Use an OpenAI-compatible client or SDK adapter with https://api.hicap.ai/v1.
+  Read HICAP_API_KEY on the server and send it in the api-key header. Never expose,
   log or commit credentials. Do not reroute unrelated HTTP calls.
+- Verify Hicap model IDs, account access and the capabilities required for each
+  workflow. Vercel or other gateway-specific SDKs, routing options and model
+  IDs are not automatically compatible. Do not mislabel or silently substitute
+  models. If a required model or capability is unavailable, surface the error,
+  identify the affected paths, and report the migration incomplete; do not
+  silently fall back to another inference gateway.
+- Inventory model catalog, availability and capability-discovery traffic
+  separately. Replace stale gateway-specific discovery where needed or report
+  the dependency explicitly; do not reroute unrelated HTTP calls.
 - Each model request sends exactly one x-hicap-tags header: one JSON object
   with string values. Preserve reviewed existing tags and merge precedence;
   reject malformed/duplicate keys or headers and unsafe values. Keep defaults
@@ -59,9 +73,11 @@ Hicap contract:
 4. Verify the integration, including the paths that previously lacked tags.
 
 Verification and completion:
-- Use mocked provider responses. Capture the FINAL outgoing HTTP headers from
-  real application functions, not just the tag builder. Do not insert the
-  expected agent/feature into the test context when production does not supply it.
+- Use mocked provider responses. Capture the FINAL outgoing HTTP headers and URL
+  from real application functions, not just the tag builder. Assert the Hicap
+  host and path, api-key and applicable tags. Assert no in-scope request reaches
+  the old inference gateway or a direct provider except documented authorized
+  routes. Do not insert the expected agent/feature into the test context when production does not supply it.
 - Check representative normal workflows and alternate modes, scripts/jobs and
   fallbacks. Reconcile every discovered model path with an emitted-tag assertion,
   a documented non-applicable dimension, or an explicit untested/deferred gap.
@@ -81,7 +97,8 @@ Verification and completion:
    Reuse existing .hicap report conventions. Write a new Markdown report under
    <application-root>/.hicap, preserving existing reports and human notes; default
    to tagging-report.md or a timestamped sibling if it exists. Include inspected
-   revision, coverage table, before/after redacted header samples, tests and gaps.
+   revision, per-workflow destinations and models, coverage table, before/after
+   redacted header samples, remaining old-gateway discovery calls, tests and gaps.
    Update README with configuration and helper usage. In the final response show
    the report path, changes, checks, remaining missing dimensions and the exact
    fresh-traffic verification needed. Do not claim complete attribution with gaps.

@@ -7,15 +7,34 @@ hidden: true
 ````text wrap title="Implementation prompt"
 Configure or repair this application's Hicap model client. Read repository
 instructions and trace all existing model transports and callers before editing.
-Reuse the existing compatible client, preserve provider behavior and ordinary
-traffic, and add only a placeholder HICAP_API_KEY to the example environment file.
-If no model calls exist, report zero; do not add AI behavior. Identify deferred
-transports and the deployment configuration still needed.
+Migrate the application's in-scope model inference calls to Hicap. Reuse an
+OpenAI-compatible client when it can target Hicap; otherwise configure an
+appropriate compatible adapter for the existing SDK. Preserve application
+features, streaming and unrelated traffic, not the old inference provider as an
+implicit fallback. Add only a placeholder HICAP_API_KEY to the example environment
+file. If no model calls exist, report zero; do not add AI behavior.
 
 Hicap contract:
-- Use the existing compatible client with https://api.hicap.ai/v1. Read
-  HICAP_API_KEY on the server and send it in the api-key header. Never expose,
+- Use an OpenAI-compatible client or SDK adapter with https://api.hicap.ai/v1.
+  Read HICAP_API_KEY on the server and send it in the api-key header. Never expose,
   log or commit credentials. Do not reroute unrelated HTTP calls.
+- Trace every in-scope inference caller through its final transport, including
+  default and title models, tools, background work, alternate models and retries.
+  Route each supported path to Hicap by default. Do not add an opt-in switch,
+  conditional provider fallback or silent direct-provider route that makes a
+  migrated workflow bypass Hicap. Preserve an explicitly requested non-Hicap
+  route only when the user or existing product requirements authorize it, and
+  document and test it as an exception. Do not change unrelated HTTP requests.
+- Gateway-specific SDKs, model identifiers, provider options and catalog or
+  capability discovery are not automatically portable. Verify Hicap model IDs,
+  account access and required API capabilities; use a compatible SDK adapter
+  and preserve tool use, streaming and structured output where supported.
+  Never relabel one model as another. If a required model or behavior is not
+  available, surface the failure and report the exact affected workflow rather
+  than silently routing it elsewhere or claiming a complete migration.
+- Inventory model-catalog, model-availability and capability-discovery requests
+  separately from inference; replace stale gateway-specific discovery when needed
+  for the new route, or explicitly report it as a remaining dependency.
 - Each model request sends exactly one x-hicap-tags header: one JSON object
   with string values. Preserve reviewed existing tags and merge precedence;
   reject malformed/duplicate keys or headers and unsafe values. Keep defaults
@@ -39,9 +58,11 @@ Hicap contract:
   personal identifiers, raw URLs or high-cardinality request/session IDs.
 
 Verification and completion:
-- Use mocked provider responses. Capture the FINAL outgoing HTTP headers from
-  real application functions, not just the tag builder. Do not insert the
-  expected agent/feature into the test context when production does not supply it.
+- Use mocked provider responses. Capture the FINAL outgoing HTTP headers and URL
+  from real application functions, not just the tag builder. Assert the Hicap
+  host and path, api-key and applicable tags, and assert no request reaches the
+  old inference gateway or a direct provider except documented authorized
+  routes. Do not insert the expected agent/feature into the test context when production does not supply it.
 - Check representative normal workflows and alternate modes, scripts/jobs and
   fallbacks. Reconcile every discovered model path with an emitted-tag assertion,
   a documented non-applicable dimension, or an explicit untested/deferred gap.
@@ -59,6 +80,8 @@ Verification and completion:
 
 Update README as needed and save a concise coverage/test report under the
 application repository's .hicap directory, preserving existing reports with a
-timestamped sibling. Include source revision, redacted headers, remaining gaps
-and post-deployment verification steps. Show the exact report path when done.
+timestamped sibling. Include source revision, a per-workflow route and model
+inventory, redacted destinations and headers, any old-gateway discovery calls,
+remaining gaps and post-deployment verification steps. Show the exact report
+path when done.
 ````
