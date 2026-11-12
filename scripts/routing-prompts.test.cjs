@@ -70,6 +70,11 @@ test('client setup gates API families and live structured-output acceptance', ()
   const prompt = compact(load('configure-client'));
   for (const required of ['Inventory API families separately', 'explicitly authorized exception, or blocked/unverified', 'Leaving a path unchanged is not an authorized exception', 'strict JSON Schema and tool calling', 'optional fields', 'mark live schema compatibility unverified']) assert.ok(prompt.includes(required), required);
 });
+test('client setup keeps unverified API families on their existing route', () => {
+  const prompt = compact(load('configure-client'));
+  assert.match(prompt, /If support is unknown or unsupported, leave that caller's existing route and credentials unchanged/);
+  assert.match(prompt, /report it as blocked\/unverified/);
+});
 for (const name of ['attribution', 'tagging-helper', 'base-dimensions', 'per-call-features']) {
   test(`${name} handles shared steps, single callers and provenance without scope creep`, () => {
     const prompt = compact(load(name));
