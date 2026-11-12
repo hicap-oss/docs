@@ -58,11 +58,14 @@ Your model requests keep going straight to your provider. Hicap only receives th
 Most OpenTelemetry SDKs read the standard exporter environment variables:
 
 ```bash
-OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=https://api.hicap.ai/otel/v1/traces
-OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
-OTEL_EXPORTER_OTLP_TRACES_HEADERS=api-key=YOUR_ANALYTICS_KEY
-OTEL_SERVICE_NAME=support-assistant
+export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=https://api.hicap.ai/otel/v1/traces
+export OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
+export OTEL_EXPORTER_OTLP_TRACES_HEADERS=api-key=YOUR_ANALYTICS_KEY
+export OTEL_BSP_MAX_EXPORT_BATCH_SIZE=256
+export OTEL_SERVICE_NAME=support-assistant
 ```
+
+`OTEL_BSP_MAX_EXPORT_BATCH_SIZE` keeps each export at or under Hicap's limit of 256 spans per request. Many SDKs default to 512.
 
 <Note>
   If you use the generic `OTEL_EXPORTER_OTLP_ENDPOINT` instead, set it to `https://api.hicap.ai/otel`. The SDK appends `/v1/traces` for you. Don't put the full traces path in the generic setting. These rules come from the [OpenTelemetry exporter specification](https://opentelemetry.io/docs/specs/otel/protocol/exporter/#endpoint-urls-for-otlphttp).
@@ -87,7 +90,8 @@ provider.add_span_processor(
         OTLPSpanExporter(
             endpoint="https://api.hicap.ai/otel/v1/traces",
             headers={"api-key": "YOUR_ANALYTICS_KEY"},
-        )
+        ),
+        max_export_batch_size=256,
     )
 )
 trace.set_tracer_provider(provider)
@@ -196,7 +200,7 @@ Hicap keeps only the usage metadata described above, plus the trace ID, span ID,
 | Limit | Value |
 | --- | --- |
 | Request body | 1 MiB, before and after gzip decompression |
-| Spans per request | 256 |
+| Spans per request | 256 (set your exporter's batch size to 256 or less) |
 | Attributes per span or resource | 128 |
 | Requests | 120 per minute, 20,000 per day |
 | Spans | 10,000 per minute, 1,000,000 per day |
@@ -208,7 +212,7 @@ Contact [support@hicap.ai](mailto:support@hicap.ai) if you need higher limits.
 
 | Status | Meaning | What to do |
 | --- | --- | --- |
-| `400` | The body isn't a valid OTLP traces request, is too large, or the URL has query parameters. | Fix the request. Don't retry it unchanged. |
+| `400` | The body isn't a valid OTLP traces request, is over 1 MiB, has more than 256 spans, or the URL has query parameters. None of its spans are recorded. | Fix the request, for example by lowering your exporter's batch size. Don't retry it unchanged. |
 | `401` / `403` | The `api-key` is missing or invalid, it isn't an analytics key, or the external connection is inactive. | Check the key and the connection. |
 | `415` | Unsupported content type or encoding. | Use `application/x-protobuf` or `application/json`, with no compression or `gzip`. |
 | `429` | You hit a limit. | Retry after the `Retry-After` delay. |
