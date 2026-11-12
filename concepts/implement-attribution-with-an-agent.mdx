@@ -4,6 +4,8 @@ description: 'Choose a prompt, understand the changes it requests, and verify ro
 icon: 'robot'
 ---
 
+import { DiagramToggle } from '/snippets/diagram-toggle.jsx';
+
 Use these prompts with a coding agent that can read and edit your application. They help you route model requests through Hicap and describe what each request is doing. You can review the full instructions before running them and review the resulting changes as you would any other code change.
 
 ## Choose your path
@@ -39,13 +41,11 @@ The diagrams summarize the prompts’ intended decisions. The complete instructi
 
 Use this when you want to route supported application inference through Hicap. The agent traces model callers and configures an appropriate client or adapter, preserves existing attribution, and checks the outgoing destination and authentication. It reports unverified or unsupported workflows. This prompt does **not** design a new tagging strategy.
 
-<details className="group not-prose">
-  <summary className="cursor-pointer list-none rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-600">
-    <img src="/images/onboarding-prompts/client-decisions-portrait.png" alt="Client setup inspects workflows, configures supported routes, reports unverified or unsupported paths, then checks requests and reports coverage." noZoom className="h-auto max-h-64 w-auto max-w-full group-open:max-h-none group-open:w-full" />
-    <span className="mt-2 block text-sm font-medium group-open:hidden">Expand diagram</span>
-    <span className="mt-2 hidden text-sm font-medium group-open:block">Collapse diagram</span>
-  </summary>
-</details>
+<DiagramToggle
+  src="/images/onboarding-prompts/client-decisions-portrait.png"
+  alt="Client setup inspects workflows, configures supported routes, reports unverified or unsupported paths, then checks requests and reports coverage."
+  title="client setup decision diagram"
+/>
 
 ```text wrap title="Client setup"
 Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set this up.
@@ -57,13 +57,11 @@ Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set t
 
 After Hicap routing is configured, use this for a complete attribution pass. The agent inventories Hicap-bound workflows, assesses six starter dimensions—Env, Feature, Operation, System, Agent and Domain—and adds source-backed values where they apply. It checks the tags on outgoing requests and reports gaps. Attribution uses existing Hicap routes and does not change your provider, models or fallback routing. Other provider paths are inventoried separately; if no Hicap client exists, it reports that prerequisite and points to client setup.
 
-<details className="group not-prose">
-  <summary className="cursor-pointer list-none rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-600">
-    <img src="/images/onboarding-prompts/attribution-decisions-portrait.png" alt="Attribution checks for a Hicap client; if one exists, it maps workflows and adds supported dimensions or reports missing values. If no client exists, it reports the prerequisite and skips tagging." noZoom className="h-auto max-h-64 w-auto max-w-full group-open:max-h-none group-open:w-full" />
-    <span className="mt-2 block text-sm font-medium group-open:hidden">Expand diagram</span>
-    <span className="mt-2 hidden text-sm font-medium group-open:block">Collapse diagram</span>
-  </summary>
-</details>
+<DiagramToggle
+  src="/images/onboarding-prompts/attribution-decisions-portrait.png"
+  alt="Attribution checks for a Hicap client; if one exists, it maps workflows and adds supported dimensions or reports missing values. If no client exists, it reports the prerequisite and skips tagging."
+  title="attribution decision diagram"
+/>
 
 ```text wrap title="Complete attribution"
 Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this up.

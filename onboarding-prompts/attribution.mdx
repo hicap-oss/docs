@@ -4,6 +4,8 @@ description: 'Add attribution across existing Hicap workflows'
 hidden: true
 ---
 
+import { DiagramToggle } from '/snippets/diagram-toggle.jsx';
+
 Use this prompt for a complete attribution pass after your Hicap client is configured. The agent inventories workflows, assesses the six starter dimensions, adds source-backed tags, tests outgoing requests, and reports coverage and gaps.
 
 This prompt uses the existing Hicap client and preserves routing, models and provider options. If the client is missing, start with [client setup](/onboarding-prompts/configure-client).
@@ -12,13 +14,11 @@ This prompt uses the existing Hicap client and preserves routing, models and pro
 
 This diagram summarizes the intended decisions in the prompt. The complete instruction below is the source of truth.
 
-<details className="group not-prose">
-  <summary className="cursor-pointer list-none rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-600">
-    <img src="/images/onboarding-prompts/attribution-decisions-portrait.png" alt="Attribution checks for an existing Hicap client, then maps workflows and adds supported dimensions or reports gaps; when no client exists, it reports the prerequisite and skips tagging." noZoom className="h-auto max-h-64 w-auto max-w-full group-open:max-h-none group-open:w-full" />
-    <span className="mt-2 block text-sm font-medium group-open:hidden">Expand diagram</span>
-    <span className="mt-2 hidden text-sm font-medium group-open:block">Collapse diagram</span>
-  </summary>
-</details>
+<DiagramToggle
+  src="/images/onboarding-prompts/attribution-decisions-portrait.png"
+  alt="Attribution checks for an existing Hicap client, then maps workflows and adds supported dimensions or reports gaps; when no client exists, it reports the prerequisite and skips tagging."
+  title="attribution decision diagram"
+/>
 
 ## Full prompt
 
