@@ -17,6 +17,179 @@
     { "apiKeyAuth": [] }
   ],
   "paths": {
+    "/usage": {
+      "get": {
+        "operationId": "GetDailyUsage",
+        "summary": "Get daily usage",
+        "description": "Daily billed development usage for the subscription associated with your active Basic product key. Use api-key authentication. from is inclusive and to is exclusive, in UTC; request 1\u201331 days. Only one from and one to are accepted. Rows refresh hourly and do not represent a live balance or guarantee complete ingestion.",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Inclusive UTC start date (YYYY-MM-DD).",
+            "example": "2026-10-15"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Exclusive UTC end date (YYYY-MM-DD), 1\u201331 days after from.",
+            "example": "2026-10-16"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Daily billed usage. Record timestamps describe returned data, not ingestion completeness.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerUsageResponse"
+                },
+                "example": {
+                  "environment": "dev",
+                  "from": "2026-10-15",
+                  "to": "2026-10-16",
+                  "granularity": "day",
+                  "refresh_interval_seconds": 3600,
+                  "data_updated_at": "2026-10-16T00:20:00.000Z",
+                  "latest_event_at": "2026-10-15T12:00:00.000Z",
+                  "data": [
+                    {
+                      "date": "2026-10-15",
+                      "requests": 2,
+                      "input_tokens": 100,
+                      "output_tokens": 50,
+                      "cached_tokens": 20,
+                      "cache_write_tokens": 0,
+                      "audio_ms": 0,
+                      "characters": 0,
+                      "spend_usd": "0.12345678"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or missing date range, duplicate date parameters, or unsupported query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerUsageError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerUsageError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The subscription or authorization does not permit usage access; use an active development Basic product key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerUsageError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No operation matches the requested path.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerUsageError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Subscription limit of 30 requests per minute exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerUsageError"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "description": "When present, wait this many seconds before retrying.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Usage reporting is temporarily unavailable. Retry with backoff.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerUsageError"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "description": "When present, wait this many seconds before retrying.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Usage reporting timed out. Retry with backoff.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerUsageError"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "description": "When present, wait this many seconds before retrying.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Usage"
+        ],
+        "servers": [
+          {
+            "url": "https://api.hicap.dev/v1",
+            "description": "Development usage reporting"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/deployments/{deploymentId}/completions": {
       "post": {
         "summary": "Creates a completion for the provided prompt, parameters and chosen model.",
@@ -2824,6 +2997,160 @@
   },
   "components": {
     "schemas": {
+      "CustomerUsageError": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "CustomerUsageResponse": {
+        "type": "object",
+        "required": [
+          "environment",
+          "from",
+          "to",
+          "granularity",
+          "refresh_interval_seconds",
+          "data_updated_at",
+          "latest_event_at",
+          "data"
+        ],
+        "properties": {
+          "environment": {
+            "type": "string",
+            "enum": [
+              "dev"
+            ],
+            "description": "Development billing environment; always dev."
+          },
+          "from": {
+            "type": "string",
+            "format": "date",
+            "description": "Inclusive requested UTC start date."
+          },
+          "to": {
+            "type": "string",
+            "format": "date",
+            "description": "Exclusive requested UTC end date."
+          },
+          "granularity": {
+            "type": "string",
+            "enum": [
+              "day"
+            ]
+          },
+          "refresh_interval_seconds": {
+            "type": "integer",
+            "enum": [
+              3600
+            ],
+            "description": "Hourly refresh cadence, not a guarantee that every recent event has arrived."
+          },
+          "data_updated_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Newest refresh timestamp among returned daily rows; null when data is empty. Not an ingestion completeness watermark."
+          },
+          "latest_event_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Newest billed event timestamp among returned daily rows; null when data is empty."
+          },
+          "data": {
+            "type": "array",
+            "maxItems": 31,
+            "items": {
+              "type": "object",
+              "required": [
+                "date",
+                "requests",
+                "input_tokens",
+                "output_tokens",
+                "cached_tokens",
+                "cache_write_tokens",
+                "audio_ms",
+                "characters",
+                "spend_usd"
+              ],
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "requests": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Number of billed debit records, not all attempted API calls.",
+                  "maximum": 9007199254740991
+                },
+                "input_tokens": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "output_tokens": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "cached_tokens": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Recorded cached tokens; accounting can overlap input tokens depending on provider.",
+                  "maximum": 9007199254740991
+                },
+                "cache_write_tokens": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Recorded cache-write tokens.",
+                  "maximum": 9007199254740991
+                },
+                "audio_ms": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Recorded audio duration in milliseconds.",
+                  "maximum": 9007199254740991
+                },
+                "characters": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Recorded character usage.",
+                  "maximum": 9007199254740991
+                },
+                "spend_usd": {
+                  "type": "string",
+                  "pattern": "^\\d+\\.\\d{8}$",
+                  "description": "USD reporting amount rounded to eight decimal places."
+                }
+              }
+            },
+            "description": "Daily rows ordered by UTC date. Days without recorded bills are omitted."
+          }
+        }
+      },
       "errorResponse": {
         "type": "object",
         "properties": {
