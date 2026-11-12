@@ -39,7 +39,7 @@ The diagrams summarize the prompts’ intended decisions. The complete instructi
 
 Use this when you want to route supported application inference through Hicap. The agent traces model callers and configures an appropriate client or adapter, preserves existing attribution, and checks the outgoing destination and authentication. It reports unverified or unsupported workflows. This prompt does **not** design a new tagging strategy.
 
-<div className="grid grid-cols-1 items-start gap-6 md:grid-cols-3">
+<div className="grid grid-cols-1 items-center gap-3 md:grid-cols-3 md:gap-5">
   <div>
 
 <img
@@ -49,7 +49,7 @@ Use this when you want to route supported application inference through Hicap. T
 />
 
   </div>
-  <div className="min-w-0 md:col-span-2">
+  <div className="w-full min-w-0 md:col-span-2">
 
 ```text wrap title="Client setup"
 Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set this up.
@@ -64,7 +64,7 @@ Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set t
 
 After Hicap routing is configured, use this for a complete attribution pass. The agent inventories Hicap-bound workflows, assesses six starter dimensions—Env, Feature, Operation, System, Agent and Domain—and adds source-backed values where they apply. It checks the tags on outgoing requests and reports gaps. Attribution uses existing Hicap routes and does not change your provider, models or fallback routing. Other provider paths are inventoried separately; if no Hicap client exists, it reports that prerequisite and points to client setup.
 
-<div className="grid grid-cols-1 items-start gap-6 md:grid-cols-3">
+<div className="grid grid-cols-1 items-center gap-3 md:grid-cols-3 md:gap-5">
   <div>
 
 <img
@@ -74,7 +74,7 @@ After Hicap routing is configured, use this for a complete attribution pass. The
 />
 
   </div>
-  <div className="min-w-0 md:col-span-2">
+  <div className="w-full min-w-0 md:col-span-2">
 
 ```text wrap title="Complete attribution"
 Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this up.
