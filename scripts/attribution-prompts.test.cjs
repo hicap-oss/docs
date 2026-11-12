@@ -18,5 +18,5 @@ test('guide links resolve and includes operation in six-dimension baseline', () 
   const guide = readFileSync(join(root, 'concepts/implement-attribution-with-an-agent.mdx'), 'utf8');
   assert.match(guide, /six.*dimensions/);
   assert.match(guide, /operation/);
-  for (const [, target] of guide.matchAll(/(?:\]\(|href=")(\/[^\s)"#]+)/g)) assert.ok(existsSync(join(root, `${target.slice(1)}.mdx`)), target);
+  for (const [, target] of guide.matchAll(/(?:\]\(|href=")(\/[^\s)"#]+)/g)) assert.ok(existsSync(join(root, target.startsWith("/images/") ? target.slice(1) : `${target.slice(1)}.mdx`)), target);
 });

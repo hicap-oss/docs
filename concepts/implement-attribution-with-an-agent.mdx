@@ -8,20 +8,7 @@ Use these prompts with a coding agent that can read and edit your application. T
 
 ## Choose your path
 
-```mermaid
-flowchart TD
-  A[Application with model calls] --> B{Hicap client configured?}
-  B -->|No| C[Configure the Hicap client]
-  B -->|Yes| D{Choose an attribution approach}
-  C --> D
-  D -->|One complete pass| E[Set up Hicap attribution]
-  D -->|Focused changes| F[Add or review tagging helper]
-  F --> G[Set base dimensions]
-  G --> H[Tag per-call features and operations]
-  E --> I[Review code, report and coverage]
-  H --> I
-  I --> J[Verify fresh traffic after deployment]
-```
+![Choose a prompt: configure the Hicap client, then choose a complete attribution pass or focused prompts.](/images/onboarding-prompts/choose-a-prompt.png)
 
 **New to Hicap?** Start with client setup, then run the complete attribution prompt. **Already using Hicap?** Start with attribution, or use a focused prompt to address a particular gap. The focused prompts are an alternative way to build attribution, not additional required steps after a complete pass. Base dimensions requires an existing tagging helper; client setup alone does not create one. You can select an individual focused prompt when its prerequisites are already met.
 
@@ -37,13 +24,7 @@ flowchart TD
 
 Each prompt asks the agent to follow the same general process, with a different scope:
 
-```mermaid
-flowchart LR
-  A[Inspect code and existing settings] --> B[Map requests and gaps]
-  B --> C[Make scoped changes]
-  C --> D[Check actual outgoing requests]
-  D --> E[Report coverage and remaining gaps]
-```
+The agent inspects the code, maps requests and gaps, makes scoped changes, checks outgoing requests, and reports what remains unverified.
 
 The agent works within your repository and may update code, tests, configuration examples and documentation. The exact edits depend on your application. Review the proposed changes and the report before deploying. The prompts use mocked provider responses for their checks; a passing mock does not prove live provider access, output quality or recorded Hicap attribution. They do not deploy your app or generate paid traffic without approval.
 
@@ -78,12 +59,7 @@ Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this u
 
 Service-wide values and caller-specific values work together. The following example illustrates possible labels; choose values supported by your own code and conventions.
 
-```mermaid
-flowchart LR
-  A[Service context<br/>env: production<br/>system: support-app] --> C[Hicap model request]
-  B[Workflow context<br/>feature: chat<br/>operation: respond] --> C
-  C --> D[Usage grouped by dimensions]
-```
+![Service context such as environment and system combines with workflow context such as feature and operation to describe a Hicap request.](/images/onboarding-prompts/request-context.png)
 
 For example, the same service might use `operation: rewrite-question` for one model call and `operation: answer` for another. Agent or Domain values should be included only when supported by the application's context. A valid header alone does not establish that every applicable workflow or dimension is covered.
 
