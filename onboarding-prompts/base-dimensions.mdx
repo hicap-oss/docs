@@ -1,8 +1,14 @@
 ---
 title: 'Set Hicap base dimensions'
-description: 'Implementation prompt with coverage checks for actual outgoing Hicap requests'
+description: 'Configure service-wide context'
 hidden: true
 ---
+
+Use this focused prompt to assess and configure applicable service-wide values, such as environment and system, using your existing tagging helper. The agent separates observed conventions from recommendations and reports unresolved values.
+
+This prompt requires an existing Hicap client and tagging helper. If the helper is missing, use the [tagging helper prompt](/onboarding-prompts/tagging-helper) first.
+
+The block below is the complete instruction for your coding agent. Review it before use, then review the agent's changes and verification report. For the overall workflow, see [Set up Hicap with a coding agent](/concepts/implement-attribution-with-an-agent).
 
 ````text wrap title="Implementation prompt"
 Review and configure this application's service attribution using its existing
