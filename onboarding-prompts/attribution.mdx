@@ -8,6 +8,14 @@ Use this prompt for a complete attribution pass after your Hicap client is confi
 
 This prompt uses the existing Hicap client and preserves routing, models and provider options. If the client is missing, start with [client setup](/onboarding-prompts/configure-client).
 
+## Decision flow
+
+This diagram summarizes the intended decisions in the prompt. The complete instruction below is the source of truth.
+
+![Attribution checks for an existing Hicap client, then maps workflows and adds supported dimensions or reports gaps; when no client exists, it reports the prerequisite and skips tagging.](/images/onboarding-prompts/attribution-decisions.png)
+
+## Full prompt
+
 The block below is the complete instruction for your coding agent. Review it before use, then review the agent's changes and verification report. For the overall workflow, see [Set up Hicap with a coding agent](/concepts/implement-attribution-with-an-agent).
 
 ````text wrap title="Implementation prompt"
