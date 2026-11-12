@@ -13,6 +13,14 @@ values separately for all five dimensions. Put only service-wide defaults in
 configuration; preserve workflow-specific roles and business features per caller.
 Leave unresolved deployment settings explicit, rather than inventing fallbacks.
 
+Shared-client acceptance case:
+A retrieval workflow can reuse one model for question rewriting and answering.
+Keep feature ownership stable but assign the correct operation and named role at
+each step (omit a role on rewriting if none exists). Use isolated caller context
+or equivalent scoped clients without changing transport, model, credentials or
+provider options. Verify each step and any tool follow-up independently; shared
+client defaults must not flatten different operations into one attribution value.
+
 Hicap attribution contract:
 - Use the existing Hicap client at https://api.hicap.ai/v1 and its server-side
   key / api-key authentication (commonly HICAP_API_KEY). Preserve endpoints, model selection,
@@ -28,13 +36,14 @@ Hicap attribution contract:
   reject malformed/duplicate keys or headers and unsafe values. Keep defaults
   immutable and caller context isolated across concurrent requests.
 - Reuse the application's approved naming and configuration. Assess agent,
-  env, system, feature and domain; preserve useful existing dimensions such as
-  trigger. These are conventions, not a gateway allowlist.
+  env, system, feature, operation and domain; preserve useful existing dimensions
+  such as trigger. These are conventions, not a gateway allowlist.
   agent = the responsible AI workflow or named model-powered pipeline role;
   env = explicit deployment context (NODE_ENV alone is insufficient);
   system = stable application/service; feature = the caller's business capability;
   domain = the application's approved business context or existing convention.
-  Keep model steps separate from business features where both exist.
+  operation = the model-powered action within a feature (for example create or
+  update). Keep model steps separate from business features where both exist.
 - Record each proposed default's provenance and intended application/environment.
   Do not silently reuse a value from a different app or earlier scenario when
   applicability is unclear. Surface the conflict and omit it or ask the user;
@@ -50,6 +59,26 @@ Hicap attribution contract:
   personal identifiers, raw URLs or high-cardinality request/session IDs.
 
 Verification and completion:
+- Scale checks to the application's actual architecture. Do not add production
+  workflows, roles or queues just to satisfy a test. Mark genuinely absent paths
+  not applicable; distinguish them from present but untested paths.
+- Keep mock tests fail-closed: block unexpected network calls and await all
+  concurrent work and retries before removing mocks, including on failures.
+
+- Bind every captured request to its originating application workflow using a
+  distinct synthetic input or an independently observed request body. Derive
+  expected feature, operation and role from that workflow's behavior/instructions,
+  not from the emitted tags or the implementation's attribution registry. Check
+  each request and retry individually, including concurrent calls. A set of valid
+  tag combinations is insufficient: swapping two callers' tags must fail a test.
+  For attribution, add a negative control and demonstrate failure: use swapping
+  two callers' tags when distinguishable callers exist; for a single caller,
+  corrupt or remove an expected tag. Restore correct code afterwards. Synthetic
+  correlation markers stay in test inputs, never in production attribution tags.
+- Invoke the actual application entrypoint where feasible. A model-factory test
+  does not verify its caller. Name any mocked database/auth boundary and any
+  unexercised orchestration. Separately report output quality: canned responses
+  prove transport and parsing only, not useful model answers.
 - Use mocked provider responses. Capture the FINAL outgoing HTTP headers from
   real application functions, not just the tag builder. Do not insert the
   expected agent/feature into the test context when production does not supply it.
@@ -57,7 +86,8 @@ Verification and completion:
   fallbacks. Reconcile each Hicap-bound path with an emitted-tag assertion, a
   documented non-applicable dimension, or an untested/deferred gap. Inventory
   non-Hicap paths separately; do not claim Hicap attribution for them.
-  Exercise concurrent callers and a failed attempt followed by a successful retry.
+  Exercise concurrent callers and a failed attempt followed by a successful retry
+  where those behaviors exist; do not invent them for coverage.
   Test enqueue/consume context when queues exist. Run relevant existing checks.
 - A valid JSON header is not proof of complete attribution. Assert the expected
   values of each applicable dimension, especially named pipeline roles. An
@@ -73,4 +103,27 @@ Update README as needed and save a concise coverage/test report under the
 application repository's .hicap directory, preserving existing reports with a
 timestamped sibling. Include source revision, redacted headers, remaining gaps
 and post-deployment verification steps. Show the exact report path when done.
+
+Current-state report requirements:
+- Lead with the current source revision and prompt revision (include dirty-state
+  or content hashes), selected models, SDK/adapter, destination and overall status.
+  Move superseded results into a clearly labeled history section.
+- List each workflow/call site separately with evidence columns: source configured,
+  outgoing request mock-verified, fresh live response verified, and recorded Hicap
+  attribution verified. Use passed/failed/untested/not-applicable, with evidence.
+  State the denominator before reporting coverage; aggregated dimension values
+  must not hide distinct call sites or untested paths.
+- For Env, Feature, Operation, System, Agent and Domain show observed/emitted values,
+  source and scope, suggestions separately, and reasons for omission. Explain
+  intentional aggregation, such as multiple artifact formats sharing one feature.
+  A generic starter package name is a candidate system name, not an approved
+  business identity. Distinguish named AI roles from harness agent_type and agent_id;
+  do not duplicate equivalent role dimensions or emit instance IDs without an
+  established approved convention. A named persona is source evidence, not proof
+  of an approved business-role taxonomy; distinguish observed persona, proposed
+  role and emitted convention. Identify unresolved semantics explicitly.
+- Separate pre-existing application defects, introduced regressions, untested
+  integration paths and unresolved configuration. Lead with a short customer
+  summary; keep detailed evidence below it.
+
 ````

@@ -53,3 +53,26 @@ test('guide explains the two tasks and prerequisite', () => {
   assert.match(guide, /Attribution uses existing Hicap routes and does not change your provider, models or fallback routing/i);
   assert.match(guide, /if no Hicap client exists, it reports that prerequisite and points to client setup/i);
 });
+
+test('client setup preserves body capabilities and fail-closed evidence', () => {
+  const prompt = compact(load('configure-client'));
+  for (const term of ['native OpenAI SDK', 'structured-output schemas', 'fail-closed', 'Current-state report requirements:', 'originating application workflow', 'output quality']) assert.ok(prompt.includes(term), term);
+});
+
+test('client negative controls do not introduce attribution or require two callers', () => {
+  const prompt = compact(load('configure-client'));
+  assert.match(prompt, /phase-appropriate negative control/);
+  assert.match(prompt, /single caller can use one incorrect expected setting/);
+  assert.match(prompt, /Never introduce attribution to satisfy a client-setup test/);
+  assert.doesNotMatch(prompt, /negative control that swaps caller attribution/);
+});
+test('client setup gates API families and live structured-output acceptance', () => {
+  const prompt = compact(load('configure-client'));
+  for (const required of ['Inventory API families separately', 'explicitly authorized exception, or blocked/unverified', 'Leaving a path unchanged is not an authorized exception', 'strict JSON Schema and tool calling', 'optional fields', 'mark live schema compatibility unverified']) assert.ok(prompt.includes(required), required);
+});
+for (const name of ['attribution', 'tagging-helper', 'base-dimensions', 'per-call-features']) {
+  test(`${name} handles shared steps, single callers and provenance without scope creep`, () => {
+    const prompt = compact(load(name));
+    for (const required of ['Shared-client acceptance case', 'question rewriting and answering', 'single caller', 'Do not add production workflows, roles or queues', 'pre-existing application defects', 'observed persona, proposed role and emitted convention']) assert.ok(prompt.includes(required), required);
+  });
+}
