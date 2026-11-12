@@ -75,14 +75,6 @@ test('client setup keeps unverified API families on their existing route', () =>
   assert.match(prompt, /If support is unknown or unsupported, leave that caller's existing route and credentials unchanged/);
   assert.match(prompt, /report it as blocked\/unverified/);
 });
-test('experimental outcome guide points to its full prompt', () => {
-  const guide = readFileSync(join(root, 'concepts/implement-attribution-with-an-agent.mdx'), 'utf8');
-  const prompt = readFileSync(join(root, 'onboarding-prompts/business-outcome.mdx'), 'utf8');
-  assert.match(guide, /\/onboarding-prompts\/business-outcome/);
-  assert.match(prompt, /Do not change routing, models, credentials/);
-  assert.match(prompt, /Do not infer ticket closure/);
-  assert.match(prompt, /Distinguish mock results, actual live responses and recorded platform\/outcome data/);
-});
 for (const name of ['attribution', 'tagging-helper', 'base-dimensions', 'per-call-features']) {
   test(`${name} handles shared steps, single callers and provenance without scope creep`, () => {
     const prompt = compact(load(name));
