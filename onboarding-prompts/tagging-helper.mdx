@@ -6,18 +6,22 @@ hidden: true
 
 ````text wrap title="Implementation prompt"
 Add or repair a shared Hicap tags helper after reviewing existing tags, callers
-and merge precedence. Preserve compatible extras. Attach it to every compatible
-model transport, including scripts and jobs; list deferrals explicitly. Trace
+and merge precedence. Preserve compatible extras. Attach it to existing
+Hicap-bound model transports, including scripts and jobs; list deferrals explicitly. Trace
 caller context through shared helpers, fallback paths, retries and queues.
 Inspect the actual named roles already used by product workflows so the helper
 does not serialize valid JSON while dropping the agent dimension.
 
-Hicap contract:
-- Use the existing compatible client with https://api.hicap.ai/v1. Read
-  HICAP_API_KEY on the server and send it in the api-key header. Never expose,
-  log or commit credentials. Do not reroute unrelated HTTP calls.
-- Each model request sends exactly one x-hicap-tags header: one JSON object
-  with string values. Preserve reviewed existing tags and merge precedence;
+Hicap attribution contract:
+- Use the existing Hicap client at https://api.hicap.ai/v1 and its server-side
+  key / api-key authentication (commonly HICAP_API_KEY). Preserve endpoints, model selection,
+  credentials, provider options and fallback routing. Add Hicap tags only to
+  requests already going to Hicap; never send its key or tags to other providers.
+  Report non-Hicap paths separately. If no Hicap client is configured, report the
+  prerequisite and point to the client setup prompt; skip tagging implementation
+  and verification until a Hicap route exists. Do not switch providers.
+- Each in-scope Hicap-bound request sends exactly one x-hicap-tags header:
+  one JSON object with string values. Preserve reviewed existing tags and merge precedence;
   reject malformed/duplicate keys or headers and unsafe values. Keep defaults
   immutable and caller context isolated across concurrent requests.
 - Reuse the application's approved naming and configuration. Assess agent,
@@ -42,9 +46,10 @@ Verification and completion:
 - Use mocked provider responses. Capture the FINAL outgoing HTTP headers from
   real application functions, not just the tag builder. Do not insert the
   expected agent/feature into the test context when production does not supply it.
-- Check representative normal workflows and alternate modes, scripts/jobs and
-  fallbacks. Reconcile every discovered model path with an emitted-tag assertion,
-  a documented non-applicable dimension, or an explicit untested/deferred gap.
+- Check representative Hicap workflows, alternate modes, scripts/jobs and
+  fallbacks. Reconcile each Hicap-bound path with an emitted-tag assertion, a
+  documented non-applicable dimension, or an untested/deferred gap. Inventory
+  non-Hicap paths separately; do not claim Hicap attribution for them.
   Exercise concurrent callers and a failed attempt followed by a successful retry.
   Test enqueue/consume context when queues exist. Run relevant existing checks.
 - A valid JSON header is not proof of complete attribution. Assert the expected

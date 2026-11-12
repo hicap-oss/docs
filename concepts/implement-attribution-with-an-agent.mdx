@@ -6,7 +6,7 @@ icon: 'robot'
 
 This page gives you a prompt you can hand to a coding agent — GitHub Copilot, or any agent that can read and edit your repository — to add a working **base attribution** setup to your application. It scans the whole application, distinguishes ordinary traffic from model calls, assesses existing client tags, and wires up evidence-backed attribution using **agent, env, system, feature, and domain**. Structural usage and spend still roll up as the [Concepts](/concepts/organizations-and-users) pages describe.
 
-Start with the [master prompt](#master-prompt) for a complete pass, or use the [focused prompts](#focused-prompts) to do it one step at a time.
+Start with [client setup](#focused-prompts) if the selected workflows do not yet use Hicap. Then use the [attribution prompt](#master-prompt) for a complete attribution pass, or use the focused tagging prompts one step at a time. Attribution uses existing Hicap routes and does not change your provider, models or fallback routing.
 
 <Note>
   These prompts describe the outcome, not a fixed set of edits. Review the agent's changes like any other pull request — where things land depends on how your codebase is structured.
@@ -22,7 +22,7 @@ The agent will need a few things to be true. You can either set these up first o
 
 ## Master prompt
 
-Copy this short instruction into your agent. It will read the full prompt from a dedicated page and help you set up Hicap and attribution in your application repository.
+Copy this short instruction into your agent after setting up a Hicap client. It will assess and implement attribution for existing Hicap-bound requests. It inventories other routes without migrating them; if no Hicap client exists, it reports that prerequisite and points to client setup.
 
 Use the copy button to copy only the instruction below. The linked page contains the full, maintained implementation prompt.
 
@@ -34,7 +34,7 @@ Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this u
 
 ## Focused prompts
 
-Prefer smaller steps? Run these in order — each is safe to hand over on its own.
+Run client setup first when you want to route selected inference through Hicap. The remaining focused prompts operate on existing Hicap routes and do not change routing. Each can be handed to an agent on its own.
 
 <AccordionGroup>
   <Accordion title="1. Point the client at Hicap">
