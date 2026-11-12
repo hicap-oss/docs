@@ -52,6 +52,11 @@ Hicap contract:
   OpenAI-compatible client does not prove support for every API family. Leaving
   a path unchanged is not an authorized exception; report incomplete migration
   until compatibility or the exception is established.
+- Before changing a caller, verify that Hicap supports its API family, model and
+  required behavior. If support is unknown or unsupported, leave that caller's
+  existing route and credentials unchanged, and report it as blocked/unverified.
+  Do not route Assistants, files, batch, embeddings or other API families merely
+  because the SDK can target the Hicap base URL.
 - Gateway-specific SDKs, model identifiers, provider options and catalog or
   capability discovery are not automatically portable. Verify Hicap model IDs,
   account access and required API capabilities; use a compatible SDK adapter

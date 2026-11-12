@@ -17,6 +17,7 @@ Use these prompts with a coding agent that can read and edit your application. T
 | [Tagging helper](#focused-prompts) | You need a reusable way to build and attach tags | Existing Hicap tag handling, merge behavior and request isolation |
 | [Base dimensions](#focused-prompts) | Service-wide values need to be configured | Evidence-backed deployment, system and domain defaults using an existing helper |
 | [Per-call features](#focused-prompts) | Different workflows or steps need distinct attribution | Caller-specific feature, operation, role and other applicable values |
+| [Business-outcome discovery (experimental)](#business-outcome-discovery-experimental) | You have baseline attribution and want to understand how activity relates to users and outcomes | Evidence-backed outcome signals and possible application-owned joins |
 
 ## What happens when a prompt runs
 
@@ -90,6 +91,26 @@ Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this u
 Service-wide values and caller-specific values work together. The following example illustrates possible labels; choose values supported by your own code and conventions.
 
 For example, the same service might use `operation: rewrite-question` for one model call and `operation: answer` for another. Agent or Domain values should be included only when supported by the application's context. A valid header alone does not establish that every applicable workflow or dimension is covered.
+
+## Business-outcome discovery (experimental)
+
+After setting up workload attribution, use this optional prompt to investigate
+how operations relate to application users, business objects and outcome signals.
+The agent checks what the application actually records and reports missing links.
+It can implement an application-owned association only when the source and
+approved policy support it. Existing Hicap routes and dimensions remain in place.
+
+For example, a ticket closure may be a recorded outcome; an assistant response
+alone does not prove the ticket was resolved. A request-to-ticket association
+also does not establish a request-to-cost join. The prompt is experimental:
+mocked checks do not establish a live join, user profitability or causation.
+Review identity, retention, access and any proposed identifier use before deployment.
+
+```text wrap title="Business-outcome discovery (experimental)"
+Read https://docs.hicap.ai/onboarding-prompts/business-outcome and help me assess this application.
+```
+
+[Review the full experimental business-outcome prompt](/onboarding-prompts/business-outcome).
 
 ## Focused prompts
 
