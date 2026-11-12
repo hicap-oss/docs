@@ -13,6 +13,7 @@ for (const name of ['attribution', 'configure-client']) {
       assert.ok(prompt.includes(required), `Missing ${required}`);
     }
     assert.match(prompt, /silent(?:ly)?[\s\S]{0,160}(?:fallback|fall back|bypass)|(?:fallback|fall back)[\s\S]{0,160}silent/i);
+    assert.match(prompt, /no in-scope\s+(?:inference\s+)?request/i);
     assert.match(prompt, /(?:user|product requirements) authorize/i);
     assert.match(prompt, /report[\s\S]{0,160}(?:incomplete|affected workflow)/i);
   });

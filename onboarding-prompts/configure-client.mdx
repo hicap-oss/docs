@@ -60,9 +60,11 @@ Hicap contract:
 Verification and completion:
 - Use mocked provider responses. Capture the FINAL outgoing HTTP headers and URL
   from real application functions, not just the tag builder. Assert the Hicap
-  host and path, api-key and applicable tags, and assert no request reaches the
-  old inference gateway or a direct provider except documented authorized
-  routes. Do not insert the expected agent/feature into the test context when production does not supply it.
+  host and path, api-key and applicable tags, and assert no in-scope inference
+  request reaches the old inference gateway or a direct provider except
+  documented authorized routes. Report any retained discovery dependency
+  separately. Do not insert the expected agent/feature into the test context
+  when production does not supply it.
 - Check representative normal workflows and alternate modes, scripts/jobs and
   fallbacks. Reconcile every discovered model path with an emitted-tag assertion,
   a documented non-applicable dimension, or an explicit untested/deferred gap.
