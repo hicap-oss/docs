@@ -39,11 +39,17 @@ The diagrams summarize the prompts’ intended decisions. The complete instructi
 
 Use this when you want to route supported application inference through Hicap. The agent traces model callers and configures an appropriate client or adapter, preserves existing attribution, and checks the outgoing destination and authentication. It reports unverified or unsupported workflows. This prompt does **not** design a new tagging strategy.
 
+<div className="grid grid-cols-1 items-start gap-6 md:grid-cols-3">
+  <div>
+
 <img
   src="/images/onboarding-prompts/client-decisions-portrait.png"
   alt="Client setup inspects workflows, configures supported routes, reports unverified or unsupported paths, then checks requests and reports coverage."
   className="mx-auto h-auto max-h-64 w-auto max-w-full"
 />
+
+  </div>
+  <div className="min-w-0 md:col-span-2">
 
 ```text wrap title="Client setup"
 Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set this up.
@@ -51,9 +57,15 @@ Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set t
 
 [Review the full client setup prompt](/onboarding-prompts/configure-client).
 
+  </div>
+</div>
+
 ## 2. Set up attribution
 
 After Hicap routing is configured, use this for a complete attribution pass. The agent inventories Hicap-bound workflows, assesses six starter dimensions—Env, Feature, Operation, System, Agent and Domain—and adds source-backed values where they apply. It checks the tags on outgoing requests and reports gaps. Attribution uses existing Hicap routes and does not change your provider, models or fallback routing. Other provider paths are inventoried separately; if no Hicap client exists, it reports that prerequisite and points to client setup.
+
+<div className="grid grid-cols-1 items-start gap-6 md:grid-cols-3">
+  <div>
 
 <img
   src="/images/onboarding-prompts/attribution-decisions-portrait.png"
@@ -61,11 +73,17 @@ After Hicap routing is configured, use this for a complete attribution pass. The
   className="mx-auto h-auto max-h-64 w-auto max-w-full"
 />
 
+  </div>
+  <div className="min-w-0 md:col-span-2">
+
 ```text wrap title="Complete attribution"
 Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this up.
 ```
 
 [Review the full attribution prompt](/onboarding-prompts/attribution).
+
+  </div>
+</div>
 
 ### How dimensions describe a request
 
