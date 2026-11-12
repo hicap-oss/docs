@@ -1,10 +1,10 @@
 ---
-title: 'External Applications'
+title: 'External Connections'
 description: 'Bring AI usage from outside the Hicap AI Gateway into Hicap analytics with OpenTelemetry'
 icon: 'chart-line'
 ---
 
-An **external application** tracks AI usage from systems that don't send requests through the Hicap AI Gateway. That includes your own provider accounts, self-hosted models, and other gateways. You report that usage with OpenTelemetry. Hicap then shows it in the application's logs and analytics, next to the rest of your usage.
+An **external connection** tracks AI usage from systems that don't send requests through the Hicap AI Gateway. That includes your own provider accounts, self-hosted models, and other gateways. You report that usage with OpenTelemetry. Hicap then shows it in the connection's logs and analytics, next to the rest of your usage.
 
 External usage is **reporting only**. It never charges your Hicap wallet, and it is never billed as Hicap spend.
 
@@ -22,19 +22,19 @@ An **exporter** sends spans from your process to a collector over OTLP, the Open
 graph LR
   A[Your application] -- model call --> P[Model provider]
   A -- OTLP inference spans --> H[Hicap /otel/v1/traces]
-  H --> L[Application logs and analytics]
+  H --> L[Connection logs and analytics]
 ```
 
 Your model requests keep going straight to your provider. Hicap only receives the usage metadata in each inference span.
 
-## Set up an external application
+## Set up an external connection
 
 <Steps>
-  <Step title="Create the external application">
-    In the [Hicap Platform](https://platform.hicap.ai/), open the application selector and choose **New External Application**. Give it a name of up to 40 characters.
+  <Step title="Create the external connection">
+    In the [Hicap Platform](https://platform.hicap.ai/), open **External connections** and choose **New external connection**. Give it a name of up to 40 characters.
   </Step>
   <Step title="Copy the analytics key">
-    Hicap creates an **analytics key** for the application and shows it once. Copy it and store it as a secret.
+    Hicap creates an **analytics key** for the connection and shows it. Copy it and store it as a secret. You can view it again later from the connection's key details.
 
     An analytics key can only report usage. It can't make inference requests, and your inference keys can't report external usage.
   </Step>
@@ -42,7 +42,7 @@ Your model requests keep going straight to your provider. Hicap only receives th
     Configure your OTLP/HTTP trace exporter with the Hicap endpoint, and send the analytics key in the `api-key` header. See [Configure your exporter](#configure-your-exporter).
   </Step>
   <Step title="Check your analytics">
-    Make a few model calls. Requests and token counts appear in the application's logs and analytics once Hicap processes them.
+    Make a few model calls. Requests and token counts appear in the connection's logs and analytics once Hicap processes them.
   </Step>
 </Steps>
 
@@ -179,7 +179,7 @@ Hicap keeps only the usage metadata described above, plus the trace ID, span ID,
 
 ## How usage appears
 
-- **Requests and token counts** appear in the application's logs and analytics, with the model, provider, and harness.
+- **Requests and token counts** appear in the connection's logs and analytics, with the model, provider, and harness.
 - **Missing counts stay unknown.** If a span has no token counts, Hicap counts the request but marks its tokens as unknown, instead of recording zero.
 - **Errors are tracked.** Spans with an error status are recorded as failed requests.
 - **No wallet charge.** External usage never debits your wallet and isn't affected by your balance.
@@ -187,7 +187,7 @@ Hicap keeps only the usage metadata described above, plus the trace ID, span ID,
 ## Delivery and retries
 
 - **Export every inference span.** Don't sample inference spans, or your usage totals will be incomplete. Export each span after its final token counts are known.
-- **Each span is recorded once.** Hicap deduplicates on trace ID and span ID within an application. If a span is sent again, the first copy wins. A retried model call that uses tokens again needs its own span.
+- **Each span is recorded once.** Hicap deduplicates on trace ID and span ID within a connection. If a span is sent again, the first copy wins. A retried model call that uses tokens again needs its own span.
 - **Partial success.** If some spans in a batch are invalid, Hicap accepts the valid ones. It returns `200` with an OTLP `partialSuccess` that lists how many spans were rejected. Don't retry that batch.
 - **Retry `429` and `503`** with backoff, and honor the `Retry-After` header. Standard OTLP exporters already do this.
 
@@ -209,7 +209,7 @@ Contact [support@hicap.ai](mailto:support@hicap.ai) if you need higher limits.
 | Status | Meaning | What to do |
 | --- | --- | --- |
 | `400` | The body isn't a valid OTLP traces request, is too large, or the URL has query parameters. | Fix the request. Don't retry it unchanged. |
-| `401` / `403` | The `api-key` is missing or invalid, it isn't an analytics key, or the external application is inactive. | Check the key and the application. |
+| `401` / `403` | The `api-key` is missing or invalid, it isn't an analytics key, or the external connection is inactive. | Check the key and the connection. |
 | `415` | Unsupported content type or encoding. | Use `application/x-protobuf` or `application/json`, with no compression or `gzip`. |
 | `429` | You hit a limit. | Retry after the `Retry-After` delay. |
 | `503` | Ingestion is temporarily unavailable. | Retry with backoff. |
