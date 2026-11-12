@@ -18,6 +18,8 @@ test('client setup owns migration and preserves existing attribution', () => {
   assert.match(prompt, /(?:user|product requirements) authorize/i);
   assert.match(prompt, /Preserve existing attribution headers/i);
   assert.match(prompt, /Do not invent dimensions, add a tagging helper/i);
+  assert.match(prompt, /default chat, title generation, tool and background models separately/i);
+  assert.match(prompt, /do not claim the application is ready/i);
   assert.doesNotMatch(prompt, /Each (?:model|in-scope Hicap-bound) request sends exactly one x-hicap-tags/);
 });
 
@@ -26,7 +28,9 @@ test('attribution preserves mixed routing and requires an existing Hicap client'
   assert.match(prompt, /does not migrate inference traffic/i);
   assert.match(prompt, /Keep existing endpoint URLs, credentials, model selection, provider options, routing and fallback behavior unchanged/i);
   assert.match(prompt, /Add tags only to requests already routed to Hicap/i);
-  assert.match(prompt, /no working Hicap client[\s\S]*skip tagging implementation and its verification/i);
+  assert.match(prompt, /no identifiable Hicap client or route is configured[\s\S]*skip tagging implementation and its verification/i);
+  assert.match(prompt, /configured route with unverified or failing live model access can still be assessed with mocks/i);
+  assert.match(prompt, /provenance and intended application\/environment/i);
   assert.match(prompt, /Verify that non-Hicap routes and fallback destinations remain unchanged and receive no Hicap key or attribution header/i);
   assert.match(prompt, /observed and recommended dimension values/i);
   assert.doesNotMatch(prompt, /Route every in-scope model inference path/i);
@@ -39,6 +43,8 @@ for (const name of ['tagging-helper', 'base-dimensions', 'per-call-features']) {
     assert.match(prompt, /never send its key or tags to other providers/i);
     assert.match(prompt, /If no Hicap client is configured[\s\S]*skip tagging implementation and verification/i);
     assert.match(prompt, /Do not switch providers/i);
+    assert.match(prompt, /live access is unverified or failing/i);
+    assert.match(prompt, /provenance and intended application\/environment/i);
   });
 }
 

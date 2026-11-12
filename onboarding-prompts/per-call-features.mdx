@@ -21,6 +21,8 @@ Hicap attribution contract:
   Report non-Hicap paths separately. If no Hicap client is configured, report the
   prerequisite and point to the client setup prompt; skip tagging implementation
   and verification until a Hicap route exists. Do not switch providers.
+  If a route is configured but live access is unverified or failing, mock-test
+  it where possible and report the access gap; do not claim live verification.
 - Each in-scope Hicap-bound request sends exactly one x-hicap-tags header:
   one JSON object with string values. Preserve reviewed existing tags and merge precedence;
   reject malformed/duplicate keys or headers and unsafe values. Keep defaults
@@ -33,6 +35,10 @@ Hicap attribution contract:
   system = stable application/service; feature = the caller's business capability;
   domain = the application's approved business context or existing convention.
   Keep model steps separate from business features where both exist.
+- Record each proposed default's provenance and intended application/environment.
+  Do not silently reuse a value from a different app or earlier scenario when
+  applicability is unclear. Surface the conflict and omit it or ask the user;
+  honor explicit current user assignments.
 - A pipeline can have named AI roles without being called "multi-agent".
   Check existing workflow definitions, prompts and execution events. Reuse real
   roles; do not invent agents from filenames, SDKs, models or arbitrary strings.

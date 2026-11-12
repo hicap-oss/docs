@@ -32,6 +32,10 @@ Hicap contract:
   Never relabel one model as another. If a required model or behavior is not
   available, surface the failure and report the exact affected workflow rather
   than silently routing it elsewhere or claiming a complete migration.
+  Check default chat, title generation, tool and background models separately;
+  identify unavailable selections and user-visible effects. Do not present a
+  model or capability as verified solely because it appears in a catalog. Make
+  any new model option explicit and do not silently change the selected model.
 - Inventory model-catalog, model-availability and capability-discovery requests
   separately from inference; replace stale gateway-specific discovery when needed
   for the new route, or explicitly report it as a remaining dependency.
@@ -49,6 +53,9 @@ Verification and completion:
   documented authorized routes. Report any retained discovery dependency
   separately. Assert existing attribution headers remain unchanged where
   present; redact credentials and sensitive values from captured evidence.
+  Distinguish a configured client and mocked success from confirmed live model
+  access. If live access is untested or fails, record the affected paths and do
+  not claim the application is ready.
 - Check representative normal workflows and alternate modes, scripts/jobs and
   fallbacks. Reconcile every discovered model path with a routing assertion,
   an explicitly authorized exception, or an untested/deferred gap.

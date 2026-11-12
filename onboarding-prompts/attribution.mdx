@@ -30,10 +30,12 @@ real Hicap-bound call paths. This task does not migrate inference traffic.
    options, routing and fallback behavior unchanged. Add tags only to requests
    already routed to Hicap; do not add Hicap headers or credentials to other
    destinations. Inventory non-Hicap model paths as outside Hicap attribution
-   coverage without rerouting them. If no working Hicap client is configured,
-   report the missing prerequisite and point to the client setup prompt; skip
-   tagging implementation and its verification until a Hicap route exists. Do
-   not create a client or switch providers in this attribution task.
+   coverage without rerouting them. If no identifiable Hicap client or route is
+   configured, report the missing prerequisite and point to the client setup
+   prompt; skip tagging implementation and its verification. Do not create a
+   client or switch providers in this attribution task. A configured route with
+   unverified or failing live model access can still be assessed with mocks;
+   report the access gap and do not claim live attribution is verified.
 
    Service defaults belong in configuration; workflow/role values belong at
    their caller or in a reviewed registry of existing roles. Carry context through
@@ -56,6 +58,10 @@ Hicap attribution contract:
   system = stable application/service; feature = the caller's business capability;
   domain = the application's approved business context or existing convention.
   Keep model steps separate from business features where both exist.
+- Record the provenance and intended application/environment of each proposed
+  default. Do not silently reuse a value from a different app, experiment or
+  earlier scenario when its applicability is unclear. Surface the conflict and
+  omit the value or ask the user; honor explicit current user assignments.
 - A pipeline can have named AI roles without being called "multi-agent".
   Check existing workflow definitions, prompts and execution events. Reuse real
   roles; do not invent agents from filenames, SDKs, models or arbitrary strings.
