@@ -1,8 +1,14 @@
 ---
 title: 'Tag Hicap per-call features'
-description: 'Implementation prompt with coverage checks for actual outgoing Hicap requests'
+description: 'Distinguish individual model workflows'
 hidden: true
 ---
+
+Use this focused prompt when different model calls need distinct feature, operation or named role values. The agent traces the actual callers and checks their outgoing tags, including applicable retries or queues.
+
+This prompt uses existing Hicap routes and does not change routing. Configure a [Hicap client](/onboarding-prompts/configure-client) first.
+
+The block below is the complete instruction for your coding agent. Review it before use, then review the agent's changes and verification report. For the overall workflow, see [Set up Hicap with a coding agent](/concepts/implement-attribution-with-an-agent).
 
 ````text wrap title="Implementation prompt"
 Repair caller-specific attribution on existing Hicap-bound model workflows. Trace

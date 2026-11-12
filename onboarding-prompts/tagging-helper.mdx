@@ -1,8 +1,14 @@
 ---
 title: 'Add a Hicap tagging helper'
-description: 'Implementation prompt with coverage checks for actual outgoing Hicap requests'
+description: 'Build a shared way to attach tags'
 hidden: true
 ---
+
+Use this focused prompt when an existing Hicap integration needs a tagging helper or its merge behavior needs repair. The agent checks real callers, concurrency, and provider boundaries.
+
+This prompt does not change routing. Configure a [Hicap client](/onboarding-prompts/configure-client) first.
+
+The block below is the complete instruction for your coding agent. Review it before use, then review the agent's changes and verification report. For the overall workflow, see [Set up Hicap with a coding agent](/concepts/implement-attribution-with-an-agent).
 
 ````text wrap title="Implementation prompt"
 Add or repair a shared Hicap tags helper after reviewing existing tags, callers

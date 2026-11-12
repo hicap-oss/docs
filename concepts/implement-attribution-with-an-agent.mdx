@@ -1,90 +1,144 @@
 ---
-title: 'Implement attribution with an agent'
-description: 'Scan application requests and processes, assess existing tags, and implement evidence-backed Hicap attribution across six starter dimensions'
+title: 'Set up Hicap with a coding agent'
+description: 'Choose a prompt, understand the changes it requests, and verify routing and attribution'
 icon: 'robot'
 ---
 
-This page gives you a prompt you can hand to a coding agent — GitHub Copilot, or any agent that can read and edit your repository — to add a working **base attribution** setup to your application. It scans the whole application, distinguishes ordinary traffic from model calls, assesses existing client tags, and wires up evidence-backed attribution using **agent, env, system, feature, operation, and domain**. Structural usage and spend still roll up as the [Concepts](/concepts/organizations-and-users) pages describe.
+Use these prompts with a coding agent that can read and edit your application. They help you route model requests through Hicap and describe what each request is doing. You can review the full instructions before running them and review the resulting changes as you would any other code change.
 
-Start with [client setup](#focused-prompts) if the selected workflows do not yet use Hicap. Then use the [attribution prompt](#master-prompt) for a complete attribution pass, or use the focused tagging prompts one step at a time. Attribution uses existing Hicap routes and does not change your provider, models or fallback routing.
+## Choose your path
 
-<Note>
-  These prompts describe the outcome, not a fixed set of edits. Review the agent's changes like any other pull request — where things land depends on how your codebase is structured.
-</Note>
+**New to Hicap?** Start with client setup, then run the complete attribution prompt. **Already using Hicap?** Start with attribution, or use a focused prompt to address a particular gap. The focused prompts are an alternative way to build attribution, not additional required steps after a complete pass. Base dimensions requires an existing tagging helper; client setup alone does not create one. You can select an individual focused prompt when its prerequisites are already met.
+
+| Prompt | Use it when | What the agent works on |
+| --- | --- | --- |
+| [Configure the Hicap client](#1-configure-the-client) | Model calls are not yet routed through Hicap | Client configuration, supported inference routes and routing checks |
+| [Set up attribution](#2-set-up-attribution) | You want a complete pass across existing Hicap requests | A workflow inventory, shared attribution and caller-specific dimensions |
+| [Tagging helper](#focused-prompts) | You need a reusable way to build and attach tags | Existing Hicap tag handling, merge behavior and request isolation |
+| [Base dimensions](#focused-prompts) | Service-wide values need to be configured | Evidence-backed deployment, system and domain defaults using an existing helper |
+| [Per-call features](#focused-prompts) | Different workflows or steps need distinct attribution | Caller-specific feature, operation, role and other applicable values |
+
+## What happens when a prompt runs
+
+Each prompt asks the agent to follow the same general process, with a different scope:
+
+The agent inspects the code, maps requests and gaps, makes scoped changes, checks outgoing requests, and reports what remains unverified.
+
+The agent works within your repository and may update code, tests, configuration examples and documentation. The exact edits depend on your application. Review the proposed changes and the report before deploying. The prompts use mocked provider responses for their checks; a passing mock does not prove live provider access, output quality or recorded Hicap attribution. They do not deploy your app or generate paid traffic without approval.
 
 ## Before you start
 
-The agent will need a few things to be true. You can either set these up first or let the prompt ask you for them:
+- Make a Hicap key available to the application server, typically as `HICAP_API_KEY`. Create and manage keys in the [Hicap Platform](https://platform.hicap.ai/); do not paste a key into the prompt, source code or report.
+- Make your repository available to your coding agent and provide any approved service or deployment names. Existing conventions are preferred over invented defaults.
+- Use an SDK or adapter that supports the API workflows and Hicap capabilities your application needs. Decide which workflows should use Hicap. The agent inventories API families and reports compatibility it cannot establish; an OpenAI-compatible client alone does not establish support for every endpoint or model.
+- For the attribution prompts, configure the Hicap client first. Read [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments) for how request dimensions work.
 
-- **A Hicap API key.** Create one in the [Hicap Platform dashboard ↗](https://platform.hicap.ai/) and make it available as the `HICAP_API_KEY` environment variable. The agent should never hard-code it.
-- **The base URL and auth header.** Requests go to `https://api.hicap.ai/v1`, and the key is sent as the `api-key` header. Use an OpenAI-compatible SDK or adapter that supports the API workflows and Hicap capabilities your application uses — see the [Developer Quickstart](/quickstart).
-- **A sense of your dimensions.** Decide which labels you want to slice spend by. See [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments) for the model; the prompts assess six starter dimensions, reuse approved application conventions, and distinguish missing instrumentation from intentionally non-applicable values.
+The diagrams summarize the prompts’ intended decisions. Unverified client routes remain gaps, and authorized exceptions are reported. In attribution, a supported value is grounded in the application and its approved conventions; reviewed existing tags are preserved. The complete instructions remain the source of truth.
 
-## Master prompt
+## 1. Configure the client
 
-Copy this short instruction into your agent after setting up a Hicap client. It will assess and implement attribution for existing Hicap-bound requests. It inventories other routes without migrating them; if no Hicap client exists, it reports that prerequisite and points to client setup.
+Use this when you want to route supported application inference through Hicap. The agent traces model callers and configures an appropriate client or adapter, preserves existing attribution, and checks the outgoing destination and authentication. It reports unverified or unsupported workflows. This prompt does **not** design a new tagging strategy.
 
-Use the copy button to copy only the instruction below. The linked page contains the full, maintained implementation prompt.
+<div className="grid grid-cols-1 items-center gap-3 md:grid-cols-3 md:gap-5">
+  <div>
 
-```text wrap title="Master prompt"
+<img
+  src="/images/onboarding-prompts/client-decisions-portrait.png"
+  alt="Client setup inspects workflows, configures supported routes, reports unverified or unsupported paths, then checks requests and reports coverage."
+  className="mx-auto h-auto max-h-64 w-auto max-w-full"
+/>
+
+  </div>
+  <div className="w-full min-w-0 md:col-span-2">
+
+```text wrap title="Client setup"
+Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set this up.
+```
+
+[Review the full client setup prompt](/onboarding-prompts/configure-client).
+
+  </div>
+</div>
+
+## 2. Set up attribution
+
+After Hicap routing is configured, use this for a complete attribution pass. The agent inventories Hicap-bound workflows, assesses six starter dimensions—Env, Feature, Operation, System, Agent and Domain—and adds source-backed values where they apply. It checks the tags on outgoing requests and reports gaps. Attribution uses existing Hicap routes and does not change your provider, models or fallback routing. Other provider paths are inventoried separately; if no Hicap client exists, it reports that prerequisite and points to client setup.
+
+<div className="grid grid-cols-1 items-center gap-3 md:grid-cols-3 md:gap-5">
+  <div>
+
+<img
+  src="/images/onboarding-prompts/attribution-decisions-portrait.png"
+  alt="Attribution checks for a Hicap client; if one exists, it maps workflows and adds supported dimensions or reports missing values. If no client exists, it reports the prerequisite and skips tagging."
+  className="mx-auto h-auto max-h-64 w-auto max-w-full"
+/>
+
+  </div>
+  <div className="w-full min-w-0 md:col-span-2">
+
+```text wrap title="Complete attribution"
 Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this up.
 ```
 
-[Review the full prompt](/onboarding-prompts/attribution).
+[Review the full attribution prompt](/onboarding-prompts/attribution).
+
+  </div>
+</div>
+
+### How dimensions describe a request
+
+Service-wide values and caller-specific values work together. The following example illustrates possible labels; choose values supported by your own code and conventions.
+
+For example, the same service might use `operation: rewrite-question` for one model call and `operation: answer` for another. Agent or Domain values should be included only when supported by the application's context. A valid header alone does not establish that every applicable workflow or dimension is covered.
 
 ## Focused prompts
 
-Run client setup first when you want to route selected inference through Hicap. The remaining focused prompts operate on existing Hicap routes and do not change routing. Choose a focused prompt after satisfying its prerequisites. Base dimensions requires an existing tagging helper; run the tagging-helper prompt first if none exists. Client setup establishes routing but does not add that helper.
+Use these instead of the complete attribution pass when you want to work on a narrower part of an existing Hicap integration. To verify coverage and provider isolation, the agent may still inspect and test related call paths across the application. Each prompt asks for a coverage report and may update your README.
 
 <AccordionGroup>
-  <Accordion title="1. Point the client at Hicap">
-    ```text wrap title="Client setup"
-    Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set this up.
-    ```
+  <Accordion title="Tagging helper: build and attach tags">
+    The agent reviews existing tags and merge rules, then adds or repairs a shared way to attach them to Hicap-bound requests. It checks caller isolation and keeps Hicap headers away from other providers. It does not change routing.
 
-    [Review the full prompt](/onboarding-prompts/configure-client).
-  </Accordion>
-  <Accordion title="2. Add a tagging helper">
     ```text wrap title="Tagging helper"
     Read https://docs.hicap.ai/onboarding-prompts/tagging-helper and help me set this up.
     ```
 
-    [Review the full prompt](/onboarding-prompts/tagging-helper).
+    [Review the full tagging helper prompt](/onboarding-prompts/tagging-helper).
   </Accordion>
-  <Accordion title="3. Set base dimensions">
+  <Accordion title="Base dimensions: configure service context">
+    Given an existing tagging helper, the agent reviews approved service and deployment conventions and configures applicable service-wide defaults. It reports unresolved values instead of inventing them; workflow-specific values remain with their callers.
+
     ```text wrap title="Base dimensions"
     Read https://docs.hicap.ai/onboarding-prompts/base-dimensions and help me set this up.
     ```
 
-    [Review the full prompt](/onboarding-prompts/base-dimensions).
+    [Review the full base dimensions prompt](/onboarding-prompts/base-dimensions).
   </Accordion>
-  <Accordion title="4. Tag per-call features">
+  <Accordion title="Per-call features: distinguish workflows">
+    The agent traces individual model workflows and attaches applicable feature, operation and named role values at the caller. It checks shared clients, retries and queues where they exist, without switching providers.
+
     ```text wrap title="Per-call features"
     Read https://docs.hicap.ai/onboarding-prompts/per-call-features and help me set this up.
     ```
 
-    [Review the full prompt](/onboarding-prompts/per-call-features).
+    [Review the full per-call features prompt](/onboarding-prompts/per-call-features).
   </Accordion>
 </AccordionGroup>
 
-## After the agent runs
+## Review the result
 
-Review the emitted tags for real workflows, not only whether a helper exists. A valid tags header can still omit a named agent role. After deployment, inspect fresh traffic in the correct application and environment; a 30-day chart can still include older untagged requests.
+The agent should leave a report in your repository's `.hicap` directory, preserve earlier reports, and identify the inspected workflows, changes, checks and gaps. Use it alongside the code diff:
 
-- **Review coverage and evidence.** Check the whole-app inventory, separate ordinary traffic from AI call sites, and review every deferred or unresolved path. Zero model calls is a valid finding; a prepared client is not proof of live attribution.
-- **Review all six dimensions.** Confirm agent, env, system, feature, operation and domain definitions and sources. Reuse approved application conventions and distinguish missing values from dimensions that do not apply. Preserve compatible existing dimensions and review any migration.
-
-- **Verify the header.** Confirm each Hicap-bound model request sends a single `x-hicap-tags` header whose value is one JSON object of strings; check safe merge precedence, privacy, concurrency and queued/retried context. Unknown assessment values must not become JSON null. See [How tags are sent](/concepts/tags-dimensions-segments#how-tags-are-sent).
-- **Check for untagged traffic.** Requests that arrive without your expected dimensions surface as **Unattributed Traffic** — a signal that a call site still needs the helper. See [Segments](/concepts/tags-dimensions-segments#segments).
-- **Grow into segments.** Once dimensions are flowing, define [segments](/concepts/tags-dimensions-segments#segments) to slice spend without touching code again.
-
-## Related
+1. **Check scope.** Confirm which model paths route to Hicap, which remain elsewhere, and which could not be verified. If there are no model calls, a prepared client does not establish integration coverage.
+2. **Check dimensions.** Review observed and suggested values for all six starter dimensions. Confirm each applicable value comes from your application's context; omit values that are unresolved or do not apply.
+3. **Check the evidence.** Confirm each Hicap-bound model request sends one `x-hicap-tags` header containing a JSON object of string values. Separate configured source, mocked outgoing requests, live responses and recorded attribution. Check that concurrent calls, retries and existing queues are covered where relevant. Do not include secrets or personal identifiers in ordinary tags.
+4. **Verify fresh traffic.** After your deployment and any approved live tests, select the right application, environment and time window in Hicap. Compare fresh recorded usage with the expected workflows and dimensions; older requests retain their original tags. An **Unattributed Traffic** group can indicate missing expected dimensions. See [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments).
 
 <CardGroup cols={2}>
   <Card title="Developer Quickstart" icon="rocket" href="/quickstart">
-    The minimal client setup the prompts build on.
+    Configure a client and make a first request.
   </Card>
   <Card title="Tags, Dimensions & Segments" icon="tags" href="/concepts/tags-dimensions-segments">
-    The attribution model these prompts implement.
+    Learn how request dimensions and reporting segments work.
   </Card>
 </CardGroup>

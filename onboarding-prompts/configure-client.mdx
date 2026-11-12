@@ -1,8 +1,26 @@
 ---
 title: 'Configure the Hicap client'
-description: 'Implementation prompt with coverage checks for actual outgoing Hicap requests'
+description: 'Configure supported model requests to use Hicap'
 hidden: true
 ---
+
+Use this prompt when your application does not yet have a Hicap route. The agent traces model call sites, configures an appropriate client or adapter, checks outgoing routing, and reports unsupported or unverified paths.
+
+Client setup preserves existing attribution and does not create a tagging strategy. Once the client is configured, use the [complete attribution prompt](/onboarding-prompts/attribution) or the focused prompts.
+
+## Decision flow
+
+This diagram summarizes the intended decisions in the prompt. Unverified or unsupported paths remain gaps; explicitly authorized non-Hicap routes are reported as exceptions. The complete instruction below is the source of truth.
+
+<img
+  src="/images/onboarding-prompts/client-decisions-portrait.png"
+  alt="Client setup inspects workflows, configures supported routes, reports unverified or unsupported paths, then checks requests and reports coverage."
+  className="mx-auto h-auto max-h-64 w-auto max-w-full"
+/>
+
+## Full prompt
+
+The block below is the complete instruction for your coding agent. Review it before use, then review the agent's changes and verification report. For the overall workflow, see [Set up Hicap with a coding agent](/concepts/implement-attribution-with-an-agent).
 
 ````text wrap title="Implementation prompt"
 Configure or repair this application's Hicap model client. Read repository

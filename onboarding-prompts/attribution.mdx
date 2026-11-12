@@ -1,13 +1,32 @@
 ---
 title: 'Set up Hicap attribution'
-description: 'Implementation prompt with coverage checks for actual outgoing Hicap requests'
+description: 'Add attribution across existing Hicap workflows'
 hidden: true
 ---
 
+Use this prompt for a complete attribution pass after your Hicap client is configured. The agent inventories workflows, assesses the six starter dimensions, adds source-backed tags, tests outgoing requests, and reports coverage and gaps.
+
+This prompt uses the existing Hicap client and preserves routing, models and provider options. If the client is missing, start with [client setup](/onboarding-prompts/configure-client).
+
+## Decision flow
+
+This diagram summarizes the intended decisions in the prompt. “Value supported” means a value is grounded in the application and its approved conventions. Preserve reviewed existing tags; do not invent missing values. The complete instruction below is the source of truth.
+
+<img
+  src="/images/onboarding-prompts/attribution-decisions-portrait.png"
+  alt="Attribution checks for an existing Hicap client, then maps workflows and adds supported dimensions or reports gaps; when no client exists, it reports the prerequisite and skips tagging."
+  className="mx-auto h-auto max-h-64 w-auto max-w-full"
+/>
+
+## Full prompt
+
+The block below is the complete instruction for your coding agent. Review it before use, then review the agent's changes and verification report. For the overall workflow, see [Set up Hicap with a coding agent](/concepts/implement-attribution-with-an-agent).
+
 ````text wrap title="Implementation prompt"
 Add or repair attribution using this application's existing Hicap client.
-Inspect the existing setup, make focused tagging changes, and prove the tags on
-real Hicap-bound call paths. This task does not migrate inference traffic.
+Inspect the existing setup, make focused tagging changes, and verify tags on
+actual Hicap-bound application call paths using mocked requests. This task does
+not migrate inference traffic.
 
 1. Read repository instructions and inspect the current integration.
    Trace ALL model request transports and their callers: product routes, shared
