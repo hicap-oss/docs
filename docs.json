@@ -15,7 +15,10 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["quickstart", "faq"]
+            "pages": [
+              "quickstart",
+              "faq"
+            ]
           },
           {
             "group": "Concepts",
@@ -29,6 +32,12 @@
               "onboarding-prompts/tagging-helper",
               "onboarding-prompts/base-dimensions",
               "onboarding-prompts/per-call-features"
+            ]
+          },
+          {
+            "group": "Analytics",
+            "pages": [
+              "analytics/external-applications"
             ]
           },
           {
