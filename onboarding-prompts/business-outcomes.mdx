@@ -158,6 +158,13 @@ Build on the base and identity steps; do not replace them with generic analytics
    Verify uniqueness and retry/failed-attempt semantics; a successful response ID
    alone does not prove complete billable-attempt coverage. Report unmatched
    requests/costs explicitly rather than treating them as zero.
+   Optional measurement and association writes must not turn a successful model
+   response into a failed user request. Make failures observable without exposing
+   sensitive data, and report missing associations. Make retries idempotent using
+   stable scoped event or attempt identities; detect conflicting associations and
+   leave them unresolved for review rather than silently overwriting or joining
+   them to the wrong user, tenant, workflow or outcome. Test failed writes,
+   duplicate delivery and conflicting identities when implementing these writes.
    Approval metrics need durable, timestamped events with stable event identity,
    defined first/repeated/revoked-approval behavior and deduplication. A mutable
    approved flag or latest approver is not an outcome history. Proposal-only
