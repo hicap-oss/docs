@@ -8,15 +8,34 @@ Use this prompt when your application does not yet have a Hicap route. The agent
 
 Client setup preserves existing attribution and does not create a tagging strategy. Once the client is configured, use the [complete attribution prompt](/onboarding-prompts/attribution) or the focused prompts.
 
-## Decision flow
+## How the prompt works
 
-This diagram summarizes the intended decisions in the prompt. Unverified or unsupported paths remain gaps; explicitly authorized non-Hicap routes are reported as exceptions. The complete instruction below is the source of truth.
+Client setup answers: **where will each model request go, and what proves it?** The agent follows four stages and leaves evidence you can review at each one.
 
-<img
-  src="/images/onboarding-prompts/client-decisions-portrait.png"
-  alt="Client setup inspects workflows, configures supported routes, reports unverified or unsupported paths, then checks requests and reports coverage."
-  className="mx-auto h-auto max-h-64 w-auto max-w-full"
-/>
+<Steps>
+  <Step title="Inspect: map the real call paths">
+    Trace each model workflow from its caller to the final request, including retries and background work where they exist.
+
+    **You get:** an inventory of destinations, models, required capabilities, and existing attribution. Zero model calls is a valid finding.
+  </Step>
+  <Step title="Decide: establish what can move">
+    Check support for each workflow's API, model, and required behavior before changing its route.
+
+    **You get:** a decision per workflow: migrate, explicitly authorized exception, or blocked/unverified. Unsupported or uncertain paths keep their existing route and remain visible gaps.
+  </Step>
+  <Step title="Change: configure the supported routes">
+    Reuse a compatible client or adapter, configure the Hicap URL and server-side authentication, and preserve required application behavior and existing tags.
+
+    **You get:** focused client changes. No silent provider fallback, unrelated traffic changes, or new attribution strategy.
+  </Step>
+  <Step title="Prove: inspect what actually leaves the app">
+    Exercise real application paths with mocked provider responses. Check the final destination, model, headers, and required request behavior; reconcile every inventoried path.
+
+    **You get:** a coverage report with passing checks, exceptions, failures, and untested paths. Mocked success does not establish live model access.
+  </Step>
+</Steps>
+
+**After the code changes:** review the report and diff, then verify fresh traffic after your approved deployment. Keep source configuration, mock-tested requests, live responses, and recorded Hicap attribution as separate evidence levels. The complete prompt below defines the detailed requirements.
 
 ## Full prompt
 
