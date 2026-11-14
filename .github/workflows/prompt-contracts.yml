@@ -5,6 +5,8 @@ on:
       - 'onboarding-prompts/**'
       - 'concepts/implement-attribution-with-an-agent.mdx'
       - 'scripts/*prompts.test.cjs'
+      - 'quickstart.mdx'
+      - 'concepts/tags-dimensions-segments.mdx'
       - 'docs.json'
       - '.github/workflows/prompt-contracts.yml'
   push:
@@ -25,4 +27,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node --test scripts/routing-prompts.test.cjs scripts/attribution-prompts.test.cjs
+      - run: node --test scripts/*prompts.test.cjs

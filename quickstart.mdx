@@ -1,16 +1,16 @@
 ---
 title: 'Developer Quickstart'
-description: 'Set up your client, attribution, and business outcomes with three linked agent prompts'
+description: 'Set up your client, base attribution, identity, and business outcomes with four linked agent prompts'
 icon: 'rocket'
 ---
 
 A model response is the beginning. Set up Hicap so you can trace AI usage to the workflow that generated it and measure what that workflow completed.
 
-Start with three prompts: connect the client, add attribution, and track business outcomes. Hicap provides a shared API for supported models; use a compatible SDK with the Hicap base URL and required `api-key` header.
+Start with four prompts: connect the client, establish base attribution, add identity where applicable, and define business outcomes. Hicap provides a shared API for supported models; use a compatible SDK with the Hicap base URL and required `api-key` header.
 
 ## Set up with an agent
 
-Open your application repository in your coding agent, then run these three prompts in order. Each links to the full, maintained instructions.
+Open your application repository in your coding agent, then run these four prompts in order. Identity is optional for workflows without a triggering user; document that finding and continue. Each links to the full, maintained instructions.
 
 ### 1. Configure the client
 
@@ -22,7 +22,7 @@ Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set t
 
 [Review the full client setup prompt](/onboarding-prompts/configure-client).
 
-### 2. Add attribution
+### 2. Set up base attribution
 
 Give the bill some context. Identify the feature, operation, and other applicable dimensions behind each request, then verify the outgoing tags.
 
@@ -32,7 +32,17 @@ Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this u
 
 [Review the full attribution prompt](/onboarding-prompts/attribution).
 
-### 3. Connect business outcomes
+### 3. Add identity attribution
+
+Know who triggered the work. Reuse trusted application context for customer organization, initiating user, and user tier. Verify permitted identifier handling and reporting; never substitute a worker account for the initiating user.
+
+```text wrap title="Identity attribution"
+Read https://docs.hicap.ai/onboarding-prompts/identity and help me set this up.
+```
+
+[Review the full identity prompt](/onboarding-prompts/identity).
+
+### 4. Connect business outcomes
 
 Measure what got done. Define actual workflow outcomes and connect them to AI usage through your application's existing tracking. A generated support summary does not mean the case was resolved.
 
@@ -46,7 +56,7 @@ You'll need an API key from the [Hicap Platform dashboard ↗](https://platform.
 
 ## Manual client setup
 
-Prefer to configure the client yourself? Follow the examples below, then use the attribution and business outcomes prompts to add attribution and outcome tracking.
+Prefer to configure the client yourself? Follow the examples below, then use the base attribution, identity, and business outcomes prompts to extend the setup.
 
 ### 1. Get your API key
 
