@@ -1,80 +1,173 @@
 ---
-title: 'Connect AI usage to business outcomes'
-description: 'Define measurable workflow outcomes and connect them to AI usage using existing application tracking'
+title: 'Define business-outcome dimensions and segments'
+description: 'Extend established base and identity context with business dimensions and segments for ROI analysis'
 hidden: true
 ---
 
-Use this prompt after configuring the Hicap client and attribution. It helps you measure actual workflow results using your application's analytics or event system. Attribution describes requests; outcome tracking establishes what happened in the business workflow.
+Use this prompt after base attribution and applicable identity attribution. It learns the definitions already established, understands how AI contributes to the business, and adds only the custom dimensions and segments needed to answer concrete outcome and ROI questions.
+
+Outcome instrumentation is a follow-up when a measurement gap requires it. Request tags describe context known when the request is sent; they do not prove a later result.
 
 ## How the prompt works
 
-Business outcomes answers: **what did the workflow complete, and what did it cost?** The agent follows four stages and leaves evidence you can review at each one.
+Business outcomes answers: **which business questions should our attribution help us answer?**
 
 <Steps>
-  <Step title="Inspect: find the workflow and its source of truth">
-    Trace the existing Hicap integration, attribution, and application analytics or events. Identify where the business workflow records completion and how that record can connect to AI usage.
+  <Step title="Inspect: inherit the established model">
+    Read earlier base and identity reports, verify the actual emitted values, and trace the business workflows they describe.
 
-    **You get:** a map of outcome and cost data sources, with missing prerequisites and correlation gaps called out.
+    **You get:** an evidence-backed baseline, existing segments, and the outcomes and ROI questions the application can support.
   </Step>
-  <Step title="Decide: define what counts as done">
-    Reuse approved outcome definitions or propose definitions grounded in the workflow. Resolve ambiguous meanings before implementing tracking, and agree on the completion event, reporting window, and cost calculation.
+  <Step title="Decide: design useful dimensions and segments">
+    Map each business question to its metric, existing dimensions, necessary custom dimensions, and named segment predicates.
 
-    **You get:** a measurable definition of success. A generated support summary does not establish that a case was resolved.
+    **You get:** a justified dimension dictionary and segment specifications, with sources, allowed values, overlap rules, and measurement gaps.
   </Step>
-  <Step title="Change: record outcomes where they happen">
-    Use the application's existing analytics or event system to record actual completion and correlate it with relevant AI usage. Preserve routing, attribution, and existing data protections.
+  <Step title="Change: extend the existing attribution">
+    Add approved, source-backed custom context through the existing helper and caller boundaries. Prepare segment definitions using supported rule semantics.
 
-    **You get:** focused tracking changes and a cost-per-completed-outcome calculation where reliable data exists. Missing data remains unavailable; no Hicap outcome API is assumed.
+    **You get:** focused tagging changes and reviewable segment definitions that preserve base and identity context. Platform configuration is reported separately from proposals.
   </Step>
-  <Step title="Prove: reconcile events, usage, and cost">
-    Test real application paths with mocked workflows and provider responses. Check completion, failures, retries, duplicate events, and delayed outcomes where relevant; compare costs and outcomes within the same scope and time window.
+  <Step title="Prove: test the questions against the data">
+    Verify final outgoing tags and positive, negative, missing-value, and overlapping segment cases. Check the evidence available for each metric.
 
-    **You get:** test evidence, calculation rules, and unresolved gaps. Zero completed outcomes do not produce a cost-per-outcome value, and correlation does not establish causal business impact.
+    **You get:** tested dimensions and segment membership, plus an honest account of which ROI questions remain unanswerable.
   </Step>
 </Steps>
 
-**After the code changes:** review the definitions, diff, and report, then verify fresh outcome events and usage after your approved deployment. Mock-tested tracking is separate from observed business results. The complete prompt below defines the detailed requirements.
+**After the code changes:** verify fresh tagged traffic and configured segment behavior after approved deployment. Keep proposed segments, locally tested rules, saved platform configuration, observed outcomes, and demonstrated ROI distinct.
 
 ## Full prompt
 
-```text wrap title="Business outcomes"
-Help me connect this application's AI usage to measurable business outcomes.
+````text wrap title="Business dimensions and segments"
+Extend this application's established attribution with custom business dimensions
+and segments for understood business outcomes and ROI questions.
+Build on the base and identity steps; do not replace them with generic analytics.
 
-1. Read repository instructions and inspect existing Hicap integration,
-   attribution, business workflows, analytics, and event tracking. Reuse the
-   existing client and tags; preserve routing, models, and provider settings.
-   Identify missing prerequisites and inaccessible or unresolved paths.
+1. Learn the existing baseline before proposing changes.
+   Read repository instructions, current .hicap base-attribution and identity
+   reports, approved definitions, helper configuration, caller mappings, tests,
+   existing segment rules, and relevant product/business documentation.
+   Verify the inspected revision and actual emitted values against current code.
+   Map env, system, domain, feature, operation, agent, approved identity context,
+   and existing custom keys. Distinguish observed, approved, proposed, missing,
+   and intentionally non-applicable fields. Do not assume a report means deployed.
+   Reuse approved names and values; do not rename, overwrite, or duplicate them.
+   Require the existing Hicap client and tagging helper for implementation.
+   If missing, report the prerequisite and defer dependent tagging changes.
+   Identity is optional for workflows without users. Reuse available approved
+   customer organization, initiating user, user tier, and trigger context;
+   never recreate identities, infer user tier from organization plan, or bypass
+   the identity prompt's privacy and capability gates.
+   If identity is missing or blocked, continue questions that do not depend on it
+   and explicitly mark the affected questions unanswerable.
 
-2. Propose measurable outcomes grounded in actual workflows, such as a resolved
-   support case or a completed document review. Document each outcome's
-   definition, source of truth, completion event, reporting window, and
-   relationship to AI usage. Reuse approved definitions; ask me to resolve
-   ambiguous business definitions before implementing tracking.
-   A successful model response or feature tag is not proof of a business outcome.
+2. Understand the business before designing labels.
+   Trace the capabilities and workflows described by the established dimensions.
+   Use code, product documentation, business rules, and approved user context to
+   identify intended outcomes and why AI is used: revenue, conversion, retention,
+   service quality, labor efficiency, or risk reduction where supported.
+   Distinguish observed behavior from inferred intent; ask only for unresolved
+   business definitions that affect the design. Do not infer successful outcomes
+   or financial value from feature names or successful model responses.
+   Prioritize a small set of actionable questions; do not invent a generic taxonomy.
+   Example question, only if supported: how does AI support cost and resolution
+   rate vary by established user tier and support channel in production?
 
-3. Implement tracking using the existing analytics or event system. Record
-   actual outcomes at the owning workflow boundary and correlate them with the
-   relevant workflow and AI usage using appropriate internal identifiers.
-   Keep secrets and personal data out of attribution tags and reports. Preserve
-   existing consent, access, and retention rules. Do not invent Hicap outcome
-   APIs, new product capabilities, or unsupported attribution fields.
+3. Produce a decision table before editing.
+   For every question show:
+   business question -> outcome/ROI metric -> existing base and identity dimensions
+   -> necessary custom dimensions -> segment rules -> data sources and gaps.
+   Reuse an existing key or segment when it already answers the question.
+   A new dimension must provide a useful distinction that existing context lacks.
+   Propose low-cardinality business context such as channel, workflow stage,
+   service class, or experiment cohort only when backed by authoritative sources.
+   Avoid synonyms for feature, operation, domain, user tier, or customer organization.
+   Record unjustified candidates as rejected or deferred instead of implementing them.
 
-4. Define cost per completed outcome for the same workflow scope and time
-   window. State how retries, failed attempts, multiple model calls, duplicate
-   events, and delayed outcomes are handled. Do not divide by zero; report
-   missing costs or outcomes as unavailable rather than zero. If reliable
-   correlation or cost data is unavailable, report the gap instead of claiming
-   the metric is implemented. Do not claim causal business impact from correlation.
+4. Specify each custom dimension and each segment.
+   Dimension dictionary: key, business meaning, question served, allowed values,
+   source/provenance, service versus per-call scope, owning call sites,
+   request-time availability, expected cardinality, normalization, missing-value
+   policy, privacy classification, and merge precedence.
+   Use strings in one x-hicap-tags JSON object and respect current wire limits.
+   Preserve approved base and identity values. Do not introduce new identity
+   references here; use the identity prompt for changes to their policy or capture.
+   Never add secrets, personal identifiers, prompt text, raw URLs, request/session
+   IDs, or unbounded transaction amounts as custom business dimensions.
+   A future outcome cannot be tagged as already observed on an earlier request.
+   Later outcomes come from their source of truth; historical request tags are not
+   retroactively rewritten. Keep correlation identifiers in an approved system,
+   not ordinary high-cardinality business tags.
 
-5. Test actual application paths with mocked workflows and provider responses.
-   Check successful completion, failure, retries, duplicate delivery, and
-   correlation across asynchronous work where relevant. Separate mock-tested
-   tracking from deployed behavior and fresh observed outcomes.
-   Do not deploy or generate paid traffic without approval.
+   Segment specification: name, business question, application/environment scope,
+   explicit predicates over existing and custom dimensions, AND/OR grouping,
+   supported operators, missing-value behavior, and positive/negative examples.
+   Segments select traffic; they are not extra tags or new dimensions.
+   Verify operator semantics against the current supported platform schema.
+   Do not invent a segment API or claim unsupported predicates are configurable;
+   provide a clearly labeled logical proposal when platform capability is unknown.
+   Document overlap: a request may match multiple segments. Do not sum overlapping
+   segment costs or outcomes as if the groups were mutually exclusive.
+   Identify a disjoint partition or deduplication rule when totals are required.
+   Avoid one segment per individual user; preserve approved exact-user analysis
+   as a separate capability with its cardinality and access limitations.
+   If existing rules/configuration are inaccessible, report that limitation.
 
-Summarize changes, outcome definitions, data sources, checks, gaps, and the
-deployment and fresh-traffic verification still required. Preserve earlier
-reports and follow existing repository conventions.
-```
+5. Specify the measurement contract.
+   For each metric identify benefit/outcome definition, source of truth, unit,
+   cost scope, denominator, baseline/comparison, time window, and cohort.
+   Separate AI spend, total workflow cost, human review effort, and business benefit.
+   Cost per completion is an efficiency metric, not ROI by itself.
+   If financial ROI is proposed, define (attributable benefit - relevant cost) /
+   relevant cost, include the stated cost scope, and require evidenced benefit
+   and baseline assumptions. Otherwise label it a hypothesis, not measured ROI.
+   Address failed attempts, retries, multiple model calls, delayed outcomes,
+   duplicate events, and segment overlap. Missing data is unavailable, not zero;
+   do not divide by zero. Correlation does not establish causal impact.
+   Request tags can attribute spend to cohorts; actual outcome denominators and
+   benefits require separately verified sources. Do not put an achieved outcome
+   or monetary return on a request merely because it is the workflow's goal.
 
-Review the resulting changes before deploying. Start with [client setup](/onboarding-prompts/configure-client) and [attribution](/onboarding-prompts/attribution) if those prerequisites are missing. Return to the [Quickstart](/quickstart).
+6. Implement only justified changes.
+   Extend the existing helper and trusted caller context for approved, source-backed
+   custom values. Preserve routes, models, credentials, provider settings,
+   fallback behavior, existing base/identity values, and reviewed merge precedence.
+   Keep per-call context immutable across concurrent work, queues, and retries.
+   Send tags only on Hicap-bound requests; other providers receive no Hicap key
+   or attribution headers.
+   Prepare versioned, reviewable segment definitions using existing repository
+   conventions. Distinguish a logical proposal from a platform-ready definition
+   and a saved platform segment. Do not change live dashboard rules without authorization.
+   New outcome-event instrumentation is conditional: propose it only for an
+   identified measurement gap. Reuse existing analytics/events first; do not
+   turn this task into a general analytics migration. Report unsupported work.
+
+7. Verify and hand off with evidence.
+   Use mocked provider responses and synthetic workflow fixtures; block unexpected
+   network calls and await concurrent work and retries.
+   Capture final outgoing headers from real application functions. Assert base
+   and identity values are preserved, custom values belong to the correct caller,
+   and non-Hicap destinations receive no Hicap tags or credentials.
+   Derive expected values from independent workflow evidence, not emitted tags
+   or the implementation registry. Demonstrate a negative control: swapped or
+   missing business context must fail; restore correct code afterward.
+   Test segment membership with positive, negative, missing-dimension, and
+   overlapping fixtures, including AND/OR precedence and tenant/tier boundaries
+   where relevant. A locally correct rule does not prove platform configuration.
+   Check metric calculations against the stated denominator, scope, zero cases,
+   retries, duplicates, and overlap without inventing observed business results.
+
+   Save a new .hicap business-outcomes report, preserving previous reports.
+   Include source/prompt revisions, inherited baseline, the decision table,
+   dimension dictionary, segment definitions and examples, measurement contracts,
+   implementation/coverage evidence, tests, rejected candidates, and blockers.
+   Use synthetic/redacted examples. Show the exact report path.
+   Distinguish configured source, mocked outgoing tags, fresh recorded dimensions,
+   tested segment rules, saved platform segments, observed outcomes, and verified
+   ROI evidence. Report precisely which questions can and cannot be answered.
+   Do not deploy, generate paid traffic, expose new identifiers, or change live
+   dashboard rules without applicable authorization.
+````
+
+Review [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments). Start with [base attribution](/onboarding-prompts/attribution) and [identity](/onboarding-prompts/identity) where applicable, or return to the [Quickstart](/quickstart).
