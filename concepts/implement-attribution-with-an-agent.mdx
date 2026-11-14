@@ -15,7 +15,7 @@ Use these prompts with a coding agent that can read and edit your application. T
 | [Configure the Hicap client](#1-configure-the-client) | Model calls are not yet routed through Hicap | Client configuration, supported inference routes and routing checks |
 | [Set up attribution](#2-set-up-attribution) | You want a complete pass across existing Hicap requests | A workflow inventory, shared attribution and caller-specific dimensions |
 | [Add identity attribution](#3-add-identity-attribution) | You need the triggering customer organization, user, and user tier | Trusted identity sources, scoped propagation, and verified identifier handling |
-| [Connect business outcomes](#4-connect-business-outcomes) | Base attribution and applicable identity context are established | Outcome definitions, application event tracking, and cost per completed outcome |
+| [Define business dimensions and segments](#4-define-business-dimensions-and-segments) | Base attribution and applicable identity context are established | Justified custom dimensions, segment rules, and measurement contracts for ROI questions |
 | [Tagging helper](#focused-prompts) | You need a reusable way to build and attach tags | Existing Hicap tag handling, merge behavior and request isolation |
 | [Base dimensions](#focused-prompts) | Service-wide values need to be configured | Evidence-backed deployment, system and domain defaults using an existing helper |
 | [Per-call features](#focused-prompts) | Different workflows or steps need distinct attribution | Caller-specific feature, operation, role and other applicable values |
@@ -35,7 +35,7 @@ The agent works within your repository and may update code, tests, configuration
 - Use an SDK or adapter that supports the API workflows and Hicap capabilities your application needs. Decide which workflows should use Hicap. The agent inventories API families and reports compatibility it cannot establish; an OpenAI-compatible client alone does not establish support for every endpoint or model.
 - For the attribution prompts, configure the Hicap client first. Read [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments) for how request dimensions work.
 
-- For business outcomes, identify the application's existing analytics or event system and any approved outcome definitions. The agent reports missing tracking or cost data rather than inventing results.
+- For business outcomes, provide the prior base and identity reports, approved business definitions, and any existing segment rules or measurement sources. Missing identity blocks only the questions that depend on it.
 
 Each linked prompt page explains the stages, deliverables, and verification boundaries in detail.
 
@@ -75,9 +75,9 @@ Read https://docs.hicap.ai/onboarding-prompts/identity and help me set this up.
 
 [Review the full identity prompt](/onboarding-prompts/identity).
 
-## 4. Connect business outcomes
+## 4. Define business dimensions and segments
 
-Measure what the workflow actually completed. Reuse your application's analytics or event system to record agreed outcomes, correlate them with AI usage, and define cost per completed outcome. A generated support summary is not evidence that the case was resolved.
+Learn the base dimensions and approved identity context from the previous steps, then map understood business outcomes and ROI questions to justified custom dimensions and segments. Reuse existing measurements and identify evidence gaps; new event tracking is a follow-up only when needed.
 
 ```text wrap title="Business outcomes"
 Read https://docs.hicap.ai/onboarding-prompts/business-outcomes and help me set this up.
@@ -129,7 +129,7 @@ The agent should leave a report in your repository's `.hicap` directory, preserv
 4. **Verify fresh traffic.** After your deployment and any approved live tests, select the right application, environment and time window in Hicap. Compare fresh recorded usage with the expected workflows and dimensions; older requests retain their original tags. An **Unattributed Traffic** group can indicate missing expected dimensions. See [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments).
 
 5. **Verify identity.** Confirm trusted initiating organization, user, and user tier; test tenant/caller isolation and continuity through retries and queues. Distinguish emitted identity from verified storage and per-user reporting. Record workflows without a user as not applicable.
-6. **Verify outcomes.** Check completion events against the application's agreed source of truth and reconcile costs over the same workflow scope and time window. Account for retries and duplicate events; report missing data as unavailable. A passing mock does not establish a real business outcome.
+6. **Verify business dimensions and segments.** Check that new keys serve a specific business question, preserve the inherited context, and use source-backed values. Test segment membership, missing values, and overlap. Separate locally tested rules from saved platform segments, and available outcome evidence from unproven ROI assumptions.
 
 <CardGroup cols={2}>
   <Card title="Developer Quickstart" icon="rocket" href="/quickstart">
