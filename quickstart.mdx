@@ -1,24 +1,78 @@
 ---
 title: 'Developer Quickstart'
-description: 'Make your first Hicap API request in minutes'
+description: 'Set up your client, base attribution, identity, and business outcomes with four linked agent prompts'
 icon: 'rocket'
 ---
 
-The Hicap API gives you access to foundation models from OpenAI, Anthropic, Google Gemini, and more — through a single OpenAI-compatible endpoint. Use any standard OpenAI SDK and start building in under 5 minutes.
+A model response is the beginning. Set up Hicap so you can trace AI usage to the workflow that generated it and measure what that workflow completed.
 
-## 1. Get your API key
+Start with four prompts: connect the client, establish base attribution, add identity where applicable, and define business outcomes. Hicap provides a shared API for supported models; use a compatible SDK with the Hicap base URL and required `api-key` header.
+
+## Set up with an agent
+
+Open your application repository in your coding agent, then run these four prompts in order. Identity is optional for workflows without a triggering user; document that finding and continue. Each links to the full, maintained instructions.
+
+### 1. Configure the client
+
+Get your requests to the right place. Route supported model calls through Hicap and verify client configuration.
+
+```text wrap title="Client setup"
+Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set this up.
+```
+
+[Review the full client setup prompt](/onboarding-prompts/configure-client).
+
+### 2. Set up base attribution
+
+Give the bill some context. Identify the feature, operation, and other applicable dimensions behind each request, then verify the outgoing tags.
+
+```text wrap title="Attribution"
+Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this up.
+```
+
+[Review the full attribution prompt](/onboarding-prompts/attribution).
+
+### 3. Add identity attribution
+
+Know who triggered the work. Reuse the trusted initiating user and any applicable organization or tier context. Users-only apps need no organization; apps without personal tiers omit tier. Verify synthetic propagation locally and permitted production identifier handling separately; never substitute a worker account for the initiating user.
+
+```text wrap title="Identity attribution"
+Read https://docs.hicap.ai/onboarding-prompts/identity and help me set this up.
+```
+
+[Review the full identity prompt](/onboarding-prompts/identity).
+
+### 4. Connect business outcomes
+
+Decide what is worth measuring. Build on the established dimensions and applicable identity to discover useful business questions, custom dimensions, and segments. Connect verified costs to actual outcomes where supported. A generated support summary does not mean the case was resolved.
+
+```text wrap title="Business outcomes"
+Read https://docs.hicap.ai/onboarding-prompts/business-outcomes and help me set this up.
+```
+
+[Review the full business outcomes prompt](/onboarding-prompts/business-outcomes).
+
+You'll need an API key from the [Hicap Platform dashboard ↗](https://platform.hicap.ai/). Keep it in server-side configuration; do not paste it into a prompt.
+
+## Manual client setup
+
+Prefer to configure the client yourself? Follow the examples below, then use the base attribution, identity, and business outcomes prompts to extend the setup.
+
+### 1. Get your API key
 
 <Note>
   **Opens the Hicap Platform** — You'll create an account and generate an API key in the [Hicap Platform dashboard ↗](https://platform.hicap.ai/). Then come back here to use it.
 </Note>
 
-Export it as an environment variable:
+Keep the key on your server. Export it as an environment variable; never put it in browser code or a public environment variable:
 
 ```bash
 export HICAP_API_KEY="your_api_key_here"
 ```
 
-## 2. Install an SDK and make your first request
+### 2. Install an SDK and make your first request
+
+Use this fictional support case to check the connection. The examples use `gpt-5`; confirm model availability and endpoint support for your key before running them. A live request consumes usage.
 
 <Tabs>
   <Tab title="JavaScript">
@@ -37,7 +91,7 @@ export HICAP_API_KEY="your_api_key_here"
 
     const response = await client.chat.completions.create({
       model: "gpt-5",
-      messages: [{ role: "user", content: "Write a one-sentence bedtime story about a unicorn." }],
+      messages: [{ role: "user", content: "Summarize this support case in one sentence: A customer was charged twice for one order. Support confirmed the duplicate charge; a refund is pending." }],
     });
 
     console.log(response.choices[0].message.content);
@@ -62,7 +116,7 @@ export HICAP_API_KEY="your_api_key_here"
 
     response = client.chat.completions.create(
         model="gpt-5",
-        messages=[{"role": "user", "content": "Write a one-sentence bedtime story about a unicorn."}],
+        messages=[{"role": "user", "content": "Summarize this support case in one sentence: A customer was charged twice for one order. Support confirmed the duplicate charge; a refund is pending."}],
     )
 
     print(response.choices[0].message.content)
@@ -77,151 +131,47 @@ export HICAP_API_KEY="your_api_key_here"
       -H "api-key: $HICAP_API_KEY" \
       -d '{
         "model": "gpt-5",
-        "messages": [{"role": "user", "content": "Write a one-sentence bedtime story about a unicorn."}]
+        "messages": [{"role": "user", "content": "Summarize this support case in one sentence: A customer was charged twice for one order. Support confirmed the duplicate charge; a refund is pending."}]
       }'
     ```
   </Tab>
 </Tabs>
 
-That's it — you just called the Hicap API. The same code works with any [supported model](https://hicap.ai/models); just change the `model` parameter.
+### 3. Check what the response proves
 
----
+A successful response proves the connection worked for this request. It does not yet prove that every application workflow uses Hicap, that its usage is attributed, or that the support case was resolved.
 
-## Switch between models and providers
+For this example, inspect the summary: it should preserve the fact that the refund is pending. Then use the [attribution prompt](/onboarding-prompts/attribution) to identify the support feature and summarization operation in your actual application. Use the [business outcomes prompt](/onboarding-prompts/business-outcomes) to track the workflow's agreed completion event from its source of truth.
 
-One API, any model. Use OpenAI, Anthropic, or Gemini models through the same endpoint and SDK — no separate integrations needed.
+## Changing the model is easy. Knowing you should takes evidence.
 
-```python
-# OpenAI
-client.chat.completions.create(model="gpt-5", messages=[...])
+Compare models on the same representative support cases. Check whether each preserves the facts, how long a usable result takes, and what the completed workflow costs. Confirm support for your endpoint, tools, streaming, and other required parameters before switching.
 
-# Anthropic Claude
-client.chat.completions.create(model="claude-sonnet-4.5", messages=[...])
+The cheapest token can produce the most expensive result. Retries, extra model calls, and human corrections all affect the economics. Track AI cost per completed outcome and human review effort separately; token price alone cannot tell you whether a workflow is cheaper.
 
-# Google Gemini
-client.chat.completions.create(model="gemini-2.5-pro", messages=[...])
+Choose an exact model ID from [the models endpoint](/api-reference/endpoints/openAI/lists-available-models), and use the [model catalog](https://hicap.ai/models) to compare options.
 
-# Moonshot Kimi
-client.chat.completions.create(model="kimi-k2.5", messages=[...])
-```
+## Add capabilities when the workflow needs them
 
-See all available models, context windows, and pricing → [All Models](https://hicap.ai/models) or [models.json](https://hicap.ai/models.json)
+Keep the first integration small. Add image input when a support case includes a screenshot, or streaming when showing a partial answer helps the person waiting.
 
----
+- **Images:** Follow the [chat completions reference](/api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message) for request structure and confirm that the selected model supports image input.
+- **Streaming:** The first token isn't the finish line. Measure time to a usable result and track interrupted responses alongside time to first token. See the [streaming guide](/api-reference/introduction#streaming).
+- **Other endpoints:** Use the [API reference](/api-reference/introduction#endpoints) to find the request shape for your workflow, then verify model and endpoint compatibility.
 
-## Analyze images
+## Make one real workflow explain its bill
 
-Send image URLs directly to vision-capable models:
+Run a workflow you recognize. Check which model calls it made, which feature and operation they belong to, and what the workflow actually completed.
 
-```javascript
-const response = await client.chat.completions.create({
-  model: "gpt-5",
-  messages: [{
-    role: "user",
-    content: [
-      { type: "text", text: "What is in this image?" },
-      { type: "image_url", image_url: { url: "https://example.com/photo.jpg" } },
-    ],
-  }],
-});
+A response proves the model answered. Attribution tells you where the usage belongs. An outcome record tells you whether the work got done.
 
-console.log(response.choices[0].message.content);
-```
+Before expanding, verify one workflow from request to result:
 
----
+1. **Trace the requests.** Confirm which calls reach Hicap, including retries and follow-up calls. Record paths that remain elsewhere or are unverified.
+2. **Inspect fresh attribution.** Select the right application, environment, and time window in Hicap. Check the expected feature, operation, and other applicable dimensions; older traffic retains its original tags.
+3. **Check the actual outcome.** Use the application's agreed source of truth. A support summary is an intermediate result; case resolution needs its own evidence.
+4. **Reconcile the cost.** Compare usage and completed outcomes for the same workflow scope and reporting window. Account for failed attempts and retries. Report missing data as unavailable, and avoid dividing by zero when no outcomes have completed.
 
-## Stream responses
+Start with one workflow you can explain from request to result. Expand from there.
 
-Use server-sent events to show results as they're generated:
-
-```javascript
-const stream = await client.chat.completions.create({
-  model: "gpt-5",
-  messages: [{ role: "user", content: "Explain quantum computing in simple terms." }],
-  stream: true,
-});
-
-for await (const chunk of stream) {
-  process.stdout.write(chunk.choices[0]?.delta?.content || "");
-}
-```
-
----
-
-## Popular endpoints
-
-These are the most commonly used Hicap API endpoints. All follow the [OpenAI API spec](/api-reference/introduction) — if you've used the OpenAI API before, you already know how to use these.
-
-| Endpoint | Description | Docs |
-| --- | --- | --- |
-| `POST /v1/chat/completions` | Generate text, analyze images, use tools | [Reference →](/api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message) |
-| `POST /v1/embeddings` | Create text embeddings for search and RAG | [Reference →](/api-reference/introduction#supported-endpoints) |
-| `POST /v1/images/generations` | Generate images with DALL·E | [Reference →](/api-reference/introduction#supported-endpoints) |
-| `POST /v1/audio/transcriptions` | Transcribe audio with Whisper | [Reference →](/api-reference/introduction#supported-endpoints) |
-| `POST /v1/audio/speech` | Generate speech from text | [Reference →](/api-reference/introduction#supported-endpoints) |
-
-[Full API Reference →](/api-reference/introduction)
-
----
-
-## Models
-
-Start with `gpt-5` for strong general-purpose performance, or pick a model optimized for your use case.
-
-<CardGroup cols={3}>
-  <Card title="GPT-5.5" icon="bolt" href="/providers/openai#gpt-5-5">
-    OpenAI's latest flagship model for top-tier reasoning, coding, and multimodal work.
-  </Card>
-  <Card title="Claude Opus 4.6" icon="brain" href="/providers/anthropic#claude-opus-4-6">
-    Anthropic's flagship. Deep reasoning, coding, and analysis.
-  </Card>
-  <Card title="Gemini 3.1 Pro" icon="sparkles" href="/providers/google#gemini-3-1-pro">
-    Google's latest. 1M context, strong multimodal and reasoning.
-  </Card>
-  <Card title="GPT-5-mini" icon="gauge-high" href="/providers/openai#gpt-5-mini">
-    Fast and affordable. Great balance of performance and cost.
-  </Card>
-  <Card title="Claude Haiku 4.5" icon="feather" href="/providers/anthropic#claude-haiku-4-5">
-    Ultra-fast. Ideal for high-volume, latency-sensitive workloads.
-  </Card>
-  <Card title="Gemini 2.5 Flash" icon="bolt" href="/providers/google#gemini-2-5-flash">
-    Cost-efficient with thinking capabilities. Great for real-time apps.
-  </Card>
-</CardGroup>
-
-[View all models →](https://hicap.ai/models)
-
----
-
-## Why Hicap?
-
-<CardGroup cols={2}>
-  <Card title="Up to 25% lower cost" icon="piggy-bank">
-    We bulk-reserve compute from leading cloud providers and pass the savings to you.
-  </Card>
-  <Card title="One API, all providers" icon="plug">
-    OpenAI, Anthropic, Gemini, Moonshot, Zhipu, MiniMax — all through one OpenAI-compatible endpoint.
-  </Card>
-  <Card title="5-minute integration" icon="clock">
-    Use the standard OpenAI SDK. Change the base URL. You're done.
-  </Card>
-  <Card title="No lock-in" icon="lock-open">
-    Start monthly, scale anytime. Switch models with a single parameter change.
-  </Card>
-</CardGroup>
-
----
-
-## Next steps
-
-<CardGroup cols={3}>
-  <Card title="API Reference" icon="code" href="/api-reference/introduction">
-    Full endpoint docs, authentication, and request/response schemas.
-  </Card>
-  <Card title="All Models" icon="table" href="https://hicap.ai/models">
-    Compare all models by provider, tier, context window, and pricing.
-  </Card>
-  <Card title="FAQ" icon="question" href="/faq">
-    Common questions about pricing, security, architecture, and data handling.
-  </Card>
-</CardGroup>
+For deeper guidance, see [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments), [agent setup and verification](/concepts/implement-attribution-with-an-agent), and the [FAQ](/faq).

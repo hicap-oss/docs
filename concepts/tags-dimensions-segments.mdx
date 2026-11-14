@@ -98,6 +98,29 @@ Note that you don't need a dimension for which Application a request came from â
 
 This is a convention and a good practice, not an enforced API restriction: enforcement is caller-side today, so it's up to your client to apply these consistently.
 
+## Identity dimensions
+
+Identity context describes who initiated application work. It complements the six starter dimensions; it does not replace them or Hicap's provisioned Organization, Application, Connection, or Key.
+
+| Context | Meaning | Source |
+| --- | --- | --- |
+| Customer organization, when applicable | The tenant in which the initiating user is acting | Server-validated active membership and authorization; omitted in users-only apps |
+| Initiating user | The person who started the workflow, not its worker or AI agent | Trusted authenticated session |
+| User tier, when applicable | That user's entitlement when the workflow began | Authoritative entitlement scoped to the user and, where applicable, the active tenant |
+| Trigger type | User action, scheduled work, or system event | Existing workflow entrypoint |
+
+Reuse approved field names. When none exist, `customer_org`, `end_user`, `user_tier`, and `trigger` are possible application conventions, not reserved fields. Keep user tier separate from organization plan, wallet balance, and model tier. Preserve the initiating snapshot through delayed jobs and retries while continuing to enforce current authorization.
+
+Organization and tier are independently optional. A users-only app can attribute its initiating user without creating a tenant. An app without personal tiers omits `user_tier`; a shared organization plan may instead be assessed as a separate `organization_plan` business dimension. Missing or blocked context in one field does not suppress other independently permitted fields. Continue enforcing the application's actual user/resource and tenant authorization.
+
+Ordinary descriptive tags must not contain direct personal identifiers, secrets, or arbitrary high-cardinality request/session IDs. For production emission, a narrow exception permits approved opaque organization/user references only after verifying the destination's identity handling, access scoped to the application's actual user/tenant model, retention/deletion, and reporting capability. Opaque values can still be personal data. A tag never grants access.
+
+Custom string dimensions do not by themselves establish complete per-user reporting. Dimension pickers may expose only a capped set of recent values; verify exact filtering and reporting at the expected cardinality separately. If a required capability or identity policy is unresolved, omit new affected identifier emissions and report the gap. Anonymous or system work must not be assigned an invented user.
+
+Explicitly approved synthetic local tests may verify applicable identity capture and serialization through real application callers with a fail-closed mock transport before production capabilities are established. Use invented test-only references, never real identifiers or their hashes. Test the production emission gate separately: a synthetic flag or test environment name must not enable live emission. Local success proves neither production permission nor destination handling.
+
+Use the [identity attribution prompt](/onboarding-prompts/identity) to assess and implement this context.
+
 ## Segments
 
 A segment is a named combination of tags. For example, a segment might select every request where the `env` dimension is `production` and the `locale` dimension starts with a European country code. You define the rule once, give it a name, and use it everywhere you report on traffic.
