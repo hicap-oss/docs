@@ -98,6 +98,25 @@ Note that you don't need a dimension for which Application a request came from â
 
 This is a convention and a good practice, not an enforced API restriction: enforcement is caller-side today, so it's up to your client to apply these consistently.
 
+## Identity dimensions
+
+Identity context describes who initiated application work. It complements the six starter dimensions; it does not replace them or Hicap's provisioned Organization, Application, Connection, or Key.
+
+| Context | Meaning | Source |
+| --- | --- | --- |
+| Customer organization | The tenant in which the initiating user is acting | Server-validated active membership and authorization |
+| Initiating user | The person who started the workflow, not its worker or AI agent | Trusted authenticated session |
+| User tier | That user's entitlement when the workflow began | Authoritative user entitlement in the active tenant |
+| Trigger type | User action, scheduled work, or system event | Existing workflow entrypoint |
+
+Reuse approved field names. When none exist, `customer_org`, `end_user`, `user_tier`, and `trigger` are possible application conventions, not reserved fields. Keep user tier separate from organization plan, wallet balance, and model tier. Preserve the initiating snapshot through delayed jobs and retries while continuing to enforce current authorization.
+
+Ordinary descriptive tags must not contain direct personal identifiers, secrets, or arbitrary high-cardinality request/session IDs. A narrow exception permits approved opaque organization/user references only after verifying the destination's identity handling, tenant-scoped access, retention/deletion, and reporting capability. Opaque values can still be personal data. A tag never grants access.
+
+Custom string dimensions do not by themselves establish complete per-user reporting. Dimension pickers may expose only a capped set of recent values; verify exact filtering and reporting at the expected cardinality separately. If a required capability or identity policy is unresolved, omit new affected identifier emissions and report the gap. Anonymous or system work must not be assigned an invented user.
+
+Use the [identity attribution prompt](/onboarding-prompts/identity) to assess and implement this context.
+
 ## Segments
 
 A segment is a named combination of tags. For example, a segment might select every request where the `env` dimension is `production` and the `locale` dimension starts with a European country code. You define the rule once, give it a name, and use it everywhere you report on traffic.

@@ -117,7 +117,12 @@ Hicap attribution contract:
   with "unknown", "default", "none" or fake values just to clear a chart.
   If non-agent calls need an explicit reporting value, propose a documented
   convention and get approval before emitting it. Never tag secrets, prompts,
-  personal identifiers, raw URLs or high-cardinality request/session IDs.
+  direct personal identifiers, raw URLs or high-cardinality request/session IDs.
+  Preserve approved opaque organization/user references established by the
+  identity prompt; do not add new identity fields in this base-attribution task.
+  That narrow exception requires verified privacy, storage and reporting
+  handling. Read https://docs.hicap.ai/onboarding-prompts/identity for the
+  identity contract; an opaque reference can still be personal data.
 
 4. Verify the integration, including the paths that previously lacked tags.
 
