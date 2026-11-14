@@ -4,17 +4,17 @@ description: 'Set up your client, base attribution, identity, and business outco
 icon: 'rocket'
 ---
 
-A model response is the beginning. Set up Hicap so you can trace AI usage to the workflow that generated it and measure what that workflow completed.
+Set up Hicap to route model requests, attribute usage to your application, and define the business outcomes you want to measure. Hicap provides a shared API for supported models using a compatible SDK and the `api-key` header.
 
-Start with four prompts: connect the client, establish base attribution, add identity where applicable, and define business outcomes. Hicap provides a shared API for supported models; use a compatible SDK with the Hicap base URL and required `api-key` header.
+You'll need a Hicap API key from the [Hicap Platform dashboard](https://platform.hicap.ai/) and access to your application repository. Keep the key on your server; don't paste it into an agent prompt.
 
 ## Set up with an agent
 
-Open your application repository in your coding agent, then run these four prompts in order. Identity is optional for workflows without a triggering user; document that finding and continue. Each links to the full, maintained instructions.
+Open your application repository in your coding agent, then run these four prompts in order. The identity prompt assesses user, organization, tier, and trigger context independently; omit fields that don't apply. Each prompt links to its full instructions.
 
 ### 1. Configure the client
 
-Get your requests to the right place. Route supported model calls through Hicap and verify client configuration.
+Route supported model requests through Hicap and verify the client configuration.
 
 ```text wrap title="Client setup"
 Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set this up.
@@ -24,7 +24,7 @@ Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set t
 
 ### 2. Set up base attribution
 
-Give the bill some context. Identify the feature, operation, and other applicable dimensions behind each request, then verify the outgoing tags.
+Identify the feature, operation, and other relevant dimensions for each request, then verify the outgoing tags.
 
 ```text wrap title="Attribution"
 Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this up.
@@ -34,7 +34,7 @@ Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this u
 
 ### 3. Add identity attribution
 
-Know who triggered the work. Reuse the trusted initiating user and any applicable organization or tier context. Users-only apps need no organization; apps without personal tiers omit tier. Verify synthetic propagation locally and permitted production identifier handling separately; never substitute a worker account for the initiating user.
+Assess the initiating user and any applicable organization, tier, and trigger context. Users-only apps need no organization; apps without personal tiers omit tier. Verify identity propagation with synthetic data, and use production identifiers only when their handling is approved and verified.
 
 ```text wrap title="Identity attribution"
 Read https://docs.hicap.ai/onboarding-prompts/identity and help me set this up.
@@ -44,15 +44,13 @@ Read https://docs.hicap.ai/onboarding-prompts/identity and help me set this up.
 
 ### 4. Connect business outcomes
 
-Decide what is worth measuring. Build on the established dimensions and applicable identity to discover useful business questions, custom dimensions, and segments. Connect verified costs to actual outcomes where supported. A generated support summary does not mean the case was resolved.
+Use the established dimensions and applicable identity to identify business questions, custom dimensions, and segments worth measuring. Connect costs to outcomes only when the required data and contracts are verified.
 
 ```text wrap title="Business outcomes"
 Read https://docs.hicap.ai/onboarding-prompts/business-outcomes and help me set this up.
 ```
 
 [Review the full business outcomes prompt](/onboarding-prompts/business-outcomes).
-
-You'll need an API key from the [Hicap Platform dashboard](https://platform.hicap.ai/). Keep it in server-side configuration; do not paste it into a prompt.
 
 ## Manual client setup
 
@@ -141,13 +139,13 @@ Use this fictional support case to check the connection. The examples use `gpt-5
 
 A successful response proves the connection worked for this request. It does not yet prove that every application workflow uses Hicap, that its usage is attributed, or that the support case was resolved.
 
-For this example, inspect the summary: it should preserve the fact that the refund is pending. Then use the [attribution prompt](/onboarding-prompts/attribution) to identify the support feature and summarization operation in your actual application. Use the [business outcomes prompt](/onboarding-prompts/business-outcomes) to track the workflow's agreed completion event from its source of truth.
+For this example, check that the summary says the refund is pending. Then use the [attribution prompt](/onboarding-prompts/attribution) to identify the feature and operation in your application. Use the [business outcomes prompt](/onboarding-prompts/business-outcomes) to identify the agreed completion event and its source of truth.
 
 ## Use evidence to choose the right model
 
-Compare models on the same representative support cases. Check whether each preserves the facts, how long a usable result takes, and what the completed workflow costs. Confirm support for your endpoint, tools, streaming, and other required parameters before switching.
+Compare models on the same representative tasks. Measure output quality, time to a usable result, model cost, retries, and human review effort. Confirm support for your endpoint, tools, streaming, and other required parameters before switching.
 
-The cheapest token can produce the most expensive result. Retries, extra model calls, and human corrections all affect the economics. Track AI cost per completed outcome and human review effort separately; token price alone cannot tell you whether a workflow is cheaper.
+When reliable cost and outcome records are available, compare AI cost per completed outcome and human review effort for the same workflow and reporting period.
 
 Choose an exact model ID from [the models endpoint](/api-reference/endpoints/openAI/lists-available-models), and use the [model catalog](https://hicap.ai/models) to compare options.
 
@@ -156,21 +154,21 @@ Choose an exact model ID from [the models endpoint](/api-reference/endpoints/ope
 Keep the first integration small. Add image input when a support case includes a screenshot, or streaming when showing a partial answer helps the person waiting.
 
 - **Images:** Follow the [chat completions reference](/api-reference/endpoints/openAI/creates-a-completion-for-the-chat-message) for request structure and confirm that the selected model supports image input.
-- **Streaming:** The first token isn't the finish line. Measure time to a usable result and track interrupted responses alongside time to first token. See the [streaming guide](/api-reference/introduction#streaming).
+- **Streaming:** Measure both time to first token and time to a usable result. Track interrupted responses separately. See the [streaming guide](/api-reference/introduction#streaming).
 - **Other endpoints:** Use the [API reference](/api-reference/introduction#endpoints) to find the request shape for your workflow, then verify model and endpoint compatibility.
 
-## Make one real workflow explain its bill
+## Verify one workflow end to end
 
 Run a workflow you recognize. Check which model calls it made, which feature and operation they belong to, and what the workflow actually completed.
 
-A response proves the model answered. Attribution tells you where the usage belongs. An outcome record tells you whether the work got done.
+A successful response confirms that the request worked. Attribution helps you see where usage belongs. An outcome record shows whether the work was completed.
 
 Before expanding, verify one workflow from request to result:
 
 1. **Trace the requests.** Confirm which calls reach Hicap, including retries and follow-up calls. Record paths that remain elsewhere or are unverified.
 2. **Inspect fresh attribution.** Select the right application, environment, and time window in Hicap. Check the expected feature, operation, and other applicable dimensions; older traffic retains its original tags.
 3. **Check the actual outcome.** Use the application's agreed source of truth. A support summary is an intermediate result; case resolution needs its own evidence.
-4. **Reconcile the cost.** Compare usage and completed outcomes for the same workflow scope and reporting window. Account for failed attempts and retries. Report missing data as unavailable, and avoid dividing by zero when no outcomes have completed.
+4. **Reconcile the cost.** When complete, comparable records are available, compare usage and completed outcomes for the same workflow scope and reporting window. Account for failed attempts and retries. Report missing data as unavailable, and avoid dividing by zero when no outcomes have completed.
 
 Start with one workflow you can explain from request to result. Expand from there.
 
