@@ -8,15 +8,34 @@ Use this prompt for a complete attribution pass after your Hicap client is confi
 
 This prompt uses the existing Hicap client and preserves routing, models and provider options. If the client is missing, start with [client setup](/onboarding-prompts/configure-client).
 
-## Decision flow
+## How the prompt works
 
-This diagram summarizes the intended decisions in the prompt. “Value supported” means a value is grounded in the application and its approved conventions. Preserve reviewed existing tags; do not invent missing values. The complete instruction below is the source of truth.
+Attribution answers: **which workflow does each request belong to, and what proves it?** The agent follows four stages and leaves evidence you can review at each one.
 
-<img
-  src="/images/onboarding-prompts/attribution-decisions-portrait.png"
-  alt="Attribution checks for an existing Hicap client, then maps workflows and adds supported dimensions or reports gaps; when no client exists, it reports the prerequisite and skips tagging."
-  className="mx-auto h-auto max-h-64 w-auto max-w-full"
-/>
+<Steps>
+  <Step title="Inspect: find the client and its callers">
+    Identify existing Hicap routes and map their workflows, current tags, and service defaults. Inventory other provider paths separately.
+
+    **You get:** an attribution coverage map. If no Hicap client exists, stop tagging work and use the client setup prompt first.
+  </Step>
+  <Step title="Decide: ground each label in evidence">
+    Assess Env, Feature, Operation, System, Agent, and Domain using the code and approved application conventions. Distinguish observed values from proposed meanings.
+
+    **You get:** each value's source and scope, with missing values classified as a bug, unresolved configuration, or not applicable. Do not invent labels to fill a chart.
+  </Step>
+  <Step title="Change: attach context where it belongs">
+    Preserve reviewed tags, set service defaults in configuration, and attach feature, operation, and role context at the caller. Carry context through retries and queues where they exist.
+
+    **You get:** focused tagging changes on existing Hicap requests. Routing, models, credentials, and other providers remain unchanged.
+  </Step>
+  <Step title="Prove: match every request to its workflow">
+    Capture final outgoing requests from real application paths using mocked responses. Check the expected tags for each caller; a swapped or missing expected tag must fail a test.
+
+    **You get:** a coverage report with emitted values, test evidence, and unresolved gaps. Valid JSON alone does not prove correct attribution.
+  </Step>
+</Steps>
+
+**After the code changes:** review the report and diff, then verify fresh traffic after your approved deployment. Keep source configuration, mock-tested requests, live responses, and recorded Hicap attribution as separate evidence levels. The complete prompt below defines the detailed requirements.
 
 ## Full prompt
 
