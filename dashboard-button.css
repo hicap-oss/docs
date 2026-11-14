@@ -1,0 +1,29 @@
+/* Keep the primary navigation action legible on its mint background. */
+#topbar-cta-button > a {
+  background-color: #60e8ce;
+  color: #102725;
+}
+
+#topbar-cta-button > a span {
+  color: inherit;
+}
+
+#topbar-cta-button > a:hover {
+  background-color: #9af2df;
+  opacity: 1;
+}
+
+#topbar-cta-button > a:focus-visible {
+  outline: 3px solid #280e87;
+  outline-offset: 3px;
+}
+
+.dark #topbar-cta-button > a:focus-visible {
+  outline-color: #9af2df;
+}
+
+@media (forced-colors: active) {
+  #topbar-cta-button > a:focus-visible {
+    outline-color: ButtonText;
+  }
+}
