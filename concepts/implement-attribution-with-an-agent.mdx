@@ -14,8 +14,8 @@ Use these prompts with a coding agent that can read and edit your application. T
 | --- | --- | --- |
 | [Configure the Hicap client](#1-configure-the-client) | Model calls are not yet routed through Hicap | Client configuration, supported inference routes and routing checks |
 | [Set up attribution](#2-set-up-attribution) | You want a complete pass across existing Hicap requests | A workflow inventory, shared attribution and caller-specific dimensions |
-| [Add identity attribution](#3-add-identity-attribution) | You need the triggering customer organization, user, and user tier | Trusted identity sources, scoped propagation, and verified identifier handling |
-| [Connect business outcomes](#4-connect-business-outcomes) | Base attribution and applicable identity context are established | Outcome definitions, application event tracking, and cost per completed outcome |
+| [Add identity attribution](#3-add-identity-attribution) | You need the initiating user and any applicable organization or tier | Trusted sources, optional fields, synthetic verification, and permitted production handling |
+| [Connect business outcomes](#4-connect-business-outcomes) | Base attribution and applicable identity context are established | Business questions, custom dimensions, segments, and supported cost/outcome associations |
 | [Tagging helper](#focused-prompts) | You need a reusable way to build and attach tags | Existing Hicap tag handling, merge behavior and request isolation |
 | [Base dimensions](#focused-prompts) | Service-wide values need to be configured | Evidence-backed deployment, system and domain defaults using an existing helper |
 | [Per-call features](#focused-prompts) | Different workflows or steps need distinct attribution | Caller-specific feature, operation, role and other applicable values |
@@ -67,7 +67,7 @@ For example, the same service might use `operation: rewrite-question` for one mo
 
 ## 3. Add identity attribution
 
-Learn the established base dimensions, then carry the triggering customer organization, user, and user tier from trusted authentication and entitlement sources through existing workflows. Verify privacy and reporting support before emitting opaque identifiers. Workflows without a user retain their actual trigger context.
+Learn the established base dimensions, then carry each applicable identity field from trusted sources. Users-only apps omit organization; apps without personal tiers omit tier. One absent field must not block the others. Verify approved synthetic propagation locally and gate production identifier emission separately. Workflows without a user retain their actual trigger context.
 
 ```text wrap title="Identity attribution"
 Read https://docs.hicap.ai/onboarding-prompts/identity and help me set this up.
@@ -77,7 +77,7 @@ Read https://docs.hicap.ai/onboarding-prompts/identity and help me set this up.
 
 ## 4. Connect business outcomes
 
-Measure what the workflow actually completed. Reuse your application's analytics or event system to record agreed outcomes, correlate them with AI usage, and define cost per completed outcome. A generated support summary is not evidence that the case was resolved.
+Discover which business questions the existing workflows can support. Extend established attribution with justified custom dimensions and segment definitions, then inspect supported cost and outcome sources. Add outcome instrumentation only for a defined measurement gap. A generated support summary is not evidence that the case was resolved.
 
 ```text wrap title="Business outcomes"
 Read https://docs.hicap.ai/onboarding-prompts/business-outcomes and help me set this up.
@@ -128,7 +128,7 @@ The agent should leave a report in your repository's `.hicap` directory, preserv
 3. **Check the evidence.** Confirm each Hicap-bound model request sends one `x-hicap-tags` header containing a JSON object of string values. Separate configured source, mocked outgoing requests, live responses and recorded attribution. Check that concurrent calls, retries and existing queues are covered where relevant. Do not include secrets or direct personal identifiers in ordinary tags. Opaque identity references require the scoped identity policy and capability checks in the identity prompt.
 4. **Verify fresh traffic.** After your deployment and any approved live tests, select the right application, environment and time window in Hicap. Compare fresh recorded usage with the expected workflows and dimensions; older requests retain their original tags. An **Unattributed Traffic** group can indicate missing expected dimensions. See [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments).
 
-5. **Verify identity.** Confirm trusted initiating organization, user, and user tier; test tenant/caller isolation and continuity through retries and queues. Distinguish emitted identity from verified storage and per-user reporting. Record workflows without a user as not applicable.
+5. **Verify identity.** Confirm each applicable initiating user, organization, and tier; test user isolation and tenant isolation where present, plus continuity through retries and queues. Distinguish emitted identity from verified storage and per-user reporting. Record workflows without a user as not applicable.
 6. **Verify outcomes.** Check completion events against the application's agreed source of truth and reconcile costs over the same workflow scope and time window. Account for retries and duplicate events; report missing data as unavailable. A passing mock does not establish a real business outcome.
 
 <CardGroup cols={2}>

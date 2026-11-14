@@ -1,16 +1,16 @@
 ---
 title: 'Attribute requests to the triggering identity'
-description: 'Carry trusted customer organization, user, and user tier through existing Hicap workflows'
+description: 'Carry trusted users and applicable organization, tier, and trigger context through Hicap workflows'
 hidden: true
 ---
 
-Use this prompt after base attribution. It learns the established dimensions, then adds the triggering customer organization, user, and user tier where applicable. Identity is optional for workflows without a user; the agent records that distinction rather than inventing a person.
+Use this prompt after base attribution. It learns the application's identity model, then carries the initiating user and whichever organization, tier, and trigger fields actually apply. Users-only apps need no organization, and apps without personal tiers need no user tier. Assess each field independently; never invent a tenant or plan to complete a schema.
 
 These are application identity dimensions, not Hicap's provisioned Organization, Application, Connection, or Key. Attribution labels describe activity; they never grant access.
 
 ## How the prompt works
 
-Identity answers: **who triggered this work, in which customer organization, and on what user tier?**
+Identity answers: **who triggered this work, and which organization or tier context actually applies?**
 
 <Steps>
   <Step title="Inspect: learn the established context">
@@ -21,7 +21,7 @@ Identity answers: **who triggered this work, in which customer organization, and
   <Step title="Decide: define identity and permitted handling">
     Reuse approved names and identifier conventions. Establish tenant scope, tier timing, non-user behavior, and whether identifier storage and reporting are supported.
 
-    **You get:** an identity contract with explicit privacy and capability gaps. Opaque IDs remain potentially personal data.
+    **You get:** a per-field contract distinguishing applicable, not applicable, unresolved, and blocked context. Production emission and synthetic local verification have separate requirements.
   </Step>
   <Step title="Change: carry the initiating context">
     Capture trusted context at the entrypoint and propagate it through model calls, queues, and retries without changing routing or base dimensions.
@@ -56,7 +56,7 @@ Learn from the previous base-attribution step; do not redesign it.
    Discover authenticated sessions, active customer organization membership,
    authorization checks, user entitlements, impersonation/delegation, jobs, and queues.
    For each workflow identify:
-   - customer organization: the tenant in which the initiating user is acting,
+   - customer organization, when the app has tenants: the tenant in which the initiating user is acting,
      validated through server-side membership/authorization, not a browser claim;
    - initiating user: the person who triggered the workflow, not the worker,
      service account, model-powered agent role, or person described in a prompt;
@@ -64,13 +64,29 @@ Learn from the previous base-attribution step; do not redesign it.
      Keep it separate from organization plan, wallet balance, and model tier;
    - trigger type: user action, scheduled work, or system event, using existing
      application conventions.
-   Snapshot organization, user, and user tier when the workflow begins. Preserve
+   Snapshot each applicable organization, user, and user tier when the workflow begins. Preserve
    that snapshot through retries and delayed jobs; a new user action gets a fresh
    snapshot. Attribution snapshots do not replace current authorization checks.
    For users in multiple tenants, bind the tier and identity to the active
    authorized tenant. Do not infer tier from spend, API keys, or organization plan.
    Identify the initiator and executor separately when delegation exists.
-   If no authoritative user tier exists, report unresolved configuration.
+   Assess user, organization, user tier, and trigger independently. Classify each
+   as applicable with an authoritative source, not applicable by product design,
+   unresolved because expected context is missing, or blocked for emission.
+   A users-only application is valid: use its authenticated application-scoped
+   user reference and user/resource authorization; omit customer_org. Do not
+   create a tenant, derive one from the user ID, or require membership in an
+   organization that does not exist. When organizations exist, missing or invalid
+   membership must still fail authorization; absence is not a bypass.
+   User tiers are optional, including in users-only apps. If the product has no
+   personal tier, mark user_tier not applicable and omit it. If a tier should
+   exist but its source is unavailable, mark only that field unresolved.
+   An absent or blocked organization or tier must not suppress independently
+   permitted user attribution, trigger context, or unrelated business dimensions.
+   An absent user must not suppress legitimate organizational context for system
+   work. Do not require any field merely to satisfy a fixed identity schema.
+   A shared organization plan is not a personal user tier. Hand its authoritative
+   source to the business-outcomes step for separate assessment.
 
 3. Specify and verify permitted identity handling before emitting identifiers.
    Produce a field table: existing/proposed key, meaning, trusted source, scope,
@@ -81,25 +97,46 @@ Learn from the previous base-attribution step; do not redesign it.
    Keep customer organization separate from Hicap's provisioned Organization.
    Tags are descriptive metadata, never an authorization or tenant-isolation mechanism.
 
-   Narrow exception to the ordinary no-personal-identifiers tagging rule:
+   Production emission: narrow exception to the ordinary no-personal-identifiers tagging rule:
    an opaque organization/user reference may be emitted only under an established
    approved identity policy and verified destination handling. Opaque IDs and
    pseudonymous values can still be personal data; hashing an email does not
    establish anonymity or permission. Never emit names, emails, phone numbers,
    tokens, prompt text, raw URLs, or request/session IDs as identity dimensions.
-   Use an approved tenant-scoped opaque reference or pseudonymization scheme;
+   Use an approved tenant-scoped opaque reference where tenants exist, or an
+   application-scoped user reference in users-only apps, with the established scheme;
    do not invent global cross-tenant tracking or a new secret-management scheme.
 
-   Verify identifier ingestion/storage, tenant-scoped access, retention/deletion
+   Verify identifier ingestion/storage, access scoped to the actual application
+   and tenant model where applicable, retention/deletion
    behavior, exact-value filtering, and intended reporting at expected cardinality.
    Custom string tags alone do not establish complete per-user analytics. A
    sampled or capped dimension picker is not an exhaustive user directory;
    absence from that picker does not prove absence from stored traffic.
    Record evidence and limitations for each capability. If policy or capability
-   is unresolved, keep affected identifiers out of outgoing tags, report the
+   is unresolved for production, keep affected identifiers out of outgoing tags
+   on live transports, report the
    specific blocker, and continue independent approved low-cardinality work.
    Do not silently remove existing approved identity tags. Surface conflicts
    for resolution; do not claim per-user attribution is complete while blocked.
+
+   Synthetic local verification is a separate permitted path. When the user or
+   fixture explicitly authorizes synthetic identity tests, implement and verify
+   the applicable identity propagation through the real caller and helper with
+   invented test-only IDs and a fail-closed mock transport. Production capability
+   gaps do not block this local path; do not mark identity complete by testing
+   only that every identifier is absent.
+   Install the mock before SDK initialization, block every unexpected network
+   path, and fail if the mock is missing. Exercise the same capture/serialization
+   path used by the application, not a test-only reconstruction of emitted tags.
+   A test-only policy/transport dependency may enable synthetic capture; it must
+   not be selectable through request input or automatically enable production
+   emission. A synthetic flag, test environment name, or fake-looking identifier
+   alone must never authorize a live destination. Keep production defaults closed
+   for unapproved identifiers and test that boundary separately.
+   Use only synthetic fixtures, never copies or hashes of real customer data.
+   Local test permission does not establish storage, retention, live reporting,
+   or authorization to send even synthetic identifiers to an external service.
 
 4. Implement scoped propagation using the existing helper.
    Capture identity from trusted server-side context, never directly from
@@ -123,19 +160,32 @@ Learn from the previous base-attribution step; do not redesign it.
    Derive expected identity independently from the authenticated test fixtures,
    not from the emitted tags or helper configuration.
    Capture final outgoing URL and headers from real application entrypoints.
-   Test concurrent users across two tenants, a user in multiple tenants, spoofed
+   For a users-only app, test two concurrent users with no organization or tier;
+   verify the correct end_user and omission of customer_org and user_tier.
+   For tenant apps without personal tiers, verify customer_org and end_user while
+   omitting user_tier. For users-only apps with personal tiers, verify the
+   authoritative user_tier without requiring customer_org.
+   Test applicable missing-source fields independently: one omitted or blocked
+   field must not erase other permitted fields. Reject spoofed organization
+   input in users-only apps; do not turn it into a tenant.
+   In tenant apps, test concurrent users across two tenants, a user in multiple tenants, spoofed
    tenant/user/tier input, and missing/anonymous/system contexts where supported.
    Test tier changes between separate actions and snapshot preservation through
    queued work and retries; test delegation where it exists.
    Demonstrate a negative control: swapped users/tenants or an overridden tier
-   must fail the test. Restore correct code afterward.
+   must fail the test where that field applies. For approved synthetic tests,
+   missing or swapped applicable user/organization tags must fail, while optional
+   fields absent by design must pass. Verify blocked production emission remains
+   blocked and a missing mock cannot contact a live endpoint.
+   Restore correct code afterward.
    Confirm base dimensions survive unchanged and other providers receive no
    Hicap tags or key. Do not create production workflows just for coverage.
 
 6. Report and hand off.
    Save a new .hicap identity report, preserving earlier reports. Include source
    and prompt revisions, the inherited base map, identity field contract,
-   approved versus blocked handling, per-workflow coverage, tests, and gaps.
+   each field's applicability and approved versus blocked handling, synthetic
+   mock versus production emission status, per-workflow coverage, tests, and gaps.
    Use synthetic/redacted examples; do not include real identity values.
    Distinguish configured source, mock-verified requests, fresh live responses,
    stored identity, and supported reporting. A mock does not verify retention

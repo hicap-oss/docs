@@ -36,3 +36,26 @@ test('four onboarding stages are ordered and identity is registered', () => {
   }
   assert.ok(read('docs.json').includes('"onboarding-prompts/identity"'));
 });
+
+test('optional organization and tier are assessed per field without disabling users', () => {
+  for (const phrase of ['Assess user, organization, user tier, and trigger independently',
+    'A users-only application is valid', 'application-scoped user reference',
+    'Do not create a tenant', 'missing or invalid membership must still fail authorization',
+    'mark user_tier not applicable', 'mark only that field unresolved',
+    'must not suppress independently permitted user attribution',
+    'concurrent users with no organization or tier',
+    'tenant apps without personal tiers', 'users-only apps with personal tiers',
+    'Reject spoofed organization input in users-only apps']) assert.ok(identity.includes(phrase), phrase);
+  assert.ok(!identity.includes('If no authoritative user tier exists, report unresolved configuration'));
+});
+test('synthetic verification cannot silently enable live identifier emission', () => {
+  for (const phrase of ['Synthetic local verification is a separate permitted path',
+    'explicitly authorizes synthetic identity tests', 'fail-closed mock transport',
+    'Production capability gaps do not block this local path',
+    'Install the mock before SDK initialization', 'fail if the mock is missing',
+    'not be selectable through request input', 'alone must never authorize a live destination',
+    'never copies or hashes of real customer data',
+    'missing or swapped applicable user/organization tags must fail',
+    'optional fields absent by design must pass',
+    'test that boundary separately']) assert.ok(identity.includes(phrase), phrase);
+});
