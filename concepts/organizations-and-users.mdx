@@ -4,41 +4,34 @@ description: 'How accounts, users, and personal keys fit together on the Hicap A
 icon: 'users'
 ---
 
-Your account on the Hicap AI Gateway is an **Organization** — a company or team made up of **Users**. Applications, Connections, and Keys are owned by the Organization by default, so usage and spend roll up across everyone who works in it. Individual Users can also own **personal** keys, which appear in their own space and still roll up to the Organization.
+An **Organization** is the account where a company or team manages shared Hicap resources. **Users** belong to Organizations and have access according to their permissions. Users can also manage personal keys in their account settings.
 
 ## Organizations
 
-An **Organization** is the top-level account. It contains your Users and the Applications they build, and it is where billing and usage ultimately roll up. A User can belong to more than one Organization, but there is no standalone "personal account" that exists outside of an Organization — personal work still lives within one.
-
-Think of the Organization as the company, and each User as a seat within it. An Organization doesn't have to be a big team, though: a **solo user is simply an Organization of one**. You still get the same structure — billing, Applications, and usage roll up to your Organization — whether you're the only member or one of hundreds.
+An **Organization** groups shared users and Applications and provides the account context for their usage and billing. A User can belong to more than one Organization. Select the Organization in which you want to work when managing its resources or reviewing its usage.
 
 ## Users
 
-A **User** is an individual person. A User can belong to one or more Organizations; within each one they sign in, build, operate, and govern Applications, and view the usage and spend they're allowed to see. Billing and usage always roll up to the Organization the work was done in.
+A **User** is an individual person. Within an Organization, a User can work with the resources and usage information their permissions allow. A User's personal keys are managed separately in their account settings.
 
 ## Who owns what
 
-Ownership sits at two levels. The Organization owns things by default; a User can additionally own personal work.
+Ownership determines which resources are shared with an Organization and which are managed personally.
 
 <CardGroup cols={2}>
   <Card title="Organization-owned" icon="building">
-    The default. Applications — and therefore their Connections and Keys — belong to the **Organization**. Anyone with the right access in the Organization can see them, and their usage rolls up to the Organization.
+    Shared Applications and their Connections belong to the **Organization**. Users with the appropriate access can manage them and review their usage.
   </Card>
   <Card title="User-owned (personal)" icon="user">
-    A User can own their **own** Applications and Keys for personal tooling — an IDE assistant, a local script, an API client, and the like. These live in the User's personal space and roll up to **both** the User and the Organization.
+    A User can manage personal keys for tooling such as an IDE assistant, local script, or API client. These keys appear in the User's account settings, separate from the Organization's shared Applications.
   </Card>
 </CardGroup>
 
-Personal keys are ordinary Applications and Keys — they simply carry an ownership marker that says they belong to a User rather than to the Organization at large. Everything in the [Applications, Connections & Keys](/concepts/applications-connections-keys) hierarchy still applies.
+For personal-key usage and billing, check the available reporting and account context in your deployment. Do not assume that personal aggregate reporting is available or that it uses the same view as shared Organization usage.
 
 ## Access
 
-Access is intentionally simple today:
-
-- **Organization admins** manage Organization-owned Applications and can see and manage the Organization's keys — their names, status, and usage, not the secret values.
-- **Members** manage their own personal keys.
-
-Finer-grained roles beyond admin and member aren't part of the model yet.
+Organization access depends on the User's role and the resource. Check your Organization's current permissions before granting access or managing shared credentials. Users manage their own personal keys in account settings.
 
 ## How this connects to attribution
 

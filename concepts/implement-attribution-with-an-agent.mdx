@@ -8,7 +8,7 @@ Use these prompts with a coding agent that can read and edit your application. T
 
 ## Choose your path
 
-**New to Hicap?** Run client setup, base attribution, identity, and business outcomes in order. Identity is optional when there are no user-triggered workflows; record that finding. **Already using Hicap?** Start with attribution, or use a focused prompt to address a particular gap. If client setup and base attribution are already in place, assess identity next, then continue to business outcomes. The focused prompts are an alternative way to build attribution, not additional required steps after a complete pass. Base dimensions requires an existing tagging helper; client setup alone does not create one. You can select an individual focused prompt when its prerequisites are already met.
+**New to Hicap?** Run client setup, base attribution, identity, and business outcomes in order. Assess user, organization, tier, and trigger independently; record fields that do not apply. **Already using Hicap?** Start at the step you need, or use a focused attribution prompt for a narrower gap. Focused prompts are alternatives to a complete attribution pass, not extra required steps. Base dimensions requires an existing tagging helper; client setup alone does not create one.
 
 | Prompt | Use it when | What the agent works on |
 | --- | --- | --- |
@@ -22,9 +22,9 @@ Use these prompts with a coding agent that can read and edit your application. T
 
 ## What happens when a prompt runs
 
-**Inspect → Decide → Change → Prove.** Each prompt maps the workflows, identifies supported changes, implements them, and checks the resulting requests or outcome events.
+**Inspect → Decide → Change → Prove.** Each prompt reviews the existing workflows, identifies applicable changes, and checks the result. If no changes are needed or a prerequisite is unresolved, the agent reports that finding.
 
-The deliverable is a code change plus evidence for each workflow. A configured client, a passing mock, a live response, and recorded Hicap attribution are four different claims. The report should tell you which ones have been established. Business outcomes need separate evidence from the application's source of truth.
+The agent provides a report covering the inspected workflows, any changes, checks, and gaps. A configured client, a passing mock, a live response, and recorded Hicap attribution are different levels of evidence. Business outcomes need separate evidence from the application's source of truth.
 
 The agent works within your repository and may update code, tests, configuration examples and documentation. The exact edits depend on your application. Review the proposed changes and the report before deploying. The prompts use mocked provider responses for their checks; a passing mock does not prove live provider access, output quality or recorded Hicap attribution. They do not deploy your app or generate paid traffic without approval.
 
@@ -128,7 +128,7 @@ The agent should leave a report in your repository's `.hicap` directory, preserv
 3. **Check the evidence.** Confirm each Hicap-bound model request sends one `x-hicap-tags` header containing a JSON object of string values. Separate configured source, mocked outgoing requests, live responses and recorded attribution. Check that concurrent calls, retries and existing queues are covered where relevant. Do not include secrets or direct personal identifiers in ordinary tags. Opaque identity references require the scoped identity policy and capability checks in the identity prompt.
 4. **Verify fresh traffic.** After your deployment and any approved live tests, select the right application, environment and time window in Hicap. Compare fresh recorded usage with the expected workflows and dimensions; older requests retain their original tags. An **Unattributed Traffic** group can indicate missing expected dimensions. See [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments).
 
-5. **Verify identity.** Confirm each applicable initiating user, organization, and tier; test user isolation and tenant isolation where present, plus continuity through retries and queues. Distinguish emitted identity from verified storage and per-user reporting. Record workflows without a user as not applicable.
+5. **Verify identity.** Assess initiating user, organization, tier, and trigger independently. Test user isolation and tenant isolation where present, plus continuity through retries and queues. Distinguish emitted identity from verified storage and per-user reporting. Record each field that does not apply without suppressing applicable context.
 6. **Verify outcomes.** Check completion events against the application's agreed source of truth and reconcile costs over the same workflow scope and time window. Account for retries and duplicate events; report missing data as unavailable. A passing mock does not establish a real business outcome.
 
 <CardGroup cols={2}>
