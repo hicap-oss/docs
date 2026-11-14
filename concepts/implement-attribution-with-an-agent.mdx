@@ -20,9 +20,9 @@ Use these prompts with a coding agent that can read and edit your application. T
 
 ## What happens when a prompt runs
 
-Each prompt asks the agent to follow the same general process, with a different scope:
+**Inspect → decide → change → prove.** Each prompt follows the same method with a different scope. Inspection produces a workflow inventory; decisions separate supported changes from gaps; implementation stays within that scope; verification checks what the application actually sends.
 
-The agent inspects the code, maps requests and gaps, makes scoped changes, checks outgoing requests, and reports what remains unverified.
+The deliverable is a code change plus evidence for each workflow. A configured client, a passing mock, a live response, and recorded Hicap attribution are four different claims. The report should tell you which ones have been established.
 
 The agent works within your repository and may update code, tests, configuration examples and documentation. The exact edits depend on your application. Review the proposed changes and the report before deploying. The prompts use mocked provider responses for their checks; a passing mock does not prove live provider access, output quality or recorded Hicap attribution. They do not deploy your app or generate paid traffic without approval.
 
@@ -33,23 +33,11 @@ The agent works within your repository and may update code, tests, configuration
 - Use an SDK or adapter that supports the API workflows and Hicap capabilities your application needs. Decide which workflows should use Hicap. The agent inventories API families and reports compatibility it cannot establish; an OpenAI-compatible client alone does not establish support for every endpoint or model.
 - For the attribution prompts, configure the Hicap client first. Read [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments) for how request dimensions work.
 
-The diagrams summarize the prompts’ intended decisions. Unverified client routes remain gaps, and authorized exceptions are reported. In attribution, a supported value is grounded in the application and its approved conventions; reviewed existing tags are preserved. The complete instructions remain the source of truth.
+The flows below show what each stage produces. Blocked or untested paths stay visible in the report; the full linked prompts define the detailed requirements.
 
 ## 1. Configure the client
 
 Use this when you want to route supported application inference through Hicap. The agent traces model callers and configures an appropriate client or adapter, preserves existing attribution, and checks the outgoing destination and authentication. It reports unverified or unsupported workflows. This prompt does **not** design a new tagging strategy.
-
-<div className="grid grid-cols-1 items-center gap-3 md:grid-cols-3 md:gap-5">
-  <div>
-
-<img
-  src="/images/onboarding-prompts/client-decisions-portrait.png"
-  alt="Client setup inspects workflows, configures supported routes, reports unverified or unsupported paths, then checks requests and reports coverage."
-  className="mx-auto h-auto max-h-64 w-auto max-w-full"
-/>
-
-  </div>
-  <div className="w-full min-w-0 md:col-span-2">
 
 ```text wrap title="Client setup"
 Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set this up.
@@ -57,24 +45,32 @@ Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set t
 
 [Review the full client setup prompt](/onboarding-prompts/configure-client).
 
-  </div>
-</div>
+<Steps>
+  <Step title="Inspect: map the real call paths">
+    Trace each model workflow from its caller to the final request, including retries and background work where they exist.
+
+    **You get:** an inventory of destinations, models, required capabilities, and existing attribution. Zero model calls is a valid finding.
+  </Step>
+  <Step title="Decide: establish what can move">
+    Check support for each workflow's API, model, and required behavior before changing its route.
+
+    **You get:** a decision per workflow: migrate, explicitly authorized exception, or blocked/unverified. Unsupported or uncertain paths keep their existing route and remain visible gaps.
+  </Step>
+  <Step title="Change: configure the supported routes">
+    Reuse a compatible client or adapter, configure the Hicap URL and server-side authentication, and preserve required application behavior and existing tags.
+
+    **You get:** focused client changes. No silent provider fallback, unrelated traffic changes, or new attribution strategy.
+  </Step>
+  <Step title="Prove: inspect what actually leaves the app">
+    Exercise real application paths with mocked provider responses. Check the final destination, model, headers, and required request behavior; reconcile every inventoried path.
+
+    **You get:** a coverage report with passing checks, exceptions, failures, and untested paths. Mocked success does not establish live model access.
+  </Step>
+</Steps>
 
 ## 2. Set up attribution
 
 After Hicap routing is configured, use this for a complete attribution pass. The agent inventories Hicap-bound workflows, assesses six starter dimensions—Env, Feature, Operation, System, Agent and Domain—and adds source-backed values where they apply. It checks the tags on outgoing requests and reports gaps. Attribution uses existing Hicap routes and does not change your provider, models or fallback routing. Other provider paths are inventoried separately; if no Hicap client exists, it reports that prerequisite and points to client setup.
-
-<div className="grid grid-cols-1 items-center gap-3 md:grid-cols-3 md:gap-5">
-  <div>
-
-<img
-  src="/images/onboarding-prompts/attribution-decisions-portrait.png"
-  alt="Attribution checks for a Hicap client; if one exists, it maps workflows and adds supported dimensions or reports missing values. If no client exists, it reports the prerequisite and skips tagging."
-  className="mx-auto h-auto max-h-64 w-auto max-w-full"
-/>
-
-  </div>
-  <div className="w-full min-w-0 md:col-span-2">
 
 ```text wrap title="Complete attribution"
 Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this up.
@@ -82,8 +78,28 @@ Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this u
 
 [Review the full attribution prompt](/onboarding-prompts/attribution).
 
-  </div>
-</div>
+<Steps>
+  <Step title="Inspect: find the client and its callers">
+    Identify existing Hicap routes and map their workflows, current tags, and service defaults. Inventory other provider paths separately.
+
+    **You get:** an attribution coverage map. If no Hicap client exists, stop tagging work and use the client setup prompt first.
+  </Step>
+  <Step title="Decide: ground each label in evidence">
+    Assess Env, Feature, Operation, System, Agent, and Domain using the code and approved application conventions. Distinguish observed values from proposed meanings.
+
+    **You get:** each value's source and scope, with missing values classified as a bug, unresolved configuration, or not applicable. Do not invent labels to fill a chart.
+  </Step>
+  <Step title="Change: attach context where it belongs">
+    Preserve reviewed tags, set service defaults in configuration, and attach feature, operation, and role context at the caller. Carry context through retries and queues where they exist.
+
+    **You get:** focused tagging changes on existing Hicap requests. Routing, models, credentials, and other providers remain unchanged.
+  </Step>
+  <Step title="Prove: match every request to its workflow">
+    Capture final outgoing requests from real application paths using mocked responses. Check the expected tags for each caller; a swapped or missing expected tag must fail a test.
+
+    **You get:** a coverage report with emitted values, test evidence, and unresolved gaps. Valid JSON alone does not prove correct attribution.
+  </Step>
+</Steps>
 
 ### How dimensions describe a request
 
