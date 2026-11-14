@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const {readFileSync} = require('node:fs');
 const {join} = require('node:path');
 const test = require('node:test');
+const {loadPrompt} = require('./focused-prompt-contract.cjs');
 const root = join(__dirname, '..');
 const read = p => readFileSync(join(root,p),'utf8');
 const identity = read('onboarding-prompts/identity.mdx').replace(/\s+/g,' ');
@@ -21,7 +22,7 @@ test('identity verifies tenant isolation and preserved routing', () => {
 });
 test('base prompts recognize only the scoped opaque-identity exception', () => {
   for (const name of ['attribution','base-dimensions','tagging-helper','per-call-features']) {
-    const text = read('onboarding-prompts/'+name+'.mdx').replace(/\s+/g,' ');
+    const text = loadPrompt(root,name).replace(/\s+/g,' ');
     assert.ok(text.includes('Preserve approved opaque organization/user references'));
     assert.ok(text.includes('do not add new identity fields'));
     assert.ok(text.includes('high-cardinality request/session IDs'));
