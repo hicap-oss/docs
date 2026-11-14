@@ -43,18 +43,7 @@ Image editing, Responses, Realtime sessions, and legacy Completions are also reg
 
 Image variations and stored Chat Completions retrieval are not included in the documented endpoint set. Do not assume those operations are available from OpenAI's API documentation.
 
-## Versioned workflow operations
-
-The Assistants and Threads and Vector Stores sections in the API Reference navigation describe operations registered on the public gateway.
-
-Include the required `api-version` query parameter shown in each operation’s Query Parameters section. For example:
-
-```bash
-curl "https://api.hicap.ai/v1/assistants?api-version=2025-01-01-preview" \
-  -H "api-key: $HICAP_API_KEY"
-```
-
-Many workflow routes require `api-version` for the gateway to match the operation. Omitting it can return `404 Resource not found` even when the method and path are otherwise correct. Use resource IDs returned by the corresponding create operations. Version, model, and connection compatibility still apply to backend execution.
+Assistants, Threads, and Vector Stores are not currently supported by Hicap. A gateway route reaching authentication does not establish that the operation is supported.
 
 ## Models
 

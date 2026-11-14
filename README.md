@@ -71,7 +71,7 @@ The managed prompts require coverage of named AI pipeline roles in ordinary work
 
 ## Keeping the API reference current
 
-The primary API pages use the routes registered in `docs.json`. Keep redirects when moving a published page. `openapi.json` describes the Hicap URL and request format; do not import Azure deployment paths or assume all upstream OpenAI operations are available. Assistants, Threads and Vector Stores use versioned routes: include the required api-version query parameter documented by each operation.
+The primary API pages use the routes registered in `docs.json`. Keep redirects when moving a published page. `openapi.json` describes the Hicap URL and request format; do not import Azure deployment paths or assume all upstream OpenAI operations are available. Assistants, Threads, and Vector Stores are not currently supported and must not be advertised as available based on route registration alone.
 
 Before changing availability claims, compare provider-page IDs with the public `GET https://api.hicap.ai/v1/models` response and record the check date. Keep catalog listings, native model capabilities, endpoint support, and connection access distinct. Verify modality claims against official provider documentation. Route recognition and invalid-key error checks do not establish successful inference support.
 

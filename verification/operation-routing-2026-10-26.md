@@ -1,5 +1,7 @@
 # Workflow operation routing verification
 
+**Update, November 14, 2026:** Assistants, Threads, and Vector Stores are not currently supported by Hicap. Authenticated list requests for Assistants and Vector Stores returned `404` with `unsupported_endpoint`. The historical auth-gate checks below do not establish support and must not be used as evidence that these operations are available.
+
 Checked October 26, 2026 against the current production API Management API serving https://api.hicap.ai/v1, matched to its custom hostname.
 
 ## Result
