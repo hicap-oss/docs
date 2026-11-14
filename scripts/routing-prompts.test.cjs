@@ -3,8 +3,9 @@ const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
 const { join } = require('node:path');
 const test = require('node:test');
+const { loadPrompt } = require('./focused-prompt-contract.cjs');
 const root = join(__dirname, '..');
-const load = name => readFileSync(join(root, 'onboarding-prompts', `${name}.mdx`), 'utf8');
+const load = name => loadPrompt(root, name);
 const compact = text => text.replace(/\s+/g, ' ');
 
 test('client setup owns migration and preserves existing attribution', () => {

@@ -33,7 +33,8 @@
               "onboarding-prompts/business-outcomes",
               "onboarding-prompts/tagging-helper",
               "onboarding-prompts/base-dimensions",
-              "onboarding-prompts/per-call-features"
+              "onboarding-prompts/per-call-features",
+              "onboarding-prompts/focused-attribution-contract-v1"
             ]
           },
           {

@@ -3,17 +3,30 @@ const assert = require('node:assert/strict');
 const { readFileSync, existsSync } = require('node:fs');
 const { join } = require('node:path');
 const test = require('node:test');
+const { loadPrompt, resolvePrompt, route, url } = require('./focused-prompt-contract.cjs');
 const root = join(__dirname, '..');
 const names = ['attribution', 'tagging-helper', 'base-dimensions', 'per-call-features'];
 for (const name of names) {
   const text = readFileSync(join(root, 'onboarding-prompts', `${name}.mdx`), 'utf8');
-  const compact = text.replace(/\s+/g, ' ');
+  const compact = loadPrompt(root, name).replace(/\s+/g, ' ');
   test(`${name}: dimensions, caller identity, negative control and evidence levels`, () => {
     assert.equal((text.match(/^````/gm) || []).length, 2);
     for (const term of ['https://api.hicap.ai/v1', 'api-key', 'HICAP_API_KEY', 'x-hicap-tags', 'agent', 'env', 'system', 'feature', 'domain', 'operation =', 'originating application workflow', 'not from the emitted tags', 'swapping two callers', 'negative control', 'fail-closed', 'Current-state report requirements:', 'source configured', 'fresh live response verified', 'recorded Hicap attribution verified', 'agent_type', 'agent_id']) assert.ok(compact.includes(term), `${name}: missing ${term}`);
     assert.match(compact, /preserv.*existing reports|preserv.*existing.*notes/i);
   });
 }
+test('focused prompt resolution fails closed for missing prerequisites', () => {
+  const prompt = `\`\`\`\`text wrap title="Implementation prompt"\n${url}\nIf it is unavailable, stop and report the missing prerequisite\n\`\`\`\``;
+  const contract = '````text wrap title="Focused attribution contract v1"\nshared\n````';
+  const nav = { navigation: { tabs: [{ groups: [{ pages: [route] }] }] } };
+  const reader = (p) => p === `${route}.mdx` ? contract : prompt;
+  assert.match(resolvePrompt('tagging-helper', reader, nav), /shared/);
+  assert.throws(() => resolvePrompt('tagging-helper', () => prompt.replace(url, ''), nav), /missing required shared contract/);
+  assert.throws(() => resolvePrompt('tagging-helper', () => prompt.replace('If it is unavailable, stop and report the missing prerequisite', ''), nav), /fail-closed instruction/);
+  assert.throws(() => resolvePrompt('tagging-helper', p => { if (p === `${route}.mdx`) throw new Error('missing file'); return prompt; }, nav), /missing file/);
+  assert.throws(() => resolvePrompt('tagging-helper', p => p === `${route}.mdx` ? '' : prompt, nav), /instruction block is missing/);
+  assert.throws(() => resolvePrompt('tagging-helper', reader, { navigation: { tabs: [] } }), /not registered/);
+});
 test('guide links resolve and includes operation in six-dimension baseline', () => {
   const guide = readFileSync(join(root, 'concepts/implement-attribution-with-an-agent.mdx'), 'utf8');
   assert.match(guide, /six.*dimensions/);
