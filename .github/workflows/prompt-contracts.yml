@@ -8,6 +8,10 @@ on:
       - 'quickstart.mdx'
       - 'concepts/tags-dimensions-segments.mdx'
       - 'docs.json'
+      - 'openapi.json'
+      - 'api-reference/**'
+      - 'faq.mdx'
+      - 'scripts/api-contracts.test.cjs'
       - '.github/workflows/prompt-contracts.yml'
   push:
     branches: [main]
@@ -16,6 +20,10 @@ on:
       - 'concepts/implement-attribution-with-an-agent.mdx'
       - 'scripts/*prompts.test.cjs'
       - 'docs.json'
+      - 'openapi.json'
+      - 'api-reference/**'
+      - 'faq.mdx'
+      - 'scripts/api-contracts.test.cjs'
       - '.github/workflows/prompt-contracts.yml'
 permissions:
   contents: read
@@ -27,4 +35,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node --test scripts/*prompts.test.cjs
+      - run: node --test scripts/*prompts.test.cjs scripts/api-contracts.test.cjs

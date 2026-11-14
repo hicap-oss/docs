@@ -1,0 +1,9 @@
+/* Mark links that leave the documentation site. */
+:is(#navbar, #sidebar-content, #content-area) a:is([href^="https://"], [href^="http://"]):not([href="https://docs.hicap.ai"]):not([href^="https://docs.hicap.ai/"]):not([href*=".mintlify.site/"])::after {
+  content: " ↗";
+  display: inline-block;
+  margin-inline-start: 0.2em;
+  font-size: 0.8em;
+  line-height: 1;
+  white-space: nowrap;
+}

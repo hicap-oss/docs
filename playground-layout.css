@@ -1,0 +1,10 @@
+/* Parameter-free endpoints do not need an empty request column. */
+@media (min-width: 1024px) {
+  [data-testid="api-playground-modal"] .grid:has(> div:first-child > .space-y-2.mt-6:empty) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  [data-testid="api-playground-modal"] .grid:has(> div:first-child > .space-y-2.mt-6:empty) > div {
+    grid-column: 1 / -1;
+  }
+}
