@@ -21,9 +21,9 @@ curl https://api.hicap.ai/v1/chat/completions \
 
 Bearer authentication alone does not authenticate a Hicap request. When an OpenAI SDK requires an `apiKey` setting, also configure the `api-key` request header as shown in the [quickstart](/quickstart).
 
-## Supported endpoints
+## Endpoints
 
-Use the endpoint for the operation you need:
+The following request paths have reference pages. Availability, model compatibility, and accepted parameters depend on the selected connection and backend; a route or schema alone does not prove that a request will succeed.
 
 | Operation | Method and path | Reference |
 | --- | --- | --- |
@@ -35,11 +35,11 @@ Use the endpoint for the operation you need:
 | Audio translation | `POST /v1/audio/translations` | [Translations](/api-reference/audio-translations) |
 | Speech generation | `POST /v1/audio/speech` | [Speech](/api-reference/audio-speech) |
 
-The model list is public and does not require a key. Inference routes require authentication. A model appearing in that list does not establish support for every endpoint or feature, or access under every connection.
+The model list is public and does not require a key. Inference routes require authentication. A bounded synthetic chat smoke test has succeeded, but the other listed inference operations have not been verified end to end for this documentation update. A model appearing in the list does not establish support for every endpoint or feature, or access under every connection.
 
 ### Endpoint availability
 
-Image editing, Responses, Realtime sessions, and legacy Completions are also registered on the public gateway. Their request formats and model capabilities differ; use a compatible model and endpoint rather than assuming all chat parameters apply.
+Image editing, Responses, Realtime sessions, and legacy Completions have been registered on the public gateway. Registration alone does not establish backend support, accepted request formats, model compatibility, or access for a connection; verify these before migrating a workflow.
 
 Image variations and stored Chat Completions retrieval are not included in the documented endpoint set. Do not assume those operations are available from OpenAI's API documentation.
 
@@ -53,7 +53,7 @@ For chat requests, text and image support, tools, structured output, sampling pa
 
 ## Streaming
 
-Set `stream: true` for server-sent events. Use streaming when required by your selected model or route; response handling must match the request.
+Where the selected model and route support streaming, `stream: true` requests server-sent events. Verify the response content type and stream handling for your connection; this documentation update did not run a live streaming request.
 
 ```bash
 curl -N https://api.hicap.ai/v1/chat/completions \
@@ -66,7 +66,7 @@ curl -N https://api.hicap.ai/v1/chat/completions \
   }'
 ```
 
-Chat completion events contain incremental content; the stream normally ends with `data: [DONE]`. Handle HTTP errors before reading the stream and handle interruptions without assuming a complete answer.
+OpenAI-compatible chat streams use incremental events and normally end with `data: [DONE]`. Verify the actual behavior for your model and backend. Handle HTTP errors before reading the stream and handle interruptions without assuming a complete answer.
 
 ## Attribution
 
