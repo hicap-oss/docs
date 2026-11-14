@@ -1,28 +1,29 @@
 ---
 title: 'Set up Hicap with a coding agent'
-description: 'Choose a prompt, understand the changes it requests, and verify routing and attribution'
+description: 'Choose a prompt, understand the changes it requests, and verify routing, attribution, and business outcomes'
 icon: 'robot'
 ---
 
-Use these prompts with a coding agent that can read and edit your application. They help you route model requests through Hicap and describe what each request is doing. You can review the full instructions before running them and review the resulting changes as you would any other code change.
+Use these prompts with a coding agent that can read and edit your application. They help you route model requests through Hicap, describe what each request is doing, and connect AI usage to measurable workflow outcomes. You can review the full instructions before running them and review the resulting changes as you would any other code change.
 
 ## Choose your path
 
-**New to Hicap?** Start with client setup, then run the complete attribution prompt. **Already using Hicap?** Start with attribution, or use a focused prompt to address a particular gap. The focused prompts are an alternative way to build attribution, not additional required steps after a complete pass. Base dimensions requires an existing tagging helper; client setup alone does not create one. You can select an individual focused prompt when its prerequisites are already met.
+**New to Hicap?** Run client setup, complete attribution, and business outcomes in order. **Already using Hicap?** Start with attribution, or use a focused prompt to address a particular gap. If client setup and attribution are already in place, go straight to business outcomes. The focused prompts are an alternative way to build attribution, not additional required steps after a complete pass. Base dimensions requires an existing tagging helper; client setup alone does not create one. You can select an individual focused prompt when its prerequisites are already met.
 
 | Prompt | Use it when | What the agent works on |
 | --- | --- | --- |
 | [Configure the Hicap client](#1-configure-the-client) | Model calls are not yet routed through Hicap | Client configuration, supported inference routes and routing checks |
 | [Set up attribution](#2-set-up-attribution) | You want a complete pass across existing Hicap requests | A workflow inventory, shared attribution and caller-specific dimensions |
+| [Connect business outcomes](#3-connect-business-outcomes) | Client setup and attribution are in place | Outcome definitions, application event tracking, and cost per completed outcome |
 | [Tagging helper](#focused-prompts) | You need a reusable way to build and attach tags | Existing Hicap tag handling, merge behavior and request isolation |
 | [Base dimensions](#focused-prompts) | Service-wide values need to be configured | Evidence-backed deployment, system and domain defaults using an existing helper |
 | [Per-call features](#focused-prompts) | Different workflows or steps need distinct attribution | Caller-specific feature, operation, role and other applicable values |
 
 ## What happens when a prompt runs
 
-**Inspect → Decide → Change → Prove.** Each prompt maps the workflows, identifies supported changes, implements them, and checks the outgoing requests.
+**Inspect → Decide → Change → Prove.** Each prompt maps the workflows, identifies supported changes, implements them, and checks the resulting requests or outcome events.
 
-The deliverable is a code change plus evidence for each workflow. A configured client, a passing mock, a live response, and recorded Hicap attribution are four different claims. The report should tell you which ones have been established.
+The deliverable is a code change plus evidence for each workflow. A configured client, a passing mock, a live response, and recorded Hicap attribution are four different claims. The report should tell you which ones have been established. Business outcomes need separate evidence from the application's source of truth.
 
 The agent works within your repository and may update code, tests, configuration examples and documentation. The exact edits depend on your application. Review the proposed changes and the report before deploying. The prompts use mocked provider responses for their checks; a passing mock does not prove live provider access, output quality or recorded Hicap attribution. They do not deploy your app or generate paid traffic without approval.
 
@@ -32,6 +33,8 @@ The agent works within your repository and may update code, tests, configuration
 - Make your repository available to your coding agent and provide any approved service or deployment names. Existing conventions are preferred over invented defaults.
 - Use an SDK or adapter that supports the API workflows and Hicap capabilities your application needs. Decide which workflows should use Hicap. The agent inventories API families and reports compatibility it cannot establish; an OpenAI-compatible client alone does not establish support for every endpoint or model.
 - For the attribution prompts, configure the Hicap client first. Read [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments) for how request dimensions work.
+
+- For business outcomes, identify the application's existing analytics or event system and any approved outcome definitions. The agent reports missing tracking or cost data rather than inventing results.
 
 Each linked prompt page explains the stages, deliverables, and verification boundaries in detail.
 
@@ -60,6 +63,16 @@ Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this u
 Service-wide values and caller-specific values work together. The following example illustrates possible labels; choose values supported by your own code and conventions.
 
 For example, the same service might use `operation: rewrite-question` for one model call and `operation: answer` for another. Agent or Domain values should be included only when supported by the application's context. A valid header alone does not establish that every applicable workflow or dimension is covered.
+
+## 3. Connect business outcomes
+
+Measure what the workflow actually completed. Reuse your application's analytics or event system to record agreed outcomes, correlate them with AI usage, and define cost per completed outcome. A generated support summary is not evidence that the case was resolved.
+
+```text wrap title="Business outcomes"
+Read https://docs.hicap.ai/onboarding-prompts/business-outcomes and help me set this up.
+```
+
+[Review the full business outcomes prompt](/onboarding-prompts/business-outcomes).
 
 ## Focused prompts
 
@@ -103,6 +116,8 @@ The agent should leave a report in your repository's `.hicap` directory, preserv
 2. **Check dimensions.** Review observed and suggested values for all six starter dimensions. Confirm each applicable value comes from your application's context; omit values that are unresolved or do not apply.
 3. **Check the evidence.** Confirm each Hicap-bound model request sends one `x-hicap-tags` header containing a JSON object of string values. Separate configured source, mocked outgoing requests, live responses and recorded attribution. Check that concurrent calls, retries and existing queues are covered where relevant. Do not include secrets or personal identifiers in ordinary tags.
 4. **Verify fresh traffic.** After your deployment and any approved live tests, select the right application, environment and time window in Hicap. Compare fresh recorded usage with the expected workflows and dimensions; older requests retain their original tags. An **Unattributed Traffic** group can indicate missing expected dimensions. See [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments).
+
+5. **Verify outcomes.** Check completion events against the application's agreed source of truth and reconcile costs over the same workflow scope and time window. Account for retries and duplicate events; report missing data as unavailable. A passing mock does not establish a real business outcome.
 
 <CardGroup cols={2}>
   <Card title="Developer Quickstart" icon="rocket" href="/quickstart">
