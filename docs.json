@@ -29,6 +29,7 @@
               "concepts/implement-attribution-with-an-agent",
               "onboarding-prompts/attribution",
               "onboarding-prompts/configure-client",
+              "onboarding-prompts/business-outcomes",
               "onboarding-prompts/tagging-helper",
               "onboarding-prompts/base-dimensions",
               "onboarding-prompts/per-call-features"
