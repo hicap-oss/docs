@@ -1,6 +1,6 @@
 ---
 title: 'Developer Quickstart'
-description: 'Set up your client, attribution, and business outcomes with a three-step agent prompt'
+description: 'Set up your client, attribution, and business outcomes with three linked agent prompts'
 icon: 'rocket'
 ---
 
@@ -8,47 +8,43 @@ The Hicap API gives you access to foundation models from OpenAI, Anthropic, Goog
 
 ## Set up with an agent
 
-Copy this prompt into your coding agent with your application repository open. It walks through three steps: **configure the client**, **add attribution**, and **connect usage to business outcomes**.
+Open your application repository in your coding agent, then run these three prompts in order. Each links to the full, maintained instructions.
 
-```text wrap title="Three-step setup prompt"
-Help me set up Hicap in this application. Inspect the repository first, then
-work through these three steps in order:
+### 1. Configure the client
 
-1. Configure the client.
-   Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me
-   set this up. Reuse the existing client where possible, keep HICAP_API_KEY
-   server-side, and verify the Hicap base URL and api-key header.
+Route supported model requests through Hicap and verify client configuration.
 
-2. Add attribution.
-   Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set
-   this up. Trace real model workflows and assess agent, env, system, feature,
-   operation, and domain. Verify the final outgoing tags with mocked model responses
-   and report any missing or intentionally non-applicable dimensions.
-
-3. Connect usage to business outcomes.
-   Identify the business workflows this application's AI calls support.
-   Propose measurable outcomes from the code and existing analytics, such as
-   a resolved support case or a completed document review, and ask me to
-   confirm the outcome definitions before implementing tracking.
-   Reuse the application's existing analytics or event system to record
-   actual outcomes and correlate them with the relevant workflow and AI
-   usage. Keep sensitive data out of attribution tags. Do not treat a
-   successful model response or a feature tag as proof of a business outcome.
-   Define how to measure cost per completed outcome, identify missing data,
-   and verify the tracking with mocked workflows. Do not invent Hicap
-   outcome APIs or claim business impact without observed evidence.
-
-Summarize what changed, what was tested, and what still requires deployment
-or fresh production traffic to verify.
+```text wrap title="Client setup"
+Read https://docs.hicap.ai/onboarding-prompts/configure-client and help me set this up.
 ```
 
-Review the maintained [client setup prompt](/onboarding-prompts/configure-client) and [attribution prompt](/onboarding-prompts/attribution). For more detail on attribution, see [Tags, Dimensions & Segments](/concepts/tags-dimensions-segments).
+[Review the full client setup prompt](/onboarding-prompts/configure-client).
 
-You'll need an API key from the [Hicap Platform dashboard ↗](https://platform.hicap.ai/). Keep it in server-side configuration; do not paste it into the prompt.
+### 2. Add attribution
+
+Describe which workflows and operations generate usage, and verify tags on outgoing requests.
+
+```text wrap title="Attribution"
+Read https://docs.hicap.ai/onboarding-prompts/attribution and help me set this up.
+```
+
+[Review the full attribution prompt](/onboarding-prompts/attribution).
+
+### 3. Connect business outcomes
+
+Define measurable workflow results and connect them to AI usage through your application's existing tracking.
+
+```text wrap title="Business outcomes"
+Read https://docs.hicap.ai/onboarding-prompts/business-outcomes and help me set this up.
+```
+
+[Review the full business outcomes prompt](/onboarding-prompts/business-outcomes).
+
+You'll need an API key from the [Hicap Platform dashboard ↗](https://platform.hicap.ai/). Keep it in server-side configuration; do not paste it into a prompt.
 
 ## Manual client setup
 
-Prefer to configure the client yourself? Follow the examples below, then use steps 2 and 3 of the prompt to add attribution and outcome tracking.
+Prefer to configure the client yourself? Follow the examples below, then use the attribution and business outcomes prompts to add attribution and outcome tracking.
 
 ### 1. Get your API key
 
