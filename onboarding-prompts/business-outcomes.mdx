@@ -6,6 +6,35 @@ hidden: true
 
 Use this prompt after configuring the Hicap client and attribution. It helps you measure actual workflow results using your application's analytics or event system. Attribution describes requests; outcome tracking establishes what happened in the business workflow.
 
+## How the prompt works
+
+Business outcomes answers: **what did the workflow complete, and what did it cost?** The agent follows four stages and leaves evidence you can review at each one.
+
+<Steps>
+  <Step title="Inspect: find the workflow and its source of truth">
+    Trace the existing Hicap integration, attribution, and application analytics or events. Identify where the business workflow records completion and how that record can connect to AI usage.
+
+    **You get:** a map of outcome and cost data sources, with missing prerequisites and correlation gaps called out.
+  </Step>
+  <Step title="Decide: define what counts as done">
+    Reuse approved outcome definitions or propose definitions grounded in the workflow. Resolve ambiguous meanings before implementing tracking, and agree on the completion event, reporting window, and cost calculation.
+
+    **You get:** a measurable definition of success. A generated support summary does not establish that a case was resolved.
+  </Step>
+  <Step title="Change: record outcomes where they happen">
+    Use the application's existing analytics or event system to record actual completion and correlate it with relevant AI usage. Preserve routing, attribution, and existing data protections.
+
+    **You get:** focused tracking changes and a cost-per-completed-outcome calculation where reliable data exists. Missing data remains unavailable; no Hicap outcome API is assumed.
+  </Step>
+  <Step title="Prove: reconcile events, usage, and cost">
+    Test real application paths with mocked workflows and provider responses. Check completion, failures, retries, duplicate events, and delayed outcomes where relevant; compare costs and outcomes within the same scope and time window.
+
+    **You get:** test evidence, calculation rules, and unresolved gaps. Zero completed outcomes do not produce a cost-per-outcome value, and correlation does not establish causal business impact.
+  </Step>
+</Steps>
+
+**After the code changes:** review the definitions, diff, and report, then verify fresh outcome events and usage after your approved deployment. Mock-tested tracking is separate from observed business results. The complete prompt below defines the detailed requirements.
+
 ## Full prompt
 
 ```text wrap title="Business outcomes"
