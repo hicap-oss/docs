@@ -1,0 +1,51 @@
+---
+title: 'Connect AI usage to business outcomes'
+description: 'Define measurable workflow outcomes and connect them to AI usage using existing application tracking'
+hidden: true
+---
+
+Use this prompt after configuring the Hicap client and attribution. It helps you measure actual workflow results using your application's analytics or event system. Attribution describes requests; outcome tracking establishes what happened in the business workflow.
+
+## Full prompt
+
+```text wrap title="Business outcomes"
+Help me connect this application's AI usage to measurable business outcomes.
+
+1. Read repository instructions and inspect existing Hicap integration,
+   attribution, business workflows, analytics, and event tracking. Reuse the
+   existing client and tags; preserve routing, models, and provider settings.
+   Identify missing prerequisites and inaccessible or unresolved paths.
+
+2. Propose measurable outcomes grounded in actual workflows, such as a resolved
+   support case or a completed document review. Document each outcome's
+   definition, source of truth, completion event, reporting window, and
+   relationship to AI usage. Reuse approved definitions; ask me to resolve
+   ambiguous business definitions before implementing tracking.
+   A successful model response or feature tag is not proof of a business outcome.
+
+3. Implement tracking using the existing analytics or event system. Record
+   actual outcomes at the owning workflow boundary and correlate them with the
+   relevant workflow and AI usage using appropriate internal identifiers.
+   Keep secrets and personal data out of attribution tags and reports. Preserve
+   existing consent, access, and retention rules. Do not invent Hicap outcome
+   APIs, new product capabilities, or unsupported attribution fields.
+
+4. Define cost per completed outcome for the same workflow scope and time
+   window. State how retries, failed attempts, multiple model calls, duplicate
+   events, and delayed outcomes are handled. Do not divide by zero; report
+   missing costs or outcomes as unavailable rather than zero. If reliable
+   correlation or cost data is unavailable, report the gap instead of claiming
+   the metric is implemented. Do not claim causal business impact from correlation.
+
+5. Test actual application paths with mocked workflows and provider responses.
+   Check successful completion, failure, retries, duplicate delivery, and
+   correlation across asynchronous work where relevant. Separate mock-tested
+   tracking from deployed behavior and fresh observed outcomes.
+   Do not deploy or generate paid traffic without approval.
+
+Summarize changes, outcome definitions, data sources, checks, gaps, and the
+deployment and fresh-traffic verification still required. Preserve earlier
+reports and follow existing repository conventions.
+```
+
+Review the resulting changes before deploying. Start with [client setup](/onboarding-prompts/configure-client) and [attribution](/onboarding-prompts/attribution) if those prerequisites are missing. Return to the [Quickstart](/quickstart).
