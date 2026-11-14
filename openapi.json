@@ -102,7 +102,7 @@
             "name": "x-hicap-tags",
             "in": "header",
             "required": false,
-            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or direct personal identifiers. Opaque identity references require approved policy and verified destination handling; see the identity attribution guide.",
             "schema": {
               "type": "string"
             },
@@ -276,7 +276,7 @@
             "name": "x-hicap-tags",
             "in": "header",
             "required": false,
-            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or direct personal identifiers. Opaque identity references require approved policy and verified destination handling; see the identity attribution guide.",
             "schema": {
               "type": "string"
             },
@@ -354,7 +354,7 @@
             "name": "x-hicap-tags",
             "in": "header",
             "required": false,
-            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or direct personal identifiers. Opaque identity references require approved policy and verified destination handling; see the identity attribution guide.",
             "schema": {
               "type": "string"
             },
@@ -431,7 +431,7 @@
             "name": "x-hicap-tags",
             "in": "header",
             "required": false,
-            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or direct personal identifiers. Opaque identity references require approved policy and verified destination handling; see the identity attribution guide.",
             "schema": {
               "type": "string"
             },
@@ -508,7 +508,7 @@
             "name": "x-hicap-tags",
             "in": "header",
             "required": false,
-            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or direct personal identifiers. Opaque identity references require approved policy and verified destination handling; see the identity attribution guide.",
             "schema": {
               "type": "string"
             },
@@ -573,7 +573,7 @@
             "name": "x-hicap-tags",
             "in": "header",
             "required": false,
-            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or direct personal identifiers. Opaque identity references require approved policy and verified destination handling; see the identity attribution guide.",
             "schema": {
               "type": "string"
             },
@@ -637,7 +637,7 @@
             "name": "x-hicap-tags",
             "in": "header",
             "required": false,
-            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or personal identifiers.",
+            "description": "One JSON object mapping dimension keys to short string values. Never include secrets or direct personal identifiers. Opaque identity references require approved policy and verified destination handling; see the identity attribution guide.",
             "schema": {
               "type": "string"
             },
@@ -3577,8 +3577,8 @@
           },
           "seed": {
             "type": "integer",
-            "minimum": -9223372036854776000,
-            "maximum": 9223372036854776000,
+            "minimum": -9223372036854775808,
+            "maximum": 9223372036854775807,
             "nullable": true,
             "description": "If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.\n\nDeterminism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.\n"
           },
@@ -3906,8 +3906,8 @@
               },
               "seed": {
                 "type": "integer",
-                "minimum": -9223372036854776000,
-                "maximum": 9223372036854776000,
+                "minimum": -9223372036854775808,
+                "maximum": 9223372036854775807,
                 "nullable": true,
                 "deprecated": true,
                 "description": "This feature is in Beta.\nIf specified, our system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.\nDeterminism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.\n"

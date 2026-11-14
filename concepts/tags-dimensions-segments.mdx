@@ -21,7 +21,7 @@ Tags are how you describe a request as you send it. Dimensions are the keys you 
 
 ## How tags are sent
 
-Attach tags to any request with the `x-hicap-tags` header. Its value is one flat JSON object mapping dimension keys to string values. Keep values short and stable; do not include credentials, prompts, personal identifiers, or request/session IDs.
+Attach tags to any request with the `x-hicap-tags` header. Its value is one flat JSON object mapping dimension keys to string values. Keep values short and stable; do not include credentials, prompts, direct personal identifiers, or request/session IDs. Opaque identity references require the approved handling described below.
 
 <Tabs>
   <Tab title="curl">
