@@ -1,0 +1,287 @@
+---
+title: 'Instant voice cloning'
+description: 'Record consent, create a private ElevenLabs voice, and use its Hicap ID to generate speech'
+icon: 'microphone'
+---
+
+Create a private voice from an audio sample using ElevenLabs Instant Voice Cloning, then use it through Hicap's OpenAI-compatible speech endpoint. You need a Hicap API key, the speaker's recorded consent, and a voice sample from that speaker. You do not need an ElevenLabs API key.
+
+## How the IDs work
+
+The flow is **consent recording → consent ID → voice sample → Hicap voice ID → speech**.
+
+| ID | Where you get it | Where you use it |
+| --- | --- | --- |
+| `cons_...` | Upload a consent recording | Reference it in the `consent` field when creating a voice |
+| `voice_...` | Create a voice | Generate speech, check status, or delete the voice |
+
+Both resources belong to your Hicap API subscription. Use API keys for that same subscription throughout the workflow. Another subscription cannot list, retrieve, use, or delete your resources; access is not shared merely because both subscriptions belong to the same customer.
+
+Hicap maps your `voice_...` ID to the provider's voice internally. Before generating speech, Hicap checks ownership, active consent, and voice readiness, then sends the provider ID to ElevenLabs. Use the Hicap ID in your application. Passing a raw ElevenLabs ID cannot bypass private-voice ownership checks. Existing premade and explicitly public library voices remain usable with their public IDs.
+
+## 1. Upload recorded consent
+
+Obtain the speaker's permission to create and use their synthetic voice. Have the speaker record that authorization in their language. Suggested wording:
+
+> I authorize [customer name] to use my voice recordings to create and use a synthetic version of my voice through Hicap and ElevenLabs.
+
+Replace `[customer name]` with the actual customer. This is suggested attestation wording, not an automatically checked phrase.
+
+<Info>
+  Hicap stores the consent recording encrypted. It does not transcribe the recording, check its wording, compare speakers, or perform biometric identity verification. A consent ID records the uploaded attestation; it is not proof of provider or OpenAI verification.
+</Info>
+
+The shell examples use `curl`, `jq`, and `uuidgen`. Set your API key in `HICAP_API_KEY` and configure the Hicap API base URL:
+
+```bash
+export HICAP_BASE_URL="https://api.hicap.ai/v1"
+```
+
+Send a multipart form with these fields:
+
+| Field | Value |
+| --- | --- |
+| `name` | A label for the consent, up to 256 characters |
+| `language` | A BCP 47 language tag, such as `en-US` |
+| `recording` | The speaker's consent audio file |
+
+```bash
+curl --fail-with-body --silent --show-error \
+  "$HICAP_BASE_URL/audio/voice_consents" \
+  -H "api-key: $HICAP_API_KEY" \
+  -F "name=Alex consent" \
+  -F "language=en-US" \
+  -F "recording=@consent.wav;type=audio/wav" \
+  -o consent.json
+
+export CONSENT_ID=$(jq -er '.id' consent.json)
+```
+
+Example response:
+
+```json
+{
+  "id": "cons_abc123",
+  "object": "audio.voice_consent",
+  "name": "Alex consent",
+  "language": "en-US",
+  "created_at": 1793000000
+}
+```
+
+Let `curl` set the multipart `Content-Type` and boundary. Do not set `Content-Type: application/json` for this upload.
+
+## 2. Create the voice
+
+Upload a sample from the consenting speaker and reference the returned consent ID. The consent recording and voice sample serve different purposes: authorization and the audio used to clone the voice.
+
+| Field | Value |
+| --- | --- |
+| `name` | A voice label, up to 256 characters |
+| `consent` | Your `cons_...` ID, not the recording itself |
+| `audio_sample` | The audio sample to clone |
+| `type` | Optional; defaults to `audio_sample`, the only supported value |
+
+Generate and save a unique idempotency key for this new clone. Run this command **once**, then keep its value for retries of the same request:
+
+```bash
+export VOICE_CREATION_KEY="$(uuidgen)"
+```
+
+For a different clone, generate a different key. Do not regenerate the key when retrying an uncertain or pending creation.
+
+```bash
+curl --fail-with-body --silent --show-error \
+  "$HICAP_BASE_URL/audio/voices" \
+  -H "api-key: $HICAP_API_KEY" \
+  -H "Idempotency-Key: $VOICE_CREATION_KEY" \
+  -F "name=Alex" \
+  -F "consent=$CONSENT_ID" \
+  -F "audio_sample=@sample.wav;type=audio/wav" \
+  -o voice.json
+
+export VOICE_ID=$(jq -er '.id' voice.json)
+```
+
+Save the voice ID and creation request's idempotency key. Do not continue to speech if either upload failed.
+
+```json
+{
+  "id": "voice_abc123",
+  "object": "audio.voice",
+  "name": "Alex",
+  "type": "audio_sample",
+  "created_at": 1793000000,
+  "status": "ready"
+}
+```
+
+`status` is a Hicap extension to the OpenAI response shape. **Only `ready` voices can generate speech.** Check the current status with:
+
+```bash
+curl --fail-with-body --silent --show-error \
+  "$HICAP_BASE_URL/audio/voices/$VOICE_ID" \
+  -H "api-key: $HICAP_API_KEY"
+```
+
+| Status | What to do |
+| --- | --- |
+| `ready` | Use the voice for speech |
+| `verification_required` | Contact support to resolve the provider's verification requirement; retrieve the voice afterward to refresh its status |
+| `creating` | Creation is pending; follow the retry guidance below |
+| `uncertain` | The creation outcome is unknown; retry the same request after 90 seconds, without changing the key or content |
+| `failed` | Address the reported failure before intentionally retrying with a new idempotency key |
+| `deleting` | Speech is blocked; retry deletion to finish cleanup |
+
+Hicap has no verification-completion API. Retrieving a voice refreshes a verification requirement only when ElevenLabs explicitly reports that verification is no longer required. Uploading consent does not clear that requirement.
+
+## 3. Generate speech
+
+Use the returned **Hicap voice ID** in `voice.id` with a supported ElevenLabs speech model, such as `eleven_multilingual_v2` or `eleven_v3`:
+
+```bash
+curl --fail-with-body --silent --show-error \
+  "$HICAP_BASE_URL/audio/speech" \
+  -H "api-key: $HICAP_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "$(jq -n --arg voice "$VOICE_ID" '{
+    model: "eleven_multilingual_v2",
+    voice: {id: $voice},
+    input: "Hello, this is my cloned voice.",
+    response_format: "mp3"
+  }')" \
+  --output speech.mp3
+```
+
+A successful response contains the audio bytes. Check that the request succeeded before treating `speech.mp3` as audio; an error response contains JSON. Subsequent speech requests need only the voice ID, not another consent upload or sample. Use `/audio/speech` for private clones; legacy ElevenLabs-native routes accept public voices only.
+
+## Use the OpenAI JavaScript SDK
+
+The HTTP contract works with the unmodified OpenAI JavaScript SDK. The following methods were tested with version `7.43.0`. Use the `api-key` header in addition to the SDK's `apiKey` setting. Set `VOICE_CREATION_KEY` to a new, saved key for this clone (for example, using the `uuidgen` command above). Preserve that key and the returned consent ID when retrying the voice-creation call; do not re-upload consent on retries.
+
+```javascript
+import OpenAI, { toFile } from "openai";
+import { readFile, writeFile } from "node:fs/promises";
+
+const key = process.env.HICAP_API_KEY?.trim();
+const baseURL = process.env.HICAP_BASE_URL?.trim(); // Includes /v1
+const creationKey = process.env.VOICE_CREATION_KEY?.trim();
+if (!key || !baseURL) {
+  throw new Error("Set HICAP_API_KEY and HICAP_BASE_URL before uploading audio.");
+}
+if (!creationKey) {
+  throw new Error("Set VOICE_CREATION_KEY to the saved unique key for this clone.");
+}
+const client = new OpenAI({
+  baseURL,
+  apiKey: key,
+  defaultHeaders: { "api-key": key },
+  maxRetries: 0, // Handle clone retries explicitly as described below.
+});
+
+const consent = await client.audio.voiceConsents.create({
+  name: "Alex consent",
+  language: "en-US",
+  recording: await toFile(await readFile("consent.wav"), "consent.wav", {
+    type: "audio/wav",
+  }),
+});
+
+const voice = await client.audio.voices.create({
+  name: "Alex",
+  consent: consent.id,
+  audio_sample: await toFile(await readFile("sample.wav"), "sample.wav", {
+    type: "audio/wav",
+  }),
+}, {
+  headers: { "Idempotency-Key": creationKey },
+});
+
+console.log({ consentId: consent.id, voiceId: voice.id });
+
+// Voice retrieval and status are Hicap extensions; use HTTP to check readiness.
+const statusResponse = await fetch(`${baseURL}/audio/voices/${voice.id}`, {
+  headers: { "api-key": key },
+});
+if (!statusResponse.ok) throw new Error(`Status lookup failed: ${statusResponse.status}`);
+const currentVoice = await statusResponse.json();
+if (currentVoice.status !== "ready") {
+  throw new Error(`Voice is ${currentVoice.status}; keep its ID and resolve before speech.`);
+}
+
+const speech = await client.audio.speech.create({
+  model: "eleven_multilingual_v2",
+  voice: { id: voice.id },
+  input: "Hello, this is my cloned voice.",
+  response_format: "mp3",
+});
+await writeFile("speech.mp3", Buffer.from(await speech.arrayBuffer()));
+```
+
+Use `toFile` with an explicit audio MIME type as shown. An untyped file stream can be sent as `application/octet-stream`, which these upload endpoints reject.
+
+Create the consent and clone once, then save their IDs for later requests. Do not rerun the entire example for each speech request.
+
+## Manage and delete resources
+
+Paths below are relative to the base URL, which includes `/v1`:
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| `POST` | `/audio/voice_consents` | Upload consent |
+| `GET` | `/audio/voice_consents` | List your consents |
+| `GET` | `/audio/voice_consents/{id}` | Retrieve consent metadata |
+| `POST` | `/audio/voice_consents/{id}` | Rename using JSON `{"name":"New name"}` |
+| `DELETE` | `/audio/voice_consents/{id}` | Delete unused consent and its retained recording |
+| `POST` | `/audio/voices` | Create a clone |
+| `GET` | `/audio/voices` | List your clones; Hicap extension |
+| `GET` | `/audio/voices/{id}` | Retrieve status; Hicap extension |
+| `DELETE` | `/audio/voices/{id}` | Delete a clone |
+
+List requests accept `limit` from 1 to 100 (default 20) and `after`, an ID from the previous page. Responses contain `data`, `has_more`, `first_id`, and `last_id`. Use `last_id` as the next `after` value while `has_more` is true.
+
+Delete the voice before its consent. Consent deletion returns `409 consent_in_use` while a linked voice remains active, pending, or deleting.
+
+```bash
+curl --fail-with-body --silent --show-error -X DELETE \
+  "$HICAP_BASE_URL/audio/voices/$VOICE_ID" \
+  -H "api-key: $HICAP_API_KEY"
+
+# Run after voice deletion succeeds.
+curl --fail-with-body --silent --show-error -X DELETE \
+  "$HICAP_BASE_URL/audio/voice_consents/$CONSENT_ID" \
+  -H "api-key: $HICAP_API_KEY"
+```
+
+The SDK equivalents are `client.audio.voices.delete(voice.id)` followed by `client.audio.voiceConsents.delete(consent.id)`. Successfully deleted resources return `404` on subsequent retrieval or deletion. If provider deletion fails, the voice stays blocked in `deleting`; retry the DELETE request to finish cleanup.
+
+## Upload limits and pricing
+
+- Each recording or sample must be nonempty and no larger than **10 MiB**. Each multipart request permits an additional 64 KiB for form overhead.
+- Accepted MIME types: `audio/mpeg`, `audio/wav`, `audio/x-wav`, `audio/ogg`, `audio/aac`, `audio/flac`, `audio/webm`, and `audio/mp4`. Declare the correct MIME type for the file.
+- Each subscription can retain up to **10 active consents** and **3 active or pending voices**. Provider entitlement and available voice slots also apply.
+- Only audio-sample instant cloning is supported. Prompt-based generation and Professional Voice Cloning are not supported by these endpoints.
+- Consent and voice management add no separate Hicap cloning charge. Speech uses the existing character-based rate for your chosen model; see the [model catalog](https://hicap.ai/models).
+
+## Retry safely
+
+For voice creation, reuse the **same `Idempotency-Key`, consent ID, name, MIME type, and sample content** when retrying. Reusing a key with different content returns `409 idempotency_conflict`. Without a key, identical creation content deduplicates automatically. Consent uploads do not have this creation-idempotency behavior: retain and reuse the consent ID you already received.
+
+If a timeout or server failure leaves creation pending or uncertain, wait at least 90 seconds and repeat that same voice-creation request. Hicap attempts to recover the existing provider result without submitting another clone. A new key or changed consent could create a second clone, so do not change them while the first outcome is unknown.
+
+If the response reports `voice_reconciliation_required`, contact [support](mailto:support@hicap.ai) with the response's `x-oscuro-request-id` header. A capacity or entitlement check that fails before sample submission releases the reservation; retry the same request and key after the condition is resolved. A known provider creation failure or previously deleted creation request requires a new key only when you intentionally want to create another clone.
+
+| HTTP status | Common cause |
+| --- | --- |
+| `400` | Missing fields, unsupported MIME/type, or invalid provider sample |
+| `404` | Resource is missing, deleted, or belongs to another subscription; private upstream IDs are also denied |
+| `409` | Voice is not ready, creation is pending, key conflicts, or consent is still in use; inspect `error.code` |
+| `413` | File or request exceeds the size limit |
+| `429` | Subscription quota or provider voice capacity is exhausted |
+| `502` / `503` | Provider/service failure or cloning is not enabled; follow the creation retry rules before retrying |
+
+## Recording retention
+
+Hicap retains consent audio encrypted and exposes only its metadata through this API. There is no consent-recording download endpoint. Renaming consent does not replace its recording. Deleting unused consent removes its encrypted audio from the live record; metadata and a recording hash remain for audit, and backups follow their retention policy.
+
+The cloning sample is sent to ElevenLabs and is not retained by Hicap's cloning service. The consent recording is not sent to ElevenLabs. Provider handling of the submitted sample is separate from Hicap's consent-record retention.
