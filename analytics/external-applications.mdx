@@ -212,8 +212,10 @@ Contact [support@hicap.ai](mailto:support@hicap.ai) if you need higher limits.
 
 | Status | Meaning | What to do |
 | --- | --- | --- |
-| `400` | The body isn't a valid OTLP traces request, is over 1 MiB, has more than 256 spans, or the URL has query parameters. None of its spans are recorded. | Fix the request, for example by lowering your exporter's batch size. Don't retry it unchanged. |
-| `401` / `403` | The `api-key` is missing or invalid, it isn't an analytics key, or the external connection is inactive. | Check the key and the connection. |
+| `400` | The body isn't a valid OTLP traces request, has more than 256 spans, isn't valid gzip, or the URL has query parameters. It's also returned when the request has more than one `api-key` value. None of its spans are recorded. | Fix the request, for example by lowering your exporter's batch size. Send exactly one `api-key` header. Don't retry it unchanged. |
+| `401` | The `api-key` header is missing, or it isn't a valid analytics key. | Send your analytics key in the `api-key` header. |
+| `403` | The key can't send analytics, or the external connection is inactive. | Use an analytics key, and check that the connection is active. |
+| `413` | The body is over 1 MiB, before or after gzip decompression. | Lower your exporter's batch size. If a single span is over the limit, record less in it, for example fewer or shorter attributes. |
 | `415` | Unsupported content type or encoding. | Use `application/x-protobuf` or `application/json`, with no compression or `gzip`. |
 | `429` | You hit a limit. | Retry after the `Retry-After` delay. |
 | `503` | Ingestion is temporarily unavailable. | Retry with backoff. |
